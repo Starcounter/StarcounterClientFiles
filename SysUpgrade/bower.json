@@ -1,0 +1,10 @@
+{
+  "name": "SysUpgrade",
+  "description": "App that overwrites Starcounter's /sys/ dependencies",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Polyjuice/SysUpgrade",
+  "private": true,
+  "dependencies": {
+    "dom-bind-notifier": "~1.0.0"
+  }
+}
