@@ -5,6 +5,8 @@
   "homepage": "https://github.com/Polyjuice/SysUpgrade",
   "private": true,
   "dependencies": {
-    "dom-bind-notifier": "~1.0.0"
+    "dom-bind-notifier": "#master",
+    "puppet-client": "PuppetJs/puppet-client#polymer_1",
+    "imported-template": "#Polymer_1"
   }
 }

@@ -141,7 +141,7 @@ Description: Adds good old Object.observe to Polymer 1.0 template binding (dom-b
         return false;
       }
       return this.deep ?
-        deepUnobserve(obj, this.observer) :
+        deepUnobserve(obj, this.observer, this.observer_array) :
         _isArray( obj ) ?
           Array.unobserve(obj, this.observer_array) :
           Object.unobserve(obj, this.observer);
@@ -177,7 +177,7 @@ Description: Adds good old Object.observe to Polymer 1.0 template binding (dom-b
     }
     return observer;
   }
-  function deepUnobserve(obj, observer) {
+  function deepUnobserve(obj, observer, observer_array) {
     if(_isArray(obj)){
       Array.unobserve(obj, observer_array);
     } else {
@@ -226,14 +226,12 @@ Description: Adds good old Object.observe to Polymer 1.0 template binding (dom-b
    * @param  {Object} change  change in Object.observe format
    */
   function notifyTemplate(element, change){
-    element.template.notifyPath(
-      translatePathForPolymerNotifyPath( // required for seems-to-be Polymer bug
+    var path = translatePathForPolymerNotifyPath( // required for seems-to-be Polymer bug
         element.path + getPath(element.observedObject, change.object) + '.' + change.name,
         element.template,
         change.oldValue
-      ),
-      change.object[change.name]
-    );
+      );
+    element.template.notifyPath(path, change.object[change.name]);
   }
   /**
    * Workaround for lack of consistency in Polymer's API

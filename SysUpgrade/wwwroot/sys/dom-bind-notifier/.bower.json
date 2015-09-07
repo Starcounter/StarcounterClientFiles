@@ -1,6 +1,5 @@
 {
   "name": "dom-bind-notifier",
-  "version": "1.0.0",
   "description": "Adds good old Object.observe to Polymer 1.0 template binding (dom-bind)",
   "license": "MIT",
   "main": "src/dom-bind-notifier.html",
@@ -26,14 +25,13 @@
     "web-component-tester": "~3.3.6"
   },
   "homepage": "https://github.com/Juicy/dom-bind-notifier",
-  "_release": "1.0.0",
+  "_release": "149e788011",
   "_resolution": {
-    "type": "version",
-    "tag": "1.0.0",
-    "commit": "1602b701dd21d9b5f0c0f795837fff413962dc46"
+    "type": "branch",
+    "branch": "master",
+    "commit": "149e78801157e26f569a815511f5dfd1d6f619bb"
   },
   "_source": "git://github.com/Juicy/dom-bind-notifier.git",
-  "_target": "~1.0.0",
-  "_originalSource": "dom-bind-notifier",
-  "_direct": true
+  "_target": "master",
+  "_originalSource": "dom-bind-notifier"
 }

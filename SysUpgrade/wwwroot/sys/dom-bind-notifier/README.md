@@ -1,6 +1,6 @@
 # &lt;dom-bind-notifier&gt;
 
-> Adds good old Object.observe to Polymer 1.0 template binding (dom-bind)
+> Adds good old Object.observe to Polymer 1.x template binding (dom-bind)
 
 So you no longer have to worry about notifying your elements.
 With single element, you get real TWO-way data-binding for HTML Templates.
@@ -43,9 +43,42 @@ Or [download as ZIP](https://github.com/Juicy/dom-bind-notifier/archive/master.z
       <!-- your magic goes here -->
     </template>
     ```
+
 ## Object.observe
 
 Please note, that we use [`Object.observe` & `Array.observe`](http://wiki.ecmascript.org/doku.php?id=harmony:observe), so if your environment does not support it, you will need a shim.
+
+## Polymer 0.5.x to 1.0.x
+
+If your old code looked as follows:
+
+```html
+<template id="root" bind>
+    <label>Company name <input value="{{name}}"></label>
+    <h3>Employee list:</h3>
+    <template repeat="{{employees}}">
+        <li><template if="{{htmlDev}}">★</template><input type="text" value="{{firstName}}"/></li>
+    </template>
+</template>
+<script>
+ document.getElementById("root").model = my_DB_data_handle_by_my_awsome_app;
+</script>
+```
+You can now get same behavior in Polymer 1.0.x with:
+```html
+<template id="root" is="dom-bind">
+    <dom-bind-notifier observed-object="{{model}}" ref="root" path="model" deep></dom-bind-notifier>
+    <label>Company name <input value="{{model.name::input}}"></label>
+    <h3>Employee list:</h3>
+    <template is="dom-repeat" items="{{model.employees}}">
+        <li><template is="dom-if" if="{{item.htmlDev}}" restamp>★</template><input type="text" value="{{item.firstName::input}}"/></li>
+    </template>
+</template>
+<script>
+ document.getElementById("root").model = my_DB_data_handle_by_my_awsome_app;
+</script>
+```
+
 
 ## Options
 
