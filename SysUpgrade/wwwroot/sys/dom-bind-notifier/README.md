@@ -38,10 +38,11 @@ Or [download as ZIP](https://github.com/Juicy/dom-bind-notifier/archive/master.z
 3. Start using it!
 
     ```html
-    <template is="dom-bind" id="tId">
-      <dom-bind-notifier ref="tId" observed-object="{{myObj}}" path="myObj" deep></dom-bind-notifier>
+    <template is="dom-bind">
       <!-- your magic goes here -->
+      <h1>{{path.to.my.magic}}</h1>
     </template>
+    <dom-bind-notifier path="path.to" deep></dom-bind-notifier>
     ```
 
 ## Object.observe
@@ -67,13 +68,13 @@ If your old code looked as follows:
 You can now get same behavior in Polymer 1.0.x with:
 ```html
 <template id="root" is="dom-bind">
-    <dom-bind-notifier observed-object="{{model}}" ref="root" path="model" deep></dom-bind-notifier>
     <label>Company name <input value="{{model.name::input}}"></label>
     <h3>Employee list:</h3>
     <template is="dom-repeat" items="{{model.employees}}">
         <li><template is="dom-if" if="{{item.htmlDev}}" restamp>★</template><input type="text" value="{{item.firstName::input}}"/></li>
     </template>
 </template>
+<dom-bind-notifier path="model" deep></dom-bind-notifier>
 <script>
  document.getElementById("root").model = my_DB_data_handle_by_my_awsome_app;
 </script>
@@ -84,10 +85,10 @@ You can now get same behavior in Polymer 1.0.x with:
 
 Attribute         | Options   | Default | Description
 ---               | ---       | ---     | ---
-`observed-object` | *Object*  |         | Object to bind to
-`ref`             | *String*  |         | Id of `dom-bind` element to notify.
-`path`            | *String*  |         | Path of observed object in scope of `ref`erenced `dom-bind`
+`path`            | *String*  |         | (**required**) Path of observed object in scope of `ref`erenced `dom-bind`
 `deep`            | *Boolean* | `false` | Should we observe objects deeply
+`ref`             | *String*  |         | Id of `dom-bind` element to notify, `.previousElementSibling` will be used if not given
+`observed-object` | *Object*  |         | Object to bind to, if other `dombind.get(path)`
 
 ## Events
 

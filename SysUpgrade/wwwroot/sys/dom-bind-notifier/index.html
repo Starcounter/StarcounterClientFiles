@@ -40,9 +40,9 @@
   <h3>Simple</h3>
   <div class="example-block">
     <pre><code>&lt;template is="dom-bind" id="simple"&gt;
-  &lt;dom-bind-notifier observed-object="{{model}}" ref="simple" path="model"&gt;&lt;/dom-bind-notifier&gt;
   &lt;h4&gt;Welcome to &lt;span&gt;{{model.name}}&lt;/span&gt;&lt;/h4&gt;
 &lt;/template&gt;
+&lt;dom-bind-notifier path="model"&gt;&lt;/dom-bind-notifier&gt;
 &lt;script&gt;
   var simple = { name: "Juicy" };
   document.getElementById("simple").model = simple;
@@ -50,12 +50,12 @@
 </code></pre>
     <div class="example">
       <template is="dom-bind" id="simple">
-
-        <!-- Using Custom Elements -->
-          <dom-bind-notifier observed-object="{{model}}" ref="simple" path="model"></dom-bind-notifier>
-
         <h4>Welcome to <span>{{model.name}}</span>!</h4>
       </template>
+
+      <!-- Using Custom Elements -->
+      <dom-bind-notifier path="model"></dom-bind-notifier>
+
       <script>
       var simple = {
         name: "Juicy"
@@ -71,34 +71,29 @@
 
   <div class="example-block">
     <pre><code>&lt;template is="dom-bind" id="deep"&gt;
-
-        &lt;!-- Using Custom Elements --&gt;
-          &lt;dom-bind-notifier observed-object="{{repo}}" ref="deep" path="repo" deep&gt;&lt;/dom-bind-notifier&gt;
-
-        &lt;h3&gt;{{repo.name}}&lt;/h3&gt;
-        by &lt;span&gt;{{repo.author.first}}&lt;/span&gt; &lt;span&gt;{{repo.author.last}}&lt;/span&gt;
-
-      &lt;/template&gt;
-      &lt;script&gt;
-      var deep = {
-        name: "&lt;juicy-dom-notifier&gt;",
-        author: {
-          first: "Tomek",
-          last: "Wytrębowicz"
-        }
-      };
-      document.getElementById("deep").repo = deep;
-      &lt;/script&gt;</code></pre>
+  &lt;h3&gt;{{repo.name}}&lt;/h3&gt;
+  by &lt;span&gt;{{repo.author.first}}&lt;/span&gt; &lt;span&gt;{{repo.author.last}}&lt;/span&gt;
+&lt;/template&gt;
+&lt;dom-bind-notifier path="repo" deep&gt;&lt;/dom-bind-notifier&gt;
+&lt;script&gt;
+  var deep = {
+  name: "&lt;juicy-dom-notifier&gt;",
+  author: {
+    first: "Tomek",
+    last: "Wytrębowicz"
+  }
+  };
+  document.getElementById("deep").repo = deep;
+&lt;/script&gt;</code></pre>
     <div class="example">
       <template is="dom-bind" id="deep">
-
-        <!-- Using Custom Elements -->
-          <dom-bind-notifier observed-object="{{repo}}" ref="deep" path="repo" deep></dom-bind-notifier>
-
         <h3>{{repo.name}}</h3>
         by <span>{{repo.author.first}}</span> <span>{{repo.author.last}}</span>
-
       </template>
+
+      <!-- Using Custom Elements -->
+      <dom-bind-notifier path="repo" deep></dom-bind-notifier>
+
       <script>
       var deep = {
         name: "<juicy-dom-notifier>",
@@ -118,42 +113,39 @@
 
   <div class="example-block">
     <pre><code>&lt;template is="dom-bind" id="arrays"&gt;
-        &lt;dom-bind-notifier observed-object="{{organization}}" ref="arrays" path="organization" deep&gt;&lt;/dom-bind-notifier&gt;
-
-      &lt;h4&gt;&lt;span&gt;{{organization.name}}&lt;/span&gt; people:&lt;/h4&gt;
-      &lt;ul&gt;
-        &lt;template  is="dom-repeat" items="{{organization.people}}"&gt;
-          &lt;li&gt;&lt;span&gt;{{item.first}}&lt;/span&gt; &lt;span&gt;{{item.last}}&lt;/span&gt;&lt;/li&gt;
-        &lt;/template&gt;
-      &lt;/ul&gt;
-
+  &lt;h4&gt;&lt;span&gt;{{organization.name}}&lt;/span&gt; people:&lt;/h4&gt;
+  &lt;ul&gt;
+    &lt;template  is="dom-repeat" items="{{organization.people}}"&gt;
+      &lt;li&gt;&lt;span&gt;{{item.first}}&lt;/span&gt; &lt;span&gt;{{item.last}}&lt;/span&gt;&lt;/li&gt;
     &lt;/template&gt;
-    &lt;script&gt;
-    var arrays = {
-      name: "Juicy",
-      people: [
-        {
-          first: "Tomek",
-          last: "Wytrębowicz"
-        }
-      ]
-    };
-    document.getElementById("arrays").organization = arrays;
-    &lt;/script&gt;</code></pre>
+  &lt;/ul&gt;
+&lt;/template&gt;
+
+&lt;dom-bind-notifier path="organization" deep&gt;&lt;/dom-bind-notifier&gt;
+
+&lt;script&gt;
+var arrays = {
+  name: "Juicy",
+  people: [
+    {
+      first: "Tomek",
+      last: "Wytrębowicz"
+    }
+  ]
+};
+document.getElementById("arrays").organization = arrays;
+&lt;/script&gt;</code></pre>
     <div class="example">
       <template is="dom-bind" id="arrays">
-
-        <!-- Using Custom Elements -->
-          <dom-bind-notifier observed-object="{{organization}}" ref="arrays" path="organization" deep></dom-bind-notifier>
-
         <h4><span>{{organization.name}}</span> people:</h4>
         <ul>
           <template  is="dom-repeat" items="{{organization.people}}">
             <li><span>{{item.first}}</span> <span>{{item.last}}</span></li>
           </template>
         </ul>
-
       </template>
+      <!-- Using Custom Elements -->
+      <dom-bind-notifier path="organization" deep></dom-bind-notifier>
       <script>
       var arrays = {
         name: "Juicy",

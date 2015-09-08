@@ -1,6 +1,6 @@
 <!--
 Element: dom-bind-notifier
-version: 1.0.0
+version: 1.1.0
 Description: Adds good old Object.observe to Polymer 1.0 template binding (dom-bind)
 -->
 
@@ -36,6 +36,7 @@ Description: Adds good old Object.observe to Polymer 1.0 template binding (dom-b
       // fix context for observer, make it instance method.
       this.observer = this._observer.bind(this);
       this.observer_array = this._observer_array.bind(this);
+
     },
     attached: function() {
       this._stamp();
@@ -74,7 +75,8 @@ Description: Adds good old Object.observe to Polymer 1.0 template binding (dom-b
           template = document.querySelector("template#" + this.ref);
         }
       } else {
-        template = this.firstChildElement;
+        template = this.previousElementSibling;
+        this.observedObject = template.get(this.path);
       }
       this.template = template;
     },
