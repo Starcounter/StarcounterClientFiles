@@ -25,11 +25,11 @@
     "web-component-tester": "~3.3.6"
   },
   "homepage": "https://github.com/Juicy/dom-bind-notifier",
-  "_release": "6dd773eb11",
+  "_release": "1e531fc5fd",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "6dd773eb11e0874c9010f75039ab4d2b71e956d6"
+    "commit": "1e531fc5fdf4b1f61723ba339636382c18e33f9d"
   },
   "_source": "git://github.com/Juicy/dom-bind-notifier.git",
   "_target": "master",

@@ -87,7 +87,7 @@ Attribute         | Options   | Default | Description
 ---               | ---       | ---     | ---
 `path`            | *String*  |         | (**required**) Path of observed object in scope of `ref`erenced `dom-bind`
 `deep`            | *Boolean* | `false` | Should we observe objects deeply
-`ref`             | *String*  |         | Id of `dom-bind` element to notify, `.previousElementSibling` will be used if not given
+`ref`             | *String*  |         | Id of `dom-bind` element to notify, first previous `<template>` sibling will be used if not given
 `observed-object` | *Object*  |         | Object to bind to, if other `dombind.get(path)`
 
 ## Events

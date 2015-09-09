@@ -6,7 +6,7 @@
   "private": true,
   "dependencies": {
     "dom-bind-notifier": "#master",
-    "puppet-client": "PuppetJs/puppet-client#polymer_1",
+    "puppet-client": "PuppetJs/puppet-client#gh-pages",
     "imported-template": "#Polymer_1"
   }
 }
