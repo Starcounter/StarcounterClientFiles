@@ -1,6 +1,6 @@
 <!--
 Element: dom-bind-notifier
-version: 1.1.1
+version: 1.2.0
 Description: Adds good old Object.observe to Polymer 1.0 template binding (dom-bind)
 -->
 
@@ -78,21 +78,38 @@ Description: Adds good old Object.observe to Polymer 1.0 template binding (dom-b
           }
         }
       } else {
-        template = this.previousElementSibling;
+        template = this.nextElementSibling;
         while(template && template.tagName != "TEMPLATE"){
-          template = template.previousElementSibling;
+          template = template.nextElementSibling;
         }
         if(!template){
-            throw "There is no previous `<template>` sibling.";
+            throw "There is no next `<template>` sibling.";
         }
-        this.observedObject = template.get(this.path);
       }
       this.template = template;
     },
     _observer: function(arr){
       var change;
       for(var changeNo = 0; changeNo < arr.length; changeNo++){
-        notifyTemplate(this, arr[changeNo]);
+        change = arr[changeNo];
+        notifyTemplate(this, change);
+        // observe new nodes / unobserve old
+        if( this.deep ){
+          switch(change.type){
+            case "update":
+              // observe new nodes
+              this.unobserve(change.oldValue);
+              this.observe(change.object[ change.name ]);
+            break;
+            case "delete":
+              this.unobserve(change.oldValue);
+            break;
+            case "add":
+              // observe new nodes
+              this.observe(change.object[ change.name ]);
+            break;
+          }
+        }
       }
       this.fire("change", arr)
     },

@@ -41,10 +41,11 @@ Or [download as ZIP](https://github.com/Juicy/dom-bind-notifier/archive/master.z
     <template is="dom-bind">
       <!-- your magic goes here -->
       <h1>{{path.to.my.magic}}</h1>
+      <dom-bind-notifier observed-object="{{path.to}}" path="path.to" deep></dom-bind-notifier>
     </template>
-    <dom-bind-notifier path="path.to" deep></dom-bind-notifier>
     ```
-
+    Use it always inside `dom-bind`, preferably as the last child.
+    
 ## Object.observe
 
 Please note, that we use [`Object.observe` & `Array.observe`](http://wiki.ecmascript.org/doku.php?id=harmony:observe), so if your environment does not support it, you will need a shim.
@@ -73,8 +74,8 @@ You can now get same behavior in Polymer 1.0.x with:
     <template is="dom-repeat" items="{{model.employees}}">
         <li><template is="dom-if" if="{{item.htmlDev}}" restamp>★</template><input type="text" value="{{item.firstName::input}}"/></li>
     </template>
+    <dom-bind-notifier observed-object="{{model}}" path="model" deep></dom-bind-notifier>
 </template>
-<dom-bind-notifier path="model" deep></dom-bind-notifier>
 <script>
  document.getElementById("root").model = my_DB_data_handle_by_my_awsome_app;
 </script>
@@ -87,7 +88,7 @@ Attribute         | Options   | Default | Description
 ---               | ---       | ---     | ---
 `path`            | *String*  |         | (**required**) Path of observed object in scope of `ref`erenced `dom-bind`
 `deep`            | *Boolean* | `false` | Should we observe objects deeply
-`ref`             | *String*  |         | Id of `dom-bind` element to notify, first previous `<template>` sibling will be used if not given
+`ref`             | *String*  |         | Id of `dom-bind` element to notify, if not given will use next sibling, or containing dom-bind.
 `observed-object` | *Object*  |         | Object to bind to, if other `dombind.get(path)`
 
 ## Events
