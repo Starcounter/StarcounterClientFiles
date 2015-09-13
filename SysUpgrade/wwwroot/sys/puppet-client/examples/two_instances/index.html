@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PuppetJs with Polymer demo</title>
+  <script src="../../../webcomponentsjs/webcomponents.js"></script>
+  <link rel="import" href="../../../model-operations/model-operations.html">
+  <link rel="import" href="../../../puppet-bunny/src/puppet-bunny.html">
+
+  <!-- include puppet-client with dependencies -->
+  <link rel="import" href="../../src/puppet-client.html">
+
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <!-- mock server responses -->
+  <script src="../../test/lib/jasmine-2.3.0/jasmine.js"></script>
+  <script>window.jasmine = jasmineRequire.core(jasmineRequire);</script>
+  <script src="../../test/lib/jasmine-ajax-3.1.1/lib/mock-ajax.js"></script>
+  <script src="js/mockServer.js"></script>
+</head>
+<body>
+
+<h1>PuppetJs + PuppetJs</h1>
+
+<p>This demo shows usage of two puppet-clients bound to separated DOM subtrees</p>
+
+<article>
+  <section id="Alice">
+    <h2>
+      Alice's Puppet
+    </h2>
+
+    
+    <template id="AliceNeedsModel" bind>
+      <h4>Welcome <em>{{fullName}}!</em><small>(&larr;calculated on server)</small></h4>
+
+
+      <p>
+        <label>First Name<input type="text" value="{{firstName$}}"></label>
+      </p>
+
+      <p class="detail">
+        By default, patches are generated on <code>blur</code>
+      </p>
+
+      <p>
+        <label>First Name (live)<input update-on="input" type="text" value="{{firstName$}}"></label>
+      </p>
+
+      <p class="detail">
+        With <code>update-on="input"</code> attribute, patches are generated on every keystroke
+      </p>
+
+      <p>
+        <label>Last Name<input type="text" value="{{lastName$}}"></label>
+      </p>
+
+      <button onclick="getModel(this).resetName$ = true">Kick me!
+      </button>
+    </template>
+
+    <template id="delay4alice" bind>
+      <puppet-client ref="AliceNeedsModel" listen-to="Alice" remoteurl="alice/"></puppet-client>
+    </template>
+  </section>
+
+  <section id="Bob">
+    <h2>
+      Bob's Puppet
+    </h2>
+
+    <template id="BobNeedsModel" bind>
+      <h4>His name is <em>{{fullName}}!</em><small>(&larr;calculated on server)</small></h4>
+
+
+      <p>
+        <label>First Name<input type="text" value="{{firstName$}}"></label>
+      </p>
+
+      <p class="detail">
+        By default, patches are generated on <code>blur</code>
+      </p>
+
+      <p>
+        <label>First Name (live)<input update-on="input" type="text" value="{{firstName$}}"></label>
+      </p>
+
+      <p class="detail">
+        With <code>update-on="input"</code> attribute, patches are generated on every keystroke
+      </p>
+
+      <p>
+        <label>Last Name<input type="text" value="{{lastName$}}"></label>
+      </p>
+
+      <button onclick="getModel(this).resetName$ = true">Kick me!
+      </button>
+    </template>
+
+    <template id="delay4bob" bind>
+      <puppet-client ref="BobNeedsModel" listen-to="Bob" remoteurl="http://puppetjs.github.io:8181/PuppetJs/lab/polymer/bob/"></puppet-client>
+    </template>
+  </section>
+
+</article>
+
+<script>
+    //our mock server cannot pass through Polymer HTML Import XHR requests
+    //so we need to delay setup of the mock server until Polymer is ready
+    window.addEventListener('polymer-ready', function () {
+        createMockServer();
+        document.getElementById('delay4alice').model = {};
+        document.getElementById('delay4bob').model = {};
+    });
+</script>
+
+<puppet-bunny></puppet-bunny>
+
+<footer>Puppet photo credit: <a href="https://www.flickr.com/photos/mujitra/4422575066">MIKI Yoshihito</a> (CC BY 2.0)
+</footer>
+
+</body>
+</html>
