@@ -36,11 +36,11 @@
   "dependencies": {
     "juicy-html": "1.0.x"
   },
-  "_release": "a5f96e5604",
+  "_release": "3c5ccbe74e",
   "_resolution": {
     "type": "branch",
     "branch": "Polymer_1",
-    "commit": "a5f96e560424b2cdc364744dad705453bc449df4"
+    "commit": "3c5ccbe74efc5b7ca78846f34d1a49c05c038b8f"
   },
   "_source": "git://github.com/Juicy/imported-template.git",
   "_target": "Polymer_1",
