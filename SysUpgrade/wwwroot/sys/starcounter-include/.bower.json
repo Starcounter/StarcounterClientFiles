@@ -1,0 +1,44 @@
+{
+  "name": "starcounter-include",
+  "authors": [
+    "Tomek Wytrebowicz <tomalecpub@gmail.com>"
+  ],
+  "homepage": "https://github.com/Polyjuice/launcher-include",
+  "description": "Custom Element to include HTML partials/templates from Starcounter, enhanced witch Launcher layout features.",
+  "main": "starcounter-include.html",
+  "keywords": [
+    "template",
+    "partial",
+    "starcounter",
+    "include",
+    "imported-template"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "Gruntfile.js",
+    "wwwroot/sys",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "imported-template": "~0.0.10",
+    "juicy-tiles-setup-sync": "Juicy/juicy-tiles-setup-sync#gh-pages",
+    "juicy-tile-grid": ">=0.2.0"
+  },
+  "devDependencies": {
+    "web-component-tester": "Polymer/web-component-tester#~3.1.3"
+  },
+  "version": "0.0.7",
+  "_release": "0.0.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.7",
+    "commit": "ad77cdac67c7813b98a8a28d9f927adf983f57b9"
+  },
+  "_source": "git://github.com/Polyjuice/launcher-include.git",
+  "_target": ">=0.0.7",
+  "_originalSource": "Polyjuice/launcher-include"
+}
