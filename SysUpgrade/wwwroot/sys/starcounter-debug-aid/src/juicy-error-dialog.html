@@ -1,0 +1,61 @@
+<link rel="import" href="../../polymer/polymer.html">
+
+<polymer-element name="juicy-error-data" attributes="error">
+  <script>
+    Polymer("juicy-error-data", {
+      error: null
+    });
+  </script>
+</polymer-element>
+
+<polymer-element name="juicy-error-dialog">
+  <template>
+    <style>
+      .errorHeader {
+        background-color: firebrick;
+        color: white;
+        padding: 2px 24px;
+        font-size: 80%;
+      }
+
+      .errorPad {
+        margin: 24px;
+      }
+    </style>
+
+    <template repeat="{{error in errors}}">
+      <div class="errorHeader">Error {{error.errorNo}}</div>
+      <div class="errorPad">
+        <juicy-error-data error="{{error}}">
+          <template bind ref="reporters"></template>
+        </juicy-error-data>
+      </div>
+    </template>
+    <content></content>
+  </template>
+  <script>
+    Polymer("juicy-error-dialog", {
+      errorNo: 0,
+      limit: 10,
+      errors: [],
+      ready: function () {
+        var that = this;
+        var tpl = this.querySelector('template');
+        tpl.id = "reporters";
+        this.shadowRoot.appendChild(tpl);
+        this._handleErrorEvent = function (ev) {
+          that.errorNo++;
+          ev.errorNo = that.errorNo;
+          if (that.errors.length > that.limit) {
+            return;
+          }
+          that.errors.push(ev);
+        };
+        window.addEventListener("error", this._handleErrorEvent);
+      },
+      reset: function () {
+        this.errors.length = 0;
+      }
+    });
+  </script>
+</polymer-element>
