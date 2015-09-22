@@ -1,8 +1,8 @@
 {
   "name": "imported-template",
+  "version": "1.0.1",
   "devDependencies": {
     "dom-bind-notifier": "~1.0.0",
-    "github-button": "zenorocha/github-button",
     "iron-icon": "PolymerElements/iron-icon#~1.0.4",
     "iron-iconset-svg": "PolymerElements/iron-iconset-svg#~1.0.4"
   },
@@ -34,15 +34,15 @@
     "preview.png"
   ],
   "dependencies": {
-    "juicy-html": "1.0.x"
+    "juicy-html": ">=1.0.0"
   },
-  "_release": "3c5ccbe74e",
+  "_release": "1.0.1",
   "_resolution": {
-    "type": "branch",
-    "branch": "Polymer_1",
-    "commit": "3c5ccbe74efc5b7ca78846f34d1a49c05c038b8f"
+    "type": "version",
+    "tag": "1.0.1",
+    "commit": "f5f65d831de95f3fd8980001367939054199771d"
   },
   "_source": "git://github.com/Juicy/imported-template.git",
-  "_target": "Polymer_1",
+  "_target": ">=1.0.1",
   "_originalSource": "imported-template"
 }

@@ -7,6 +7,7 @@
 module.exports = function(grunt) {
     // grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-bump');
 
     grunt.initConfig({
         watch: {
@@ -20,7 +21,24 @@ module.exports = function(grunt) {
                 ],
                 // tasks: ['jshint'],
             },
+        },
+        bump: {
+          options: {
+            files: ['package.json', 'bower.json', 'imported-template.html'],
+            commit: true,
+            commitMessage: '%VERSION%',
+            commitFiles: ['package.json', 'bower.json', 'imported-template.html'],
+            createTag: true,
+            tagName: '%VERSION%',
+            tagMessage: 'Version %VERSION%',
+            push: false,
+            // pushTo: 'origin',
+            globalReplace: false,
+            prereleaseName: false,
+            regExp: false
+          }
         }
     });
+
 
 };

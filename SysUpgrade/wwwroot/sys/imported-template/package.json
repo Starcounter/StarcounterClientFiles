@@ -1,6 +1,6 @@
 {
   "name": "imported-template",
-  "version": "0.0.10",
+  "version": "1.0.1",
   "description": "`<imported-template>` is a custom element that let's you load HTML partials into your Web Components, and take full control over loaded `<script>`s and `<link rel=\"import\">`s.",
   "homepage": "https://github.com/Juicy/imported-template",
   "repository": {
@@ -22,6 +22,7 @@
   "license": "MIT",
   "devDependencies": {
     "grunt": "~0.4.4",
+    "grunt-bump": "^0.5.0",
     "grunt-contrib-watch": "~0.6.1"
   }
 }

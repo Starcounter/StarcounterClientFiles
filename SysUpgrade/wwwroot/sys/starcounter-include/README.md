@@ -1,40 +1,70 @@
-Launcher's &lt;starcounter-include&gt;
+&lt;starcounter-include&gt;
 ==============
 
-This is Launcher's version of [`<starcounter-include>`](https://github.com/Polyjuice/starcounter-include).
-Launcher overwrites it with is a custom element that not only let's you load HTML partials into your Starcounter page with full control over loaded `<script>`s and `<link rel="import">`s, but also allows you to gently manage output from many apps mixed by Polyjuice mappings.
+`<starcounter-include>` is a custom element that let's you load HTML partials into your Starcounter page, it uses [`<imported-template>`](https://github.com/Juicy/imported-template), so, you can take full control over loaded `<script>`s and `<link rel="import">`s. Thanks to HTML Imports - caching, script execution, etc. is completely native.
+g
+### Small sample
+
+If you have **/app/sub/page/path.html**:
+```html
+<template>
+	<h1>Hello {{username}}</h1>
+</template>
+```
+and JSON view-model
+```javascript
+SubPageViewModel = {
+  username: "World"
+  html: "/app/sub/page/path.html"
+}
+```
+You can put it on screen with
+```html
+<starcounter-include partial="{{ SubPageViewModel }}"></starcounter-include>
+```
+To produce
+```html
+<h1>Hello World</h1>
+```
 
 ## Demo/Examples
 :construction:
 [Example in Starcounter Fiddle!]()
 
-## Related custom elements
+### [`<imported-template>` Demo/Example](https://github.com/Juicy/imported-template#demoexamples)
 
- - [`<starcounter-include>`](https://github.com/Polyjuice/starcounter-include) - includes Starcounter Partial,
- - [`<imported-template>`](https://github.com/Juicy/imported-template) - includes HTML Template,
- - [`<juicy-tile-grid>`](https://github.com/Juicy/juicy-tile-grid),
- - [`<juicy-tile-list>`](https://github.com/Juicy/juicy-tile-list),
- - [`<juicy-tile-editor>`](https://github.com/Juicy/juicy-tile-editor),
- - [`<juicy-tiles-setup-sync>`](https://github.com/Juicy/juicy-tiles-setup-sync)
+### [Test/Use cases](http://polyjuice.github.io/starcounter-include/tests)
 
-## Related wiki articles: 
+## Features
 
- - https://github.com/Polyjuice/Launcher/wiki/Partials
- - https://github.com/Polyjuice/Launcher/wiki/Layout-setup
- - https://github.com/Polyjuice/Launcher/wiki/include-template-in-Polyjuice
+ - Applies two-way databinding, even for nested asynchronously loaded `<polymer-element>`s,
+ - Multiple (concatenated) templates per partial, 
+ - Polymer's `<template>` features (binding, repeat, if, etc.),
+ - HTML Imports features: 
+  - Sends request for template only once (HTML Import's caching),
+  - Supports `<script>, <link>, <style>` tags to be executed once,
+  - Supports `<script>, <style>` tags per template instance.
 
+### HTML Partial limitations
+
+ - It should be W3C compliant Document body,
+ - It should contain at least one `<template>` tag in root node.
+
+### Partial conventions
+
+ - View-model contains `Html` property with path to file (:construction:, or just inline markup).
 
 ## Install
 
-[Launcher](https://github.com/Polyjuice/Launcher) has it already pre-installed, under `/sys/starcounter-include/starcounter-include.html` (overwrites Starcounter's one), but if you want to use it separately as well.
+Starcounter has it already pre-installed, under `/sys/starcounter-include/starcounter-include.html`, but if you want to use it separately as well.
 
 Install the component using [Bower](http://bower.io/):
 
 ```sh
-$ bower install Polyjuice/launcher-include --save
+$ bower install Polyjuice/starcounter-include --save
 ```
 
-Or [download as ZIP](https://github.com/Polyjuice/launcher-include/archive/master.zip).
+Or [download as ZIP](https://github.com/Polyjuice/starcounter-include/archive/master.zip).
 
 ## Usage
 
@@ -79,4 +109,4 @@ Or [download as ZIP](https://github.com/Polyjuice/launcher-include/archive/maste
 
 ## History
 
-For detailed changelog, check [Releases](https://github.com/Polyjuice/launcher-include/releases).
+For detailed changelog, check [Releases](https://github.com/Polyjuice/starcounter-include/releases).

@@ -1,51 +1,24 @@
 <!--
-`launcher-root-partial` - Custom Element (w/ Polymer's TempalteBinding)
-with predefined template content, which should be used to include partials.
-It's just <template is="imported-template"> wrapped within <juicy-tiles> and layout editor.
-Uses juicy-tiles setup given from DB as juicyTilesSetup.
-version: 0.0.7
-
-@FIXME (tomalec): Use scoped Partial and layout data once implemented on server-side
-@FIXME (tomalec): DRY with default starcounter-include
+starcounter-include.html
+MIT license
+https://github.com/Polyjuice/starcounter-include
+version: 0.0.6
 -->
-<!-- Import dependencies -->
-<!-- <link rel="import" href="/sys/polymer/polymer.html"> -->
-
 <link rel="import" href="../imported-template/imported-template.html">
-<link rel="import" href="../juicy-tile-grid/src/juicy-tile-grid.html">
-<link rel="import" href="../juicy-tiles-setup-sync/src/juicy-tiles-setup-sync.html">
-<!-- <link rel="import" href="/sys/console-log/console-log.html"> -->
-
-<template id="partial-template">
-    <juicy-tiles-setup-sync
-        apiUrl="/launcher/juicytilessetup"></juicy-tiles-setup-sync>
-    <juicy-tile-grid
-        defaultTileSetup='{
-            "precalculateHeight": true,
-            "width": "100%",
-            "widthFlexible": true
-        }'
-        refreshonmutation>
-      <template is="imported-template"></template>
-    </juicy-tile-grid>
-</template>
 <script>
   (function () {
+    var StarcounterIncludePrototype = Object.create(HTMLElement.prototype);
 
-
-    var templ = (document._currentScript || document.currentScript).ownerDocument.getElementById("partial-template");
-
-
-    var LauncherPartialPrototype = Object.create(HTMLElement.prototype);
-
-    LauncherPartialPrototype.partial = null;
-    LauncherPartialPrototype.isAttached = false;
+    StarcounterIncludePrototype.partial = null;
+    StarcounterIncludePrototype.isAttached = false;
 
     /**
-     * @see Polyjuice/starcounter-include - partialAttributeToProperty It's just a copy
+     * Read the `partial` attribute of given element,
+     * filter if it's not Polymer's mustaches, and set it to `partial` property.
+     * @param  {HTMLElement} element
      */
-    function partialAttributeToProperty(element, attrVal){
-      attrVal = attrVal || element.getAttribute("partial");
+    function partialAttributeToProperty(element){
+      var attrVal = element.getAttribute("partial");
       // no value, or Polymer binding
       if(!attrVal || attrVal.match(/\{\{.*\}\}|\[\[.*\]\]/)){
         return;
@@ -53,20 +26,18 @@ version: 0.0.7
       element.partial = JSON.parse(attrVal);
     }
     /**
-     * Use predefined template content, rewrite attributes.
+     * Define partial setter, stamp inner `imported-template`
      */
-    LauncherPartialPrototype.createdCallback = function LPartialCreated(){
-      // ugly https://code.google.com/p/chromium/issues/detail?id=430578 workaround
-      // if( inDocumentFragment( this ) ){
-      //   return ;
-      // }
+    StarcounterIncludePrototype.createdCallback = function () {
+      //d console.log("starcounter-partial created");
+      //this.partial = /*this.partial ||*/ {};
       var partial = undefined;
       var starcounterInclude = this;
       // define a setter for partial attribute,
       // so it could be change by VanillaJs without Polymer Template Binding
       Object.defineProperty(this,"partial",{
         set: function(newValue){
-          console.log("partial set", newValue);
+          //d console.log("partial set");
           partial = newValue;
           starcounterInclude.partialChanged(partial);
         },
@@ -75,66 +46,48 @@ version: 0.0.7
         }
       });
 
-      var sroot = this.createShadowRoot();
-      sroot.innerHTML = "<style>:host{display:block;}</style><content></content>";
-
-      var clone = document.importNode( templ.content, true);
-      this.clone = clone;
-      this.sync = clone.children[0];// .getElementsByTagName("JUICY-TILES-SETUP-SYNC");
-      this.grid = clone.children[1];// .getElementsByTagName("JUICY-TILE-GRID");
-      this.template = this.grid.firstElementChild;// .getElementsByTagName("TEMPLATE");
+      var importedTemplate = document.createElement("template","imported-template");
+      this.template = importedTemplate;
     };
-    /**
-     * Attach model.
-     * @see Polyjuice/starcounter-include#attachedCallback It's just a copy
-     */
-    LauncherPartialPrototype.attachedCallback = function LPartialAttached(){
+
+    StarcounterIncludePrototype.attachedCallback = function () {
       partialAttributeToProperty(this);
       this.isAttached = true;
       //d console.log("starcounter-partial attached");
       this.partialChanged();
-      this.appendChild( this.clone );
+      this.appendChild(this.template);
     };
-    /**
-     * @see Polyjuice/starcounter-include#detachedCallback It's just a copy
-     * @return {[type]} [description]
-     */
-    LauncherPartialPrototype.detachedCallback = function(){
+
+    StarcounterIncludePrototype.detachedCallback = function () {
       this.isAttached = false;
       //d console.log("starcounter-partial detached");
     };
-    /**
-     * @see Polyjuice/starcounter-include#attributeChangedCallback It's just a copy
-     */
-    LauncherPartialPrototype.attributeChangedCallback = function(name, oldVal, newVal){
+
+    StarcounterIncludePrototype.attributeChangedCallback = function (name, oldVal, newVal) {
       if(name === "partial"){
-        partialAttributeToProperty(this, newVal);
+        partialAttributeToProperty(this);
         //d console.log("starcounter-partial attr changed");
       }
     };
     /**
      * Updates inner `imported-template` with partial data given (if applicable)
-     * @see Polyjuice/starcounter-include#partialChanged it's alsmost a copy
      * @param  {Object} newVal new partial value
      */
-    LauncherPartialPrototype.partialChanged = function(newVal){
+    StarcounterIncludePrototype.partialChanged = function (newVal) {
       if(this.partial){
         var html = this.partial.Html;
         !html && console.warn("partial.Html for", this, "is missing.");
-        !this.partial.PartialId && console.warn("partial.PartialId for", this, "is missing.");
         if(this.isAttached && html){
-          this.sync.setAttribute("name", this.partial.PartialId);
-          this.sync.storedValue = this.partial.juicyTilesSetup;
-          this.grid.setAttribute("name", this.partial.PartialId);
-          this.grid.setup = this.partial.juicyTilesSetup && JSON.parse(JSON.stringify(this.partial.juicyTilesSetup));
-          this.template.setAttribute("content", this.partial.Html);
+          this.template.setAttribute("content", html);
           this.template.model = this.partial;
         }
       }
     };
 
     document.registerElement('starcounter-include', {
-      prototype: LauncherPartialPrototype
+      prototype: StarcounterIncludePrototype
     });
+
+
   })();
 </script>

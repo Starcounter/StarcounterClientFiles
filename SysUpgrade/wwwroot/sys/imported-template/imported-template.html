@@ -1,5 +1,5 @@
 <!--
-imported-template.html v0.0.10
+imported-template.html version: 1.0.1
 (c) 2013 Joachim Wester
 MIT license
 https://github.com/Juicy/imported-template
@@ -105,6 +105,10 @@ https://github.com/Juicy/imported-template
                 attachModels(model[scopedNodes[childNo].scope], scopedNodes[childNo]);
             }
             attachModels(model, this.scopelessNodes);
+            // inline HTML
+            if(!this.scopedNodes && !this.scopelessNodes){
+                attachModels(model, this.stampedNodes);
+            }
         }
 
 
