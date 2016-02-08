@@ -6,7 +6,7 @@
     <ProductVersion>9.0.20706</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectTypeGuids>{C86118D7-451E-4933-BFEE-A1EFDB162FD7};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{BB4A0326-833B-47F7-AE93-5EFDCDBB24A1}</ProjectGuid>
+    <ProjectGuid>{72D767C9-CC68-4C1D-8A6B-28F61848DBDF}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SysUpgrade</RootNamespace>
