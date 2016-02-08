@@ -1,3 +1,11 @@
 {
-  "directory" : "wwwroot/sys"
+  "directory" : "wwwroot/sys",
+  "ignoredDependencies": [
+      "webcomponentsjs",
+      "fast-json-patch",
+      "json-patch-queue",
+      "json-patch-ot",
+      "json-patch-ot-agent"
+
+  ]
 }

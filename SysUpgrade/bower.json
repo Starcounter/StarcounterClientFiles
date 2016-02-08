@@ -1,8 +1,8 @@
 {
   "name": "SysUpgrade",
-  "description": "App that overwrites Starcounter's /sys/ dependencies",
+  "description": "App that overwrites Starcounter's and Launcher's /sys/ dependencies",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/Polyjuice/SysUpgrade",
   "authors": [
     "Tomek Wytrebowicz <tomalecpub@gmail.com>"
@@ -17,13 +17,8 @@
     "tests"
   ],
   "dependencies": {
-    "dom-bind-notifier": ">=1.2.0",
-    "imported-template": ">=1.0.1",
-    "juicy-html": ">=1.0.0",
-    "polymer": "Polymer/polymer#>=1.1.3",
-    "PuppetJs": "#issues/65",
-    "puppet-client": "PuppetJs/puppet-client#gh-pages",
-    "starcounter-debug-aid": "Polyjuice/starcounter-debug-aid#~2.0.0",
-    "starcounter-include": "Polyjuice/starcounter-include#>=0.0.6"
+    "polymer": "Polymer/polymer#>=1.2.0",
+    "PuppetJs": "#custom-jsonpatch",
+    "puppet-client": "PuppetJs/puppet-client#gh-pages"
   }
 }

@@ -1,7 +1,7 @@
 PuppetJs
 ========
 
-Library for two-way data binding between local JSON view models and remote, using JSON-Patch, w/ optional OT, via HTTP or WebSockets.
+Library for two-way data binding between local JSON view models and remote, using JSON-Patch, w/ optional OT, via HTTP or WebSocket.
  
 
 Implements [Server communication](https://github.com/Starcounter-Jack/PuppetJs/wiki/Server-communication).
@@ -20,6 +20,7 @@ Then add source to your head:
 <script src="bower_components/fast-json-patch/src/json-patch-duplex.js"></script>
 <script src="bower_components/PuppetJs/src/puppet.js"></script>
 ```
+See [Dependencies section](https://github.com/PuppetJs/puppetjs#dependencies) for more details.
 
 ### Usage
 
@@ -45,22 +46,24 @@ All the parameters are optional.
 var puppet = new Puppet({attribute: value});
 ```
 
-Attribute           | Type          | Default                | Description
----                 | ---           | ---                    | ---
-`remoteUrl`         | *String*      | `window.location.href` | PATCH server URL
-`callback`          | *Function*    |                        | Called after initial state object is received from the server (NOT necessarily after WS connection was established)
-`obj`               | *Object*      | `{}`                   | object where the parsed JSON data will be inserted
-`useWebSocket`      | *Boolean*     | `false`                | Set to `true` to enable WebSocket support
-`ignoreAdd`         | *RegExp*      |                        | Regular Expression for `add` operations to be ignored (tested against JSON Pointer in JSON Patch)
-`debug`             | *Boolean*     | `true`                 | Toggle debugging mode
-`onRemoteChange`    | *Function*    |                        | Deprecated. Helper callback triggered each time a patch is obtained from server
-`onPatchReceived`   | *Function*    |                        | Helper callback triggered each time a JSON-patch is received, accepts two parameters: (*String* `data`, *String* `url`, *String*, `method`)
-`onPatchSent`       | *Function*    |                        | Helper callback triggered each time a JSON-patch is sent, accepts two parameters: (*String* `data`, *String* `url`, *String*, `method`)
-`onSocketStateChanged`| *Function*  |                        | Helper callback triggered when stocket state changes, accepts next parameters: (*int* `state`, *String* `url`, *String* `data`, *int* `code`, *String* `reason`)
-`localVersionPath`  | *JSONPointer* | `disabled`             | local version path, set it to enable Versioned JSON Patch communication
-`remoteVersionPath` | *JSONPointer* | `disabled`             | remote version path, set it (and `localVersionPath`) to enable Versioned JSON Patch communication
-`ot`                | *Boolean*     | `false`                | `true` to enable OT (requires `localVersionPath` and `remoteVersionPath`)
-`purity`            | *Boolean*     | `false`                | `true` to enable purist mode of OT
+Attribute              | Type          | Default                | Description
+---                    | ---           | ---                    | ---
+`remoteUrl`            | *String*      | `window.location.href` | PATCH server URL
+`callback`             | *Function*    |                        | Called after initial state object is received from the server (NOT necessarily after WS connection was established)
+`obj`                  | *Object*      | `{}`                   | object where the parsed JSON data will be inserted
+`useWebSocket`         | *Boolean*     | `false`                | Set to `true` to enable WebSocket support
+`ignoreAdd`            | *RegExp*      |                        | Regular Expression for `add` operations to be ignored (tested against JSON Pointer in JSON Patch)
+`debug`                | *Boolean*     | `true`                 | Toggle debugging mode
+`onRemoteChange`       | *Function*    |                        | Deprecated. Helper callback triggered each time a patch is obtained from server
+`onPatchReceived`      | *Function*    |                        | Helper callback triggered each time a JSON-patch is received, accepts two parameters: (*String* `data`, *String* `url`, *String*, `method`)
+`onPatchSent`          | *Function*    |                        | Helper callback triggered each time a JSON-patch is sent, accepts two parameters: (*String* `data`, *String* `url`, *String*, `method`)
+`onSocketStateChanged` | *Function*    |                        | Helper callback triggered when socket state changes, accepts next parameters: (*int* `state`, *String* `url`, *String* `data`, *int* `code`, *String* `reason`)
+`onConnectionError`    | *Function*    |                        | Helper callback triggered when socket connection closed, socket connection failed to establish, http requiest failed. Accepts next parameters: (*String* `data`, *String* `url`, *String*, `method`)
+`localVersionPath`     | *JSONPointer* | `disabled`             | local version path, set it to enable Versioned JSON Patch communication
+`remoteVersionPath`    | *JSONPointer* | `disabled`             | remote version path, set it (and `localVersionPath`) to enable Versioned JSON Patch communication
+`ot`                   | *Boolean*     | `false`                | `true` to enable OT (requires `localVersionPath` and `remoteVersionPath`)
+`purity`               | *Boolean*     | `false`                | `true` to enable purist mode of OT
+`pingInterval`         | *Number*      | `0`                    | Interval in seconds between ping patches, `0` - disable ping patches
 
 most of them are accessible also in runtime:
 
@@ -80,6 +83,7 @@ Attribute             | Type       | Default                | Description
 `onPatchReceived`     | *Function* |                        | See above
 `onSocketStateChanged`| *Function* |                        | See above
 `onPatchSent`         | *Function* |                        | See above
+`onConnectionError`   | *Function* |                        | See above
 
 
 ### Binding object once is ready (`callback`)
@@ -176,6 +180,9 @@ PuppetJs is dependent on [Starcounter-Jack/JSON-Patch](https://github.com/Starco
 It also, uses [URL API](http://www.w3.org/TR/url/), if your environment does not support it (IE, Node), you need to use shim, for example [Polymer/URL](https://github.com/Polymer/URL).
 ```shell
 bower install Polymer/URL
+```
+```html
+<script src="bower_components/url/url.js"></script>
 ```
 
 ### Development

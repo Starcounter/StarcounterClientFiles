@@ -17,23 +17,23 @@
     "node_modules"
   ],
   "dependencies": {
-    "fast-json-patch": "Starcounter-Jack/JSON-Patch#~0.5.3",
+    "fast-json-patch": "Starcounter-Jack/JSON-Patch#~0.5.4",
     "json-patch-queue": "PuppetJs/JSON-Patch-Queue#gh-pages",
     "json-patch-ot-agent": "PuppetJs/JSON-Patch-OT-agent#gh-pages",
     "json-patch-ot": "PuppetJs/JSON-Patch-OT#gh-pages"
   },
   "devDependencies": {
-    "polymer": "Polymer/polymer#<0.8.0",
-    "model-operations": "Polyjuice/model-operations"
+    "polymer": "*",
+    "puppet-bunny": "PuppetJs/puppet-bunny",
+    "dom-bind-notifier": "*"
   },
-  "_release": "dddac29cfa",
+  "_release": "bba4d14128",
   "_resolution": {
     "type": "branch",
-    "branch": "issues/65",
-    "commit": "dddac29cfa99a8eb461d4dc964f1c147c6a1aaae"
+    "branch": "custom-jsonpatch",
+    "commit": "bba4d141287d13a0f8e8e4c1688bcc28fc926cac"
   },
   "_source": "git://github.com/PuppetJs/PuppetJs.git",
-  "_target": "issues/65",
-  "_originalSource": "PuppetJs",
-  "_direct": true
+  "_target": "custom-jsonpatch",
+  "_originalSource": "PuppetJs"
 }

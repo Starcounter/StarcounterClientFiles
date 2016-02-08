@@ -1,4 +1,4 @@
-/*! puppet.js version: 1.2.1
+/*! puppet.js version: 1.3.4
  * (c) 2013 Joachim Wester
  * MIT license
  */
@@ -100,7 +100,7 @@
     } else {
         this.remoteUrl = new URL(window.location.href);
     }
-    
+
     // define wsURL if needed
     if(useWebSocket){
       defineWebSocketURL(this, remoteUrl);
@@ -118,6 +118,8 @@
         return useWebSocket;
       },
       set: function (newValue) {
+        useWebSocket = newValue;
+
         if(newValue == false) {
           if(that._ws) {
             that._ws.onclose = function() { //overwrites the previous onclose
@@ -129,7 +131,7 @@
         } else if(!that.wsURL) {
           defineWebSocketURL(this, remoteUrl);
         }
-        return useWebSocket = newValue;
+        return useWebSocket;
       }
     });
   }
@@ -138,8 +140,8 @@
     var network = this;
     return this.xhr(
         this.remoteUrl.href,
-        'application/json', 
-        null,  
+        'application/json',
+        null,
         function (res) {
           bootstrap( res.responseText );
 
@@ -212,18 +214,31 @@
     };
     that._ws.onerror = function (event) {
       that.onStateChange(that._ws.readyState, upgradeURL, event.data);
-      throw new Error("WebSocket connection could not be made." + (event.data || "") + "\nCould not connect to: " + upgradeURL);
+
+      if (!that.useWebSocket) {
+          return;
+      }
+
+      var m = {
+          statusText: "WebSocket connection could not be made.",
+          readyState: that._ws.readyState,
+          url: upgradeURL
+      };
+
+      that.onError(JSON.stringify(m), upgradeURL, "WS");
     };
     that._ws.onclose = function (event) {
       that.onStateChange(that._ws.readyState, upgradeURL, null, event.code, event.reason);
 
-      var m = ["WebSocket connection closed. Status code: ", event.code, "."];
+      var m = {
+          statusText: "WebSocket connection closed.",
+          readyState: that._ws.readyState,
+          url: upgradeURL,
+          statusCode: event.code,
+          reason: event.reason
+      };
 
-      if (event.reason) {
-          m.push(" Reason: ", event.reason);
-      }
-
-      console.error(m.join(""));
+      that.onError(JSON.stringify(m), upgradeURL, "WS");
     };
   };
   PuppetNetworkChannel.prototype.changeState = function (href) {
@@ -307,7 +322,7 @@
   };
   /** Apply given JSON Patch sequence immediately */
   NoQueue.prototype.receive = function(obj, sequence){
-      this.apply(obj, sequence);    
+      this.apply(obj, sequence);
   };
 
   /**
@@ -330,6 +345,7 @@
    */
   function Puppet(options) {
     options || (options={});
+    this.jsonpatch = options.jsonpatch || this.jsonpatch || jsonpatch;
     this.debug = options.debug != undefined ? options.debug : true;
     this.obj = options.obj || {};
     this.observer = null;
@@ -337,6 +353,7 @@
     this.onPatchReceived = options.onPatchReceived || function () { };
     this.onPatchSent = options.onPatchSent || function () { };
     this.onSocketStateChanged = options.onSocketStateChanged || function () { };
+    this.onConnectionError = options.onConnectionError || function () { };
 
     this.network = new PuppetNetworkChannel(
         this, // puppet instance TODO: to be removed, used for error reporting
@@ -347,7 +364,7 @@
         this.handleRemoteError.bind(this), //onError,
         this.onSocketStateChanged.bind(this) //onStateChange
       );
-    
+
     Object.defineProperty(this, "useWebSocket", {
       get: function () {
         return this.network.useWebSocket;
@@ -375,6 +392,7 @@
 
     this.ignoreCache = [];
     this.ignoreAdd = options.ignoreAdd || null; //undefined, null or regexp (tested against JSON Pointer in JSON Patch)
+    this.pingInterval = options.pingInterval || false;
 
     //usage:
     //puppet.ignoreAdd = null;  //undefined or null means that all properties added on client will be sent to remote
@@ -398,6 +416,7 @@
         onDataReady.call(puppet, puppet.obj);
       }
 
+      puppet.ping();
     });
   }
 
@@ -451,13 +470,29 @@
 
   Puppet.prototype = Object.create(EventDispatcher.prototype); //inherit EventTarget API from EventDispatcher
 
+  Puppet.prototype.ping = function () {
+      if (!this.pingInterval) {
+          return;
+      }
+
+      var time = this.pingInterval * 1000;
+
+      clearTimeout(this.pingTimeout);
+
+      this.pingTimeout = setTimeout(function () {
+          this.handleLocalChange([]);
+          //console.log(this.obj);
+          this.ping();
+      }.bind(this), time);
+  };
+
   Puppet.prototype.observe = function () {
-    this.observer = jsonpatch.observe(this.obj, this.filterChangedCallback.bind(this));
+    this.observer = this.jsonpatch.observe(this.obj, this.filterChangedCallback.bind(this));
   };
 
   Puppet.prototype.unobserve = function () {
     if (this.observer) { //there is a bug in JSON-Patch when trying to unobserve something that is already unobserved
-      jsonpatch.unobserve(this.obj, this.observer);
+      this.jsonpatch.unobserve(this.obj, this.observer);
       this.observer = null;
     }
   };
@@ -521,7 +556,7 @@
   Puppet.prototype.validateAndApplySequence = function (tree, sequence) {
     if (this.debug) {
       try {
-        jsonpatch.apply(tree, sequence, true);
+        this.jsonpatch.apply(tree, sequence, true);
       }
       catch (error) {
         error.message = "Incoming patch validation error: " + error.message;
@@ -538,12 +573,13 @@
       }
     }
     else {
-      jsonpatch.apply(tree, sequence);
+      this.jsonpatch.apply(tree, sequence);
     }
+    this.dispatchEvent(new CustomEvent("patch-applied", {bubbles: true, cancelable: true, detail: sequence}));
   };
 
   Puppet.prototype.validateSequence = function (tree, sequence) {
-    var error = jsonpatch.validate(sequence, tree);
+    var error = this.jsonpatch.validate(sequence, tree);
     if (error) {
       error.message = "Outgoing patch validation error: " + error.message;
       var ev;
@@ -560,6 +596,10 @@
   };
 
   Puppet.prototype.handleRemoteError = function (data, url, method) {
+      if (this.onConnectionError) {
+          this.onConnectionError(data, url, method);
+      }
+
       if (this.onPatchReceived) {
           this.onPatchReceived(data, url, method);
       }

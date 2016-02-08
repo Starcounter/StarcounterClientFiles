@@ -17,19 +17,19 @@
     "Gruntfile.js"
   ],
   "dependencies": {
-    "polymer": "<0.8.0",
     "PuppetJs": ">=1.0.0"
   },
   "devDependencies": {
-    "model-operations": "Polyjuice/model-operations",
-    "puppet-bunny": "PuppetJs/puppet-bunny"
+    "polymer": "*",
+    "puppet-bunny": "PuppetJs/puppet-bunny",
+    "dom-bind-notifier": "*"
   },
   "homepage": "https://github.com/PuppetJs/puppet-client",
-  "_release": "0a9c96ffe9",
+  "_release": "0925514ed3",
   "_resolution": {
     "type": "branch",
     "branch": "gh-pages",
-    "commit": "0a9c96ffe976ced9ea14e8004a5620dd791dc3cc"
+    "commit": "0925514ed3a76d6282ac76958627c2ac2ff6b7e2"
   },
   "_source": "git://github.com/PuppetJs/puppet-client.git",
   "_target": "gh-pages",
