@@ -147,11 +147,10 @@ All the changes from server are also received and propagated to your HTML.
              */
             obj: {
                 type: Object,
-                notify: true
-                // ,
-                // value: function() {
-                //     return {};
-                // }
+                notify: true,
+				value: function() {
+                     return {};
+                }
             },
 
             /**
@@ -200,8 +199,7 @@ All the changes from server are also received and propagated to your HTML.
                 listenTo = typeof listenTo == "string" ? document.getElementById(listenTo) : listenTo;
             }
             function onDataReady(obj){
-
-
+                /*
                 // TODO tomalec: consider changing it in PuppetJS so it starts observing after this callback
                 this.unobserve();
                 // XXX: will do nothing, if this.obj was defined on attached callback!
@@ -209,6 +207,7 @@ All the changes from server are also received and propagated to your HTML.
                 me.notifyPath('obj', obj);
 
                 this.observe();
+				*/
             }
 
             this.puppet = new PuppetDOM({
