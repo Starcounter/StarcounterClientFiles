@@ -1,0 +1,28 @@
+{
+  "name": "starcounter-debug-aid",
+  "description": "Polymer Elements for debugging Starcounter Puppet web apps",
+  "license": "MIT",
+  "main": "src/starcounter-debug-aid.html",
+  "keywords": [
+    "web-components"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "juicy-jsoneditor": "~1.0.1",
+    "polymer": "~1.1.4"
+  },
+  "homepage": "https://github.com/StarcounterSamples/starcounter-debug-aid",
+  "_release": "dc450856b4",
+  "_resolution": {
+    "type": "branch",
+    "branch": "puppet-polymer-client",
+    "commit": "dc450856b461b858018d6a70ba94a6be609f58c7"
+  },
+  "_source": "git://github.com/StarcounterSamples/starcounter-debug-aid.git",
+  "_target": "puppet-polymer-client",
+  "_originalSource": "StarcounterSamples/starcounter-debug-aid"
+}

@@ -1,0 +1,195 @@
+﻿<link rel="import" href="../../polymer/polymer.html" />
+<link rel="import" href="../../juicy-jsoneditor/src/juicy-jsoneditor.html" />
+<script src="puppet-js-listener.js"></script>
+
+<dom-module id="puppet-js-patches">
+    <template>
+        <style>
+            :host { width: 100%; overflow: auto; background-color: white; color: #333333; }
+            table, div.table { display: table; width: 100%; border-collapse: collapse; padding: 0px; margin: 0px; border-left: 1px solid #dddddd; border-right: 1px solid #dddddd; }
+            div.tr { display: table-row; }
+            div.tbody { display: table-row-group; }
+            div.thead { display: table-header-group; }
+            div.tfoot { display: table-footer-group; }
+            table th, table td, div.table div.th, div.table div.td { display: table-cell; padding: 8px; border: 1px solid #dddddd; text-align: left; border-left: 0px; border-right: 0px; }
+            table th, div.table div.th { border-bottom-width: 2px; font-size: 110%; }
+            table td.td-index, div.table div.td.td-index { white-space: nowrap; width: 20px; }
+            table td.td-type, div.table div.td.td-type { white-space: nowrap; width: 30px; }
+            table td.td-date, div.table div.td.td-data { white-space: nowrap; width: 80px; }
+            table td.td-duration, div.table div.td.td-duration { white-space: nowrap; width: 60px; }
+            table td.td-code, div.table div.td.td-code { white-space: nowrap; width: 50px; font-weight:bold; }
+            table td.td-direction, div.table div.td.td-direction { white-space: nowrap; width: 70px; }
+            table td.td-data, div.table div.td.td-data { font-size: 10px; width: 100%; }
+            table td.td-url input, div.table div.td.td-url input { width: 100%; box-sizing: border-box; border: 1px solid transparent; padding: 5px 8px; }
+            table td.td-data textarea, div.table div.td.td-data textarea { width: 100%; box-sizing: border-box; border: 1px solid transparent; resize:none; }
+            table tr.status-500 td, table tr.status-500 td input, table tr.status-500 td textarea, 
+            div.table div.tr.status-500 div.td, div.table div.tr.status-500 div.td input, div.table div.tr.status-500 div.td textarea { color: red; }
+            table td.td-url input:hover, table td.td-data textarea:hover,
+            div.table div.td.td-url input:hover, div.table div.td.td-data textarea:hover { border: 1px solid #dddddd; }
+            table tr.tr-ws td.td-url, div.table div.tr.tr-ws div.td.td-url { color: blue; }
+            .btn { background-color: white; border: 2px solid #dddddd; padding: 6px 22px; margin: 8px 0px; display: inline-block; cursor: pointer; box-shadow: none; }
+            .btn:hover { border-color: #333333; }
+            .actions { overflow: auto; }
+            .form-control { padding: 6px; border: 1px solid #dddddd; margin: 8px 0px; width: 180px; display: inline-block; }
+            .pull-right { float: right; }
+            .direction-send { color: green; font-weight: bold; }
+            .direction-send .receive { display:none; }
+            .direction-receive { color: red; font-weight: bold; }
+            .direction-receive .send { display: none; }
+            .direction-state { display: none; }
+        </style>
+        <template is="dom-if" if="{{!editorVisible}}">
+            <div class="actions">
+                <span class="pull-right">
+                    <button type="button" class="btn" on-click="refreshRows" title="Relaod log entries from PuppetListener">Refresh</button>
+                    <button type="button" class="btn" on-click="clearRows" title="Remove all log entries">Clear log</button>
+                </span>
+                <select value="{{filterMethod::change}}" class="form-control">
+                    <option value="all">All types</option>
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="WS">WS</option>
+                </select>
+                <select value="{{filterDirection::change}}" class="form-control">
+                    <option value="all">All direction</option>
+                    <option value="send">Send</option>
+                    <option value="receive">Receive</option>
+                </select>
+            </div>
+            <div class="table">
+                <div class="thead">
+                    <div class="tr">
+                        <div class="th">#</div>
+                        <div class="th">Time</div>
+                        <div class="th">Type</div>
+                        <div class="th">Url</div>
+                        <div class="th">Code</div>
+                        <div class="th">Duration</div>
+                        <div class="th">Data</div>
+                    </div>
+                </div>
+                <div class="tbody">
+                    <template is="dom-repeat" items="{{filteredRows}}" as="row" index-as="i">
+                        <div class$="{{getStatusClass(row.statusCode)}}">
+                            <div class="td td-index">{{i}}</div>
+                            <div class="td td-date">
+                                <span title="{{row.date}}">{{row.time}}</span>
+                            </div>
+                            <div class="td td-type">
+                                <span>{{row.method}}</span>
+                                <span class$="{{getDirectionClass(row.direction)}}">
+                                    <span class="send" title="Sent">→</span>
+                                    <span class="receive" title="Received">←</span>
+                                </span>
+                            </div>
+                            <div class="td td-url">
+                                <a title="{{row.url}}" href="{{row.url}}" target="_blank">{{row.path}}</a>
+                            </div>
+                            <div class="td td-code">{{row.statusCode}}</div>
+                            <div class="td td-duration">{{row.duration}}</div>
+                            <div class="td td-data">
+                                <template is="dom-if" if="{{row.data}}">
+                                    <textarea readonly="readonly" onclick="this.select();" on-dblclick="openEditor" title="Double click me to enter JSON viewer" json="{{row.data}}">{{row.data}}</textarea>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+        <template is="dom-if" if="{{editorVisible}}">
+            <juicy-jsoneditor json="{{editorJson}}" mode="view" history="false"></juicy-jsoneditor>
+            <div class="actions">
+                <button type="button" class="btn pull-right" on-click="closeEditor">Close</button>
+            </div>
+        </template>
+    </template>
+    <script>
+        (function (gloabl) {
+            var listener = gloabl.PuppetListener;
+            window.rows = listener.rows;
+            window.addEventListener("WebComponentsReady", function (e) {
+                listener.startListen();
+            });
+
+            function filterRows(rows, filter) {
+                if (!rows) {
+                    return [];
+                }
+
+                var result = [];
+                var method = filter.method;
+                var direction = filter.direction;
+                var i = rows.length - 1;
+
+                while (i >= 0) {
+                    var is = true;
+                    var row = rows[i];
+
+                    is = is && (method == "all" || method == row.method);
+                    is = is && (direction == "all" || (direction == row.direction));
+
+                    if (is) {
+                        result.push(row);
+                    }
+
+                    i--;
+                }
+
+                return result;
+            }
+
+            Polymer({
+                is: "puppet-js-patches",
+                properties: {
+                    rows: { type: Array, value: null },
+                    filterMethod: { type: String, value: "all", observer: "applyFilter" },
+                    filterDirection: { type: String, value: "all", observer: "applyFilter" },
+                    filteredRows: { type: Array, value: null },
+                    editorJson: { type: Object, value: null },
+                    editorVisible: { type: Boolean, value: false }
+                },
+                // {Object} JSON editor config
+                editor: null,
+                // set default values
+                ready: function () {
+                    this.refreshRows();
+                },
+                // Update filteredRows property with filtered rows
+                applyFilter: function () {
+                    this.set("filteredRows", filterRows(this.rows, { method: this.filterMethod, direction: this.filterDirection }));
+                },
+                refreshRows: function () {
+                    this.set("rows", listener.rows.slice());
+                    this.applyFilter();
+                },
+                clearRows: function () {
+                    listener.clear();
+                    this.refreshRows();
+                    this.set("filterMethod", "all");
+                    this.set("filterDirection", "all");
+                },
+                getStatusClass: function (code) {
+                    return "tr status-" + code;
+                },
+                getDirectionClass: function (direction) {
+                    return "direction-" + direction;
+                },
+                openEditor: function (e) {
+                    if (!e.currentTarget.json) {
+                        return;
+                    }
+
+                    //getModel(this).editor.json = getModel(this).row.json; getModel(this).editor.visible = true;
+                    this.set("editorJson", JSON.parse(e.currentTarget.json));
+                    this.set("editorVisible", true)
+                },
+                closeEditor: function () {
+                    this.set("editorVisible", false);
+                }
+            });
+        })(window);
+    </script>
+</dom-module>

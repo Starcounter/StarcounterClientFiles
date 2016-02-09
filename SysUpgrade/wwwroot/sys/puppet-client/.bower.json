@@ -1,37 +1,57 @@
 {
-  "name": "puppet-client",
-  "description": "Custom Element to bind server-side view models with HTML nodes (HTML Templates/Web Components/AngularJs Apps) using PuppetJs communication (JSON-Patch)",
-  "license": "MIT",
-  "main": "src/puppet-client.html",
+  "name": "puppet-polymer-client",
+  "description": "Three-way data binding server - JS - HTML kept in flawless sync with JSON Patch, WebSockets/HTTP.",
+  "private": true,
+  "authors": [
+    "Tomek Wytrębowicz"
+  ],
   "keywords": [
     "web-components",
-    "websocket"
+    "polymer",
+    "json-patch",
+    "puppetjs",
+    "binding",
+    "template",
+    "web-socket",
+    "http",
+    "json"
   ],
+  "main": "puppet-polymer-client.html",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PuppetJs/puppet-polymer-client.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/PuppetJs/puppet-polymer-client",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "preview.png",
-    "test",
-    "examples",
+    "test/",
+    "demo/",
     "Gruntfile.js"
   ],
   "dependencies": {
-    "PuppetJs": ">=1.0.0"
+    "polymer": "Polymer/polymer#^1.0.0",
+    "PuppetJs": "#custom-jsonpatch"
   },
   "devDependencies": {
-    "polymer": "*",
-    "puppet-bunny": "PuppetJs/puppet-bunny",
-    "dom-bind-notifier": "*"
+    "iron-component-page": "polymerelements/iron-component-page#^1.0.0",
+    "iron-image": "polymerelements/iron-image#^1.0.0",
+    "paper-styles": "polymerelements/paper-styles#^1.0.0",
+    "test-fixture": "polymerelements/test-fixture#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0",
+    "jasmine-core": "jasmine#^2.4.1",
+    "jasmine-ajax": "^3.2.0"
   },
-  "homepage": "https://github.com/PuppetJs/puppet-client",
-  "_release": "0925514ed3",
+  "_release": "1fc45dbc42",
   "_resolution": {
     "type": "branch",
-    "branch": "gh-pages",
-    "commit": "0925514ed3a76d6282ac76958627c2ac2ff6b7e2"
+    "branch": "puppet-apply",
+    "commit": "1fc45dbc429c50b69b966df5c4c62a9a2a641580"
   },
-  "_source": "git://github.com/PuppetJs/puppet-client.git",
-  "_target": "gh-pages",
-  "_originalSource": "PuppetJs/puppet-client"
+  "_source": "git://github.com/PuppetJs/puppet-polymer-client.git",
+  "_target": "puppet-apply",
+  "_originalSource": "PuppetJs/puppet-polymer-client"
 }

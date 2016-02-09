@@ -19,6 +19,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#>=1.2.0",
     "PuppetJs": "#custom-jsonpatch",
-    "puppet-client": "PuppetJs/puppet-client#gh-pages"
+    "puppet-client": "PuppetJs/puppet-polymer-client#puppet-apply",
+    "starcounter-debug-aid": "StarcounterSamples/starcounter-debug-aid#puppet-polymer-client"
   }
 }

@@ -1,21 +1,34 @@
-# &lt;puppet-client&gt;
 
-> Custom Element to bind server-side view models with HTML nodes (HTML Templates/Web Components/AngularJs Apps) using [PuppetJS](https://github.com/PuppetJs/PuppetJs) [communication](https://github.com/PuppetJs/PuppetJs/wiki/Server-communication) ([JSON-Patch](http://tools.ietf.org/html/rfc6902))
+# &lt;puppet-polymer-client&gt;
+> Three-way data binding server - JS - HTML kept in flawless sync with JSON Patch, WebSockets/HTTP.
 
-## Demos
+Custom Element that binds [PuppetJs](https://github.com/PuppetJs/PuppetJs) with [Polymer's template binding](https://www.polymer-project.org/1.0/docs/devguide/templates.html).
+That keeps your Polymer app, or just `dom-bind` template in sync with any server-side
+data-model using Puppet & [JSON Patch](https://tools.ietf.org/html/rfc6902) flow.
 
-- [Example with Polymer app](http://PuppetJs.github.io/puppet-client/examples/polymer/)
-- [Example with two separate connection instances](http://PuppetJs.github.io/puppet-client/examples/two_instances/)
+You get three-way data binding server - JS - HTML, kept in flawless sync.
+
+    <puppet-polymer-client
+        obj="{{model}}"></puppet-polymer-client>
+
+
+
+
+## Demo
+
+- [Check it live!](http://PuppetJs.github.io/puppet-polymer-client)
+- [test suite](http://PuppetJs.github.io/puppet-polymer-client/test)
+
 
 ## Install
 
 Install the component using [Bower](http://bower.io/):
 
 ```sh
-$ bower install puppet-client --save
+$ bower install puppet-polymer-client --save
 ```
 
-Or [download as ZIP](https://github.com/PuppetJs/puppet-client/archive/master.zip).
+Or [download as ZIP](https://github.com/PuppetJs/puppet-polymer-client/archive/gh-pages.zip).
 
 ## Usage
 
@@ -28,44 +41,47 @@ Or [download as ZIP](https://github.com/PuppetJs/puppet-client/archive/master.zi
 2. Import Custom Element:
 
     ```html
-    <link rel="import" href="bower_components/puppet-client/puppet-client.html">
+    <link rel="import" href="bower_components/puppet-polymer-client/pupppuppet-polymer-client.html">
     ```
 
 3. Start using it!
 
     ```html
-    <puppet-client ref="nodeToBind"></puppet-client>
+    <puppet-polymer-client obj="{{model}}"></puppet-polymer-client>
     ```
+    It establishes the PuppetJs connection when attached. All the changes made
+    in browser are sent to the server via WebSocket or HTTP, as
+    [JSON Patch](https://tools.ietf.org/html/rfc6902)es.
+    All the changes from server are also received and propagated to your HTML.
 
-## Attributes
-All attributes are optional.
-See [PuppetJS options](https://github.com/PuppetJs/PuppetJs#options-constructor-parameters)
+## Properties
 
-Attribute          | Options       | Default                | Description
----                | ---           | ---                    | ---
-`ref`              | *String*      |                        | **required** Id or object reference to DOM Element to bind with server
-`remoteUrl`        | *String*      | `window.location.href` | Data (view model) server URL
-`ignoreAdd`        | *String*      | `".*"`                 | Regular expression with local properties to ignore (see [PuppetJS.ignoreAdd](https://github.com/PuppetJs/PuppetJs#ignoring-local-changes-ignoreadd)). Should be given in string format, like `"_.+"`.
-`useWebSocket`     | *String*      | `true`                 | Set to `false` to disable WebSocket (use HTTP)
-`debug`            | *Boolean*     | `true`                 | Set to true to enable debugging mode
-`onRemoteChange`   | *Function*    |                        | Helper callback triggered each time a patch is obtained from server
-`localVersionPath` | *JSONPointer* | `"_ver#c$"`            | local version path, set to falsy do disable Versioned JSON Patch communication
-`remoteVersionPath`| *JSONPointer* | `"_ver#s"`             | remote version path, set it to falsy to disable Double Versioned JSON Patch communication
-`ot`               | *Boolean*     | `true`                 | `false` to disable OT
-`purity`           | *Boolean*     | `false`                | true to enable purist mode of OT
-`listen-to`		   | *String*      | `document.body`        | DOM node to listen to (see [PuppetDOM listenTo attribute](https://github.com/PuppetJs/PuppetJs#puppetdom))
-`ping-interval`    | *Number*      | `60`                   | Interval in seconds between ping patches, `0` - disable ping patches
+
+Attribute                       | Options   | Default | Description
+---                             | ---       | ---     | ---
+debug | Boolean | `false` | Set to `true` to enable debugging mode
+ignoreAdd | RegExp | `/.*/` | Regular expression with local properties to ignore
+listenTo | String | `document.body` | DOM node to listen to (see PuppetDOM listenTo attribute)
+localVersionPath | JSONPointer | `/_ver#c$` | local version path, set to falsy do disable Versioned JSON Patch communication
+obj | Object | `{}` | **notifies** Object that will be synced
+ot | Boolean | `true` | `false` to disable OT
+path | String | `/` | Path to given obj
+pingInterval | Number | `60` | Interval in seconds between ping patches, `0` - disable ping patches
+purity | Boolean | `false` | `true` to enable purist mode of OT
+remoteUrl | String | `window.location` | The remote's URL
+remoteVersionPath | JSONPointer | `/_ver#s` | remote version path, set it to falsy to disable Double Versioned JSON Patch communication
+useWebSocket | Boolean | `true` | Set to false to disable WebSocket (use HTTP)
+
 
 ## Events
-Name                 | Arguments                                                             | Descriptions
----                  | ---                                                                   | ---
-`patchreceived`      | *String* `data`, *String* `url`, *String*, `method`                   | Occurs when a JSON-patch is received.
-`patchsent`          | *String* `data`, *String* `url`, *String*, `method`                   | Occurs when a JSON-patch is sent.
-`socketstatechanged` | *int* `state`, *String* `url`, *String* `data`, *int* `code`, *String* `reason` | Occurs when sockets changes its state.
 
-## Properties, Methods, Events
-
-`<puppet-client>` inherits from `Puppet` so take a look at [PuppetJs API](https://github.com/PuppetJs/PuppetJs).
+Name                       | Description
+---                             | ---     
+patch-applied | Fired when patch gets applied
+patchreceived | Fired when patch gets applied
+patchsent | Fired when patch gets applied
+socketstatechanged | Fired when patch gets applied
+connectionerror | Fired when patch gets applied
 
 ## Contributing
 
@@ -75,16 +91,9 @@ Name                 | Arguments                                                
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
-### Releases
-
-To release new version run
-```sh
-grunt bump
-
-```
 ## History
 
-For detailed changelog, check [Releases](https://github.com/PuppetJs/puppet-client/releases).
+For detailed changelog, check [Releases](https://github.com/PuppetJs/puppet-polymer-client/releases).
 
 ## License
 

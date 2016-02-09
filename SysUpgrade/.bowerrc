@@ -5,7 +5,9 @@
       "fast-json-patch",
       "json-patch-queue",
       "json-patch-ot",
-      "json-patch-ot-agent"
+      "json-patch-ot-agent",
+      "jsoneditor",
+      "juicy-jsoneditor"
 
   ]
 }
