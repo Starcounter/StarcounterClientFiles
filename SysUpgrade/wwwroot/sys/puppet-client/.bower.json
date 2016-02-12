@@ -16,7 +16,7 @@
     "http",
     "json"
   ],
-  "main": "puppet-polymer-client.html",
+  "main": "puppet-client.html",
   "repository": {
     "type": "git",
     "url": "git://github.com/PuppetJs/puppet-polymer-client.git"
@@ -45,11 +45,11 @@
     "jasmine-core": "jasmine#^2.4.1",
     "jasmine-ajax": "^3.2.0"
   },
-  "_release": "1fc45dbc42",
+  "_release": "bb213802ac",
   "_resolution": {
     "type": "branch",
     "branch": "puppet-apply",
-    "commit": "1fc45dbc429c50b69b966df5c4c62a9a2a641580"
+    "commit": "bb213802aceee9f955e399925cb0643a9c140872"
   },
   "_source": "git://github.com/PuppetJs/puppet-polymer-client.git",
   "_target": "puppet-apply",

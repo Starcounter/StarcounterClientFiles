@@ -341,11 +341,12 @@
    * @param {Boolean}            [options.purity=false]       true to enable purist mode of OT
    * @param {Function}           [options.onPatchReceived]
    * @param {Function}           [options.onPatchSent]
+   * @param {Function}           [options.jsonpatch=jsonpatch] jsonpatch provider
    * @param {HTMLElement | window} [options.listenTo]         HTMLElement or window to listen to clicks
    */
   function Puppet(options) {
     options || (options={});
-    this.jsonpatch = options.jsonpatch || this.jsonpatch || jsonpatch;
+    this.jsonpatch = options.jsonpatch || this.jsonpatch;
     this.debug = options.debug != undefined ? options.debug : true;
 
     if ("obj" in options) {
@@ -357,7 +358,7 @@
     else {
         this.obj = {};
     }
-	
+
     this.observer = null;
     this.onRemoteChange = options.onRemoteChange;
     this.onPatchReceived = options.onPatchReceived || function () { };
@@ -467,6 +468,8 @@
   }
 
   Puppet.prototype = Object.create(EventDispatcher.prototype); //inherit EventTarget API from EventDispatcher
+
+  Puppet.prototype.jsonpatch = global.jsonpatch;
 
   Puppet.prototype.ping = function () {
       if (!this.pingInterval) {
