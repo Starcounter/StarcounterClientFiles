@@ -190,7 +190,7 @@ All the changes from server are also received and propagated to your HTML.
          */
         attached: function() {
 
-            // var whereToBind = this.getAttribute("ref");
+            var whereToBind = this.getAttribute("ref");
             var listenTo = this.listenTo;
             var pingInterval = this.pingInterval / 1;
             var me = this;
@@ -236,6 +236,15 @@ All the changes from server are also received and propagated to your HTML.
                 }
             });
             // this.puppet.addEventListener('patch-applied', this.notifyChange);
+            
+            if(whereToBind){
+                this.bindTo(whereToBind);
+            }
+        },
+        bindTo: function(element){
+            // use node id or node itself;
+            element = typeof element == "string" ? document.getElementById( element ) : element;
+            element.model = this.obj;
         },
         _objChanged: function(obj, changes){
             var templates = document.querySelectorAll("template[is=dom-bind], template[is=dom-repeat]");
