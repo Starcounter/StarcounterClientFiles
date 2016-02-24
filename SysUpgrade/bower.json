@@ -20,6 +20,7 @@
     "polymer": "Polymer/polymer#>=1.2.0",
     "PuppetJs": "#custom-jsonpatch",
     "puppet-client": "PuppetJs/puppet-polymer-client#puppet-apply",
-    "starcounter-debug-aid": "StarcounterSamples/starcounter-debug-aid#puppet-polymer-client"
+    "starcounter-debug-aid": "StarcounterSamples/starcounter-debug-aid#puppet-polymer-client",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#~0.7.21"
   }
 }
