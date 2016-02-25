@@ -17,10 +17,10 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#>=1.3.0",
-    "PuppetJs": "#custom-jsonpatch",
-    "puppet-client": "PuppetJs/puppet-polymer-client#puppet-apply",
-    "starcounter-debug-aid": "StarcounterSamples/starcounter-debug-aid#puppet-polymer-client",
+    "polymer": "polymer/polymer#>=1.3.0",
+    "PuppetJs": ">=1.3.5",
+    "puppet-client": "PuppetJs/puppet-polymer-client#~1.0.1",
+    "starcounter-debug-aid": "StarcounterSamples/starcounter-debug-aid#~2.0.5",
     "webcomponentsjs": "webcomponents/webcomponentsjs#~0.7.21"
   }
 }

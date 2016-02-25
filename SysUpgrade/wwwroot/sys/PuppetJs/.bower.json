@@ -27,13 +27,14 @@
     "puppet-bunny": "PuppetJs/puppet-bunny",
     "dom-bind-notifier": "*"
   },
-  "_release": "a3cfda31d7",
+  "version": "1.3.5",
+  "_release": "1.3.5",
   "_resolution": {
-    "type": "branch",
-    "branch": "custom-jsonpatch",
-    "commit": "a3cfda31d7b2f072d81b0db43b1382a3f44850bc"
+    "type": "version",
+    "tag": "1.3.5",
+    "commit": "ec7ce909ab36caed417eb4270081fc4429fd9914"
   },
   "_source": "git://github.com/PuppetJs/PuppetJs.git",
-  "_target": "custom-jsonpatch",
+  "_target": ">=1.3.5",
   "_originalSource": "PuppetJs"
 }

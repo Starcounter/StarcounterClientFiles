@@ -1,4 +1,4 @@
-<!-- puppet-polymer-client version: 0.0.0 | MIT License -->
+<!-- puppet-polymer-client version: 1.0.1 | MIT License -->
 
 <link rel="import" href="../polymer/polymer.html">
 <!-- <link rel="import" href="iron-request.html"> -->
@@ -173,17 +173,6 @@ All the changes from server are also received and propagated to your HTML.
 
         },
 
-        /*observers: [
-            '_objChanged(obj, obj.*)'
-        ],*/
-
-        created: function(){
-            this.onPatchReceived = this.onPatchReceived.bind(this);
-            this.onPatchSent = this.onPatchSent.bind(this);
-            this.onSocketStateChanged = this.onSocketStateChanged.bind(this);
-            this.onConnectionError = this.onConnectionError.bind(this);
-
-        },
         /**
          * Creates an instance of Puppet according to given params, attaches it to .pupet property
          *
@@ -198,17 +187,6 @@ All the changes from server are also received and propagated to your HTML.
             if (listenTo) {
                 listenTo = typeof listenTo == "string" ? document.getElementById(listenTo) : listenTo;
             }
-            function onDataReady(obj){
-                /*
-                // TODO tomalec: consider changing it in PuppetJS so it starts observing after this callback
-                this.unobserve();
-                // XXX: will do nothing, if this.obj was defined on attached callback!
-                // as old obj === new obj :( recursiveExtend tricked us
-                me.notifyPath('obj', obj);
-
-                this.observe();
-				*/
-            }
 
             this.puppet = new PuppetDOM({
             // PuppetDOM.call(this,{
@@ -220,9 +198,11 @@ All the changes from server are also received and propagated to your HTML.
                 useWebSocket: this.useWebSocket,
                 ignoreAdd: this.ignoreAdd,
                 debug: this.debug,
-				onRemoteChange: this._objChanged,
-                callback: onDataReady,
-                onDataReady: onDataReady,
+                onRemoteChange: this._objChanged,
+                onPatchReceived: this.onPatchReceived.bind(this),
+                onPatchSent: this.onPatchSent.bind(this),
+                onSocketStateChanged: this.onSocketStateChanged.bind(this),
+                onConnectionError: this.onConnectionError.bind(this),
 
                 localVersionPath: this.localVersionPath,
                 remoteVersionPath: this.remoteVersionPath,
