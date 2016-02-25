@@ -248,24 +248,37 @@ All the changes from server are also received and propagated to your HTML.
             element.model = this.obj;
         },
         _objChanged: function(obj, changes){
-            var templates = document.querySelectorAll("template[is=dom-bind], template[is=dom-repeat]");
+            var templates = document.querySelectorAll("template[is=dom-bind], template[is=dom-repeat], template[is=dom-if]");
             for (var i in templates) {
                 if (templates.hasOwnProperty(i)) {
                     if (templates[i].model) {
                         //this is a template[is=dom-bind]
-                        templates[i]._pathEffector("model", templates[i].model);
+                        templates[i]._pathEffector.call(templates[i], "model", templates[i].model);
                     }
                     if (templates[i].items) {
                         //this is a template[is=dom-repeat]
-                        templates[i]._pathEffector("items", templates[i].items);
+                        templates[i]._pathEffector.call(templates[i], "items", templates[i].items);
+                        for (var j in templates[i]._instances) {
+                            if (templates[i]._instances.hasOwnProperty(j)) {
+                                if (templates[i]._instances[j].model) {
+                                    templates[i]._instances[j]._pathEffector.call(templates[i]._instances[j], "model", templates[i]._instances[j].model);
+                                }
+                            }
+                        };
+                    }
+                    if (templates[i].if !== undefined && templates[i]._instance) {
+                        //this is a template[is=dom-if]
+                        if (templates[i]._instance.model) {
+                            templates[i]._instance._pathEffector.call(templates[i]._instance, "model", templates[i]._instance.model);
+                        }
+                        if (templates[i]._instance.item) {
+                            templates[i]._instance._pathEffector.call(templates[i]._instance, "item", templates[i]._instance.item);
+                        }
                     }
                 }
             }
         },
         onPatchReceived: function(data, url, method) {
-            console.log('onPatchReceived', arguments);
-            // TODO: this JSON.parse is redundant
-            // this.notifyChange(JSON.parse(data));
             this.fire("patchreceived", {
                 data: data,
                 url: url,
@@ -273,7 +286,6 @@ All the changes from server are also received and propagated to your HTML.
             });
         },
         onPatchSent: function(data, url, method) {
-            console.log('onPatchSent', arguments);
             this.fire("patchsent", {
                 data: data,
                 url: url,
@@ -281,7 +293,6 @@ All the changes from server are also received and propagated to your HTML.
             });
         },
         onSocketStateChanged: function(state, url, data, code, reason) {
-            console.log('onSocketStateChanged', arguments);
             this.fire("socketstatechanged", {
                 state: state,
                 url: url,
@@ -291,14 +302,12 @@ All the changes from server are also received and propagated to your HTML.
             });
         },
         onConnectionError: function(data, url, method) {
-            console.log('onConnectionError', arguments);
             var eventDetail = {
                 data: data,
                 url: url,
                 method: method,
                 handled: false
             };
-
 
             this.fire("connectionerror", eventDetail);
 
@@ -308,7 +317,6 @@ All the changes from server are also received and propagated to your HTML.
         },
         applyJSONPatch: function(tree, sequence){
             this._beingSet = true;
-            console.info('applyJSONPatch', tree, sequence);
             var operation, polymerPath;
             for(var operationNo = 0, len = sequence.length; operationNo < len; operationNo++){
 			    operation = sequence[operationNo];
@@ -405,11 +413,9 @@ All the changes from server are also received and propagated to your HTML.
         },
         observeJSONPatch: function(obj, callback){
             this.puppetObserver = callback;
-            console.log('attach Listeners');
             return callback;
         },
         unobserveJSONPatch: function(){
-            console.log('detach listeners');
             // FIXME this is dummy as hell
             this.puppetObserver = noop;
         }
