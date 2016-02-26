@@ -1,6 +1,6 @@
 # SysUpgrade
 
-App that upgrades Starcounter's `/sys/` dependencies to Polymer 1.2
+App that upgrades Starcounter's `/sys/` dependencies to Polymer 1.3
 
 ## Usage instructions
 
