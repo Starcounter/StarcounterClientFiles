@@ -1,4 +1,4 @@
-<!-- puppet-polymer-client version: 1.0.1 | MIT License -->
+<!-- puppet-polymer-client version: 1.0.2 | MIT License -->
 
 <link rel="import" href="../polymer/polymer.html">
 <!-- <link rel="import" href="iron-request.html"> -->
@@ -148,7 +148,7 @@ All the changes from server are also received and propagated to your HTML.
             obj: {
                 type: Object,
                 notify: true,
-                value: function() {
+				value: function() {
                      return {};
                 }
             },
@@ -189,16 +189,14 @@ All the changes from server are also received and propagated to your HTML.
             }
 
             this.puppet = new PuppetDOM({
-            // PuppetDOM.call(this,{
-                // use server URL or window.location.href;
                 remoteUrl: this.remoteUrl,
                 pingInterval: pingInterval,
                 listenTo: listenTo,
-                obj:            this.obj,
+                obj: this.obj,
                 useWebSocket: this.useWebSocket,
                 ignoreAdd: this.ignoreAdd,
                 debug: this.debug,
-                onLocalChange: this.onLocalChange.bind(this),
+                //onLocalChange: this.onLocalChange.bind(this), //see this.onPatchSent
                 onPatchReceived: this.onPatchReceived.bind(this),
                 onPatchSent: this.onPatchSent.bind(this),
                 onSocketStateChanged: this.onSocketStateChanged.bind(this),
@@ -209,33 +207,46 @@ All the changes from server are also received and propagated to your HTML.
                 ot: this.ot,
                 purity: this.purity,
                 jsonpatch: {
-                    apply: function (obj, sequence) {
-                        me.propagateDomBind(sequence);
-                    },
+                    apply: this.applyJSONPatch.bind(this),
                     observe: jsonpatch.observe.bind(this),
                     unobserve: jsonpatch.unobserve.bind(this),
                     validate: this.validateJSONPatch.bind(this)
-                }
+                },
+                callback: function () {
+                    if (whereToBind) {
+                        this.bindTo(whereToBind);
+                    }
+                }.bind(this)
             });
             // this.puppet.addEventListener('patch-applied', this.notifyChange);
 
-            if (whereToBind) {
-                this.bindTo(whereToBind);
-            }
-
             this.network = this.puppet.network;
         },
-        bindTo: function(element){
+        bindTo: function(element) {
             // use node id or node itself;
-            element = typeof element == "string" ? document.getElementById( element ) : element;
+            element = typeof element == "string" ? document.getElementById(element) : element;
             element.model = this.obj;
+            this.bound = true;
         },
         propagateDomBind: function(sequence) {
+            var that = this;
             var templates = document.querySelectorAll("template[is=dom-bind]");
-            for (var i=0; i<templates.length; i++) {
-                if (templates[i].model) {
-                    this.applyJSONPatch(templates[i].model, sequence, templates[i].model.$rootPath, templates[i]);
+            for (var i = 0; i < templates.length; i++) {
+                if (!templates[i]._propertyEffects) {
+                    return;
                 }
+
+                var keys = Object.keys(templates[i]._propertyEffects);
+                keys.forEach(function(key) {
+                    if (typeof templates[i][key] === "object") {
+                        if (!templates[i][key].hasOwnProperty("$rootPath")) {
+                            recursiveMarkObjProperties(that.obj, "");
+                        }
+                        if (templates[i][key].hasOwnProperty("$rootPath")) {
+                            that.notifyTemplateDomBind(templates[i][key], sequence, templates[i], key);
+                        }
+                    }
+                });
             }
         },
         onLocalChange: function(patches) {
@@ -249,6 +260,11 @@ All the changes from server are also received and propagated to your HTML.
             });
         },
         onPatchSent: function(data, url, method) {
+            if (data) {
+                //slow! consider moving onLocalChange PuppetJS constructor options
+                //https://github.com/PuppetJs/PuppetJs/issues/81
+                this.onLocalChange(JSON.parse(data));
+            }
             this.fire("patchsent", {
                 data: data,
                 url: url,
@@ -278,11 +294,25 @@ All the changes from server are also received and propagated to your HTML.
                 alert("Connection error, please reload page!");
             }
         },
-        applyJSONPatch: function(tree, sequence, rootPath, templateDomBind){
-            this._beingSet = true;
-            var polymerPathPrefix = "model";
+        applyJSONPatch: function(tree, sequence) {
+            if(!this.bound) {
+                var whereToBind = this.getAttribute("ref");
+                if (whereToBind) {
+                    this.bindTo(whereToBind);
+                }
+            }
+
+            this.propagateDomBind(sequence);
+            // FIXME tomalec: DRY, puppet does the same
+            this.dispatchEvent(new CustomEvent("patch-applied", {
+                bubbles: true,
+                cancelable: true,
+                detail: sequence
+            }));
+        },
+        notifyTemplateDomBind: function(tree, sequence, templateDomBind, polymerPathPrefix) {
             var operation, polymerPath;
-            for(var operationNo = 0, len = sequence.length; operationNo < len; operationNo++){
+            for (var operationNo = 0, len = sequence.length; operationNo < len; operationNo++) {
                 operation = sequence[operationNo];
 
                 if (operation.path == "") {
@@ -290,20 +320,25 @@ All the changes from server are also received and propagated to your HTML.
                     var newSequence = [];
                     for (var prop in operation.value) {
                         if (operation.value.hasOwnProperty(prop)) {
-                            newSequence.push({op: "add", path: "/" + prop, value: operation.value[prop]});
+                            newSequence.push({
+                                op: "add",
+                                path: "/" + prop,
+                                value: operation.value[prop]
+                            });
                         }
                     }
-                    this.applyJSONPatch(tree, newSequence, "", templateDomBind);
+                    this.notifyTemplateDomBind(tree, newSequence, templateDomBind, polymerPathPrefix);
                     continue;
                 }
 
-                if (rootPath.length > 0 && operation.path.indexOf(rootPath) !== 0) {
+                if (tree.$rootPath.length > 0 && operation.path.indexOf(tree.$rootPath) !== 0) {
+                    //the path is out of scope of current templateDomBind
                     continue;
                 }
 
-                polymerPath = polymerPathPrefix + translateJSONPointerToPolymerPath(operation.path.substring(rootPath.length));
+                polymerPath = polymerPathPrefix + translateJSONPointerToPolymerPath(operation.path.substring(tree.$rootPath.length));
 
-                if( operation.op === 'test'){
+                if (operation.op === 'test') {
                     // we assume that jsonpatch covered it already
                 } else if( operation.op === 'move' ||  operation.op === 'copy'){
                     console.warn("move, and copy operations are not supported yet.")
@@ -311,28 +346,27 @@ All the changes from server are also received and propagated to your HTML.
                     // for add and remove we need to check whether it's an array or not
                     var lastSeparator = operation.path.lastIndexOf('/');
                     var name = operation.path.substr(lastSeparator + 1);
-                    var parentsPolymerPath = polymerPathPrefix + translateJSONPointerToPolymerPath(operation.path.substring(rootPath.length, lastSeparator));
+                    var parentsPolymerPath = polymerPathPrefix + translateJSONPointerToPolymerPath(operation.path.substring(tree.$rootPath.length, lastSeparator));
 
                     var parent = templateDomBind.get(parentsPolymerPath);
-                    if(Array.isArray(parent) && (name === '-' || isNormalInteger(name))){
+                    if (Array.isArray(parent) && (name === '-' || isNormalInteger(name))) {
                         var addedCount = 0;
                         var removed = [];
-                        switch(operation.op){
+                        switch (operation.op) {
                             case 'add':
                                 // JSONPatch push
-                                if(name === '-'){
+                                if (name === '-') {
                                     name = parent.length;
                                 }
-                                if(operation.PuppetClientParentIndex !== undefined) {
+                                if (operation.PuppetClientParentIndex !== undefined) {
                                     templateDomBind.notifySplices(parentsPolymerPath, [{
-                                         index: operation.PuppetClientParentIndex,
-                                         removed: [],
-                                         addedCount: 1,
-                                         object: parent,
-                                         type: 'splice'
-                                     }]);
-                                }
-                                else {
+                                        index: operation.PuppetClientParentIndex,
+                                        removed: [],
+                                        addedCount: 1,
+                                        object: parent,
+                                        type: 'splice'
+                                    }]);
+                                } else {
                                     operation.PuppetClientParentIndex = name;
                                     templateDomBind.splice(parentsPolymerPath, name, 0, operation.value);
                                 }
@@ -359,7 +393,7 @@ All the changes from server are also received and propagated to your HTML.
                                 break;
                         }
                     } else {
-                        switch(operation.op){
+                        switch (operation.op) {
                             case 'add':
                             case 'replace':
                                 templateDomBind.set(polymerPath, operation.value);
@@ -376,10 +410,6 @@ All the changes from server are also received and propagated to your HTML.
                     }
                 }
             }
-            this._beingSet = false;
-            //    this.dispatchEvent(event);
-            // FIXME tomalec: DRY, puppet does the same
-            this.dispatchEvent(new CustomEvent("patch-applied", {bubbles: true, cancelable: true, detail: sequence}));
         },
         validateJSONPatch: function(){
             console.info('inherit  validateJSONPatch from fast-json-patch');
@@ -419,6 +449,28 @@ All the changes from server are also received and propagated to your HTML.
         _isArray = function (obj) {
             return obj.push && typeof obj.length === 'number';
         };
+    }
+
+    function placeMarker(subject, rootPath) {
+        if (!subject.hasOwnProperty('$rootPath')) {
+            Object.defineProperty(subject, '$rootPath', {
+                enumerable: false,
+                get: function() {
+                    return rootPath;
+                }
+            });
+        };
+    }
+
+    function recursiveMarkObjProperties(subject, rootPath) {
+        if (subject !== null && typeof subject === 'object') {
+            placeMarker(subject, rootPath);
+            for (var i in subject) {
+                if (subject.hasOwnProperty(i)) {
+                    recursiveMarkObjProperties(subject[i], rootPath + "/" + i);
+                }
+            }
+        }
     }
 
 

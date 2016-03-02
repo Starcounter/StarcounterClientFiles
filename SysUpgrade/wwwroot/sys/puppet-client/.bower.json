@@ -1,6 +1,6 @@
 {
   "name": "puppet-polymer-client",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Three-way data binding server - JS - HTML kept in flawless sync with JSON Patch, WebSockets/HTTP.",
   "private": true,
   "authors": [
@@ -46,11 +46,11 @@
     "jasmine-core": "jasmine#^2.4.1",
     "jasmine-ajax": "^3.2.0"
   },
-  "_release": "1.0.1",
+  "_release": "1.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "1.0.1",
-    "commit": "7f611689173f654232750a1fd86dc59206aea6cf"
+    "tag": "1.0.2",
+    "commit": "a17bb5d00e7ee90574375e3e7d4387d3f15c3a12"
   },
   "_source": "git://github.com/PuppetJs/puppet-polymer-client.git",
   "_target": "~1.0.1",
