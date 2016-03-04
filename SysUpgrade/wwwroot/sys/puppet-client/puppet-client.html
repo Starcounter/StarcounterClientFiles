@@ -31,7 +31,7 @@ All the changes from server are also received and propagated to your HTML.
 -->
 
 <script>
-(function(){
+(function() {
     'use strict';
 
 
@@ -148,8 +148,8 @@ All the changes from server are also received and propagated to your HTML.
             obj: {
                 type: Object,
                 notify: true,
-				value: function() {
-                     return {};
+                value: function() {
+                    return {};
                 }
             },
 
@@ -196,7 +196,7 @@ All the changes from server are also received and propagated to your HTML.
                 useWebSocket: this.useWebSocket,
                 ignoreAdd: this.ignoreAdd,
                 debug: this.debug,
-                //onLocalChange: this.onLocalChange.bind(this), //see this.onPatchSent
+                onLocalChange: this.onLocalChange.bind(this),
                 onPatchReceived: this.onPatchReceived.bind(this),
                 onPatchSent: this.onPatchSent.bind(this),
                 onSocketStateChanged: this.onSocketStateChanged.bind(this),
@@ -212,7 +212,7 @@ All the changes from server are also received and propagated to your HTML.
                     unobserve: jsonpatch.unobserve.bind(this),
                     validate: this.validateJSONPatch.bind(this)
                 },
-                callback: function () {
+                callback: function() {
                     if (whereToBind) {
                         this.bindTo(whereToBind);
                     }
@@ -261,11 +261,6 @@ All the changes from server are also received and propagated to your HTML.
             });
         },
         onPatchSent: function(data, url, method) {
-            if (data) {
-                //slow! consider moving onLocalChange PuppetJS constructor options
-                //https://github.com/PuppetJs/PuppetJs/issues/81
-                this.onLocalChange(JSON.parse(data));
-            }
             this.fire("patchsent", {
                 data: data,
                 url: url,
@@ -296,7 +291,7 @@ All the changes from server are also received and propagated to your HTML.
             }
         },
         applyJSONPatch: function(tree, sequence) {
-            if(!this.bound) {
+            if (!this.bound) {
                 var whereToBind = this.getAttribute("ref");
                 if (whereToBind) {
                     this.bindTo(whereToBind);
@@ -341,7 +336,7 @@ All the changes from server are also received and propagated to your HTML.
 
                 if (operation.op === 'test') {
                     // we assume that jsonpatch covered it already
-                } else if( operation.op === 'move' ||  operation.op === 'copy'){
+                } else if (operation.op === 'move' || operation.op === 'copy') {
                     console.warn("move, and copy operations are not supported yet.")
                 } else {
                     // for add and remove we need to check whether it's an array or not
@@ -351,25 +346,23 @@ All the changes from server are also received and propagated to your HTML.
 
                     var parent = templateDomBind.get(parentsPolymerPath);
                     if (Array.isArray(parent) && (name === '-' || isNormalInteger(name))) {
-                        var addedCount = 0;
-                        var removed = [];
                         switch (operation.op) {
                             case 'add':
                                 // JSONPatch push
                                 if (name === '-') {
                                     name = parent.length;
                                 }
-                                if (operation.PuppetClientParentIndex !== undefined) {
+                                if (operation.$spliceIndex !== undefined) {
                                     templateDomBind.notifySplices(parentsPolymerPath, [{
-                                        index: operation.PuppetClientParentIndex,
+                                        index: operation.$spliceIndex,
                                         removed: [],
                                         addedCount: 1,
                                         object: parent,
                                         type: 'splice'
                                     }]);
                                 } else {
-                                    operation.PuppetClientParentIndex = name;
-                                    templateDomBind.splice(parentsPolymerPath, name, 0, operation.value);
+                                    operation.$spliceIndex = parseInt(name, 10);
+                                    templateDomBind.splice(parentsPolymerPath, operation.$spliceIndex, 0, operation.value);
                                 }
                                 console.info('Add /splice in array is fragile, as Polymer requires something they call normalization, so splices to appear in index order, what is not guaranteed by this element.')
 
@@ -382,14 +375,20 @@ All the changes from server are also received and propagated to your HTML.
                                 // var col = Polymer.Collection.get(parent);
                                 // removed = col.getItem('#'+name);
                             case 'remove':
-                                templateDomBind.splice(parentsPolymerPath, name, 1);
-                                // this.notifySplices(parentsPolymerPath, [{
-                                //     index: name,
-                                //     removed: removed,
-                                //     addedCount: addedCount,
-                                //     object: parent,
-                                //     type: 'splice'
-                                // }]);
+                                if (operation.$spliceIndex !== undefined) {
+                                    templateDomBind.notifySplices(parentsPolymerPath, [{
+                                        index: operation.$spliceIndex,
+                                        removed: operation.$spliceRemoved,
+                                        addedCount: 0,
+                                        object: parent,
+                                        type: 'splice'
+                                    }]);
+                                } else {
+                                    operation.$spliceIndex = parseInt(name, 10);
+                                    operation.$spliceRemoved = [parent[operation.$spliceIndex]];
+                                    templateDomBind.splice(parentsPolymerPath, name, 1);
+                                }
+
                                 console.info('Remove is fragile, as Polymer requires something they call normalization, so splices to appear in index order, what is not guaranteed by this element.')
                                 break;
                         }
@@ -412,29 +411,31 @@ All the changes from server are also received and propagated to your HTML.
                 }
             }
         },
-        validateJSONPatch: function(){
+        validateJSONPatch: function() {
             console.info('inherit  validateJSONPatch from fast-json-patch');
         },
-        observeJSONPatch: function(obj, callback){
+        observeJSONPatch: function(obj, callback) {
             this.puppetObserver = callback;
             return callback;
         },
-        unobserveJSONPatch: function(){
+        unobserveJSONPatch: function() {
             // FIXME this is dummy as hell
             this.puppetObserver = noop;
         }
 
 
     });
-    function noop(){}
-    function translateJSONPointerToPolymerPath(pointer){
+
+    function noop() {}
+
+    function translateJSONPointerToPolymerPath(pointer) {
         return pointer.replace(/\//g, '.');
     }
 
-    function translatePolymerPathToJSONPointer(pointer){
+    function translatePolymerPathToJSONPointer(pointer) {
         return pointer.replace(/~/g, '~0')
-                        .replace(/\//g,'~1')
-                        .replace(/\./g, '/');
+            .replace(/\//g, '~1')
+            .replace(/\./g, '/');
     }
 
     function isNormalInteger(str) {
@@ -447,7 +448,7 @@ All the changes from server are also received and propagated to your HTML.
     if (Array.isArray) {
         _isArray = Array.isArray;
     } else {
-        _isArray = function (obj) {
+        _isArray = function(obj) {
             return obj.push && typeof obj.length === 'number';
         };
     }
@@ -475,5 +476,5 @@ All the changes from server are also received and propagated to your HTML.
     }
 
 
-  }());
+}());
 </script>
