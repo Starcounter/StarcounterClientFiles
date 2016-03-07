@@ -46,6 +46,38 @@ https://github.com/Juicy/imported-template
                 this.reattachTemplate_(val);
             }
         };
+        
+        function _notifyModels(path, value, nodes) {
+            for (var childNo = 0; childNo < nodes.length; childNo++) {
+                if(nodes[childNo]._notifyPath) {
+                    nodes[childNo]._notifyPath(path, value);
+                }
+            }
+        }
+        
+        ImportedTemplatePrototype._notifyPath = function (path, value) {
+            //return;
+            var modelPrefix = "model.";
+            if(path.indexOf(modelPrefix) == 0) {
+                var childNo,
+                    scopedNodes = this.scopedNodes,
+                    len = scopedNodes && scopedNodes.length || 0;
+
+                for (childNo = 0; childNo < len; childNo++) {
+                    var modelScopePrefix = modelPrefix + scopedNodes[childNo].scope + ".";
+                    //only notify the scope if it is in path
+                    if (path.indexOf(modelScopePrefix) == 0) {
+                        var fixedScopePath = path.replace(modelScopePrefix, modelPrefix);
+                        _notifyModels(fixedScopePath, value, scopedNodes[childNo]);
+                    }
+                }
+                _notifyModels(path, value, this.scopelessNodes);
+                // inline HTML
+                if (!this.scopedNodes && !this.scopelessNodes) {
+                    _notifyModels(path, value, this.stampedNodes);
+                }
+            }
+        }
 
         /**
          * Import partial via HTML Import, and replicate its `<template>`.

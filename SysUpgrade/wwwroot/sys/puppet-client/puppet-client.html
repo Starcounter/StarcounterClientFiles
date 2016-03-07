@@ -228,11 +228,16 @@ All the changes from server are also received and propagated to your HTML.
             // use node id or node itself;
             element = typeof element == "string" ? document.getElementById(element) : element;
             element.model = this.obj;
-            this.bound = true;
+            this.bound = element;
         },
         propagateDomBind: function(sequence) {
             var that = this;
+            /*return;
+            console.log("notify all");
             var templates = document.querySelectorAll("template[is=dom-bind]");
+            var templates = document.querySelectorAll("html /deep/ template[is=dom-bind]");
+            */
+            var templates = [this.bound];
             for (var i = 0; i < templates.length; i++) {
                 if (!templates[i]._propertyEffects) {
                     return;

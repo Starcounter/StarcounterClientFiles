@@ -107,6 +107,15 @@ version: 0.2.1
       this.isAttached = false;
       //d console.log("starcounter-partial detached");
     };
+
+    LauncherPartialPrototype._notifyPath = function (path, value) {
+        if(path.indexOf("partial.") == 0) {
+            if(this.template._notifyPath) {
+                this.template._notifyPath(path.replace("partial.", "model."), value);
+            }
+        }
+    };
+
     /**
      * @see Starcounter/starcounter-include#attributeChangedCallback It's just a copy
      */
