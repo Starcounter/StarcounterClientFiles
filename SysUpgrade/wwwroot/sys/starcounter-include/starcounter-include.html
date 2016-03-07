@@ -1,0 +1,151 @@
+<!--
+`launcher-include` - Launcher's `starcounter-include` -
+Custom Element (w/ Polymer's TempalteBinding)
+with predefined template content, which should be used to include partials.
+It's just <template is="imported-template"> wrapped within <juicy-tile-table> and layout editor.
+Uses juicy-tiles setup given from DB as layout.
+version: 0.2.1
+
+@FIXME (tomalec): Use scoped Partial and layout data once implemented on server-side
+@FIXME (tomalec): DRY with default starcounter-include
+-->
+<!-- Import dependencies -->
+<!-- <link rel="import" href="/sys/polymer/polymer.html"> -->
+
+<link rel="import" href="../imported-template/imported-template.html">
+<link rel="import" href="../juicy-tile-table/juicy-tile-table.html">
+<link rel="import" href="../juicy-tiles-setup-sync/src/juicy-tiles-setup-sync.html">
+<!-- <link rel="import" href="/sys/console-log/console-log.html"> -->
+
+<template id="partial-template">
+    <juicy-tiles-setup-sync
+        api-url="/sc/layout"></juicy-tiles-setup-sync>
+    <juicy-tile-table
+        defaultTileSetup='{
+            "height": 1,
+            "heightDynamic": true,
+            "width": "100%",
+            "widthFlexible": true
+        }'
+        refreshonmutation>
+      <template is="imported-template"></template>
+    </juicy-tile-table>
+</template>
+<script>
+  (function () {
+
+
+    var templ = (document._currentScript || document.currentScript).ownerDocument.getElementById("partial-template");
+
+
+    var LauncherPartialPrototype = Object.create(HTMLElement.prototype);
+
+    LauncherPartialPrototype.partial = null;
+    LauncherPartialPrototype.isAttached = false;
+
+    /**
+     * @see Starcounter/starcounter-include - partialAttributeToProperty It's just a copy
+     */
+    function partialAttributeToProperty(element, attrVal){
+      attrVal = attrVal || element.getAttribute("partial");
+      // no value, or Polymer binding
+      if(!attrVal || attrVal.match(/\{\{.*\}\}|\[\[.*\]\]/)){
+        return;
+      }
+      element.partial = JSON.parse(attrVal);
+    }
+    /**
+     * Use predefined template content, rewrite attributes.
+     */
+    LauncherPartialPrototype.createdCallback = function LPartialCreated(){
+      // ugly https://code.google.com/p/chromium/issues/detail?id=430578 workaround
+      // if( inDocumentFragment( this ) ){
+      //   return ;
+      // }
+      var partial = undefined;
+      var starcounterInclude = this;
+      // define a setter for partial attribute,
+      // so it could be change by VanillaJs without Polymer Template Binding
+      Object.defineProperty(this,"partial",{
+        set: function(newValue){
+          if (partial !== newValue) {
+            partial = newValue;
+            starcounterInclude.partialChanged(partial);
+          }
+        },
+        get: function(){
+          return partial;
+        }
+      });
+
+      var sroot = this.createShadowRoot();
+      sroot.innerHTML = "<style>:host{display:block;}</style><content></content>";
+
+      var clone = document.importNode( templ.content, true);
+      this.clone = clone;
+      this.sync = clone.children[0];// .getElementsByTagName("JUICY-TILES-SETUP-SYNC");
+      this.grid = clone.children[1];// .getElementsByTagName("juicy-tile-table");
+      this.template = this.grid.firstElementChild;// .getElementsByTagName("TEMPLATE");
+    };
+    /**
+     * Attach model.
+     * @see Starcounter/starcounter-include#attachedCallback
+     * It's almost the same, but in here w append full structure of elements
+     */
+    LauncherPartialPrototype.attachedCallback = function LPartialAttached(){
+      partialAttributeToProperty(this);
+      this.isAttached = true;
+      //d console.log("starcounter-partial attached");
+      this.partialChanged();
+      this.appendChild( this.clone );
+    };
+    /**
+     * @see Starcounter/starcounter-include#detachedCallback It's just a copy
+     * @return {[type]} [description]
+     */
+    LauncherPartialPrototype.detachedCallback = function(){
+      this.isAttached = false;
+      //d console.log("starcounter-partial detached");
+    };
+    /**
+     * @see Starcounter/starcounter-include#attributeChangedCallback It's just a copy
+     */
+    LauncherPartialPrototype.attributeChangedCallback = function(name, oldVal, newVal){
+      if(name === "partial"){
+        partialAttributeToProperty(this, newVal);
+        //d console.log("starcounter-partial attr changed");
+      }
+    };
+    /**
+     * Updates inner `imported-template` with partial data given (if applicable)
+     * @see Starcounter/starcounter-include#partialChanged it's alsmost a copy
+     * @param  {Object} newVal new partial value
+     */
+    LauncherPartialPrototype.partialChanged = function(newVal){
+      if(this.partial){
+        var html = this.partial.Html;
+        !html && console.warn("partial.Html for", this, "is missing.");
+        !this.partial.PartialId && console.warn("partial.PartialId for", this, "is missing.");
+        if(this.isAttached && html){
+          this.sync.setAttribute("name", this.partial.PartialId);
+          //Up to Starcounter 2.1.1261, layout came as an object
+          //Starting from one of the following versions, layout will come as a string, for the reasons described in:
+          //https://github.com/Juicy/juicy-tile-editor/issues/127
+          //It can be changed again when this is fixed:
+          //https://github.com/Starcounter/Starcounter/issues/3074
+          this.sync.storedValue = typeof this.partial.layout == "string" ? JSON.parse(this.partial.layout) : this.partial.layout;
+          this.grid.setAttribute("name", this.partial.PartialId);
+          if(this.partial.layout){
+            this.grid.setup = typeof this.partial.layout == "string" ? JSON.parse(this.partial.layout) : JSON.parse(JSON.stringify(this.partial.layout));
+          }
+          this.partial.Html && this.template.setAttribute("content", this.partial.Html);
+          this.template.model = this.partial;
+        }
+      }
+    };
+
+    document.registerElement('starcounter-include', {
+      prototype: LauncherPartialPrototype
+    });
+  })();
+</script>
