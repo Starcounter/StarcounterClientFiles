@@ -1,23 +1,26 @@
 # SysUpgrade
 
-App that upgrades Starcounter's `/sys/` dependencies to Polymer 1.3
+App that overwrites Starcounter's `/sys/` with anything in its `/sys` folder. This branch is upgrade Starcounter to Palindrom 3.0.0 and `palindrom-polymer-client` 4.0.0.
 
-## Purpose of this app
+### Purpose of this app
 
 The Starcounter installer includes a bundle of commonly used client-side libraries with set versions. In case you want to try out these libraries in a different version, your options are:
 
-a. Manually replace the files in your installation path (typically `C:\Program Files\Starcounter\ClientFiles\StaticFiles\sys`)
-b. Run an app that overwrites the URLs with different versions of libraries bundled with the installer
+1. Manually replace the files in your installation path (typically `C:\Program Files\Starcounter\ClientFiles\StaticFiles\sys`)
 
-This app is the implementation of the option b.
+2. Run an app that overwrites the URLs with different versions of libraries bundled with the installer
 
-## Usage instructions
+This app is the implementation of the option 2.
 
-Clone this repo locally and build the project in Visual Studio. 
+## Testing Palindrom 3.0.0 and `palindrom-polymer-client` 4.0.0 using SysUpgrade
 
-Then start the app using Visual Studio or `cmd`:
+### Steps:
 
-```
-cd c:\github\starcountersamples\sysupgrade\sysupgrade
-star bin\debug\sysupgrade.exe
-```
+1. Clone this repo, checkout `Palindrom3.0.0` branch.
+2. Run this application. 
+3. See if your other Starcounter apps work seamlessly without any problems.
+4. See if (`puppet-client` is deprecated) warning exists in your browser console.
+5. It would be super nice of you to verify the version of `palindrom-client` is 4.0.0, by looking at the downloaded files log from Chrome's Network tab in DevTools. `palindrom-client.html` has a version banner right on top.
+
+
+Thanks!
