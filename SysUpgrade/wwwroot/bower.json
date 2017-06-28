@@ -1,0 +1,9 @@
+{
+  "name": "sys",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "puppet-client": "Palindrom/palindrom-polymer-client#^4.0.0",
+    "palindrom-client": "Palindrom/palindrom-polymer-client#^4.0.0"
+  }
+}
