@@ -16,7 +16,7 @@ This app is the implementation of the option 2.
 
 ### Steps:
 
-1. Clone this repo, checkout `Palindrom3.0.0` branch.
+1. Clone this repo.
 2. Run this application. 
 3. See if your other Starcounter apps work seamlessly without any problems.
 4. See if (`puppet-client` is deprecated) warning exists in your browser console.
