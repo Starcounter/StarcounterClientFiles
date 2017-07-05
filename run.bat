@@ -1,2 +1,5 @@
-@echo off
-star %* --resourcedir="%~dp0SysUpgrade\wwwroot" "%~dp0SysUpgrade/bin/Debug/SysUpgrade.exe"
+@ECHO OFF
+
+IF "%CONFIGURATION%"=="" SET CONFIGURATION=Debug
+
+star --resourcedir="%~dp0src\SysUpgrade\wwwroot" "%~dp0src/SysUpgrade/bin/%CONFIGURATION%/SysUpgrade.exe"
