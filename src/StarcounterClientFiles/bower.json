@@ -3,7 +3,7 @@
   "description": "App that overwrites Starcounter's and Launcher's /sys/ dependencies",
   "private": true,
   "version": "1.0.1",
-  "homepage": "https://github.com/Polyjuice/StarcounterClientFiles",
+  "homepage": "https://github.com/Starcounter/StarcounterClientFiles",
   "authors": [
     "Tomek Wytrebowicz <tomalecpub@gmail.com>"
   ],
