@@ -1,7 +1,7 @@
 ﻿using System;
 using Starcounter;
 
-namespace SysUpgrade
+namespace StarcounterClientFiles
 {
     class Program
     {

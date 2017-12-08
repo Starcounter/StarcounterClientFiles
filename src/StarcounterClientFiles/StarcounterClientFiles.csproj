@@ -9,8 +9,8 @@
     <ProjectGuid>{72D767C9-CC68-4C1D-8A6B-28F61848DBDF}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SysUpgrade</RootNamespace>
-    <AssemblyName>SysUpgrade</AssemblyName>
+    <RootNamespace>StarcounterClientFiles</RootNamespace>
+    <AssemblyName>StarcounterClientFiles</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <UseVSHostingProcess>false</UseVSHostingProcess>

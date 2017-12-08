@@ -1,4 +1,4 @@
-# SysUpgrade
+# StarcounterClientFiles
 
 App that overwrites Starcounter's `/sys/` with anything in its `/sys` folder. This branch is upgrade Starcounter to Palindrom 3.0.0 and `palindrom-polymer-client` 4.0.0.
 
@@ -12,7 +12,7 @@ The Starcounter installer includes a bundle of commonly used client-side librari
 
 This app is the implementation of the option 2.
 
-## Testing Palindrom 3.0.0 and `palindrom-polymer-client` 4.0.0 using SysUpgrade
+## Testing Palindrom 3.0.0 and `palindrom-polymer-client` 4.0.0 using StarcounterClientFiles
 
 ### Steps:
 
