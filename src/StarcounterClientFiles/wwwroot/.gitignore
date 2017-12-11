@@ -1,4 +1,0 @@
-# Ignore all the Bootswatch themes apart from Paper
-sys/bootswatch/*/*
-!sys/bootswatch/fonts/*
-!sys/bootswatch/paper/*
