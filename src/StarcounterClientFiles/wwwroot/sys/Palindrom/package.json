@@ -1,6 +1,6 @@
 {
   "name": "palindrom",
-  "version": "3.0.0",
+  "version": "3.0.9",
   "description": "",
   "license": "MIT",
   "homepage": "https://github.com/palindrom/Palindrom",
@@ -32,11 +32,10 @@
   "dependencies": {
     "axios": "^0.15.3",
     "events": "^1.1.1",
-    "fast-json-patch": "^2.0.0",
+    "fast-json-patch": "^2.0.5",
     "json-patch-ot": "^1.0.1",
-    "json-patch-ot-agent": "^1.1.2",
-    "json-patch-queue": "^2.0.1",
-    "jsonpatcherproxy": "^0.0.5",
+    "json-patch-ot-agent": "2.0.0-rc.0",
+    "jsonpatcherproxy": "^0.0.9",
     "url": "^0.11.0",
     "websocket": "^1.0.24"
   },
@@ -55,7 +54,7 @@
     "saucelabs": "^1.4.0",
     "selenium-webdriver": "^3.3.0",
     "sinon": "^2.1.0",
-    "webpack": "^2.2.1"
+    "webpack": "^2.7.0"
   },
   "scripts": {
     "version": "webpack && git add -A",

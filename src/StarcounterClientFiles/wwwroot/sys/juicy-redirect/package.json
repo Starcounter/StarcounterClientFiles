@@ -1,0 +1,31 @@
+{
+  "private": true,
+  "name": "juicy-redirect",
+  "description": "> Custom Element that redirects to a new URL when an attribute is changed. It can be configured to work using window location or History API.",
+  "version": "0.6.0",
+  "main": "juicy-redirect.html",
+  "dependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Juicy/juicy-redirect.git"
+  },
+  "keywords": [
+    "juicy",
+    "web-components",
+    "redirect"
+  ],
+  "author": "Marcin Warpechowski <marcin@nextgen.pl>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Juicy/juicy-redirect/issues"
+  },
+  "homepage": "https://github.com/Juicy/juicy-redirect#readme",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-bump": "^0.3.0",
+    "grunt-cli": "^0.1.13"
+  }
+}

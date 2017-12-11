@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>&lt;link is="puppet-redirect"&gt;</title>
+    <link rel="stylesheet" href="http://juicy.github.io/github-markdown-css/github-markdown.css">
+
+    <!-- Importing Web Component's Polyfill (optional, allows to run it in old browsers) -->
+    <script src="https://cdn.jsdelivr.net/webcomponentsjs/0.7.19/webcomponents.min.js"></script>
+
+    <!-- Importing Custom Elements -->
+    <link rel="import" href="puppet-redirect.html">
+
+    <style>
+        html {
+            min-height: 100%;
+        }
+
+        body {
+            padding: 2em;
+        }
+    </style>
+</head>
+
+<body class="markdown-body">
+<a href="https://github.com/PuppetJs/puppet-redirect"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+<h1>&lt;link is="puppet-redirect"&gt;
+            <iframe src="http://ghbtns.com/github-btn.html?user=puppetjs&repo=puppet-redirect&type=watch&count=true&size=medium"
+    allowtransparency="true" frameborder="0" scrolling="0" width="90" height="30"></iframe></h1>
+
+<p>Custom Element that redirects to a new URL when an attribute is changed.</p>
+
+<p>It can be configured to work using window location or History API.</p>
+
+<p>See <a href="https://github.com/PuppetJs/puppet-redirect">README.md</a> for docs</p>
+
+<h2>Redirect using <code>window.location</code></h2>
+<button id="example1">&lt;link is="puppet-redirect" url="/"&gt;</button>
+
+<link is="puppet-redirect" id="redirect1">
+
+<script>
+    document.getElementById("example1").addEventListener("click", function () {
+        document.getElementById("redirect1").setAttribute("url", "/");
+    });
+</script>
+
+<h3>Open new tab</h3>
+<button id="example1_blank">&lt;link is="juicy-redirect" url="/" target="_blank"&gt;</button>
+
+<link is="juicy-redirect" id="redirect1_blank" target="_blank">
+
+<script>
+    document.getElementById("example1_blank").addEventListener("click", function () {
+        document.getElementById("redirect1_blank").setAttribute("url", "/");
+    });
+</script>
+
+<h2>Redirect using History API (<code>history.pushState</code>)</h2>
+<p>Watch console entries for events logging</p>
+
+<button id="example2">&lt;link is="puppet-redirect" history url="/"&gt;</button>
+
+<link is="puppet-redirect" history id="redirect2">
+
+<script>
+    document.getElementById("example2").addEventListener("click", function () {
+        document.getElementById("redirect2").setAttribute("url", "/");
+    });
+</script>
+<script>
+    window.addEventListener("puppet-redirect-pushstate", function (e) {
+        console.info("`puppet-redirect-pushstate` triggered with", e.detail, location.href)
+    });
+</script>
+
+</body>
+</html>

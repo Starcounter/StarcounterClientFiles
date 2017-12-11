@@ -1,3 +1,8 @@
 {
-  "directory": "./sys"
+  "directory": "sys",
+  "ignoredDependencies": [
+    "bootstrap",
+    "jquery",
+    "platform"
+  ]
 }

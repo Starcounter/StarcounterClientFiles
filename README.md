@@ -1,26 +1,31 @@
 # StarcounterClientFiles
 
-App that overwrites Starcounter's `/sys/` with anything in its `/sys` folder. This branch is upgrade Starcounter to Palindrom 3.0.0 and `palindrom-polymer-client` 4.0.0.
+An app that provides Starcounter with all the client-side libs it needs to function. Currently it has:
 
-### Purpose of this app
+[//]: # (Please execute `bower list` in `src\StarcounterClientFiles\wwwroot` and list the output below)
 
-The Starcounter installer includes a bundle of commonly used client-side libraries with set versions. In case you want to try out these libraries in a different version, your options are:
+```shell
+starcounter-clientfiles#2.0.0           C:\Work\Starcounter\StarcounterClientFiles\src\StarcounterClientFiles\wwwroot
+    ├─┬ bootswatch#3.3.7 (latest is 4.0.0-beta.2)
+    │ └── bootstrap not installed
+    ├─┬ imported-template#3.0.0
+    │ └── juicy-html#3.0.0
+    ├── juicy-redirect#0.6.0
+    ├─┬ palindrom-client#4.0.3
+    │ ├── Palindrom#3.0.9
+    │ └─┬ polymer#2.3.1 incompatible with ^1.11.0 (1.11.1 available, latest is 2.3.1)
+    │   ├── shadycss#1.1.0
+    │   └── webcomponentsjs#1.0.20
+    ├── palindrom-redirect#0.7.0
+    ├── polymer#2.3.1
+    ├── puppet-redirect#0.7.0
+    ├─┬ starcounter-include#4.0.0
+    │ ├─┬ imported-template#3.0.0
+    │ │ └── juicy-html#3.0.0
+    │ └── translate-shadowdom#0.0.5
+    └── webcomponentsjs#1.0.20
+```
 
-1. Manually replace the files in your installation path (typically `C:\Program Files\Starcounter\ClientFiles\StaticFiles\sys`)
+## Development
 
-2. Run an app that overwrites the URLs with different versions of libraries bundled with the installer
-
-This app is the implementation of the option 2.
-
-## Testing Palindrom 3.0.0 and `palindrom-polymer-client` 4.0.0 using StarcounterClientFiles
-
-### Steps:
-
-1. Clone this repo.
-2. Run this application. 
-3. See if your other Starcounter apps work seamlessly without any problems.
-4. See if (`puppet-client` is deprecated) warning exists in your browser console.
-5. It would be super nice of you to verify the version of `palindrom-client` is 4.0.0, by looking at the downloaded files log from Chrome's Network tab in DevTools. `palindrom-client.html` has a version banner right on top.
-
-
-Thanks!
+If you edit client-libs, please execute `bower list > bower-list.txt` in `src\StarcounterClientFiles\wwwroot` and copy-paste `bower-list.txt` contents in README.md (above).

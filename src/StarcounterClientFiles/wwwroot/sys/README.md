@@ -1,1 +1,0 @@
-`puppet-client` folder is added for backwards-compability.

@@ -1,0 +1,41 @@
+{
+  "name": "imported-template",
+  "version": "3.0.0",
+  "description": "Declarative way for client-side includes boosted with HTML Imports features, like full control over loaded `<script>`s and `<link>`s, caching, de-duping, etc.",
+  "homepage": "https://github.com/Juicy/imported-template",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Juicy/imported-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Juicy/imported-template/issues"
+  },
+  "author": {
+    "name": "Joachim Wester",
+    "email": "joachimwester@me.com",
+    "url": "http://www.starcounter.com/"
+  },
+  "main": "./imported-template.html",
+  "keywords": [
+    "include",
+    "partials",
+    "html",
+    "declarative",
+    "client-side",
+    "custom-element",
+    "web-components",
+    "polymer"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-bump": "^0.5.0",
+    "grunt-contrib-watch": "~0.6.1"
+  },
+  "scripts": {
+    "test": "wct",
+    "translate-juicy-html-tests": "grep -r -l juicy-html test/* | xargs sed -i \"s/<\\(\\/\\)\\?juicy-html/<\\1imported-template/g;s/'juicy-html'/'imported-template'/g;s/juicy-html\\.html/imported-template\\.html/g\"",
+    "fetch-juicy-html-tests": "git clone --depth=1 https://github.com/Juicy/juicy-html.git && rm -rf juicy-html/test/index.html juicy-html/test/mock && cp -r juicy-html/test/. test/ && rm -rf juicy-html",
+    "use-juicy-html-tests": "npm run fetch-juicy-html-tests && npm run translate-juicy-html-tests"
+  }
+}

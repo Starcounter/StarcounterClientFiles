@@ -1,0 +1,23 @@
+{
+  "name": "palindrom-redirect",
+  "version": "0.7.0",
+  "description": "Custom Element that redirects to a new URL when an attribute is changed. It's also being listened by Palindrom.",
+  "license": "MIT",
+  "main": "palindrom-redirect.html",
+  "keywords": [
+    "web-components"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "preview.png",
+    "Gruntfile.js"
+  ],
+  "dependencies": {
+  },
+  "authors": [
+    "Marcin Warpechowski <marcin@nextgen.pl>",
+    "Tomek Wytrebowicz <tomalecpub@gmail.com>"
+  ]
+}
