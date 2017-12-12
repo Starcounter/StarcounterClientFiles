@@ -2,9 +2,9 @@
 `starcounter-include` -
 Custom Element (w/ Polymer's TemplateBinding)
 with predefined template content, which should be used to include partials.
-It's just <imported-template> wrapped within Shadow Root for `declarative-shadow-dom` bindable by layout editor.
+It's just <template is="imported-template"> wrapped within Shadow Root for `declarative-shadow-dom` bindable by layout editor.
 Uses Shadow DOM given from DB as `Starcounter.MergedPartial.(CompositionProvider|CompositionProvider_0).Composition$`.
-version: 4.0.0
+version: 3.0.0
 
 -->
 <!-- Import dependencies -->
@@ -15,7 +15,7 @@ version: 4.0.0
 <script>
     (function() {
         const isWebkit = navigator.vendor && navigator.vendor.indexOf("Apple") > -1;
-
+        
         // still needed for .selectNode
         const isSafari = isWebkit && navigator.userAgent && !navigator.userAgent.match("CriOS");
 
@@ -36,9 +36,12 @@ version: 4.0.0
             // in both cases, the mandatory `super()` call
             // will return the right context/instance to use
             // and eventually return
-            constructor(self) {
-                self = super(self);
+            createdCallback() {
                 this.createComponent();
+                const partialAttrib = this.getAttribute('partial');
+                const viewModelAttrib = this.getAttribute('view-model');
+                partialAttrib && this.attributeChangedCallback('partial', null, partialAttrib);
+                viewModelAttrib && this.attributeChangedCallback('view-model', null, viewModelAttrib);
             }
             /**
              * Stamp `imported-template` into Light DOM,
@@ -49,7 +52,7 @@ version: 4.0.0
                 if(!this.template){
                     const starcounterInclude = this;
                     this.defaultComposition = null;
-                    const importedTemplate = document.createElement('imported-template');
+                    const importedTemplate = document.createElement('template', 'imported-template');
 
                     importedTemplate.addEventListener('stamping', function fetchCompositions(event) {
                         var mergedComposition = null;
@@ -77,7 +80,7 @@ version: 4.0.0
                     this.template = importedTemplate;
                 }
             }
-            connectedCallback(){
+            attachedCallback(){
                 this.stampImportedTemplate();
             }
         }
@@ -90,7 +93,6 @@ version: 4.0.0
         StarcounterIncludePrototype.defaultHtml = '';
         /**
          * @see Starcounter/starcounter-include - partialAttributeToProperty It's just a copy
-         * @TODO(tomalec): check if needed in Polymer 2
          */
         function partialAttributeToProperty(element, attrVal) {
 
@@ -221,7 +223,7 @@ version: 4.0.0
                     this._lastCompositionRef = compositionRef;
                 }
             }
-        }
+        }        
 
         function appendComposition(fragment, template) {
             if (template.nodeName && template.nodeName == 'TEMPLATE') {
@@ -229,11 +231,11 @@ version: 4.0.0
                 if (name === 'declarative-shadow-dom' || name === 'starcounter-composition') {
                     if (name === 'starcounter-composition') {
                         console.warn('`starcounter-composition` was renamed to `declarative-shadow-dom`! Please update your markup, as the old name is likely to be not supported soon (in V1).')
-                    }
+                    } 
                     fragment.appendChild(template.content.cloneNode(true));
                 }
             }
-        }
+        }        
 
         /**
          * Handles change of the composition.
@@ -297,27 +299,20 @@ version: 4.0.0
 
                 if (!this.explicitComposition) {
                     return this._renderCompositionChange("explicit", () => undefined);
-                }
-            }
+                }                
+            }            
         };
-        // to fool Polymer into thinking `starcounter-include` is a polymer element thus forwarding notifications to it.
-        StarcounterIncludePrototype.__dataHasAccessor = {partial: true, viewModel: true};
-
-        // Polymer doesn't set props on its own components, rather, it calls this function
-        StarcounterIncludePrototype._setPendingProperty = function (path, value) {
-            this[path] = value;
-        }
         /**
-        * Forward Polymer notification downwards from `<dom-bind>`
-        * to <imported-template>
-        * @param  {String} path Polymer notification path
-        * @param  {Mixed} value New value
-        */
-        StarcounterIncludePrototype._setPendingPropertyOrPath = function (path, value) {
+         * Forward Polymer notification downwards from `<template is="dom-bind">`
+         * to <template is="imported-template">
+         * @param  {String} path Polymer notification path
+         * @param  {Mixed} value New value
+         */
+        StarcounterIncludePrototype._notifyPath = function(path, value) {
             var sameModelAlreadyLoaded = this.template.model == this.partial;
             this.partialChanged(this.partial);
-            if (sameModelAlreadyLoaded && this.template._setPendingPropertyOrPath) {
-                this.template._setPendingPropertyOrPath(
+            if (sameModelAlreadyLoaded && this.template._notifyPath) {
+                this.template._notifyPath(
                     path.replace("partial.", "model.")
                         .replace("viewModel.", "model."),
                      value);
@@ -422,7 +417,7 @@ version: 4.0.0
                 console.warn(`Your view-model is probably not namespaced!
 `, viewModel, `
 We no longer support those.
-Please make sure it's a result of \`Self.GET\` on serverside. If it's not a result of blending, then replace \`<starcounter-include view-model="{{viewModel}}">\` with  \`<div><imported-template model="{{viewModel}}" href="{{viewModel.Html}}"></imported-template></div>\`.
+Please make sure it's a result of \`Self.GET\` on serverside. If it's not a result of blending, then replace \`<starcounter-include view-model="{{viewModel}}">\` with  \`<div><template is="imported-template" model="{{viewModel}}" href="{{viewModel.Html}}"></template></div>\`.
 `, element);
             }
         };
@@ -470,6 +465,7 @@ Please make sure it's a result of \`Self.GET\` on serverside. If it's not a resu
             console.error('clear is not yet defined!');
         }
 
-        customElements.define('starcounter-include', StarcounterInclude);
+
+        document.registerElement('starcounter-include', StarcounterInclude);
     })();
 </script>

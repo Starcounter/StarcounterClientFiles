@@ -1,14 +1,12 @@
 {
   "name": "imported-template",
-  "version": "3.0.0",
+  "version": "2.0.1",
   "keywords": [
     "include",
     "partials",
     "html",
     "declarative",
     "client-side",
-    "partial",
-    "template",
     "custom-element",
     "web-components",
     "polymer"
@@ -34,22 +32,26 @@
     "wct.conf.json"
   ],
   "dependencies": {
-    "juicy-html": "^3.0.0"
+    "juicy-html": "^2.0.0"
   },
   "devDependencies": {
-    "iron-icon": "PolymerElements/iron-icon#~2.0.0",
-    "iron-iconset-svg": "PolymerElements/iron-iconset-svg#~2.0.0",
-    "web-component-tester": "^6.2.0",
-    "polymer": "^2.0.0",
-    "webcomponentsjs": "^1.0.0"
+    "dom-bind-notifier": "~1.0.0",
+    "iron-icon": "PolymerElements/iron-icon#~1.0.4",
+    "iron-iconset-svg": "PolymerElements/iron-iconset-svg#~1.0.4",
+    "object.observe": "^0.2.6",
+    "array.observe": "^0.0.1",
+    "web-component-tester": "^6.2.0"
   },
-  "_release": "3.0.0",
+  "resolutions": {
+    "webcomponentsjs": "^0.7.24"
+  },
+  "_release": "2.0.1",
   "_resolution": {
     "type": "version",
-    "tag": "3.0.0",
-    "commit": "d3dfe7624a3c2500598862adcb92f5ad0f9a13e0"
+    "tag": "2.0.1",
+    "commit": "632a46840b2ea5b59371944bd69e7d01b53484df"
   },
   "_source": "https://github.com/Juicy/imported-template.git",
-  "_target": "^3.0.0",
+  "_target": "^2.0.0",
   "_originalSource": "imported-template"
 }

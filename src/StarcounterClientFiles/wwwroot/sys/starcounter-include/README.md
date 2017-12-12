@@ -99,7 +99,8 @@ Or [download as ZIP](https://github.com/Starcounter/starcounter-include/archive/
 1. Import Web Components' polyfill (if needed):
 
     ```html
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+
     ```
 
 2. Import Custom Element:

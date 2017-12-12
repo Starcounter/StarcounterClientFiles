@@ -29,11 +29,11 @@
     "sc"
   ],
   "dependencies": {
-    "imported-template": "^3.0.0",
+    "imported-template": "^2.0.0",
     "translate-shadowdom": ">=0.0.4"
   },
   "devDependencies": {
     "web-component-tester": "^6.0.0",
-    "polymer": "^2.2.0"
+    "polymer": "^1.9.1"
   }
 }
