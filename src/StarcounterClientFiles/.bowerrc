@@ -1,5 +1,5 @@
 {
-  "directory": "src/StarcounterClientFiles/wwwroot/sys",
+  "directory": "wwwroot/sys",
   "ignoredDependencies": [
     "bootstrap",
     "jquery",
