@@ -50,6 +50,7 @@ version: 4.0.0
                     const starcounterInclude = this;
                     this.defaultComposition = null;
                     const importedTemplate = document.createElement('imported-template');
+                    var href = buildURL(this.partial, this.mergedHtmlPrefix, this.defaultHtml);
 
                     importedTemplate.addEventListener('stamping', function fetchCompositions(event) {
                         var mergedComposition = null;
@@ -72,6 +73,7 @@ version: 4.0.0
                         // TODO: consider moving entire partialChanged or appendChild here
                         starcounterInclude._compositionChanged();
                     });
+                    href && (importedTemplate.href = href);
 
                     this.appendChild(importedTemplate);
                     this.template = importedTemplate;
