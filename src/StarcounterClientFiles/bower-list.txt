@@ -7,12 +7,12 @@ starcounter-clientfiles#1.0.0 F:\wamp\www\starcounter\StarcounterClientFiles
 ├── juicy-redirect#0.6.0
 ├─┬ palindrom-client#4.0.3
 │ ├── Palindrom#3.0.9
-│ └── polymer#1.11.1 (1.11.2 available, latest is 2.3.1)
+│ └── polymer#1.11.2 (latest is 2.3.1)
 ├── palindrom-redirect#0.7.0
-├── polymer#1.11.1 (1.11.2 available, latest is 2.3.1)
+├── polymer#1.11.2 (latest is 2.3.1)
 ├─┬ puppet-client#4.0.3
 │ ├── Palindrom#3.0.9
-│ └─┬ polymer#1.11.1
+│ └─┬ polymer#1.11.2
 │   └── webcomponentsjs#0.7.24
 ├── puppet-redirect#0.7.0
 ├─┬ starcounter-include#3.0.0 (latest is 4.0.1)
