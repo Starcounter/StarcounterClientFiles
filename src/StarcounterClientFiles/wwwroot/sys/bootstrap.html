@@ -1,8 +1,10 @@
-﻿<!-- A theme of choice. Bootswatch Paper theme by default -->
-<link rel="stylesheet" href="/sys/bootswatch/paper/bootstrap.css">
 <script>
 (function(){
-    var importDoc = document.currentScript.ownerDocument;
-    document.head.appendChild(importDoc.firstElementChild);
+    // <!-- A theme of choice. Bootswatch Paper theme by default -->
+    // <link rel="stylesheet" href="/sys/bootswatch/paper/bootstrap.css">
+    const bootstrap = document.createElement('link');
+    bootstrap.href = '/sys/bootswatch/paper/bootstrap.css';
+    bootstrap.rel = 'stylesheet';
+    document.head.appendChild(bootstrap);
 })();
 </script>
