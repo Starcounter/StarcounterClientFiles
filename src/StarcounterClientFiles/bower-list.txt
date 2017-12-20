@@ -1,5 +1,5 @@
 bower check-new     Checking for new versions of the project dependencies...
-starcounter-clientfiles#1.0.0 F:\wamp\www\starcounter\StarcounterClientFiles
+starcounter-clientfiles#1.1.0 F:\wamp\www\starcounter\StarcounterClientFiles
 ├─┬ bootswatch#3.3.7 (latest is 4.0.0-beta.2)
 │ └── bootstrap not installed
 ├─┬ imported-template#2.0.2 (latest is 3.1.0)
