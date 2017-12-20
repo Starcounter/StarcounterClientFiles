@@ -1,6 +1,6 @@
 {
   "name": "imported-template",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "keywords": [
     "include",
     "partials",
@@ -32,7 +32,7 @@
     "wct.conf.json"
   ],
   "dependencies": {
-    "juicy-html": "^2.0.0"
+    "juicy-html": "^2.0.3"
   },
   "devDependencies": {
     "dom-bind-notifier": "~1.0.0",

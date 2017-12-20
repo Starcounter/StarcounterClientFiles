@@ -1,6 +1,6 @@
 {
   "name": "imported-template",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "keywords": [
     "include",
     "partials",
@@ -32,7 +32,7 @@
     "wct.conf.json"
   ],
   "dependencies": {
-    "juicy-html": "^2.0.0"
+    "juicy-html": "^2.0.3"
   },
   "devDependencies": {
     "dom-bind-notifier": "~1.0.0",
@@ -45,11 +45,11 @@
   "resolutions": {
     "webcomponentsjs": "^0.7.24"
   },
-  "_release": "2.0.1",
+  "_release": "2.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "2.0.1",
-    "commit": "632a46840b2ea5b59371944bd69e7d01b53484df"
+    "tag": "2.0.2",
+    "commit": "63ab9ebf138f57ddbf81f6ef397924a48ae96b22"
   },
   "_source": "https://github.com/Juicy/imported-template.git",
   "_target": "^2.0.0",
