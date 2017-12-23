@@ -2,18 +2,18 @@ This repo is supposed to replace [/Starcounter/level1/tree/develop/src/BuildSyst
 
 ## This branch
 
-The branch `master-2.4` contains Web Components V1 & Polymer 2 client-side libraries intended as:
+The branch `2.x` contains Web Components V1 & Polymer 2 client-side libraries intended as:
 
 - the default client-side libraries supported in Starcounter 2.4
 
-There is also another branch, `master`, which contains Web Components V0 and Polymer 1.
+There is also another branch, `1.x`, which contains Web Components V0 and Polymer 1.
 
 ## Development
 
 Currently, the developer process looks like follows:
 
 1. Commit changes to individual client-side package's repo, like https://github.com/Starcounter/starcounter-include, and release a version there,
-2. Bump files in a feature branch started from `master` in [this repo](https://github.com/Starcounter/StarcounterClientFiles) either,
+2. Bump files in a feature branch started from `2.x` in [this repo](https://github.com/Starcounter/StarcounterClientFiles) either,
    - by updating `bower.json` and running `bower install`,
    - or `calling `bower install --save packagename[#version]`
 3. Update `bower-list.txt` by calling `bower list > bower-list.txt`
