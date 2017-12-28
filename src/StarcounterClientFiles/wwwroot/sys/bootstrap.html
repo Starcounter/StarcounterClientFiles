@@ -1,8 +1,9 @@
-﻿<!-- A theme of choice. Bootswatch Paper theme by default -->
-<link rel="stylesheet" href="/sys/bootswatch/paper/bootstrap.css">
-<script>
+﻿<script>
 (function(){
-    var importDoc = document.currentScript.ownerDocument;
-    document.head.appendChild(importDoc.firstElementChild);
+    const link = document.createElement('link');
+    link.rel = "stylesheet";
+    /* theme of choice. Bootswatch Paper theme by default */
+    link.href = "/sys/bootswatch/paper/bootstrap.css";
+    document.head.appendChild(link);
 })();
 </script>
