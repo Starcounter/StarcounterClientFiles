@@ -4,7 +4,7 @@ Custom Element (w/ Polymer's TemplateBinding)
 with predefined template content, which should be used to include partials.
 It's just <imported-template> wrapped within Shadow Root for `declarative-shadow-dom` bindable by layout editor.
 Uses Shadow DOM given from DB as `Starcounter.MergedPartial.(CompositionProvider|CompositionProvider_0).Composition$`.
-version: 4.0.0
+version: 4.1.0
 
 -->
 <!-- Import dependencies -->
@@ -19,7 +19,7 @@ version: 4.0.0
         // still needed for .selectNode
         const isSafari = isWebkit && navigator.userAgent && !navigator.userAgent.match("CriOS");
 
-        const useShadowDOMV1 = !isWebkit && Boolean(Element.prototype.attachShadow && Node.prototype.getRootNode);
+        const useShadowDOMV1 = Boolean(Element.prototype.attachShadow && Node.prototype.getRootNode);
         // && !(window.StarcounterInclude && window.StarcounterInclude.shadow === 'v0'));
         const defaultShadowCSS = '<style>:host{display:block;}</style>';
         const defaultShadowDOM = useShadowDOMV1 ? '<slot></slot>' : '<content select=":not([slot]),[slot=\'\']"></content>';
@@ -32,13 +32,74 @@ version: 4.0.0
             static get observedAttributes() {
                 return ['partial', 'view-model', 'partialId'];
             }
-            // the self argument might be provided or not
-            // in both cases, the mandatory `super()` call
-            // will return the right context/instance to use
-            // and eventually return
-            constructor(self) {
-                self = super(self);
-                this.createComponent();
+            /**
+            * Create shadowRoot, define property setters, set initial partial.
+            */
+            constructor() {
+                super();
+                this.defaultComposition = null;
+                var partialId = this.partialId;
+                var partial = this.viewModel || this.partial || undefined;
+                checkForNonNamespaced(partial, this);
+
+                // build shadow DOM
+                if(useShadowDOMV1){
+                    this.attachShadow({mode: "open"});
+                } else {
+                    this.createShadowRoot();
+                }
+                // stamp composition
+                // like this.stampComposition() without an event
+                this.shadowRoot.innerHTML = defaultShadowCSS + defaultShadowDOM;
+
+                // define a setter for partial attribute,
+                // so it could be change by VanillaJs without Polymer Template Binding
+                Object.defineProperties(this, {
+                    partial: {
+                        set: function(newValue) {
+                            partial = newValue;
+                            checkForNonNamespaced(partial, this);
+                            if(!this.template){
+                                // stamp imported tempalte attach href, and eventually model
+                                this.stampImportedTemplate();
+                            } else {
+                                // just update href and model ONLY if there is no href change
+                                if(!this._updateHref()){
+                                    this.template.model = this.partial;
+                                }
+                            }
+                            // update composition, use custom one until content is fetched to avoid FOUC
+                            this.updateComposition();
+                        },
+                        get: function() {
+                            return partial;
+                        }
+                    },
+                    viewModel: {
+                        set: function(newValue) {
+                            this.partial = newValue;
+                        },
+                        get: function() {
+                            return this.partial;
+                        }
+                    },
+                    partialId: {
+                        set: function(newValue) {
+                            // do nothing if value is the same or null is being changed to undefined
+                            if (newValue != partialId) {
+                                partialId = newValue || null;
+                                if (!partialId) {
+                                    this.removeAttribute("partial-id");
+                                } else {
+                                    this.setAttribute("partial-id", partialId);
+                                }
+                            }
+                        },
+                        get: function() {
+                            return partialId;
+                        }
+                    }
+                });
             }
             /**
              * Stamp `imported-template` into Light DOM,
@@ -50,7 +111,6 @@ version: 4.0.0
                     const starcounterInclude = this;
                     this.defaultComposition = null;
                     const importedTemplate = document.createElement('imported-template');
-
                     importedTemplate.addEventListener('stamping', function fetchCompositions(event) {
                         var mergedComposition = null;
                         var templates = event.detail.querySelectorAll('template[is="declarative-shadow-dom"],template[is="starcounter-composition"]');
@@ -65,13 +125,16 @@ version: 4.0.0
                         }
                         starcounterInclude.defaultComposition = mergedComposition;
 
-                        if (this.model != starcounterInclude.partial) {
-                            this.model = starcounterInclude.partial
+                        if (this.model !== starcounterInclude.partial) {
+                            // update entire model
+                            this.model = starcounterInclude.partial;
                         }
-                        // notify composition property
-                        // TODO: consider moving entire partialChanged or appendChild here
-                        starcounterInclude._compositionChanged();
+                        // put correct composition
+                        starcounterInclude.updateComposition();
                     });
+
+                    const href = buildURL(this.partial, this.mergedHtmlPrefix, this.defaultHtml);
+                    href && (importedTemplate.href = href);
 
                     this.appendChild(importedTemplate);
                     this.template = importedTemplate;
@@ -105,67 +168,6 @@ version: 4.0.0
             }
         }
         /**
-         * Create shadowRoot, define property setters, set unitial partial.
-         */
-        StarcounterIncludePrototype.createComponent = function StarcounterIncludeCreated() {
-            var starcounterInclude = this;
-            this.defaultComposition = null;
-            var partialId = this.partialId;
-            var partial = this.viewModel || this.partial || undefined;
-            checkForNonNamespaced(partial, this);
-
-            // build shadow DOM
-            if(useShadowDOMV1){
-                this.attachShadow({mode: "open"});
-            } else {
-                this.createShadowRoot();
-            }
-            // partialChanged will do
-            // this.stampComposition();
-
-            // define a setter for partial attribute,
-            // so it could be change by VanillaJs without Polymer Template Binding
-            Object.defineProperties(this, {
-                partial: {
-                    set: function(newValue) {
-                        partial = newValue;
-                        checkForNonNamespaced(partial, this);
-                        starcounterInclude.stampImportedTemplate();
-                        starcounterInclude.partialChanged(partial);
-                    },
-                    get: function() {
-                        return partial;
-                    }
-                },
-                viewModel: {
-                    set: function(newValue) {
-                        this.partial = newValue;
-                    },
-                    get: function() {
-                        return this.partial;
-                    }
-                },
-                partialId: {
-                    set: function(newValue) {
-                        // do nothing if value is the same or null is being changed to undefined
-                        if (newValue != partialId) {
-                            partialId = newValue || null;
-                            if (!partialId) {
-                                this.removeAttribute("partial-id");
-                            } else {
-                                this.setAttribute("partial-id", partialId);
-                            }
-                        }
-                    },
-                    get: function() {
-                        return partialId;
-                    }
-                }
-            });
-            // attach partial
-            this.partialChanged();
-        };
-        /**
          * Set partial property if partial or viewm-model attribute was changed
          */
         StarcounterIncludePrototype.attributeChangedCallback = function(name, oldVal, newVal) {
@@ -175,15 +177,14 @@ version: 4.0.0
             }
         };
         /**
-         * Updates inner `imported-template` with partial data given (if applicable)
-         * @see Starcounter/starcounter-include#partialChanged it's alsmost a copy
-         * @param  {Object} newVal new partial value
+         * Builds merged HTML URL.
+         * If the URL is different than previous importedTemplate.href,
+         * clears the template and #defaultComposition, then updates it.
+         * TODO: Check if merged HTML URL should be changed,
+         * Check if needed: Does nothing if there is no template
+         * @returns {Boolean} was the href changed?
          */
-        StarcounterIncludePrototype.partialChanged = function(newVal) {
-            this._htmlChanged();
-            this._compositionChanged();
-        };
-        StarcounterIncludePrototype._htmlChanged = function() {
+        StarcounterIncludePrototype._updateHref = function() {
             // do nothing if there is no tempalte yet
             if(!this.template){
                 return;
@@ -194,16 +195,11 @@ version: 4.0.0
                     this.defaultComposition = null;
                     this.template.clear();
                 }
-                if (!href) {
-                    this.template.href = null;
-                    if (this.template.model != this.partial) {
-                        this.template.model = this.partial
-                    }
-                } else {
-                    this.template.href = href;
-                }
-            } else if (this.template.model != this.partial) {
-                this.template.model = this.partial
+                // set the new value, unify falsy to null
+                this.template.href = href || null;
+                return true;
+            } else {
+                return false;
             }
         };
 
@@ -234,7 +230,14 @@ version: 4.0.0
                 }
             }
         }
-
+        /**
+         * @deprecated Use `starcounterInclude.shadowRoot` or `viewModel.{CompositionProvider}.Composition$`
+         * @alias #updateComposition
+         */
+        StarcounterIncludePrototype._compositionChanged = function(compositionString) {
+            console.warn('_compositionChanged, was renamed to updateComposition. Most probably you don\'t even need to use it. In most of the cases `starcounterInclude.shadowRoot` or changing the `viewModel.{CompositionProvider}.Composition$` should do the right thing.');
+            return this.updateComposition(compositionString);
+        };
         /**
          * Handles change of the composition.
          * If not given explicitely, fetches one from provider.
@@ -244,7 +247,7 @@ version: 4.0.0
          * @see .stampComposition
          * @param  {String} compositionString stringified HTML for new Shadow Root
          */
-        StarcounterIncludePrototype._compositionChanged = function(compositionString) {
+        StarcounterIncludePrototype.updateComposition = function(compositionString) {
             if (compositionString) {
                 this.explicitComposition = compositionString;
                 return this._renderCompositionChange(compositionString, () => this.stringToDocumentFragment(compositionString));
@@ -314,13 +317,55 @@ version: 4.0.0
         * @param  {Mixed} value New value
         */
         StarcounterIncludePrototype._setPendingPropertyOrPath = function (path, value) {
-            var sameModelAlreadyLoaded = this.template.model == this.partial;
-            this.partialChanged(this.partial);
-            if (sameModelAlreadyLoaded && this.template._setPendingPropertyOrPath) {
-                this.template._setPendingPropertyOrPath(
-                    path.replace("partial.", "model.")
-                        .replace("viewModel.", "model."),
-                     value);
+
+            var sameModelAlreadyLoaded = this.template.model === this.partial;
+            const newPath = path.replace("partial.", "model.")
+                .replace("viewModel.", "model.");
+            // If that's the same model, we still may need to bump
+            if(sameModelAlreadyLoaded){
+                // yey we still support both names, lets strip one or another.
+                const subPath = path.startsWith('partial.') && path.substr(8) ||
+                                path.startsWith('viewModel.') && path.substr(10);
+                // check indexOf to optimize match performance
+                const dotPos = subPath.indexOf('.');
+                // Update html and composition if needed
+                if (
+                    // it's a change of entire sub-partial
+                    dotPos === -1
+                ){
+                    // update href (when changed it will re-stamp and set the model by itself)
+                    if(!this._updateHref()){
+                        // Notify about model change
+                        if (this.template._setPendingPropertyOrPath) {
+                            this.template._setPendingPropertyOrPath(newPath, value);
+                        }
+                        // There is no chance that composition changed by changing just Apps model
+                        // TODO: unless it's Composition Provider add a test for a change for just model.CompositionProvider_0
+                    }
+                    return ;
+                }
+                else if (
+                    // it's sub-partial's .Html
+                    // subPath.matches(/[^\.]\.Html/)
+                    subPath.endsWith('.Html') &&
+                    dotPos === subPath.lastIndexOf('.')
+                ){
+                    this._updateHref();
+                    return;
+                }
+                // TODO: handle just composition change add a test for a change for just model.CompositionProvider_0.Composition$
+                // Notify about model change
+                if (this.template._setPendingPropertyOrPath) {
+                    this.template._setPendingPropertyOrPath(newPath, value);
+                }
+            } else {
+                // this.partialChanged(this.partial);
+                // Completely new partial, reload everything
+                // TODO: check if we can even get to this point
+                if(!this._updateHref()){
+                    this.template.model = this.partial;
+                }
+                this.updateComposition();
             }
         };
         /**
@@ -364,7 +409,7 @@ version: 4.0.0
             }
         };
         /**
-         * Saves given or current composition as stored one, (TODO:) notifies binding about it.
+         * Saves given or current composition as stored one, notifies binding about it.
          * @param  {String} [compositionStr] composition to be saved, if not given current one will be used
          * @TODO: to be simplified after https://github.com/StarcounterApps/CompositionProvider/pull/13 is done
          */
