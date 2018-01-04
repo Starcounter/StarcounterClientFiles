@@ -1,6 +1,6 @@
 {
   "name": "starcounter-clientfiles",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "dependencies": {
     "palindrom-client": "Palindrom/palindrom-polymer-client#^4.0.0",
