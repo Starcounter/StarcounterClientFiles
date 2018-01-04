@@ -8,7 +8,7 @@ Our team heavily uses Github for all of our software management. We use Github i
 
 If you find an issue, please do file it on the repository.
 
-We love examples for addressing issues - issues with a Plunkr, [jsFiddle](http://jsfiddle.net), or [jsBin](http://jsbin.com) will be much easier for us to work on quickly. You can start with [this jsbin](http://jsbin.com/capequ/edit?html,output) which sets up the basics to demonstrate a Juicy element.
+We love examples for addressing issues - issues with a Plunkr, [jsFiddle](http://jsfiddle.net), or [jsBin](http://jsbin.com) will be much easier for us to work on quickly. You can start with [this jsbin](http://jsbin.com/capequ/edit?html,output) which sets up the basics to demonstrate a Palindrom element.
 
 Occasionally we'll close issues if they appear stale or are too vague - please don't take this personally! Please feel free to re-open issues we've closed if there's something we've missed and they still need to be addressed.
 
@@ -16,15 +16,15 @@ Occasionally we'll close issues if they appear stale or are too vague - please d
 
 If you would like to start to fiddle with element's code, here is the flow we use.
 
-- Make a local clone of this repo: `git clone git@github.com:Juicy/juicy-redirect.git`
+- Make a local clone of this repo: `git clone git@github.com:Palindrom/palindrom-redirect.git`
 
 In order to develop it locally we suggest to use [polyserve](https://npmjs.com/polyserve) tool to handle bower paths gently.
 
-0. Go to the repo's directory: `cd juicy-redirect`
+0. Go to the repo's directory: `cd palindrom-redirect`
 1. Install [bower](http://bower.io/) & [polyserve](https://npmjs.com/polyserve): `$ npm install -g bower polyserve`
 2. Install local dependencies: `$ bower install`
 3. Start development server `$ polyserve -p 8000`
-4. Open the demo/preview: [http://localhost:8000/components/juicy-redirect/](http://localhost:8000/components/juicy-redirect/)
+4. Open the demo/preview: [http://localhost:8000/components/palindrom-redirect/](http://localhost:8000/components/palindrom-redirect/)
 
 ## Contributing Pull Requests
 

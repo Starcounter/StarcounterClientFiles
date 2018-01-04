@@ -1,6 +1,6 @@
 {
   "name": "palindrom-redirect",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "description": "Custom Element that redirects to a new URL when an attribute is changed. It's also being listened by Palindrom.",
   "license": "MIT",
   "main": "palindrom-redirect.html",
