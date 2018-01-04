@@ -3,8 +3,8 @@
 Custom Element (w/ Polymer's TemplateBinding)
 with predefined template content, which should be used to include partials.
 It's just <imported-template> wrapped within Shadow Root for `declarative-shadow-dom` bindable by layout editor.
-Uses Shadow DOM given from DB as `Starcounter.MergedPartial.(CompositionProvider|CompositionProvider_0).Composition$`.
-version: 4.1.0
+Uses Shadow DOM given from DB as `Starcounter.MergedPartial.{_compositionProvider_}.Composition$`.
+version: 4.2.0
 
 -->
 <!-- Import dependencies -->
@@ -231,11 +231,11 @@ version: 4.1.0
             }
         }
         /**
-         * @deprecated Use `starcounterInclude.shadowRoot` or `viewModel.{CompositionProvider}.Composition$`
+         * @deprecated Use `starcounterInclude.shadowRoot` or `viewModel.{compositionProvider}.Composition$`
          * @alias #updateComposition
          */
         StarcounterIncludePrototype._compositionChanged = function(compositionString) {
-            console.warn('_compositionChanged, was renamed to updateComposition. Most probably you don\'t even need to use it. In most of the cases `starcounterInclude.shadowRoot` or changing the `viewModel.{CompositionProvider}.Composition$` should do the right thing.');
+            console.warn('_compositionChanged, was renamed to updateComposition. Most probably you don\'t even need to use it. In most of the cases `starcounterInclude.shadowRoot` or changing the `viewModel.{compositionProvider}.Composition$` should do the right thing.');
             return this.updateComposition(compositionString);
         };
         /**
@@ -253,7 +253,7 @@ version: 4.1.0
                 return this._renderCompositionChange(compositionString, () => this.stringToDocumentFragment(compositionString));
             }
             else {
-                const compositionProvider = this.partial && findCompositionProvider(this.partial);
+                const compositionProvider = this.partial && this.partial[this.compositionProvider];
 
                 if (compositionProvider) {
                     this.partialId = compositionProvider.PartialId;
@@ -340,7 +340,7 @@ version: 4.1.0
                             this.template._setPendingPropertyOrPath(newPath, value);
                         }
                         // There is no chance that composition changed by changing just Apps model
-                        // TODO: unless it's Composition Provider add a test for a change for just model.CompositionProvider_0
+                        // TODO: unless it's Composition Provider add a test for a change for just model.{compositionProvider}
                     }
                     return ;
                 }
@@ -353,7 +353,7 @@ version: 4.1.0
                     this._updateHref();
                     return;
                 }
-                // TODO: handle just composition change add a test for a change for just model.CompositionProvider_0.Composition$
+                // TODO: handle just composition change add a test for a change for just model.{compositionProvider}.Composition$
                 // Notify about model change
                 if (this.template._setPendingPropertyOrPath) {
                     this.template._setPendingPropertyOrPath(newPath, value);
@@ -415,10 +415,10 @@ version: 4.1.0
          */
         StarcounterIncludePrototype.saveLayout = function(compositionStr){
             compositionStr = compositionStr || this.shadowRoot.innerHTML;
-            findCompositionProvider(this.partial).Composition$ = compositionStr;
+            this.partial[this.compositionProvider].Composition$ = compositionStr;
             this.dispatchEvent(new CustomEvent("starcounter-include-composition-saved", {detail: compositionStr}));
             // trigger polymer-notification-protocol-compilant event
-            var notificationPath = findCompositionProviderPath(this.partial) + '.Composition$';
+            var notificationPath = this.compositionProvider + '.Composition$';
             this.dispatchEvent(new CustomEvent("partial-changed", {detail: {value: compositionStr, path: 'partial.' + notificationPath}}));
             this.dispatchEvent(new CustomEvent("view-model-changed", {detail: {value: compositionStr, path: 'viewModel.' + notificationPath}}));
         };
@@ -438,23 +438,13 @@ version: 4.1.0
             }
             return range.createContextualFragment(htmlStr);
         }
-
         /**
-         * Find composition provider scope in given marged/namespaced view-model
-         * @param  {Object} obj namespaced view-model
-         * @return {Object}     Composition Provider scope
+         * Composition provider key.
+         * The place which the element will check for compositions.
+         * Could be overwritten per instance or globally if you change the prototype.
+         * @type {String}
          */
-        function findCompositionProvider(obj) {
-            return obj.CompositionProvider || obj.CompositionProvider_0;
-        };
-        /**
-         * Find composition provider path in given marged/namespaced view-model
-         * @param  {Object} obj namespaced view-model
-         * @return {String}     path to Composition Provider scope
-         */
-        function findCompositionProviderPath(obj) {
-            return obj.CompositionProvider && 'CompositionProvider'|| obj.CompositionProvider_0 && 'CompositionProvider_0';
-        };
+        StarcounterIncludePrototype.compositionProvider = 'CompositionProvider_0';
 
         /**
          * Check if given viewModel is non-namespace (contains `.Html` property)
