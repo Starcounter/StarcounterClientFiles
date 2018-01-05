@@ -1,18 +1,17 @@
 bower check-new     Checking for new versions of the project dependencies...
 starcounter-clientfiles#2.1.0 C:\Work\Starcounter\StarcounterClientFiles
-├─┬ bootswatch#3.3.7 (latest is 4.0.0-beta.2)
+├─┬ bootswatch#3.3.7 (latest is 4.0.0-beta.3)
 │ └── bootstrap not installed
 ├─┬ imported-template#3.1.1
 │ └── juicy-html#3.0.0
 ├── juicy-redirect#0.6.0
 ├─┬ palindrom-client#4.0.3
-│ ├── Palindrom#3.0.9
+│ ├── Palindrom#3.1.0
 │ └─┬ polymer#2.3.1 incompatible with ^1.11.0 (1.11.2 available, latest is 2.4.0-rc.1)
 │   ├── shadycss#1.1.0
 │   └── webcomponentsjs#1.0.22
 ├── palindrom-redirect#1.0.0
 ├── polymer#2.3.1 (2.4.0-rc.1 available)
-├── puppet-redirect#0.7.0 extraneous (latest is 1.0.0)
 ├─┬ starcounter-include#4.2.0
 │ ├── imported-template#3.1.1
 │ └── translate-shadowdom#0.0.5
