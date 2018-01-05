@@ -27,4 +27,4 @@ Currently, the developer process looks like follows:
 11. You don't need a reviewer for this PR. Simply do something similar to what @warpech did in https://github.com/Starcounter/level1/pull/4420 and give the link to the PR in StarcounterClientFiles where it was reviewed in more detail.
 12. Merge the PR to `develop`.
 
-**Warning!** Before we decide to include Polymer 2 in Starcounter 2.4, omit the steps 7-10.
+**Warning!** Before we decide to include Polymer 2 in Starcounter 2.4, omit the steps 7-12.
