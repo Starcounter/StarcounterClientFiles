@@ -1,4 +1,4 @@
-/*! Palindrom, version: 3.0.9 */
+/*! Palindrom, version: 3.1.0 */
 var PalindromDOM =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -1601,6 +1601,9 @@ process.umask = function() { return 0; };
  * MIT license
  */
 
+/* this variable is bumped automatically when you call npm version */
+const palindromVersion = '3.1.0';
+
 const { applyPatch, validate } = __webpack_require__(33);
 const JSONPatcherProxy = __webpack_require__(38);
 const JSONPatchQueueSynchronous = __webpack_require__(3)
@@ -1815,7 +1818,29 @@ const Palindrom = (() => {
       onFatalError && (this.onFatalError = onFatalError);
       onStateChange && (this.onStateChange = onStateChange);
       onSocketOpened && (this.onSocketOpened = onSocketOpened);
-      this._useWebSocket = useWebSocket || false;
+      
+      Object.defineProperty(this, 'useWebSocket', {
+        get: function() {
+          return useWebSocket;
+        },
+        set: (newValue) => {
+          useWebSocket = newValue;
+  
+          if (newValue == false) {
+            if (this._ws) {
+              this._ws.onclose = function() {
+                //overwrites the previous onclose
+                this._ws = null;
+              };
+              this._ws.close();
+            }
+            // define wsUrl if needed
+          } else if (!this.wsUrl) {
+            this.wsUrl = toWebSocketURL(this.remoteUrl.href);
+          }
+          return useWebSocket;
+        }
+      });
     }
     get useWebSocket() {
       return this._useWebSocket;
@@ -1876,7 +1901,7 @@ const Palindrom = (() => {
      * @param {String} [JSONPatch_sequences] message with Array of JSONPatches that were send by remote.
      * @return {[type]} [description]
      */
-    onReceive() /*String_with_JSONPatch_sequences*/ {
+    onReceive(/*String_with_JSONPatch_sequences*/) {
     }
 
     onSend() {}
@@ -2131,7 +2156,19 @@ const Palindrom = (() => {
    * @param {Object} [options] map of arguments. See README.md for description
    */
   class Palindrom {
+    /**
+     * Palindrom version
+     */
+    static get version() { 
+      return palindromVersion
+    }
+
     constructor(options) {
+      /**
+       * Palindrom instance version
+       */
+      this.version = palindromVersion;
+
       if (typeof options !== 'object') {
         throw new TypeError(
           'Palindrom constructor requires an object argument.'
@@ -4588,6 +4625,7 @@ module.exports = g;
  * (c) 2017 Joachim Wester
  * MIT license
  */
+
 const Palindrom = __webpack_require__(12);
 
 const PalindromDOM = (() => {
@@ -4624,6 +4662,7 @@ const PalindromDOM = (() => {
       this.element = options.listenTo || document.body;
       this.clickHandler = this.clickHandler.bind(this);
       this.historyHandler = this.historyHandler.bind(this);
+      this.morphUrlEventHandler = this.morphUrlEventHandler.bind(this);
 
       this.historyHandlerDeprecated = () => {
         console.warn(
@@ -4637,6 +4676,7 @@ const PalindromDOM = (() => {
         'palindrom-redirect-pushstate',
         this.historyHandler
       );
+
       /* backward compatibility: for people using old puppet-redirect */
       this.element.addEventListener(
         'puppet-redirect-pushstate',
@@ -4648,6 +4688,11 @@ const PalindromDOM = (() => {
       this.listening = true;
       this.element.addEventListener('click', this.clickHandler);
       window.addEventListener('popstate', this.historyHandler); //better here than in constructor, because Chrome triggers popstate on page load
+
+      this.element.addEventListener(
+        'palindrom-morph-url',
+        this.morphUrlEventHandler
+      );
 
       this.element.addEventListener(
         'palindrom-redirect-pushstate',
@@ -4668,6 +4713,11 @@ const PalindromDOM = (() => {
       this.element.removeEventListener(
         'palindrom-redirect-pushstate',
         this.historyHandler
+      );
+
+      this.element.removeEventListener(
+        'palindrom-morph-url',
+        this.morphUrlEventHandler
       );
 
       /* backward compatibility: for people using old puppet-redirect */
@@ -4698,8 +4748,8 @@ const PalindromDOM = (() => {
           window.scrollTo(0, 0);
         } else {
           // if somehow someone manages to navigate twice in a 100ms,
-          // we don't scroll for their first navigation, i.e de-bouncing 
-          
+          // we don't scroll for their first navigation, i.e de-bouncing
+
           this.scrollAsyncTimeout = setTimeout(() => {
             // does that anchor exist in the page?
             const anchorTarget = document.querySelector(anchor); // look for #element-id
@@ -4724,6 +4774,14 @@ const PalindromDOM = (() => {
       window && window.scrollTo(0, 0);
     }
 
+    /**
+     * Handles `palindrom-morph-url` event and channels its `detail.url` to `morphUrl`
+     * @param {palindrom-morph-url Event} event 
+     */
+    morphUrlEventHandler(event) {
+      this.morphUrl(event.detail.url);
+    }
+
     clickHandler(event) {
       //Don't morph ctrl/cmd + click & middle mouse button
       if (event.ctrlKey || event.metaKey || event.which == 2) {
@@ -4738,16 +4796,22 @@ const PalindromDOM = (() => {
       let target = event.target;
 
       if (target.nodeName !== 'A') {
-        for (let i = 0; i < event.path.length; i++) {
-          if (event.path[i].nodeName == 'A') {
-            target = event.path[i];
+        let eventPath = event.composedPath && event.composedPath();
+        if(!eventPath) {
+          // for backwards compatibility with SDv0
+          eventPath = event.path;
+        }
+        for (let i = 0; i < eventPath.length; i++) {
+          if (eventPath[i].nodeName == 'A') {
+            target = eventPath[i];
             break;
           }
         }
       }
       const anchorTarget = target.target || target.getAttribute('target');
+      const hasDownloadAttribute = target.hasAttribute('download');
 
-      if (!anchorTarget || anchorTarget === '_self') {
+      if (!hasDownloadAttribute && (!anchorTarget || anchorTarget === '_self')) {
         //needed since Polymer 0.2.0 in Chrome stable / Web Plaftorm features disabled
         //because target.href returns undefined for <polymer-ui-menu-item href="..."> (which is an error)
         //while target.getAttribute("href") returns desired href (as string)

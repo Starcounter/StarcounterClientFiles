@@ -4,6 +4,9 @@
  * MIT license
  */
 
+/* this variable is bumped automatically when you call npm version */
+const palindromVersion = '3.1.0';
+
 const { applyPatch, validate } = require('fast-json-patch');
 const JSONPatcherProxy = require('jsonpatcherproxy');
 const JSONPatchQueueSynchronous = require('json-patch-queue')
@@ -218,7 +221,29 @@ const Palindrom = (() => {
       onFatalError && (this.onFatalError = onFatalError);
       onStateChange && (this.onStateChange = onStateChange);
       onSocketOpened && (this.onSocketOpened = onSocketOpened);
-      this._useWebSocket = useWebSocket || false;
+      
+      Object.defineProperty(this, 'useWebSocket', {
+        get: function() {
+          return useWebSocket;
+        },
+        set: (newValue) => {
+          useWebSocket = newValue;
+  
+          if (newValue == false) {
+            if (this._ws) {
+              this._ws.onclose = function() {
+                //overwrites the previous onclose
+                this._ws = null;
+              };
+              this._ws.close();
+            }
+            // define wsUrl if needed
+          } else if (!this.wsUrl) {
+            this.wsUrl = toWebSocketURL(this.remoteUrl.href);
+          }
+          return useWebSocket;
+        }
+      });
     }
     get useWebSocket() {
       return this._useWebSocket;
@@ -279,7 +304,7 @@ const Palindrom = (() => {
      * @param {String} [JSONPatch_sequences] message with Array of JSONPatches that were send by remote.
      * @return {[type]} [description]
      */
-    onReceive() /*String_with_JSONPatch_sequences*/ {
+    onReceive(/*String_with_JSONPatch_sequences*/) {
     }
 
     onSend() {}
@@ -534,7 +559,19 @@ const Palindrom = (() => {
    * @param {Object} [options] map of arguments. See README.md for description
    */
   class Palindrom {
+    /**
+     * Palindrom version
+     */
+    static get version() { 
+      return palindromVersion
+    }
+
     constructor(options) {
+      /**
+       * Palindrom instance version
+       */
+      this.version = palindromVersion;
+
       if (typeof options !== 'object') {
         throw new TypeError(
           'Palindrom constructor requires an object argument.'
