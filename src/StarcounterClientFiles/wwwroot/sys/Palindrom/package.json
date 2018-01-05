@@ -1,6 +1,6 @@
 {
   "name": "palindrom",
-  "version": "3.0.9",
+  "version": "3.1.0",
   "description": "",
   "license": "MIT",
   "homepage": "https://github.com/palindrom/Palindrom",
@@ -40,7 +40,7 @@
     "websocket": "^1.0.24"
   },
   "devDependencies": {
-    "babili-webpack-plugin": "^0.1.1",
+    "babili-webpack-plugin": "0.1.1",
     "bluebird": "^3.5.0",
     "bluebird-retry": "^0.10.1",
     "chai": "^3.5.0",
@@ -57,7 +57,7 @@
     "webpack": "^2.7.0"
   },
   "scripts": {
-    "version": "webpack && git add -A",
+    "version": "node ./bump-version.js && webpack && git add -A",
     "test-sauce": "webpack && node test/Sauce/Runner.js",
     "test": "mocha test/runner.js",
     "test-full": "mocha test/runner.js && webpack && node test/Sauce/Runner.js",
