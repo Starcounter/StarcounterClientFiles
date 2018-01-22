@@ -1,0 +1,222 @@
+/**
+ * Uniform.css
+ * (c) Starcounter
+ */
+
+/**
+ * .uniform-label-control
+ * Puts slotted input in the left column, everything else in the right column
+ */
+
+ :root {
+  --default: var(--light);
+  --primary: var(--blue);
+  --secondary: var(--blue);
+  --success: var(--green);
+  --danger: var(--red);
+  --info: var(--cyan);
+  --warning: var(--yellow);
+  --disabled: var(--light-gray);
+ }
+
+ .primary:not([disabled]),
+ .success:not([disabled]),
+ .danger:not([disabled]) {
+    color: white;
+    border: none
+ }
+
+ .primary:not([disabled]):hover,
+ .success:not([disabled]):hover,
+ .danger:not([disabled]):hover {
+    filter: brightness(110%);
+ }
+
+ .primary:not([disabled]) {
+    background-color: var(--primary);
+ }
+
+ .success:not([disabled]) {
+    background-color: var(--success);
+ }
+
+ .danger:not([disabled]) {
+    background-color: var(--danger);
+ }
+
+
+
+.uniform-label-control {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  grid-column-gap: 10px;
+  align-items: baseline;
+}
+
+.uniform-label-control > * /* , .uniform-label-control > *, .uniform-label-control > ::slotted(*) */ {
+  grid-column: 2 / 3;
+  width: 100%;
+}
+
+.uniform-label-control > label /* , .uniform-label-control > ::slotted(label) */ {
+  text-align: left;
+  grid-column: 1 / 2;
+}
+
+.uniform-label-control > label.of-paper-input /* , .uniform-label-control > ::slotted(label.of-paper-input) */ {
+  align-self: end;
+  padding-bottom: 6px;
+}
+
+/** 
+ *
+ */
+
+.uniform-button-primary button /* , .uniform-button-primary::slotted(button) */ {
+  color: #fff !important;
+  background-color: var(--blue, #0084B4);
+  border: 0.1rem solid var(--blue, #0084B4);
+  border-radius: 3px !important;
+  height: inherit !important;
+}
+
+.uniform-button-primary:hover button /* , .uniform-button-primary:hover::slotted(button), .uniform-button-primary:focus button, .uniform-button-primary:focus::slotted(button) */ {
+  background-color: var(--blue) !important;
+}
+
+.uniform-button-success button /* , .uniform-button-success::slotted(button) */ {
+  background-color: var(--green, #3fa13f) !important;
+  color: var(--white, #fff) !important;
+}
+
+.uniform-button-success:hover button /* , .uniform-button-success:hover::slotted(button), .uniform-button-success:focus button, .uniform-button-success:focus::slotted(button) */ {
+  background-color: darkgreen !important;
+}
+
+.uniform-pagination {
+  border: 1px solid var(--light-gray, #e1e1e1);
+  border-radius: 5px;
+  height: 36px;
+  padding: 1px;
+}
+
+.uniform-pagination > span,
+.uniform-pagination > a,
+.uniform-pagination > button
+/*.uniform-pagination > ::slotted(*) */ {
+  all: initial;
+  font-family: inherit;
+  font-size: 1em;
+  padding: 0 5px;
+  margin: 5px 2px;
+  border: 1px solid #fff;
+  color: #0084b4;
+  cursor: pointer;
+  display: inline-block;
+
+}
+
+button.button-outline,
+input[type="button"].button-outline,
+input[type="reset"].button-outline,
+input[type="submit"].button-outline {
+  background-color: transparent;
+  color: var(--blue, #0084b4);
+}
+
+button.button-outline:focus,
+button.button-outline:hover,
+input[type="button"].button-outline:focus,
+input[type="button"].button-outline:hover,
+input[type="reset"].button-outline:focus,
+input[type="reset"].button-outline:hover,
+input[type="submit"].button-outline:focus,
+input[type="submit"].button-outline:hover {
+  background-color: transparent;
+  border-color: #606c76;
+  color: #606c76;
+}
+
+button.button-outline[disabled]:focus,
+button.button-outline[disabled]:hover,
+input[type="button"].button-outline[disabled]:focus,
+input[type="button"].button-outline[disabled]:hover,
+input[type="reset"].button-outline[disabled]:focus,
+input[type="reset"].button-outline[disabled]:hover,
+input[type="submit"].button-outline[disabled]:focus,
+input[type="submit"].button-outline[disabled]:hover {
+  border-color: inherit;
+  color: #868e96;
+}
+
+
+
+.uniform-pagination > .active /* , .uniform-pagination > ::slotted(.active) */ {
+  border: 1px solid #0084b4;
+}
+
+.uniform-pagination > :disabled, [disabled] /* , .uniform-pagination > ::slotted(:disabled , [disabled]) */ {
+    background: #eee;
+    color: #aaa;
+  }
+  
+
+.uniform-pagination > .previous /* , .uniform-pagination > ::slotted(.previous) */ {
+  padding-right: 1em;
+  border: 2px solid transparent;
+  border-right: 2px solid #ddd;
+  margin: 0px;
+  margin-right: 8px;
+  margin-left: 6px
+}
+
+.uniform-pagination > .next /* , .uniform-pagination > ::slotted(.next) */ {
+  padding-left: 1em;
+  border: 2px solid transparent;
+  border-left: 2px solid #ddd;
+  margin-left: 8px;
+  margin-right: 6px
+}
+
+.uniform-pagination > span:hover:not(.active):not(.previous):not(.next):not(:disabled):not([disabled]) /* , .uniform-pagination > ::slotted(span:hover:not(.active)) */ {
+  border: 1px solid rgb(105, 206, 243);
+}
+
+.uniform-form > div {
+    margin-bottom: 20px;
+}
+.uniform-form > div:last-child {
+    margin-bottom: 10px;
+}
+
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-info {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+.alert-danger {
+  color: var(--white, #fff);
+  background-color: var(--red, #df4534);
+  border-color: var(--red, #df4534);
+}
+
+.alert-success {
+  color: var(--white, #fff);
+  background-color: var(--green, #3fa13f);
+  border-color: var(--green, #3fa13f);
+}
+
+.alert-warning {
+  color: var(--white, #fff);
+  background-color: var(--orange, #f0ad4e);
+  border-color: var(--orange, #f0ad4e);
+}
