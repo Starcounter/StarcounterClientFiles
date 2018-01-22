@@ -53,7 +53,7 @@
   align-items: baseline;
 }
 
-.uniform-label-control > * , .uniform-label-control > *, .uniform-label-control > ::slotted(*) {
+.uniform-label-control > *, .uniform-label-control > ::slotted(*) {
   grid-column: 2 / 3;
   width: 100%;
 }
