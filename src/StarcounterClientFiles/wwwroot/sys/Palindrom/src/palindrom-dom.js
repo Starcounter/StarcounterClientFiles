@@ -3,6 +3,7 @@
  * (c) 2017 Joachim Wester
  * MIT license
  */
+
 const Palindrom = require('./palindrom');
 
 const PalindromDOM = (() => {
@@ -39,23 +40,12 @@ const PalindromDOM = (() => {
       this.element = options.listenTo || document.body;
       this.clickHandler = this.clickHandler.bind(this);
       this.historyHandler = this.historyHandler.bind(this);
-
-      this.historyHandlerDeprecated = () => {
-        console.warn(
-          "`puppet-redirect-pushstate` event is deprecated, please use `palindrom-redirect-pushstate`, if you're using `puppet-redirect`, please upgrade to `palindrom-redirect`"
-        );
-        this.historyHandler();
-      };
+      this.morphUrlEventHandler = this.morphUrlEventHandler.bind(this);
 
       /* in some cases, people emit redirect requests before `listen` is called */
       this.element.addEventListener(
         'palindrom-redirect-pushstate',
         this.historyHandler
-      );
-      /* backward compatibility: for people using old puppet-redirect */
-      this.element.addEventListener(
-        'puppet-redirect-pushstate',
-        this.historyHandlerDeprecated
       );
     }
 
@@ -65,14 +55,13 @@ const PalindromDOM = (() => {
       window.addEventListener('popstate', this.historyHandler); //better here than in constructor, because Chrome triggers popstate on page load
 
       this.element.addEventListener(
-        'palindrom-redirect-pushstate',
-        this.historyHandler
+        'palindrom-morph-url',
+        this.morphUrlEventHandler
       );
 
-      /* backward compatibility: for people using old puppet-redirect */
       this.element.addEventListener(
-        'puppet-redirect-pushstate',
-        this.historyHandlerDeprecated
+        'palindrom-redirect-pushstate',
+        this.historyHandler
       );
     }
     unlisten() {
@@ -85,10 +74,9 @@ const PalindromDOM = (() => {
         this.historyHandler
       );
 
-      /* backward compatibility: for people using old puppet-redirect */
       this.element.removeEventListener(
-        'puppet-redirect-pushstate',
-        this.historyHandlerDeprecated
+        'palindrom-morph-url',
+        this.morphUrlEventHandler
       );
     }
 
@@ -113,8 +101,8 @@ const PalindromDOM = (() => {
           window.scrollTo(0, 0);
         } else {
           // if somehow someone manages to navigate twice in a 100ms,
-          // we don't scroll for their first navigation, i.e de-bouncing 
-          
+          // we don't scroll for their first navigation, i.e de-bouncing
+
           this.scrollAsyncTimeout = setTimeout(() => {
             // does that anchor exist in the page?
             const anchorTarget = document.querySelector(anchor); // look for #element-id
@@ -139,6 +127,14 @@ const PalindromDOM = (() => {
       window && window.scrollTo(0, 0);
     }
 
+    /**
+     * Handles `palindrom-morph-url` event and channels its `detail.url` to `morphUrl`
+     * @param {palindrom-morph-url Event} event 
+     */
+    morphUrlEventHandler(event) {
+      this.morphUrl(event.detail.url);
+    }
+
     clickHandler(event) {
       //Don't morph ctrl/cmd + click & middle mouse button
       if (event.ctrlKey || event.metaKey || event.which == 2) {
@@ -153,16 +149,22 @@ const PalindromDOM = (() => {
       let target = event.target;
 
       if (target.nodeName !== 'A') {
-        for (let i = 0; i < event.path.length; i++) {
-          if (event.path[i].nodeName == 'A') {
-            target = event.path[i];
+        let eventPath = event.composedPath && event.composedPath();
+        if(!eventPath) {
+          // for backwards compatibility with SDv0
+          eventPath = event.path;
+        }
+        for (let i = 0; i < eventPath.length; i++) {
+          if (eventPath[i].nodeName == 'A') {
+            target = eventPath[i];
             break;
           }
         }
       }
       const anchorTarget = target.target || target.getAttribute('target');
+      const hasDownloadAttribute = target.hasAttribute('download');
 
-      if (!anchorTarget || anchorTarget === '_self') {
+      if (!hasDownloadAttribute && (!anchorTarget || anchorTarget === '_self')) {
         //needed since Polymer 0.2.0 in Chrome stable / Web Plaftorm features disabled
         //because target.href returns undefined for <polymer-ui-menu-item href="..."> (which is an error)
         //while target.getAttribute("href") returns desired href (as string)
@@ -208,25 +210,7 @@ const PalindromDOM = (() => {
       );
     }
   }
-
-  PalindromDOM.prototype = Object.create(Palindrom.prototype);
-
-  /* backward compatibility, not sure if this is good practice */
-  if (typeof global === 'undefined') {
-    if (typeof window !== 'undefined') {
-      /* incase neither window nor global existed, e.g React Native */
-      var global = window;
-    } else {
-      var global = {};
-    }
-  }
-  global.PuppetDOM = PalindromDOM;
-
-  /* Since we have Palindrom bundled,
-  let's expose it in case anyone needs it */
-  global.Puppet = Palindrom;
-  global.Palindrom = Palindrom;
-
+  
   return PalindromDOM;
 })();
 

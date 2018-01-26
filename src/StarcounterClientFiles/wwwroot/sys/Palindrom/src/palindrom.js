@@ -4,6 +4,13 @@
  * MIT license
  */
 
+/* this variable is bumped automatically when you call npm version */
+const palindromVersion = '5.0.0';
+
+const CLIENT = 'Client';
+const SERVER = 'Server';
+
+
 const { applyPatch, validate } = require('fast-json-patch');
 const JSONPatcherProxy = require('jsonpatcherproxy');
 const JSONPatchQueueSynchronous = require('json-patch-queue')
@@ -13,6 +20,10 @@ const JSONPatchOT = require('json-patch-ot');
 const JSONPatchOTAgent = require('json-patch-ot-agent');
 const URL = require('./URL');
 const axios = require('axios');
+const {
+  PalindromError,
+  PalindromConnectionError
+} = require('./palindrom-errors');
 
 /* We are going to hand `websocket` lib as an external to webpack
   (see: https://webpack.js.org/configuration/externals/), 
@@ -23,7 +34,7 @@ const NodeWebSocket = require('websocket').w3cwebsocket;
 
 /* this allows us to stub WebSockets */
 if (!global.WebSocket && NodeWebSocket) {
-  /* we are in production env */
+  /* we are in Node production env */
   var WebSocket = NodeWebSocket;
 } else if (global.WebSocket) {
   /* we are in testing env */
@@ -133,7 +144,7 @@ const Palindrom = (() => {
    * @param intervalMs if no request will be sent in that time, a heartbeat will be issued
    * @param timeoutMs should a response fail to arrive in this time, `onError` will be called
    * @constructor
-     */
+   */
   function Heartbeat(sendHeartbeatAction, onError, intervalMs, timeoutMs) {
     let scheduledSend;
     let scheduledError;
@@ -162,7 +173,14 @@ const Palindrom = (() => {
       }
       scheduledError = setTimeout(() => {
         scheduledError = null;
-        onError(); // timeout has passed and response hasn't arrived
+        onError(
+          new PalindromConnectionError(
+            "Timeout has passed and response hasn't arrived",
+            CLIENT,
+            this.remoteUrl,
+            'Unknown'
+          )
+        ); // timeout has passed and response hasn't arrived
       }, timeoutMs);
     };
 
@@ -218,7 +236,29 @@ const Palindrom = (() => {
       onFatalError && (this.onFatalError = onFatalError);
       onStateChange && (this.onStateChange = onStateChange);
       onSocketOpened && (this.onSocketOpened = onSocketOpened);
-      this._useWebSocket = useWebSocket || false;
+
+      Object.defineProperty(this, 'useWebSocket', {
+        get: function() {
+          return useWebSocket;
+        },
+        set: newValue => {
+          useWebSocket = newValue;
+
+          if (newValue == false) {
+            if (this._ws) {
+              this._ws.onclose = function() {
+                //overwrites the previous onclose
+                this._ws = null;
+              };
+              this._ws.close();
+            }
+            // define wsUrl if needed
+          } else if (!this.wsUrl) {
+            this.wsUrl = toWebSocketURL(this.remoteUrl.href);
+          }
+          return useWebSocket;
+        }
+      });
     }
     get useWebSocket() {
       return this._useWebSocket;
@@ -279,8 +319,7 @@ const Palindrom = (() => {
      * @param {String} [JSONPatch_sequences] message with Array of JSONPatches that were send by remote.
      * @return {[type]} [description]
      */
-    onReceive() /*String_with_JSONPatch_sequences*/ {
-    }
+    onReceive(/*String_with_JSONPatch_sequences*/) {}
 
     onSend() {}
     onStateChange() {}
@@ -306,8 +345,20 @@ const Palindrom = (() => {
         onSocketOpenCallback && onSocketOpenCallback(event);
       };
       this._ws.onmessage = event => {
-        const parsedMessage = JSON.parse(event.data);
-        this.onReceive(parsedMessage, this._ws.url, 'WS');
+        try {
+          var parsedMessage = JSON.parse(event.data);
+        } catch (e) {
+          this.onFatalError(
+            new PalindromConnectionError(
+              event.data,
+              SERVER,
+              this._ws.url,
+              'WS'
+            )
+          );
+          return;
+        }
+        this.onReceive(parsedMessage, this._ws.url, 'WS');        
       };
       this._ws.onerror = event => {
         this.onStateChange(this._ws.readyState, upgradeURL, event.data);
@@ -316,15 +367,17 @@ const Palindrom = (() => {
           return;
         }
 
-        const m = {
-          statusText: 'WebSocket connection could not be made.',
-          readyState: this._ws.readyState,
-          url: upgradeURL
-        };
+        const message = [
+          'WebSocket connection could not be made',
+          'readyState: ' + this._ws.readyState
+        ].join('\n');
 
-        this.onFatalError(m, upgradeURL, 'WS');
+        this.onFatalError(
+          new PalindromConnectionError(message, CLIENT, upgradeURL, 'WS')
+        );
       };
       this._ws.onclose = event => {
+
         this.onStateChange(
           this._ws.readyState,
           upgradeURL,
@@ -333,18 +386,30 @@ const Palindrom = (() => {
           event.reason
         );
 
-        const m = {
-          statusText: 'WebSocket connection closed.',
-          readyState: this._ws.readyState,
-          url: upgradeURL,
-          statusCode: event.code,
-          reason: event.reason
-        };
-
         if (event.reason) {
-          this.onFatalError(m, upgradeURL, 'WS');
+
+          const message = [
+            'WebSocket connection closed unexpectedly.',
+            'reason: ' + event.reason,
+            'readyState: ' + this._ws.readyState, 
+            'stateCode: ' + event.code
+          ].join('\n');
+
+          this.onFatalError(
+            new PalindromConnectionError(message, SERVER, upgradeURL, 'WS')
+          );
+          
         } else if (!event.wasClean) {
-          this.onConnectionError();
+          const message = [
+            'WebSocket connection closed unexpectedly.',
+            'reason: ' + event.reason,
+            'readyState: ' + this._ws.readyState,
+            'stateCode: ' + event.code
+          ].join('\n');
+
+          this.onConnectionError(
+            new PalindromConnectionError(message, SERVER, upgradeURL, 'WS')
+          );
         }
       };
     }
@@ -363,7 +428,7 @@ const Palindrom = (() => {
 
     changeState(href) {
       console.warn(
-        "Palindrom: changeState was renamed to `getPatchUsingHTTP`, and they're both not recommended to use, please use `PalindromDOM.morphUrl` instead"
+        "changeState was renamed to `getPatchUsingHTTP`, and they're both not recommended to use, please use `PalindromDOM.morphUrl` instead"
       );
       return this.getPatchUsingHTTP(href);
     }
@@ -371,10 +436,17 @@ const Palindrom = (() => {
     // TODO:(tomalec)[cleanup] hide from public API.
     setRemoteUrl(remoteUrl) {
       if (this.remoteUrlSet && this.remoteUrl && this.remoteUrl != remoteUrl) {
-        throw new Error(
-          `Session lost. Server replied with a different session ID that was already set. \nPossibly a server restart happened while you were working. \nPlease reload the page.\n\nPrevious session ID: ${this
-            .remoteUrl}\nNew session ID: ${remoteUrl}`
-        );
+
+        const message = [
+          'Session lost.',
+          'Server replied with a different session ID than the already set one.',
+          'Possibly a server restart happened while you were working.',
+          'Please reload the page.',
+          'Previous session ID: ' + this.remoteUrl,
+          'New session ID: ' + remoteUrl
+        ].join('\n');
+
+        throw new PalindromError(message);
       }
       this.remoteUrlSet = true;
       this.remoteUrl = new URL(remoteUrl, this.remoteUrl.href);
@@ -430,24 +502,29 @@ const Palindrom = (() => {
 
           if (res) {
             var statusCode = res.status;
-            var statusText = res.statusText;
+            var statusText = res.statusText || res.data;
             var reason = res.data;
           } else {
             // no sufficient error information, we need to create on our own
             var statusCode = -1;
-            var statusText = `An unknown network error has occurred. Raw message: ${error.message}`;
+            var statusText = `An unknown network error has occurred. Raw message: ${
+              error.message
+            }`;
             var reason = 'Maybe you lost connection with the server';
             // log it for verbosity
             console.error(error);
           }
+
+          const message = [
+            statusText,
+            'statusCode: ' + statusCode,
+            'reason: ' + reason,
+            'url: ' + url,
+            'HTTP method: ' + method
+          ].join('\n');
+
           this.onFatalError(
-            {
-              statusCode,
-              statusText,
-              reason
-            },
-            url,
-            method
+            new PalindromConnectionError(message, CLIENT, url, method)
           );
         });
 
@@ -534,7 +611,19 @@ const Palindrom = (() => {
    * @param {Object} [options] map of arguments. See README.md for description
    */
   class Palindrom {
+    /**
+     * Palindrom version
+     */
+    static get version() {
+      return palindromVersion;
+    }
+
     constructor(options) {
+      /**
+       * Palindrom instance version
+       */
+      this.version = palindromVersion;
+
       if (typeof options !== 'object') {
         throw new TypeError(
           'Palindrom constructor requires an object argument.'
@@ -546,7 +635,7 @@ const Palindrom = (() => {
 
       if (options.ignoreAdd) {
         throw new TypeError(
-          'Palindrom: `ignoreAdd` is removed in favour of local state objects. see https://github.com/Palindrom/Palindrom/issues/136'
+          '`ignoreAdd` is removed in favour of local state objects. see https://github.com/Palindrom/Palindrom/issues/136'
         );
       }
 
@@ -563,7 +652,7 @@ const Palindrom = (() => {
 
       if (options.callback) {
         console.warn(
-          'Palindrom: options.callback is deprecated. Please use `onStateReset` instead'
+          'options.callback is deprecated. Please use `onStateReset` instead'
         );
       }
 
@@ -579,6 +668,7 @@ const Palindrom = (() => {
         options.onIncomingPatchValidationError || noop;
       this.onOutgoingPatchValidationError =
         options.onOutgoingPatchValidationError || noop;
+      this.onError = options.onError || noop;
 
       this.reconnector = new Reconnector(
         () => makeReconnection(this),
@@ -653,7 +743,7 @@ const Palindrom = (() => {
     }
     set ignoreAdd(newValue) {
       throw new TypeError(
-        "Palindrom: Can't set `ignoreAdd`, it is removed in favour of local state objects. see https://github.com/Palindrom/Palindrom/issues/136"
+        "Can't set `ignoreAdd`, it is removed in favour of local state objects. see https://github.com/Palindrom/Palindrom/issues/136"
       );
     }
     get useWebSocket() {
@@ -707,7 +797,7 @@ const Palindrom = (() => {
     handleLocalChange(operation) {
       // it's a single operation, we need to check only it's value
       operation.value &&
-        findRangeErrors(operation.value, this.onOutgoingPatchValidationError);
+        findRangeErrors(operation.value, this.onOutgoingPatchValidationError, operation.path);
 
       const patches = [operation];
       if (this.debug) {
@@ -740,8 +830,13 @@ const Palindrom = (() => {
             this.onStateReset(this.obj);
           } catch (error) {
             // to prevent the promise's catch from swallowing errors inside onStateReset
-            error.message = `Palindrom: Error inside onStateReset callback: ${error.message}`;
-            this.onConnectionError(error);
+            this.onError(
+              new PalindromError(
+                `Error inside onStateReset callback: ${
+                  error.message
+                }`
+              )
+            );
             console.error(error);
           }
         }
@@ -774,12 +869,13 @@ const Palindrom = (() => {
 
     /**
      * Handle an error which probably won't go away on itself (basically forward upstream)
+     * @param {PalindromConnectionError} palindromError
      */
-    handleFatalError(data, url, method) {
+    handleFatalError(palindromError) {
       this.heartbeat.stop();
       this.reconnector.stopReconnecting();
       if (this.onConnectionError) {
-        this.onConnectionError(data, url, method);
+        this.onConnectionError(palindromError);
       }
     }
 
@@ -797,6 +893,11 @@ const Palindrom = (() => {
     }
 
     handleRemoteChange(data, url, method) {
+    
+      if (this.onPatchReceived) {
+        this.onPatchReceived(data, url, method);
+      }
+
       this.heartbeat.notifyReceive();
       const patches = data || []; // fault tolerance - empty response string should be treated as empty patch array
 
@@ -809,10 +910,6 @@ const Palindrom = (() => {
       if (patches.length === 0) {
         // ping message
         return;
-      }
-
-      if (this.onPatchReceived) {
-        this.onPatchReceived(data, url, method);
       }
 
       // apply only if we're still watching
@@ -844,21 +941,21 @@ const Palindrom = (() => {
    */
   function validateNumericsRangesInPatch(patch, errorHandler, startFrom) {
     for (let i = startFrom, len = patch.length; i < len; i++) {
-      findRangeErrors(patch[i].value, errorHandler);
+      findRangeErrors(patch[i].value, errorHandler, patch[i].path);
     }
   }
 
   /**
    * Traverses/checks value looking for out-of-range numbers, throws a RangeError if it finds any
-   * @param {*} val value 
-   * @param {Function} errorHandler 
+   * @param {*} val value
+   * @param {Function} errorHandler
    */
-  function findRangeErrors(val, errorHandler) {
+  function findRangeErrors(val, errorHandler, variablePath = "") {
     const type = typeof val;
     if (type == 'object') {
       for (const key in val) {
         if (val.hasOwnProperty(key)) {
-          findRangeErrors(val[key], errorHandler);
+          findRangeErrors(val[key], errorHandler, variablePath + '/' + key);
         }
       }
     } else if (
@@ -867,7 +964,7 @@ const Palindrom = (() => {
     ) {
       errorHandler(
         new RangeError(
-          `A number that is either bigger than Number.MAX_INTEGER_VALUE or smaller than Number.MIN_INTEGER_VALUE has been encountered in a patch, value is: ${val}`
+          `A number that is either bigger than Number.MAX_INTEGER_VALUE or smaller than Number.MIN_INTEGER_VALUE has been encountered in a patch, value is: ${val}, variable path is: ${variablePath}`
         )
       );
     }
@@ -880,9 +977,6 @@ const Palindrom = (() => {
     palindrom.network.send(txt);
     palindrom.observe();
   }
-
-  /* backward compatibility */
-  global.Puppet = Palindrom;
 
   return Palindrom;
 })();

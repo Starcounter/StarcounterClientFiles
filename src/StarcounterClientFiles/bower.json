@@ -3,8 +3,7 @@
   "version": "1.1.0",
   "private": true,
   "dependencies": {
-    "puppet-client": "Palindrom/palindrom-polymer-client#^4.0.0",
-    "palindrom-client": "Palindrom/palindrom-polymer-client#^4.0.0",
+    "palindrom-client": "Palindrom/palindrom-polymer-client#^5.0.0",
     "imported-template": "^2.0.0",
     "puppet-redirect": "PuppetJs/puppet-redirect#~0.7.0",
     "palindrom-redirect": "Palindrom/palindrom-redirect#~0.7.0",
