@@ -1,22 +1,18 @@
 bower check-new     Checking for new versions of the project dependencies...
-starcounter-clientfiles#1.1.0 F:\wamp\www\starcounter\StarcounterClientFiles
-├─┬ bootswatch#3.3.7 (latest is 4.0.0-beta.2)
+starcounter-clientfiles#1.1.0 C:\Work\Starcounter\StarcounterClientFiles\src\StarcounterClientFiles
+├─┬ bootswatch#3.3.7 (latest is 4.0.0)
 │ └── bootstrap not installed
-├─┬ imported-template#2.0.2 (latest is 3.1.0)
+├─┬ imported-template#2.0.2 (latest is 3.1.1)
 │ └── juicy-html#2.0.3 (latest is 3.0.0)
 ├── juicy-redirect#0.6.0
-├─┬ palindrom-client#4.0.3
-│ ├── Palindrom#3.0.9
-│ └── polymer#1.11.2 (latest is 2.3.1)
-├── palindrom-redirect#0.7.0
-├── polymer#1.11.2 (latest is 2.3.1)
-├─┬ puppet-client#4.0.3
-│ ├── Palindrom#3.0.9
-│ └─┬ polymer#1.11.2
-│   └── webcomponentsjs#0.7.24
-├── puppet-redirect#0.7.0
-├─┬ starcounter-include#3.0.0 (latest is 4.0.1)
-│ ├─┬ imported-template#2.0.2 (latest is 3.1.0)
+├─┬ palindrom-client#5.0.0
+│ ├── Palindrom#5.0.0
+│ └─┬ polymer#1.11.2 (latest is 2.4.0-rc.1)
+│   └── webcomponentsjs#0.7.24 (latest is 1.1.0)
+├── palindrom-redirect#0.7.0 (latest is 1.0.0)
+├── polymer#1.11.2 (latest is 2.4.0-rc.1)
+├─┬ starcounter-include#3.0.0 (latest is 4.2.0)
+│ ├─┬ imported-template#2.0.2 (latest is 3.1.1)
 │ │ └── juicy-html#2.0.3
 │ └── translate-shadowdom#0.0.5
-└── webcomponentsjs#0.7.24 (latest is 1.0.22)
+└── webcomponentsjs#0.7.24 (latest is 1.1.0)

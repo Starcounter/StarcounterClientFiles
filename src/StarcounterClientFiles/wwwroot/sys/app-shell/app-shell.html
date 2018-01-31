@@ -1,7 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <!-- hello! This is to verify that I was loaded from StarcounterClientFiles -->
     <meta charset="utf-8">
     <title>{0}</title>
 
@@ -33,10 +32,10 @@
     </style>
 </head>
 <body>
-    <template is="dom-bind" id="puppet-root">
+    <template is="dom-bind" id="palindrom-root">
         <starcounter-include view-model="{{{{model}}}}"></starcounter-include>
     </template>
 
-    <puppet-client ref="puppet-root" remote-url="{1}"></puppet-client>
+    <palindrom-client ref="palindrom-root" remote-url="{1}"></palindrom-client>
 </body>
 </html>

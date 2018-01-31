@@ -1,6 +1,6 @@
 const webpack = require("webpack");
-const BabiliPlugin = require('babili-webpack-plugin');
-const package = require('./package.json');
+const MinifyPlugin = require('babel-minify-webpack-plugin');
+const version = require('./package.json').version;
 
 module.exports = [
   {
@@ -15,7 +15,7 @@ module.exports = [
     },
     /* (see: https://webpack.js.org/configuration/externals/) */
     externals: { websocket: "WebSocket", './URL': 'URL' },
-    plugins: [new webpack.BannerPlugin('Palindrom, version: ' + package['version'])]    
+    plugins: [new webpack.BannerPlugin('Palindrom, version: ' + version)]    
   },
   {
     entry: "./src/palindrom.js",
@@ -28,7 +28,7 @@ module.exports = [
       extensions: [".js"]
     },
     externals: { websocket: "WebSocket", './URL': 'URL' },
-    plugins: [new BabiliPlugin(), new webpack.BannerPlugin('Palindrom, version: ' + package['version'])]
+    plugins: [new MinifyPlugin(), new webpack.BannerPlugin('Palindrom, version: ' + version)]
   },
   {
     entry: "./src/palindrom-dom.js",
@@ -41,7 +41,7 @@ module.exports = [
       extensions: [".js"]
     },
     externals: { websocket: "WebSocket", './URL': 'URL' },
-    plugins: [new webpack.BannerPlugin('Palindrom, version: ' + package['version'])]
+    plugins: [new webpack.BannerPlugin('Palindrom, version: ' + version)]
   },
   {
     entry: "./src/palindrom-dom.js",
@@ -50,12 +50,11 @@ module.exports = [
       library: "PalindromDOM",
       libraryTarget: "var"
     },
-    devtool: 'source-map',
     resolve: {
       extensions: [".js"]
     },
     externals: { websocket: "WebSocket", './URL': 'URL' },
-    plugins: [new BabiliPlugin(), new webpack.BannerPlugin('Palindrom, version: ' + package['version'])]
+    plugins: [new MinifyPlugin(), new webpack.BannerPlugin('Palindrom, version: ' + version)]
   },
   /* bundle tests for browser */
   {
@@ -65,11 +64,10 @@ module.exports = [
       library: "Tests",
       libraryTarget: "var"
     },
-    devtool: 'source-map',
     externals: { websocket: "WebSocket", './URL': 'URL' },
     resolve: {
       extensions: [".js"]
     },
-    plugins: [new webpack.BannerPlugin('Palindrom, version: ' + package['version'])]
+    plugins: [new webpack.BannerPlugin('Palindrom, version: ' + version)]
   }
 ];
