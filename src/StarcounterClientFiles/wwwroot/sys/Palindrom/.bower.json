@@ -20,14 +20,14 @@
     "polymer": "*",
     "palindrom-bunny": "Palindrom/palindrom-bunny"
   },
-  "version": "3.1.0",
-  "_release": "3.1.0",
+  "version": "5.0.0",
+  "_release": "5.0.0",
   "_resolution": {
     "type": "version",
-    "tag": "v3.1.0",
-    "commit": "51a2cfcfbeda792f4b8e7cd42195d3932f157947"
+    "tag": "v5.0.0",
+    "commit": "a18708c7000faa299f13a7438cf8e811aa0ea2e2"
   },
   "_source": "https://github.com/Palindrom/Palindrom.git",
-  "_target": "^v3.0.0",
+  "_target": "^v5.0.0",
   "_originalSource": "Palindrom/Palindrom"
 }
