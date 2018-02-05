@@ -1,4 +1,4 @@
-This repo is the source of client files for [/Starcounter/level1/tree/develop/src/BuildSystem/ClientFiles](https://github.com/Starcounter/level1/tree/develop/src/BuildSystem/ClientFiles).
+This repo is the source of client files distributed with Starcounter at `%StarcounterBin%/ClientFiles`. It can also be ran as an app, overwriting the default client files distributed with Starcounter.
 
 ## This branch
 
