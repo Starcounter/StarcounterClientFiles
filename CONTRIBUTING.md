@@ -19,4 +19,5 @@ The developer process of releasing of a new version of StarcounterClientFiles `2
 6. Still in the feature branch, release new version (2.x) of StarcounterClientFiles on GitHub. Remember to write the release notes.
 7. Still in the feature branch, publish a package of this version to App Warehouse (built with Starcounter 2.4)
 8. Merge the PR to StarcounterClientFiles branch `2.x`.
-   - at this point, a new build of Level1 is started
+   - at this point, a new daily build of Starcounter 2.4 is started
+   - it will be detected and included in the next nightly build of Starcounter 2.4
