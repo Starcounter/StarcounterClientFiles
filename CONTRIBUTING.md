@@ -17,6 +17,6 @@ The developer process of releasing of a new version of StarcounterClientFiles `1
 4. When you push to a feature branch of StarcounterClientFiles, TeamCity will run a integration test of this branch with KitchenSink, WebsiteProvider and CompositionProvider. Make sure these tests are passing.
 5. Make a PR for someone to review the complete set of changes.
 6. Still in the feature branch, release new version (1.x) of StarcounterClientFiles on GitHub. Remember to write the release notes.
-7. Still in the feature branch, publish a package of this version to App Warehouse (built with Starcounter 2.3)
-8. Merge the PR to StarcounterClientFiles branch `1.x`.
-   - at this point, a new build of Level1 is started
+7. Merge the PR to StarcounterClientFiles branch `1.x`.
+   - at this point, a new daily build of Starcounter 2.3 is started
+   - it will be detected and included in the next nightly build of Starcounter 2.3
