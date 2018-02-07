@@ -1,0 +1,37 @@
+{
+  "name": "uniform.css",
+  "description": "Lightweight, opinionated CSS library that plays nicely within Shadow DOM.",
+  "main": "uniform.css",
+  "authors": [
+    "Omar Alshaker"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "css",
+    "shadowdom",
+    "shadow-dom",
+    "lightweight",
+    "framework"
+  ],
+  "homepage": "https://github.com/Starcounter/Uniform.css",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "assets",
+    "webpack.config.js",
+    "src"
+  ],
+  "version": "0.0.1",
+  "_release": "0.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.1",
+    "commit": "d5503f9ed4dd9deb7d5bc04f4f11a102799e67a3"
+  },
+  "_source": "https://github.com/Starcounter/Uniform.css.git",
+  "_target": "^0.0.1",
+  "_originalSource": "uniform.css"
+}
