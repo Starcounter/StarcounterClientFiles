@@ -1,11 +1,10 @@
 bower check-new     Checking for new versions of the project dependencies...
 starcounter-clientfiles#2.1.1 C:\Work\Starcounter\StarcounterClientFiles
-├── Underwear.css#0.0.1
 ├─┬ imported-template#3.1.1
 │ └── juicy-html#3.0.0
 ├── juicy-redirect#0.6.0
-├─┬ palindrom-client#4.0.3 (latest is 5.0.0)
-│ ├── Palindrom#3.1.0 (latest is 5.0.0)
+├─┬ palindrom-client#5.0.0
+│ ├── Palindrom#5.0.0
 │ └─┬ polymer#2.3.1 incompatible with ^1.11.0 (1.11.2 available, latest is 2.5.0)
 │   ├── shadycss#1.1.0 (1.1.1 available)
 │   └── webcomponentsjs#1.0.22 (1.1.0 available)
@@ -14,5 +13,6 @@ starcounter-clientfiles#2.1.1 C:\Work\Starcounter\StarcounterClientFiles
 ├─┬ starcounter-include#4.2.0
 │ ├── imported-template#3.1.1
 │ └── translate-shadowdom#0.0.5
+├── underwear.css#0.0.1
 ├── uniform.css#0.0.1
 └── webcomponentsjs#1.0.22 (1.1.0 available)
