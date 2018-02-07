@@ -1,0 +1,35 @@
+{
+  "name": "underwear.css",
+  "description": "Minimalistic CSS library to normalize UA styles",
+  "main": "underwear.css",
+  "authors": [
+    "Omar Alshaker"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "CSS",
+    "library",
+    "minimalistic"
+  ],
+  "homepage": "https://github.com/Starcounter/Underwear.css",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "assets",
+    "webpack.config.js",
+    "src"
+  ],
+  "version": "0.0.2",
+  "_release": "0.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.2",
+    "commit": "55eafaefcf8955642d94e54ea03510dda17a5b1f"
+  },
+  "_source": "https://github.com/Starcounter/Underwear.css.git",
+  "_target": "^0.0.2",
+  "_originalSource": "underwear.css"
+}

@@ -1,0 +1,37 @@
+{
+  "name": "uniform.css",
+  "version": "0.0.2",
+  "description": "Lightweight, opinionated CSS library that plays nicely within Shadow DOM.",
+  "main": "index.js",
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.3.1",
+    "css-loader": "^0.28.7",
+    "cssnano": "^3.10.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.6",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.19.1",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.10.1",
+    "webpack-shell-plugin": "^0.5.0"
+  },
+  "dependencies": {
+    "normalize.css": "^7.0.0",
+    "sakura.css": "^1.0.0"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --content-base . --hot --inline --open",
+    "build": "webpack",
+    "version": "npm run build && git add uniform.css uniform.unminified.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Starcounter/Uniform.css.git"
+  },
+  "author": "Omar Alshaker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Starcounter/Uniform.css/issues"
+  },
+  "homepage": "https://github.com/Starcounter/Uniform.css#readme"
+}

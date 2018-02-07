@@ -481,8 +481,8 @@ template {
   --default-font-size: 14px;
   --default-body-color: var(--dark);
   --blockquote-border-color: var(--livid);
-  --button-shadow-color: var(--transparent-black);
-  --select-background-color: var(--light);
+  --shadow-color: var(--transparent-black);
+  --editables-background-color: var(--light);
   --button-background-color: var(--while);
   --disabled-background-color: var(--light);
   --button-hover-background-color: var(--mouse);
@@ -540,13 +540,14 @@ input[type='submit'] {
   color: var(--button-text-color);
   border-radius: 2px;
   padding-left: 16px;
+  padding-top: 2px;  
   padding-right: 16px;
   height: 32px;
   cursor: pointer;
   box-sizing: border-box;
   white-space: nowrap;
   min-width: 120px;
-  box-shadow: 0px 1px 3px 0 var(--button-shadow-color);
+  box-shadow: 0px 1px 3px 0 var(--shadow-color);
   margin: 2px 2px 2px 0;
 }
 
@@ -601,7 +602,7 @@ input[type='submit'][disabled]:hover {
 
 code {
   background: var(--code-block-bg-color);
-  border-radius: 0.4rem;
+  border-radius: 2px;
   font-size: 86%;
   margin: 0 0.2rem;
   padding: 0.2rem 0.5rem;
@@ -636,16 +637,15 @@ input[type='search'],
 input[type='tel'],
 input[type='text'],
 input[type='url'],
-textarea,
-select:not([multiple]) {
+textarea {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color: var(--select-background-color);
+  background-color: var(--editables-background-color);
   border: none;
   box-shadow: none;
   box-sizing: border-box;
-  height: 32px;
+  height: 38px;
   padding-left: 16px;
   padding-right: 20px;
 }
@@ -663,12 +663,18 @@ select:focus {
 }
 
 select:not([multiple]) {
+  background-color: var(--editables-background-color);
   background: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="20" height="20" x="120px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><g><polygon points="79.3,42.1 76.4,39.3 51.3,65 25.5,39.9 22.7,42.7 51.3,70.7  "></polygon></g></svg>')
     center right no-repeat;
-  padding-right: 3rem;
-  background-position: 94% 50%;
-  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.31);
-  border-radius: 4px;
+  padding: 5px 32px 5px 14px;
+  background-position: 89% 50%;
+  box-shadow: 0px 1px 3px 0 var(--shadow-color);
+  border-radius: 2px;
+  border: none;
+  height: 32px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 textarea {
@@ -680,10 +686,11 @@ legend {
   margin-bottom: 0.5rem;
   display: inline-block;
 }
+
 label > span {
   display: block;
   font-size: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 fieldset {
@@ -691,15 +698,12 @@ fieldset {
   padding: 0;
 }
 
-input[type='checkbox'],
-input[type='radio'] {
-  display: inline;
-}
-
 input[type='checkbox'] {
   width: 24px;
   height: 24px;
+  margin-right: 5px;
   vertical-align: middle;
+  background: #fff;
 }
 
 /* only works in Chrome :( *
@@ -775,25 +779,24 @@ table {
 td,
 th {
   text-align: left;
-  padding: 8px;
-  padding-top: 9px;
+  padding: 11px 8px 6px 8px;
   font-weight: 400;
 }
 
 tr:nth-child(2) > td:first-of-type {
-  border-top-left-radius: 5px;
+  border-top-left-radius: 2px;
 }
 
 tr:nth-child(2) > td:last-of-type {
-  border-top-right-radius: 5px;
+  border-top-right-radius: 2px;
 }
 
 tr:last-of-type > td:first-of-type {
-  border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 2px;
 }
 
 tr:last-of-type > td:last-of-type {
-  border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 2px;
 }
 
 td {
