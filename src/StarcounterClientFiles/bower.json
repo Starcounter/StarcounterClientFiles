@@ -7,7 +7,6 @@
     "imported-template": "^3.1.1",
     "palindrom-redirect": "~1.0.0",
     "juicy-redirect": "Juicy/juicy-redirect#~0.6.0",
-    "bootswatch": "thomaspark/bootswatch#~3.3.5",
     "starcounter-include": "^4.2.0",
     "polymer": "^2.0.0",
     "webcomponentsjs": "^1.0.0",
