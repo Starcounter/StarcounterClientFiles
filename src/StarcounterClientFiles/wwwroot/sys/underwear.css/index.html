@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Underwear.css</title>
+    <link rel="stylesheet" href="underwear.css">
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+        <header>
+        <div>
+            <div>
+                <h1>
+                    <span class="emoji">👙</span> Underwear<span class="suffix">.css</span>
+                </h1>
+            </div>
+            <div style="text-align: right">
+                <a href="https://github.com/Starcounter/Underwear.css" rel="noopener" target="_blank">
+                    <img src="assets/gh-logo.png">
+                </a>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <div>
+            <h1>Headings</h1>
+            <h1>Heading
+                <code>h1</code>
+            </h1>
+            <h2>Heading
+                <code>h2</code>
+            </h2>
+            <h3>Heading
+                <code>h3</code>
+            </h3>
+            <h4>Heading
+                <code>h4</code>
+            </h4>
+            <h5>Heading
+                <code>h5</code>
+            </h5>
+            <h6>Heading
+                <code>h6</code>
+            </h6>
+        </div>
+        <div>
+            <h1>Text</h1>
+            <p>We're no strangers to love, You know the rules and so do I, A full commitment's what I'm thinking of, You wouldn't
+                get this from any other guy, I just wanna tell you how I'm feeling, Gotta make you understand, Never gonna
+                give you up, Never gonna let you down, Never gonna run around and desert you, Never gonna make you cry, Never
+                gonna say goodbye, Never gonna tell a lie and hurt you.</p>
+        </div>
+        <div>
+            <h1>Link</h1>
+            <p>Here is a sample
+                <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">link.</a>
+            </p>
+        </div>
+        <div>
+            <h1>Button</h1>
+            <table>
+                <tr>
+                    <th>
+                        <p>Default</p>
+                    </th>
+                    <th>
+                        <p>Disabled</p>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <button onclick="surprise.removeAttribute('invisible')">Default</button>
+                        <div id="surprise" invisible>
+                            I like your curiosity
+                        </div>
+                    </td>
+                    <td>
+                        <button disabled>Disabled</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <h1>Dropdown</h1>
+            <table>
+                <tr>
+                    <th>
+                        <p>Default</p>
+                    </th>
+                    <th>
+                        <p>Disabled</p>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <select>
+                            <option>Select me</option>
+                            <option>Or me</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select disabled>
+                            <option>Disabled</option>
+                            <option>Or me</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <h1>Entry field</h1>
+            <div>
+                <form>
+                    <label>
+                        <span>Title</span>
+                        <input type="text" value="Default">
+                    </label>
+                </form>
+            </div>
+            <div>
+                <form>
+                    <input type="text" value="Default">
+                    <input type="text" disabled value="Disabled">
+                    <input type="text" value="Default" placeholder="&lt;place holder&gt;">
+                </form>
+            </div>
+        </div>
+        <div>
+            <h1>Blockquote</h1>
+            <div>
+                <p>Remember this line from
+                    <strong>Jerry Maguire</strong>:</p>
+                <blockquote>
+                    We live in a cynical world. A cynical world. And we work in a business of tough competitors. I love you. You... complete
+                    me.
+                </blockquote>
+                <p>And she responded to him:</p>
+                <blockquote>
+                    Shut up... shut up, you had me at hello...
+                </blockquote>
+            </div>
+        </div>
+        <div>
+            <h1>Lists</h1>
+            <div>
+                <h4>One can always list a few things:</h4>
+                <ul>
+                    <li>First thing</li>
+                    <li>Second thing</li>
+                    <li>Last but not least thing</li>
+                </ul>
+            </div>
+            <div>
+                <h4>One can always list a few
+                    <strong>ordered</strong> things:</h4>
+                <ol>
+                    <li>First thing</li>
+                    <li>Second thing</li>
+                    <li>Last but not least thing</li>
+                </ol>
+            </div>
+            <div>
+                <h4>One can always list a few
+                    <strong>nested</strong> things:</h4>
+                <ol>
+                    <li>Parent
+                        <ul>
+                            That has some children
+                        </ul>
+                    </li>
+                    <li>Grand parent
+                        <ol>
+                            <li>Parent
+                                <ul>
+                                    <li>
+                                        That has some children
+                                    </li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div>
+            <h1>&lt;code&gt;</h1>
+            <div>
+                <code>while(true) { stay(happy) }</code>
+            </div>
+        </div>
+        <div>
+            <h1>&lt;pre&gt;</h1>
+            <div>
+                <code>while(true) { stay(happy) }</code>
+            </div>
+        </div>
+        <div>
+            <h1>&lt;pre&gt;&lt;code&gt;</h1>
+            <div>
+                <pre><code>while(true) { stay(happy) }</code></pre>
+            </div>
+        </div>
+        <div style="width: 700px">
+            <h1>Table</h1>
+            <table>
+                <tr>
+                    <th>Entry Header 1</th>
+                    <th>Entry Header 2</th>
+                    <th>Entry Header 3</th>
+                    <th>Entry Header 4</th>
+                </tr>
+                <tr>
+                    <td>Entry First Line 1</td>
+                    <td>Entry First Line 2</td>
+                    <td>Entry First Line 3</td>
+                    <td>Entry First Line 4</td>
+                </tr>
+                <tr>
+                    <td>Entry Line 1</td>
+                    <td>Entry Line 2</td>
+                    <td>Entry Line 3</td>
+                    <td>Entry Line 4</td>
+                </tr>
+                <tr>
+                    <td>Entry Last Line 1</td>
+                    <td>Entry Last Line 2</td>
+                    <td>Entry Last Line 3</td>
+                    <td>Entry Last Line 4</td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <span sider>
+                <h1>Checkbox</h1>
+                <div style="margin: 10px">
+                    <form>
+                        <input id="checkbox" type="checkbox" value="Checkbox">
+                        <label for="checkbox">Checkbox</label>
+                    </form>
+                </div>
+                <div style="margin: 10px">
+                    <form>
+                        <input id="checkbox2" disabled type="checkbox" value="Checkbox">
+                        <label for="checkbox2">Disabled unchecked</label>
+                    </form>
+                </div>
+                <div style="margin: 10px">
+                    <form>
+                        <input id="checkbox3" disabled checked type="checkbox" value="Checkbox">
+                        <label for="checkbox3">Disabled checked</label>
+                    </form>
+                </div>
+        </div>
+        <div>
+            <h1>
+                Composition Example
+            </h1>
+            <div class="uniform-form">
+                <div style="width: 500px">
+                    <label style="width: 100%">
+                        <span>Email</span>
+                        <input style="width: 100%" type="text" value="stephen@fry.com">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <span>Firstname</span>
+                        <input type="text" value="Stephen">
+                    </label>
+
+                    <label>
+                        <span>Lastname</span>
+                        <input type="text" value="Fry">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <span>Mobile phone number</span>
+                        <input type="text" value="+46 707 11 33 44">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <span>Home number</span>
+                        <input type="text" value="+46 707 11 33 44">
+                    </label>
+                    <p>
+                        <a href="#">ADD PHONE NUMBER</a>
+                    </p>
+                </div>
+                <div>
+                    <label>
+                        <span>Home address</span>
+                        <input type="text" value="Bybrokajen 5, 111 48 Stockholm">
+                    </label>
+                    <p>
+                        <a href="#">ADD ADDRESS</a>
+                    </p>
+                </div>
+                <div>
+                    <button class="primary">Submit</button>
+                    <button>Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>MIT License, Starcounter © 2018</footer>
+</body>
+
+</html>
+
+<body>
