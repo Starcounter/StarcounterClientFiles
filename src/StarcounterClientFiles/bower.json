@@ -10,8 +10,8 @@
     "starcounter-include": "^4.2.0",
     "polymer": "^2.0.0",
     "webcomponentsjs": "^1.0.0",
-    "underwear.css": "underwear.css#^0.0.1",
-    "uniform.css": "^0.0.1"
+    "underwear.css": "underwear.css#^0.0.2",
+    "uniform.css": "^0.0.2"
   },
   "resolutions": {
     "fast-json-patch": "^1.1.0"

@@ -22,6 +22,7 @@
     "tests",
     "assets",
     "webpack.config.js",
+    "index.js",
     "src"
   ]
 }

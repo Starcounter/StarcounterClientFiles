@@ -1,5 +1,5 @@
 {
-  "name": "Underwear.css",
+  "name": "underwear.css",
   "description": "Minimalistic CSS library to normalize UA styles",
   "main": "underwear.css",
   "authors": [
@@ -22,15 +22,14 @@
     "webpack.config.js",
     "src"
   ],
-  "version": "0.0.1",
-  "_release": "0.0.1",
+  "version": "0.0.2",
+  "_release": "0.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.1",
-    "commit": "f49e78067aaee8546492a10ff543069e298845ee"
+    "tag": "0.0.2",
+    "commit": "55eafaefcf8955642d94e54ea03510dda17a5b1f"
   },
   "_source": "https://github.com/Starcounter/Underwear.css.git",
-  "_target": "^0.0.1",
-  "_originalSource": "underwear.css",
-  "_direct": true
+  "_target": "^0.0.2",
+  "_originalSource": "underwear.css"
 }
