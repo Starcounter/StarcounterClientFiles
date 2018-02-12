@@ -6,7 +6,6 @@
     "palindrom-client": "Palindrom/palindrom-polymer-client#^5.0.0",
     "imported-template": "^3.1.1",
     "palindrom-redirect": "~1.0.0",
-    "juicy-redirect": "Juicy/juicy-redirect#~0.6.0",
     "starcounter-include": "^4.2.0",
     "polymer": "^2.0.0",
     "webcomponentsjs": "^1.0.0",
