@@ -25,14 +25,14 @@
     "index.js",
     "src"
   ],
-  "version": "0.0.2",
-  "_release": "0.0.2",
+  "version": "0.0.3",
+  "_release": "0.0.3",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.2",
-    "commit": "6151f1cf7ac7da8e314abf9f693e9b59b9efc95c"
+    "tag": "0.0.3",
+    "commit": "659261fbd926dff11f12c1f855523d19e8a0eea1"
   },
   "_source": "https://github.com/Starcounter/Uniform.css.git",
-  "_target": "^0.0.2",
+  "_target": "^0.0.3",
   "_originalSource": "uniform.css"
 }
