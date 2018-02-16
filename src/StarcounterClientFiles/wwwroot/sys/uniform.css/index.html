@@ -4,327 +4,746 @@
 <head>
     <meta charset="utf-8">
     <title>Uniform.css</title>
+
+    <!-- Toggle it on and off -->
+    <link rel="stylesheet" href="../underwear.css/underwear.css">
+    <!--
+        We strongly suggest to use Uniform in shadow roots,
+        then the outer tree could be free of opinionated classes
+    -->
     <link rel="stylesheet" href="uniform.css">
-    <link rel="stylesheet" href="assets/style.css">
+
+    <!-- As a user of uniform you don't need any of the styles & imports below -->
+    <!-- Styles for this demo page only -->
+    <style>
+        html,
+        body {
+            width: 100%;
+            margin: 0;
+        }
+
+        body>div {
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        /* We need to increase specificity for native elements selectors,
+         to override rules applied by Underwear loaded after due to leaky ShadyCSS*/
+
+        body>footer {
+            border-top: 1px solid #eee;
+            padding: 0 5%;
+        }
+
+        body>header {
+            padding: 0 5%;
+            display: grid;
+            grid-template: "logo links"
+                           "desc desc"/ minmax(min-content, 1fr) auto;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        header>h1 { grid-area: logo; }
+        header>a { grid-area: links; }
+        header>p {
+            grid-area: desc;
+            margin: 1em 0;
+            font-size: 1.3em;
+        }
+        [data-shadow-host]{
+            border: 1px solid #eee;
+        }
+    </style>
+
+    <!-- Polyfill Custom Elements for `declarative-shadow-dom`-->
+    <script src="../document-register-element/build/document-register-element.js"></script>
+    <!-- Polyfill Shadow DOM used in demos -->
+    <script src="../webcomponentsjs/webcomponents-sd-ce.js"></script>
+    <!-- Load `declarative-shadow-dom` used in demo snippets -->
+    <script src="../declarative-shadow-dom/declarative-shadow-dom.js"></script>
 </head>
 
 <body>
     <header>
-        <div>
-            <div>
-                <h1>
-                    <span class="emoji">🥋</span> Uniform
-                    <span class="suffix">.css</span>
-                </h1>
-            </div>
-            <div style="text-align: right">
-                <a href="https://github.com/Starcounter/Uniform.css" rel="noopener" target="_blank">
-                    <img src="assets/gh-logo.png">
-                </a>
-            </div>
-        </div>
+        <h1>
+            <span style="opacity: 0.7;">🥋</span> Uniform.css
+        </h1>
+        <a href="https://github.com/Starcounter/Uniform.css" rel="noopener" target="_blank">
+            <img src="assets/gh-logo.png" width="32">
+        </a>
+        <p>
+            Lightweight, opinionated CSS library that plays nicely within <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM">Shadow DOM</a>.
+        </p>
     </header>
-    <div class="container">
-        <div>
-            <h1>Buttons</h1>
-            <table>
-                <tr>
-                    <th>
-                        <p>Normal</p>
-                    </th>
-                    <th>
-                        <p>Disabled</p>
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                        <button>Default</button>
-                    </td>
-                    <td>
-                        <button disabled>Disabled</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button class="uni-primary">Primary</button>
-                    </td>
-                    <td>
-                        <button class="uni-primary" disabled>Disabled</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button class="uni-danger">Danger</button>
-                    </td>
-                    <td>
-                        <button class="uni-danger" disabled>Disabled</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button class="uni-success">Success</button>
-                    </td>
-                    <td>
-                        <button class="uni-success" disabled>Disabled</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <div>
-            <h1>Pagination</h1>
-            <div class="uni-pagination">
-                <span class="previous">Previous</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-                <span>5</span>
-                <span>6</span>
-                <span>7</span>
-                <span>8</span>
-                <span class="next">Next</span>
+    <div>
+        <section>
+            <h2><a href="https://github.com/Starcounter/Underwear.css">Underwear.css</a></h2>
+            <p>Usually, it's recommended to put some <a href="https://github.com/Starcounter/Underwear.css">Underwear</a> before putting the Uniform.</p>
+            <p>
+                Underwear is a minimalistic library that normalizes User Agent styles and puts a tiny layer of sugar on top. They are designed to play well together.
+                <ul>
+                    <li>Underwear unifies your light DOM content, using just native HTML semantics,</li>
+                    <li>Uniform allows you to put your opinionated styling, with specific classes into shadow roots.</li>
+            </p>
+            <p>You can try how it looks with or without Underwear.</p>
+            <div>
+                Put Underwear.css
+                <label><input type="radio" checked name="underwear-light" value="on">on</label><label><input type="radio" name="underwear-light" value="off">off</label>
+                for this document (light DOM).
             </div>
-        </div>
-        <div>
-            <h1>
-                Forms
-            </h1>
-            <div class="uniform-form">
-                <div style="width: 500px">
-                    <label style="width: 100%">
-                        <span>Email</span>
-                        <input style="width: 100%" type="text" value="stephen@fry.com">
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        <span>Firstname</span>
-                        <input type="text" value="Stephen">
-                    </label>
+            <div>
+                Put Underwear.css
+                <label><input type="radio" checked name="underwear-shadow" value="on">on</label><label><input type="radio" name="underwear-shadow" value="off">off</label>
+                for all sample shadow roots.
+            </div>
+            <p>Please note that above distintion works best for browsers that support Shadow DOM, otherwise styles may leak. Without Shadow DOM, outer underwear may bleed into shadow roots, and inner underwear may leak outside. Uniform selectors are more specific, explicit and should not make so many problems.</p>
+        </section>
+        <section>
+            <h2>Custom Properties</h2>
+            <p>Uniform.css uses CSS Custom Properties (CSS Variables) that you can configure per (shadow) root in which you included <code>uniform.css</code>. You can also use them by yourself, to adhere to the consistent look and feel.</p>
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <style>
+                        @import '../underwear.css/underwear.css';
+                        @import 'uniform.css';
+                        .color-sample{
+                            width: 25px;
+                            height: 25px;
+                            border-radius: 4px;
+                            transition: transform 0.2s ease-in-out;
+                            border: 1px solid #DDD;
+                        }
+                        .color-sample:hover {
+                            transform: scale(5,5);
+                        }
+                    </style>
+                    <table>
+                        <tr><th>Name</th><th>Default value</th><th>Sample</th></tr>
+                        <tr>
+                            <td><code>--uni-blue</code></td>
+                            <td><code>var(--blue, #0084B4);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-blue);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-blue-dark</code></td>
+                            <td><code>var(--blue-dark, #1a587f);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-blue-dark);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-green</code></td>
+                            <td><code>var(--green, #3FA13F);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-green);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-red</code></td>
+                            <td><code>var(--red, #DF4534);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-red);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-yellow</code></td>
+                            <td><code>var(--yellow, #faffdd);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-yellow);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-dark</code></td>
+                            <td><code>var(--dark, #141d26);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-dark);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-inky</code></td>
+                            <td><code>var(--inky, #1b2936);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-inky);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-livid</code></td>
+                            <td><code>var(--livid, #8696a5);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-livid);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-platinum</code></td>
+                            <td><code>var(--platinum, #e7e7e7);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-platinum);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-white-smoke</code></td>
+                            <td><code>var(--white-smoke, #EFEFEF);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-white-smoke);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-light</code></td>
+                            <td><code>var(--light, #f6f6f6);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-light);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-white</code></td>
+                            <td><code>var(--white, #ffffff);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-white);"></div></td>
+                        </tr>
 
-                    <label>
-                        <span>Lastname</span>
-                        <input type="text" value="Fry">
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        <span>Mobile phone number</span>
-                        <input type="text" value="+46 707 11 33 44">
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        <span>Home number</span>
-                        <input type="text" value="+46 707 11 33 44">
-                    </label>
-                    <p>
-                        <a href="#">ADD PHONE NUMBER</a>
-                    </p>
-                </div>
-                <div>
-                    <label>
-                        <span>Home address</span>
-                        <input type="text" value="Bybrokajen 5, 111 48 Stockholm">
-                    </label>
-                    <p>
-                        <a href="#">ADD ADDRESS</a>
-                    </p>
-                </div>
-                <div>
-                    <button class="uni-primary">Submit</button>
+                        <tr>
+                            <td><code>--uni-default</code></td>
+                            <td><code>var(--light);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-default);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-primary</code></td>
+                            <td><code>var(--uni-blue);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-primary);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-secondary</code></td>
+                            <td><code>var(--uni-blue);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-secondary);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-success</code></td>
+                            <td><code>var(--uni-green);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-success);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-danger</code></td>
+                            <td><code>var(--uni-red);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-danger);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-info</code></td>
+                            <td><code>var(--cyan);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-info);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-warning</code></td>
+                            <td><code>var(--uni-yellow);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-warning);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-disabled</code></td>
+                            <td><code>var(--light-gray);</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-disabled);"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-section-padding-horizontal</code></td>
+                            <td><code>40px</code></td>
+                            <td>
+                                <div data-shadow-host style="border: 1px solid #eee;">
+                                    <template is="declarative-shadow-dom" mode="open">
+                                        <style>@import '../uniform.css/uniform.css';</style>
+                                        <div style="padding: 0 var(--uni-section-padding-horizontal);"><slot></slot></div>
+                                    </template>
+                                    padded
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-section-padding-vertical</code></td>
+                            <td><code>20px</code></td>
+                            <td>
+                                <div data-shadow-host style="border: 1px solid #eee;">
+                                    <template is="declarative-shadow-dom" mode="open">
+                                        <style>@import '../uniform.css/uniform.css';</style>
+                                        <div style="padding: var(--uni-section-padding-vertical) 0;"><slot></slot></div>
+                                    </template>
+                                    padded
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <slot></slot>
+                </template>
+            </div>
+            <hr>
+            <pre><code>&lt;style&gt;.pinky-host{ --uni-primary: pink;}&lt;/style&gt;
+&lt;div class="pinky-host"&gt;
+    &lt;shadowroot mode="open"&gt;
+        &lt;style&gt;
+            @import 'uniform.css';
+            .app-header{
+              color: var(--uni-danger);
+            }
+        &lt;/style&gt;
+        &lt;h3 class="app-header"&gt;&lt;slot name="app/some"&gt;&lt;/slot&gt;&lt;/h3&gt;
+        &lt;div class="uni-primary-button"&gt;&lt;slot name="app/button"&gt;&lt;/slot&gt;&lt;/div&gt;
+    &lt;/shadowroot&gt;
+    &lt;custom-element slot="app/content"&gt;Some content with consistent uni-colors&lt;/custom-element&gt;
+    &lt;button slot="app/button"&gt;Pinky primary button&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+            <style>.pinky-host{ --uni-primary: pink;}</style>
+            <div data-shadow-host class="pinky-host">
+                <template is="declarative-shadow-dom" mode="open">
+                    <style>
+                        @import 'uniform.css';
+                        .app-header{
+                          color: var(--uni-danger);
+                        }
+                    </style>
+                    <h3 class="app-header"><slot name="app/content"></slot></h3>
+                    <div class="uni-primary-button"><slot name="app/button"></slot></div>
+                </template>
+                <custom-element slot="app/content">Some content with consistent uni-colors</custom-element>
+                <button slot="app/button">Pinky primary button</button>
+            </div>
+        </section>
+        <section>
+            <h2>Form control</h2>
+            <code>.uni-label-control</code>
+            <p>Puts slotted input in the left column, everything else in the right column.</p>
+            <p>It works for distributed elements.</p>
+            <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;div class="uni-label-control"&gt;
+        &lt;slot&gt;&lt;/slot&gt;
+    &lt;/div&gt;
+&lt;/shadowroot&gt;
+&lt;label&gt;Label&lt;/label&gt;
+&lt;input&gt;</code></pre>
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <style>@import 'uniform.css';</style>
+                    <div class="uni-label-control">
+                        <slot></slot>
+                    </div>
+                </template>
+                <label>Label</label>
+                <input>
+            </div>
+            <hr>
+            <p>You can use it as well for styling any elements in the same tree.</p>
+            <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;div class="uni-label-control"&gt;
+        &lt;label&gt;Label&lt;/label&gt;
+        &lt;slot&gt;&lt;/slot&gt;
+    &lt;/div&gt;
+&lt;/shadowroot&gt;
+&lt;input&gt;
+&lt;input&gt;
+&lt;span&gt;message&lt;/span&gt;</code></pre>
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <style>@import 'uniform.css';</style>
+                    <div class="uni-label-control">
+                        <label>Label</label>
+                        <slot></slot>
+                    </div>
+                </template>
+                <input>
+                <input>
+                <span>message</span>
+            </div>
+        </section>
+        <section>
+            <h2>Buttons</h2>
+            <code>.uni-*-button</code>
+            <p>Makes a specific type of a button</p>
+            <p>
+                We would love to use just <code>.uni-*-button</code> class,
+                but we have to use <code></code>  suffix and demand an additional wrapping element to support polyfilled browsers.
+                You can read more at <a href="https://github.com/Starcounter/Uniform.css#wrapping-slots-and--selectors">README.md</a>
+            </p>
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <style>@import '../underwear.css/underwear.css';</style>
+                    <style>@import 'uniform.css';</style>
+                    <table>
+                        <tr>
+                            <th>Normal</th>
+                            <th>Disabled</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button>Default</button>
+                            </td>
+                            <td>
+                                <button disabled>Disabled</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="uni-primary-button"><button>Primary</button></div>
+                            </td>
+                            <td>
+                                <div class="uni-primary-button"><button disabled>Primary</button></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="uni-danger-button"><button>Danger</button></div>
+                            </td>
+                            <td>
+                                <div class="uni-danger-button"><button disabled>Danger</button></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="uni-success-button"><button>Success</button></div>
+                            </td>
+                            <td>
+                                <div class="uni-success-button"><button disabled>Success</button></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="uni-flat-button"><button>Flat</button></div>
+                            </td>
+                            <td>
+                                <div class="uni-flat-button"><button disabled>Flat</button></div>
+                            </td>
+                        </tr>
+                    </table>
+                </template>
+            </div>
+            <p>You can style distributed buttons.</p>
+            <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;div class="uni-success-button"&gt;
+        &lt;slot&gt;&lt;/slot&gt;
+    &lt;/div&gt;
+&lt;/shadowroot&gt;
+&lt;button&gt;light&lt;/button&gt;</code></pre>
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <style>@import 'uniform.css';</style>
+                    <div class="uni-success-button">
+                        <slot></slot>
+                    </div>
+                </template>
+                <button>light</button>
+            </div>
+            <hr>
+            <p>As well as the elements from the same tree</p>
+            <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;style&gt;@import 'underwear.css';&lt;/style&gt;
+    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;div class="uni-success-button"&gt;
+        &lt;slot&gt;&lt;/slot&gt;
+        &lt;button&gt;shadow&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/shadowroot&gt;
+&lt;button&gt;light&lt;/button&gt;</code></pre>
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <style>@import '../underwear.css/underwear.css';</style>
+                    <style>@import 'uniform.css';</style>
+                    <div class="uni-success-button">
+                        <slot></slot>
+                        <button>shadow</button>
+                    </div>
+                </template>
+                <button>light</button>
+            </div>
+        </section>
+        <section>
+            <h2>Pagination</h2>
+            <code>.uni-pagination, .uni-previous, .uni-next, .uni-pages</code>
+            <p>
+                To style pagination widget use:
+                <ul>
+                    <li><code>.uni-pagination</code> - to wrap all page-related links,</li>
+                    <li><code>.uni-previous</code> - to wrap the "previous", or "first" link,</li>
+                    <li><code>.uni-next</code> - to a list of pages,</li>
+                    <li><code>.uni-pages</code> - to wrap the "next", or "last" link,</li>
+                    <li><code>[disabled]</code> - to disable a link, simply put "disabled" attribute,</li>
+                    <li><code>[aria-current="true"]</code> - to mark current page, use ARIA attribute.</li>
+                </ul>
+            </p>
+            <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;style&gt;
+        @import "uniform.css";
+    &lt;/style&gt;
+    &lt;div class="uni-pagination"&gt;
+        &lt;div class="uni-previous"&gt;&lt;slot name="foo/previous"&gt;&lt;/slot&gt;&lt;/div&gt;
+        &lt;div class="uni-pages"&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/div&gt;
+        &lt;div class="uni-next"&gt;&lt;slot name="foo/next"&gt;&lt;/slot&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/shadowroot&gt;
+&lt;span slot="foo/previous" onclick="doYourJobInJS()" href="orUseStaticLinks"&gt;Previous&lt;/span&gt;
+&lt;span&gt;2&lt;/span&gt;
+&lt;span aria-current="true"&gt;3&lt;/span&gt;
+&lt;span&gt;4&lt;/span&gt;
+&lt;span disabled&gt;5&lt;/span&gt;
+&lt;span slot="foo/next" disabled&gt;Next&lt;/span&gt;</code></pre>
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <style>
+                        @import "uniform.css";
+                    </style>
+                    <div class="uni-pagination">
+                        <div class="uni-previous"><slot name="foo/previous"></slot></div>
+                        <div class="uni-pages"><slot></slot></div>
+                        <div class="uni-next"><slot name="foo/next"></slot></div>
+                    </div>
+                </template>
+                <span slot="foo/previous" onclick="doYourJobInJS()" href="orUseStaticLinks">Previous</span>
+                <span>2</span>
+                <span aria-current="true">3</span>
+                <span>4</span>
+                <span disabled>5</span>
+                <span slot="foo/next" disabled>Next</span>
+            </div>
+            <p>As with other Uniform classes you can use them to style elements from the same tree as you style distributed elements.</p>
+        </section>
+        <section>
+            <h2>
+                Forms
+            </h2>
+            <code>.uniform-form</code>
+            🚧 Currently, it just sets <code>margin-bottom</code> for <code>div</code>s. That does not serve the purpose well. But we have plans...
+
+            <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;style&gt;
+        @import "uniform.css";
+    &lt;/style&gt;
+    &lt;div class="uni-form"&gt;
+        &lt;slot&gt;&lt;/slot&gt;
+    &lt;/div&gt;
+&lt;/shadowroot&gt;
+&lt;label&gt;Email&lt;/label&gt;
+&lt;input type="text" value="stephen@fry.com"&gt;
+&lt;label&gt;Firstname&lt;/label&gt;
+&lt;input type="text" value="Stephen"&gt;
+&lt;label&gt;Lastname&lt;/label&gt;
+&lt;input type="text" value="Fry"&gt;
+&lt;label&gt;Mobile phone number&lt;/label&gt;
+&lt;input type="text" value="+46 707 11 33 44"&gt;
+&lt;label&gt;Home number&lt;/label&gt;
+&lt;input type="text" value="+46 707 11 33 44"&gt;
+&lt;a href="#"&gt;ADD PHONE NUMBER&lt;/a&gt;
+&lt;label&gt;Home address&lt;/label&gt;
+&lt;input type="text" value="Bybrokajen 5, 111 48 Stockholm"&gt;
+&lt;a href="#"&gt;ADD ADDRESS&lt;/a&gt;
+&lt;button&gt;Submit&lt;/button&gt;
+&lt;button&gt;Cancel&lt;/button&gt;</code></pre>
+            <form>
+                <div data-shadow-host>
+                    <template is="declarative-shadow-dom" mode="open">
+                        <style>
+                            @import "uniform.css";
+                        </style>
+                        <div class="uni-form">
+                            <slot></slot>
+                        </div>
+                    </template>
+                    <label>Email</label>
+                    <input type="text" value="stephen@fry.com">
+                    <label>Firstname</label>
+                    <input type="text" value="Stephen">
+                    <label>Lastname</label>
+                    <input type="text" value="Fry">
+                    <label>Mobile phone number</label>
+                    <input type="text" value="+46 707 11 33 44">
+                    <label>Home number</label>
+                    <input type="text" value="+46 707 11 33 44">
+                    <a href="#">ADD PHONE NUMBER</a>
+                    <label>Home address</label>
+                    <input type="text" value="Bybrokajen 5, 111 48 Stockholm">
+                    <a href="#">ADD ADDRESS</a>
+                    <button>Submit</button>
                     <button>Cancel</button>
                 </div>
-            </div>
-        </div>
-        <div>
-            <h1>Alerts</h1>
-            <div>
-                <div class="uni-alert uni-alert-info">Hi! This is some info</div>
-            </div>
-            <hr>
-            <div>
-                <div class="uni-alert uni-alert-warning">This is just a warning</div>
-            </div>
-            <hr>
-            <div>
-                <div class="uni-alert uni-alert-danger">This is a more serious warning</div>
-            </div>
-        </div>
-        <div>
-            <h2>The following CSS all comes from <a rel="noopener" target="_blank" href="https://github.com/Starcounter/Underwear.css">Underwear.css</a></h2>
-        </div>
-        <div>
-            <h1>Dropdown</h1>
-            <table>
-                <tr>
-                    <th>
-                        <p>Default</p>
-                    </th>
-                    <th>
-                        <p>Disabled</p>
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                        <select>
-                            <option>Select me</option>
-                            <option>Or me</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select disabled>
-                            <option>Disabled</option>
-                            <option>Or me</option>
-                        </select>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div>
-            <h1>Entry field</h1>
-            <div>
-                <form>
-                    <label>
-                        <span>Title</span>
-                        <input type="text" value="Default">
-                    </label>
-                </form>
-            </div>
-            <div>
-                <form>
-                    <input type="text" value="Default">
-                    <input type="text" disabled value="Disabled">
-                    <input type="text" value="Default" placeholder="&lt;place holder&gt;">
-                </form>
-            </div>
-        </div>
-        <div>
-            <h1>Blockquote</h1>
-            <div>
-                <p>Remember this line from
-                    <strong>Jerry Maguire</strong>:</p>
-                <blockquote>
-                    We live in a cynical world. A cynical world. And we work in a business of tough competitors. I love you. You... complete
-                    me.
-                </blockquote>
-                <p>And she responded to him:</p>
-                <blockquote>
-                    Shut up... shut up, you had me at hello...
-                </blockquote>
-            </div>
-        </div>
-        <div>
-            <h1>Lists</h1>
-            <div>
-                <h4>One can always list a few things:</h4>
-                <ul>
-                    <li>First thing</li>
-                    <li>Second thing</li>
-                    <li>Last but not least thing</li>
-                </ul>
-            </div>
-            <div>
-                <h4>One can always list a few
-                    <strong>ordered</strong> things:</h4>
-                <ol>
-                    <li>First thing</li>
-                    <li>Second thing</li>
-                    <li>Last but not least thing</li>
-                </ol>
-            </div>
-            <div>
-                <h4>One can always list a few
-                    <strong>nested</strong> things:</h4>
-                <ol>
-                    <li>Parent
-                        <ul>
-                            That has some children
-                        </ul>
-                    </li>
-                    <li>Grand parent
-                        <ol>
-                            <li>Parent
-                                <ul>
-                                    <li>
-                                        That has some children
-                                    </li>
-                                </ul>
-                            </li>
-                        </ol>
-                    </li>
-                </ol>
-            </div>
-        </div>
-        <div>
-            <h1>&lt;code&gt;</h1>
-            <div>
-                <code>while(true) { stay(happy) }</code>
-            </div>
-        </div>
-        <div>
-            <h1>&lt;pre&gt;</h1>
-            <div>
-                <code>while(true) { stay(happy) }</code>
-            </div>
-        </div>
-        <div>
-            <h1>&lt;pre&gt;&lt;code&gt;</h1>
-            <div>
-                <pre><code>while(true) { stay(happy) }</code></pre>
-            </div>
-        </div>
-        <div style="width: 700px">
-            <h1>Table</h1>
-            <table>
-                <tr>
-                    <th>Entry Header 1</th>
-                    <th>Entry Header 2</th>
-                    <th>Entry Header 3</th>
-                    <th>Entry Header 4</th>
-                </tr>
-                <tr>
-                    <td>Entry First Line 1</td>
-                    <td>Entry First Line 2</td>
-                    <td>Entry First Line 3</td>
-                    <td>Entry First Line 4</td>
-                </tr>
-                <tr>
-                    <td>Entry Line 1</td>
-                    <td>Entry Line 2</td>
-                    <td>Entry Line 3</td>
-                    <td>Entry Line 4</td>
-                </tr>
-                <tr>
-                    <td>Entry Last Line 1</td>
-                    <td>Entry Last Line 2</td>
-                    <td>Entry Last Line 3</td>
-                    <td>Entry Last Line 4</td>
-                </tr>
-            </table>
-        </div>
-        <div>
-            <span sider>
-                <h1>Checkbox</h1>
-                <div style="margin: 10px">
-                    <form>
-                        <input id="checkbox" type="checkbox" value="Checkbox">
-                        <label for="checkbox">Checkbox</label>
-                    </form>
+            </form>
+        </section>
+        <section>
+            <h2>Alerts</h2>
+            <code>.uni-alert-info, .uni-alert-warning, .uni-alert-danger</code>
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <style>@import '../underwear.css/underwear.css';</style>
+                    <style>@import 'uniform.css';</style>
+
+                    <div class="uni-alert-info">
+                        <slot name="myapp/info"></slot>
+                    </div>
+                    <hr>
+                    <div class="uni-alert-warning">
+                        <div><code>uni-alert-warning</code>This is just a warning</div>
+                    </div>
+                    <hr>
+                    <div class="uni-alert-danger">
+                        <div><code>uni-alert-danger</code>This is a more serious warning</div>
+                    </div>
+                    <hr>
+                    <div class="uni-alert-success">
+                        <slot name="myapp/success"></slot>
+                    </div>
+                </template>
+                <div slot="myapp/info">
+                    <code>uni-alert-info</code>Hi! This is some info
                 </div>
-                <div style="margin: 10px">
-                    <form>
-                        <input id="checkbox2" disabled type="checkbox" value="Checkbox">
-                        <label for="checkbox2">Disabled unchecked</label>
-                    </form>
+                <div slot="myapp/success">
+                    <code>uni-alert-success</code>This is great success!
                 </div>
-                <div style="margin: 10px">
-                    <form>
-                        <input id="checkbox3" disabled checked type="checkbox" value="Checkbox">
-                        <label for="checkbox3">Disabled checked</label>
-                    </form>
+            </div>
+            <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;style&gt;@import '../underwear.css/underwear.css';&lt;/style&gt;
+    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+
+    &lt;div class="uni-alert-info"&gt;
+        &lt;slot name="myapp/info"&gt;&lt;/slot&gt;
+    &lt;/div&gt;
+    &lt;hr&gt;
+    &lt;div class="uni-alert-warning"&gt;
+        &lt;div&gt;&lt;code&gt;uni-alert-warning&lt;/code&gt;This is just a warning&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;hr&gt;
+    &lt;div class="uni-alert-danger"&gt;
+        &lt;div&gt;&lt;code&gt;uni-alert-danger&lt;/code&gt;This is a more serious warning&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;hr&gt;
+    &lt;div class="uni-alert-success"&gt;
+        &lt;slot name="myapp/success"&gt;&lt;/slot&gt;
+    &lt;/div&gt;
+&lt;/shadowroot&gt;
+&lt;div slot="myapp/info"&gt;
+    &lt;code&gt;uni-alert-info&lt;/code&gt;Hi! This is some info
+&lt;/div&gt;
+&lt;div slot="myapp/success"&gt;
+    &lt;code&gt;uni-alert-success&lt;/code&gt;This is great success!
+&lt;/div&gt;</code></pre>
+            <section>
+                <h3>Dynamic content as an alert</h3>
+                <div data-shadow-host>
+                    <template is="declarative-shadow-dom" mode="open">
+                        <style>@import '../underwear.css/underwear.css';</style>
+                        <style>@import 'uniform.css';</style>
+                        <slot></slot>
+                        <div class="uni-alert-success">
+                            <slot name="myapp/success"></slot>
+                        </div>
+                    </template>
+
+                    <button>Click me to see the alert</button>
+                    <script>(function(){
+                        const current = document.currentScript;
+                        current.previousElementSibling.addEventListener('click', function loadContent(){
+                            const msg = document.createElement('div');
+                            msg.setAttribute('slot', 'myapp/success');
+                            msg.innerHTML = 'There was no alert before I arrived!';
+                            current.parentNode.appendChild(msg);
+                            setTimeout(()=>{msg.remove();}, 2000);
+                        });
+                    }())</script>
                 </div>
-        </div>
+                <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;style&gt;@import '../underwear.css/underwear.css';&lt;/style&gt;
+    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+    &lt;div class="uni-alert-success"&gt;
+        &lt;slot name="myapp/success"&gt;&lt;/slot&gt;
+    &lt;/div&gt;
+&lt;/shadowroot&gt;
+
+&lt;button&gt;Click me to see the alert&lt;/button&gt;
+&lt;script&gt;(function(){
+    const current = document.currentScript;
+    current.previousElementSibling.addEventListener('click', function loadContent(){
+        const msg = document.createElement('div');
+        msg.setAttribute('slot', 'myapp/success');
+        msg.innerHTML = 'There was no alert before I arrived!';
+        current.parentNode.appendChild(msg);
+        setTimeout(()=&gt;{msg.remove();}, 2000);
+    });
+}())&lt;/script&gt;</code></pre>
+            </section>
+
+        </section>
+        <section>
+            <h2>Card</h2>
+            To create slightly elevated card, use <code>.uni-card</code>.
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <style>@import 'uniform.css';</style>
+                    <div class="uni-card">
+                        I'm an elevated panel,
+                        <slot></slot>
+                    </div>
+                </template>
+                with distributed content.
+            </div>
+            <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;style&gt;
+        @import 'uniform.css';
+    &lt;/style&gt;
+    &lt;div class="uni-card"&gt;
+        I'm an elevated panel,
+    &lt;/div&gt;
+&lt;/shadowroot&gt;
+with distributed content.</code></pre>
+        </section>
+        <section>
+            <h2>Sections</h2>
+            To create different kinds of sections, use:
+            <ul>
+                <li><code>.uni-section-primary</code> - to have a greyish background,</li>
+                <li><code>.uni-section-secondary</code> - to have white background,</li>
+                <li><code>.uni-section-tertiary</code> - to have dark blue background</li>
+            </ul>
+            Note, that those sections stick to the sides of padded host.
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <style>@import 'uniform.css';</style>
+                    <div class="uni-section-primary">
+                        Primary section
+                    </div>
+                    <section class="uni-section-secondary">
+                        Secondary section
+                    </section>
+                    <div class="uni-section-tertiary">
+                        Tertiary section
+                    </div>
+                </template>
+            </div>
+            <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;div class="uni-section-primary"&gt;
+        Primary section
+    &lt;/div&gt;
+    &lt;section class="uni-section-secondary"&gt;
+        Secondary section
+    &lt;/section&gt;
+    &lt;div class="uni-section-tertiary"&gt;
+        Tertiary section
+    &lt;/div&gt;
+&lt;/shadowroot&gt;</code></pre>
+
+            You can nest cards within sections. It is recommended to lay out cards within sections using CSS Grid Layout.
+
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <style>@import '../underwear.css/underwear.css';</style>
+                    <style>@import 'uniform.css';</style>
+                    <div class="uni-section-primary">
+                        <div class="uni-card">Default card in a section.</div>
+                    </div>
+                    <div class="uni-section-secondary">
+                        <div class="uni-card" style="display: block">Full-width card in a section, achieved by setting <code>display: block</code> on the card</div>
+                    </div>
+                    <div class="uni-section-primary" style="display: grid;">
+                        <div class="uni-card">Full-width card in a section, achieved by setting <code>display: grid</code> on the section.</div>
+                    </div>
+                    <div class="uni-section-tertiary" style="display: grid; grid-template-columns: repeat(2, 1fr);grid-gap: var(--uni-section-padding-horizontal)">
+                        <div class="uni-card">Two half-width cards in a section, achieved by setting <code>display: grid</code> on the section (with two columns and a gap).</div>
+                        <div class="uni-card">Two half-width cards in a section, achieved by setting <code>display: grid</code> on the section (with two columns and a gap).</div>
+                    </div>
+                </template>
+            </div>
+            <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;style&gt;@import '../underwear.css/underwear.css';&lt;/style&gt;
+    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;div class=&quot;uni-section-primary&quot;&gt;
+        &lt;div class=&quot;uni-card&quot;&gt;Default card in a section.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;uni-section-secondary&quot;&gt;
+        &lt;div class=&quot;uni-card&quot; style=&quot;display: block&quot;&gt;Full-width card in a section, achieved by setting &lt;code&gt;display: block&lt;/code&gt; on the card&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;uni-section-primary&quot; style=&quot;display: grid;&quot;&gt;
+        &lt;div class=&quot;uni-card&quot;&gt;Full-width card in a section, achieved by setting &lt;code&gt;display: grid&lt;/code&gt; on the section.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;uni-section-tertiary&quot; style=&quot;display: grid; grid-template-columns: repeat(2, 1fr);grid-gap: var(--uni-section-padding-horizontal)&quot;&gt;
+        &lt;div class=&quot;uni-card&quot;&gt;Two half-width cards in a section, achieved by setting &lt;code&gt;display: grid&lt;/code&gt; on the section (with two columns and a gap).&lt;/div&gt;
+        &lt;div class=&quot;uni-card&quot;&gt;Two half-width cards in a section, achieved by setting &lt;code&gt;display: grid&lt;/code&gt; on the section (with two columns and a gap).&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/shadowroot&gt;</code></pre>
+        </section>
     </div>
     <footer>MIT License, Starcounter © 2018</footer>
 </body>
@@ -332,3 +751,5 @@
 </html>
 
 <body>
+<!-- Script for demo purposes only. Allows putting underwear.css on and off -->
+<script src="assets/toggle-styles.js"></script>

@@ -26,14 +26,14 @@ As this is library is designed to play well within Shadow DOM, we encourage you 
         }
     </style>
     <div class="app-header"><slot name="app/some"></slot></div>
-    <div class="uni-alert"><slot name="app/content"></slot></div>
+    <div class="uni-alert-info"><slot name="app/content"></slot></div>
 </template>
 ```
 
 
 
-## Usage / Elements / Classes/ demo
-TBD
+## Usage, Elements, Classes
+To see how to use it, what elements and classes we define, check the [demo page](https://starcounter.github.io/uniform.css/).
 
 ## Conventions
 TBD
@@ -41,7 +41,7 @@ TBD
 ## Caveats
 There are few caveats you could face due to Shadow DOM polyfill limitations:
 
-### Wrapping slots and `-wrapper` selectors
+### Wrapping slots
 We would really love to support short and clean usage:
 ```html
 <button slot="my-slot-for-button">light DOM button</button>
@@ -61,17 +61,16 @@ Therefore, you have to wrap slot in an element.
 <button slot="my-slot-for-button">light DOM button</button>
 #shadowRoot
     <link rel="stylesheet" href="path/to/uniform.css">
-    <div class="uni-primary-button-wrapper">
+    <div class="uni-primary-button">
         <slot name="my-slot-for-button"></slot>
     </div>
     ...
-    <div class="uni-primary-button-wrapper">
+    <div class="uni-primary-button">
         <button>shadow DOM button</button>
     </div>
 ```
 
-
-That's why all those classes have `-wrapper` suffix, so eventually, we could introduce `uni-*` classes (like `uni-primary-button`) without breaking backward compatibility and requiring any code change.
+In future, when it becomes possible to apply classes on `slot` elements in a cross-browser way, we could introduce classes like `uni-primary-button-element` without breaking backward compatibility and requiring any code change.
 
 ### Not so DRY code, duplicated rules
 You might notice (especially as a contributor), that we use duplicated rules, like:
