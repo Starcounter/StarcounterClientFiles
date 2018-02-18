@@ -1,1 +1,468 @@
-:host{--uni-blue:var(--blue,#0084b4);--uni-blue-dark:var(--blue-dark,#1a587f);--uni-green:var(--green,#3fa13f);--uni-red:var(--red,#df4534);--uni-yellow:var(--yellow,#faffdd);--uni-dark:var(--dark,#141d26);--uni-inky:var(--inky,#1b2936);--uni-livid:var(--livid,#8696a5);--uni-platinum:var(--platinum,#e7e7e7);--uni-white-smoke:var(--white-smoke,#efefef);--uni-light:var(--light,#f6f6f6);--uni-white:var(--white,#fff);--uni-default:var(--uni-light);--uni-primary:var(--uni-blue);--uni-secondary:var(--uni-blue);--uni-success:var(--uni-green);--uni-danger:var(--uni-red);--uni-info:var(--cyan);--uni-warning:var(--uni-yellow);--uni-disabled:var(--light-gray);--uni-section-padding-horizontal:40px;--uni-section-padding-vertical:20px}:root{--uni-blue:var(--blue,#0084b4);--uni-blue-dark:var(--blue-dark,#1a587f);--uni-green:var(--green,#3fa13f);--uni-red:var(--red,#df4534);--uni-yellow:var(--yellow,#faffdd);--uni-dark:var(--dark,#141d26);--uni-inky:var(--inky,#1b2936);--uni-livid:var(--livid,#8696a5);--uni-platinum:var(--platinum,#e7e7e7);--uni-white-smoke:var(--white-smoke,#efefef);--uni-light:var(--light,#f6f6f6);--uni-white:var(--white,#fff);--uni-default:var(--light);--uni-primary:var(--uni-blue);--uni-secondary:var(--uni-blue);--uni-success:var(--uni-green);--uni-danger:var(--uni-red);--uni-info:var(--cyan);--uni-warning:var(--uni-yellow);--uni-disabled:var(--light-gray);--uni-section-padding-horizontal:40px;--uni-section-padding-vertical:20px}.uni-label-control{display:grid;grid-template-columns:150px 1fr;grid-column-gap:10px;align-items:baseline}.uni-label-control>::slotted(*){grid-column:2/3;width:100%}.uni-label-control>*{grid-column:2/3;width:100%}.uni-label-control>::slotted(label){text-align:left;grid-column:1/2}.uni-label-control>label{text-align:left;grid-column:1/2}.uni-danger-button,.uni-flat-button,.uni-primary-button,.uni-success-button{display:inline-block}.uni-flat-button{min-width:auto}.uni-primary-button>::slotted(button){color:#fff!important;background-color:var(--uni-primary)!important}.uni-primary-button>button{color:#fff!important;background-color:var(--uni-primary)!important}.uni-success-button>::slotted(button){background-color:var(--uni-success)!important;color:var(--white)!important}.uni-success-button>button{background-color:var(--uni-success)!important;color:var(--white)!important}.uni-danger-button>::slotted(button){background-color:var(--uni-danger)!important;color:var(--white)!important}.uni-danger-button>button{background-color:var(--uni-danger)!important;color:var(--white)!important}.uni-flat-button>::slotted(button){background-color:transparent!important;color:var(--blue)!important;box-shadow:none!important;min-width:auto!important;margin-left:16px!important;margin-right:16px!important}.uni-flat-button>button{background-color:transparent!important;color:var(--blue)!important;box-shadow:none!important;min-width:auto!important;padding-left:16px!important;padding-right:16px!important;margin-left:10px!important;margin-right:10px!important}.uni-danger-button>::slotted(button:focus),.uni-danger-button>::slotted(button:hover),.uni-primary-button>::slotted(button:focus),.uni-primary-button>::slotted(button:hover),.uni-success-button>::slotted(button:focus),.uni-success-button>::slotted(button:hover){filter:brightness(90%)!important}.uni-flat-button>::slotted(button:focus),.uni-flat-button>::slotted(button:hover){background-color:var(--uni-light)!important}.uni-danger-button>button:focus,.uni-danger-button>button:hover,.uni-primary-button>button:focus,.uni-primary-button>button:hover,.uni-success-button>button:focus,.uni-success-button>button:hover{filter:brightness(90%)!important}.uni-flat-button>button:focus,.uni-flat-button>button:hover{background-color:var(--uni-light)!important}.uni-danger-button>::slotted(button[disabled]),.uni-flat-button>::slotted(button[disabled]),.uni-primary-button>::slotted(button[disabled]),.uni-success-button>::slotted(button[disabled]){opacity:.65!important;box-shadow:none!important}.uni-flat-button>::slotted(button[disabled]){color:var(--livid)!important}.uni-danger-button>button[disabled],.uni-flat-button>button[disabled],.uni-primary-button>button[disabled],.uni-success-button>button[disabled]{opacity:.65!important;box-shadow:none!important}.uni-flat-button>button[disabled]{color:var(--livid)!important}.uni-danger-button>::slotted(button[disabled]:focus),.uni-danger-button>::slotted(button[disabled]:hover),.uni-primary-button>::slotted(button[disabled]:focus),.uni-primary-button>::slotted(button[disabled]:hover),.uni-success-button>::slotted(button[disabled]:focus),.uni-success-button>::slotted(button[disabled]:hover){filter:none!important}.uni-flat-button>::slotted(button[disabled]:focus),.uni-flat-button>::slotted(button[disabled]:hover){background-color:transparent!important}.uni-danger-button>button[disabled]:focus,.uni-danger-button>button[disabled]:hover,.uni-primary-button>button[disabled]:focus,.uni-primary-button>button[disabled]:hover,.uni-success-button>button[disabled]:focus,.uni-success-button>button[disabled]:hover{filter:none!important}.uni-flat-button>button[disabled]:focus,.uni-flat-button>button[disabled]:hover{background-color:transparent!important}.uni-pagination{border:1px solid var(--light-gray,#e1e1e1);border-radius:5px;height:36px;padding:1px;margin:10px 0;display:inline-flex;align-items:center}.uni-pagination>*>::slotted(*),.uni-pagination>::slotted(*){all:initial;font-family:inherit;font-size:1em;padding:0 5px;margin:5px 2px;border:1px solid #fff;color:var(--uni-primary);cursor:pointer;display:inline-block}.uni-pagination>*,.uni.pagination>*>*{all:initial;font-family:inherit;font-size:1em;padding:0 5px;margin:5px 2px;border:1px solid #fff;color:var(--uni-primary);cursor:pointer;display:inline-block}.uni-pagination>.uni-pages>::slotted([aria-current=true]){border:1px solid var(--uni-primary)}.uni-pagination>.uni-pages>[aria-current=true]{border:1px solid var(--uni-primary)}.uni-pagination>*>::slotted([disabled]){background:#eee;color:#aaa;cursor:default}.uni-pagination>*>:disabled,.uni-pagination>*>[disabled]{background:#eee;color:#aaa;cursor:default}.uni-pagination>.uni-previous>::slotted(*){padding-right:1em;border:2px solid transparent;border-right:2px solid #ddd;margin:0;margin-right:8px;margin-left:6px}.uni-pagination>.uni-previous>*{padding-right:1em;border:2px solid transparent;border-right:2px solid #ddd;margin:0;margin-right:8px;margin-left:6px}.uni-pagination>.uni-next>::slotted(*){padding-left:1em;border:2px solid transparent;border-left:2px solid #ddd;margin-left:8px;margin-right:6px}.uni-pagination>.uni-next>*{padding-left:1em;border:2px solid transparent;border-left:2px solid #ddd;margin-left:8px;margin-right:6px}.uni-pagination>.uni-pages>::slotted(:hover:not([aria-current=true]):not(:disabled):not([disabled])){border:1px solid #69cef3}.uni-pagination>.uni-pages>:hover:not([aria-current=true]):not(:disabled):not([disabled]){border:1px solid #69cef3}.uni-form>::slotted(div){margin-bottom:20px}.uni-form>div{margin-bottom:20px}.uni-form>::slotted(div:last-child){margin-bottom:10px}.uni-form>div:last-child{margin-bottom:10px}.uni-alert-danger>::slotted(*),.uni-alert-info>::slotted(*),.uni-alert-success>::slotted(*),.uni-alert-warning>::slotted(*){padding:20px;border:1px solid transparent;border-radius:2px;position:relative}.uni-alert-danger>*,.uni-alert-info>*,.uni-alert-success>*,.uni-alert-warning>*{padding:20px;border:1px solid transparent;border-radius:2px;position:relative}.uni-alert-info>::slotted(*){color:#31708f;background-color:#d9edf7;border-color:#bce8f1}.uni-alert-info>*{color:#31708f;background-color:#d9edf7;border-color:#bce8f1}.uni-alert-danger>::slotted(*){color:var(--white,#fff);background-color:var(--uni-danger);border-color:var(--uni-danger)}.uni-alert-danger>*{color:var(--white,#fff);background-color:var(--uni-danger);border-color:var(--uni-danger)}.uni-alert-success>::slotted(*){color:var(--white);background-color:var(--uni-success);border-color:var(--uni-success)}.uni-alert-success>*{color:var(--white);background-color:var(--uni-success);border-color:var(--uni-success)}.uni-alert-warning>::slotted(*){color:var(--dark);background-color:var(--uni-warning);border-color:var(--uni-warning)}.uni-alert-warning>*{color:var(--dark);background-color:var(--uni-warning);border-color:var(--uni-warning)}.uni-card{display:inline-block;position:relative;box-sizing:border-box;color:var(--uni-dark);background-color:var(--uni-white);border-radius:3px;padding:16px;box-shadow:0 1px 3px 0 rgba(0,0,0,.4)}.uni-section-primary,.uni-section-secondary,.uni-section-tertiary{padding:var(--uni-section-padding-vertical) var(--uni-section-padding-horizontal)}.uni-section-primary{background:#e7ecf0}.uni-section-secondary{background:var(--uni-white)}.uni-section-tertiary{background:#1b2936;color:#fff}
+/**
+ * Uniform.css
+ * (c) Starcounter
+ */
+
+:host {
+  /* all non-uni-prefixed variables (--blue, --dark-blue, etc..) are inherited from "underwear.css" */
+  --uni-white: var(--white, #ffffff);
+
+  --uni-gray-1: var(--gray-1, #f9f9f9);
+  --uni-gray-2: var(--gray-2, #f6f6f6);
+  --uni-gray-3: var(--gray-3, #efefef);
+  --uni-gray-4: var(--gray-4, #e7e7e7);
+  --uni-gray-5: var(--gray-5, #e1e1e1);
+  --uni-gray-6: var(--gray-6, #868e96);
+  --uni-gray-7: var(--gray-7, #606c76);
+
+  --uni-transparent-black: var(--transparent-black, #00000033);
+
+  --uni-blue: var(--blue, #0084b4);
+  --uni-dark-blue: var(--dark-blue, #1a587f);
+  --uni-dark: var(--dark, #141d26);
+  --uni-green: var(--green, #3fa13f);
+  --uni-inky: var(--inky, #1b2936);
+  --uni-livid: var(--livid, #8696a5);
+  --uni-mouse: var(--mouse, #e7ecf0);
+  --uni-red: var(--red, #df4534);
+  --uni-yellow: var(--yellow, #ffdb25);
+
+  /* only use uni colors below this line */
+
+  --uni-default: var(--uni-gray-2);
+  --uni-primary: var(--uni-blue);
+  --uni-secondary: var(--uni-blue);
+  --uni-success: var(--uni-green);
+  --uni-danger: var(--uni-red);
+  --uni-warning: var(--uni-yellow);
+  --uni-disabled: var(--uni-gray-5);
+
+  --uni-section-padding-horizontal: 40px;
+  --uni-section-padding-vertical: 20px;
+}
+/* We need sepearate selector for browsers that does not support :host */
+:root {
+  /* all non-uni-prefixed variables (--blue, --dark-blue, etc..) are inherited from "underwear.css" */
+  --uni-white: var(--white, #ffffff);
+
+  --uni-gray-1: var(--gray-1, #f9f9f9);
+  --uni-gray-2: var(--gray-2, #f6f6f6);
+  --uni-gray-3: var(--gray-3, #efefef);
+  --uni-gray-4: var(--gray-4, #e7e7e7);
+  --uni-gray-5: var(--gray-5, #e1e1e1);
+  --uni-gray-6: var(--gray-6, #868e96);
+  --uni-gray-7: var(--gray-7, #606c76);
+
+  --uni-transparent-black: var(--transparent-black, #00000033);
+
+  --uni-blue: var(--blue, #0084b4);
+  --uni-dark-blue: var(--dark-blue, #1a587f);
+  --uni-dark: var(--dark, #141d26);
+  --uni-green: var(--green, #3fa13f);
+  --uni-inky: var(--inky, #1b2936);
+  --uni-livid: var(--livid, #8696a5);
+  --uni-mouse: var(--mouse, #e7ecf0);
+  --uni-red: var(--red, #df4534);
+  --uni-yellow: var(--yellow, #ffdb25);
+
+  /* only use uni colors below this line */
+
+  --uni-default: var(--uni-gray-2);
+  --uni-primary: var(--uni-blue);
+  --uni-secondary: var(--uni-blue);
+  --uni-success: var(--uni-green);
+  --uni-danger: var(--uni-red);
+  --uni-warning: var(--uni-yellow);
+  --uni-disabled: var(--uni-gray-5);
+
+  --uni-section-padding-horizontal: 40px;
+  --uni-section-padding-vertical: 20px;
+}
+
+
+/**
+  * .uni-label-control
+  * Puts label (slotted or not) in the left column, everything else in the right column
+ */
+
+.uni-label-control {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  grid-column-gap: 10px;
+  align-items: baseline;
+}
+
+.uni-label-control > ::slotted(*) {
+  grid-column: 2 / 3;
+  width: 100%;
+}
+.uni-label-control > * {
+  grid-column: 2 / 3;
+  width: 100%;
+}
+
+.uni-label-control > ::slotted(label) {
+  text-align: left;
+  grid-column: 1 / 2;
+}
+.uni-label-control > label {
+  text-align: left;
+  grid-column: 1 / 2;
+}
+
+/**
+Buttons
+*/
+
+.uni-primary-button,
+.uni-success-button,
+.uni-danger-button,
+.uni-flat-button {
+  display: inline-block;
+}
+.uni-flat-button {
+  min-width: auto;
+}
+
+/* Style a button that is a light DOM content, probably functional element bound to the database */
+.uni-primary-button > ::slotted(button) {
+  color: #fff !important;
+  background-color: var(--uni-primary) !important;
+}
+/* In case a button is used in Shadow DOM, for example, to perform visual-only action, like collapsing the accordion.
+  This approach is also required to cover polyfill browsers and polyfill limitations.
+*/
+.uni-primary-button > button {
+  color: #fff !important;
+  background-color: var(--uni-primary) !important;
+}
+
+.uni-success-button > ::slotted(button) {
+  background-color: var(--uni-success) !important;
+  color: var(--uni-white) !important;
+}
+.uni-success-button > button {
+  background-color: var(--uni-success) !important;
+  color: var(--uni-white) !important;
+}
+
+.uni-danger-button > ::slotted(button) {
+  background-color: var(--uni-danger) !important;
+  color: var(--uni-white) !important;
+}
+.uni-danger-button > button {
+  background-color: var(--uni-danger) !important;
+  color: var(--uni-white) !important;
+}
+
+.uni-flat-button > ::slotted(button) {
+  background-color: transparent !important;
+  color: var(--uni-blue) !important;
+  box-shadow: none !important;
+  min-width: auto !important;
+  margin-left: 16px !important;
+  margin-right: 16px !important;
+
+}
+.uni-flat-button > button {
+  background-color: transparent !important;
+  color: var(--uni-blue) !important;
+  box-shadow: none !important;
+  min-width: auto !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+
+.uni-primary-button > ::slotted(button:hover),
+.uni-primary-button > ::slotted(button:focus),
+.uni-success-button > ::slotted(button:hover),
+.uni-success-button > ::slotted(button:focus),
+.uni-danger-button > ::slotted(button:hover),
+.uni-danger-button > ::slotted(button:focus) {
+  filter: brightness(90%) !important;
+}
+.uni-flat-button > ::slotted(button:hover),
+.uni-flat-button > ::slotted(button:focus) {
+  background-color: var(--uni-gray-2) !important;
+}
+.uni-primary-button > button:hover,
+.uni-primary-button > button:focus,
+.uni-success-button > button:hover,
+.uni-success-button > button:focus,
+.uni-danger-button > button:hover,
+.uni-danger-button > button:focus {
+  filter: brightness(90%) !important;
+}
+.uni-flat-button > button:hover,
+.uni-flat-button > button:focus {
+  background-color: var(--uni-gray-2) !important;
+}
+
+.uni-primary-button > ::slotted(button[disabled]),
+.uni-success-button > ::slotted(button[disabled]),
+.uni-danger-button > ::slotted(button[disabled]),
+.uni-flat-button > ::slotted(button[disabled]) {
+  opacity: .65 !important;
+  box-shadow: initial !important;
+}
+.uni-flat-button > ::slotted(button[disabled]) {
+  color: var(--uni-livid) !important;
+}
+.uni-primary-button > button[disabled],
+.uni-success-button > button[disabled],
+.uni-danger-button > button[disabled],
+.uni-flat-button > button[disabled] {
+  opacity: .65 !important;
+  box-shadow: initial !important;
+}
+.uni-flat-button > button[disabled] {
+  color: var(--uni-livid) !important;
+}
+
+.uni-primary-button > ::slotted(button[disabled]:hover),
+.uni-primary-button > ::slotted(button[disabled]:focus),
+.uni-success-button > ::slotted(button[disabled]:hover),
+.uni-success-button > ::slotted(button[disabled]:focus),
+.uni-danger-button > ::slotted(button[disabled]:hover),
+.uni-danger-button > ::slotted(button[disabled]:focus) {
+  filter: initial !important;
+}
+.uni-flat-button > ::slotted(button[disabled]:hover),
+.uni-flat-button > ::slotted(button[disabled]:focus) {
+  background-color: transparent !important;
+}
+.uni-primary-button > button[disabled]:hover,
+.uni-primary-button > button[disabled]:focus,
+.uni-success-button > button[disabled]:hover,
+.uni-success-button > button[disabled]:focus,
+.uni-danger-button > button[disabled]:hover,
+.uni-danger-button > button[disabled]:focus {
+  filter: initial !important;
+}
+.uni-flat-button > button[disabled]:hover,
+.uni-flat-button > button[disabled]:focus {
+  background-color: transparent !important;
+}
+
+/**
+Pagination
+*/
+
+.uni-pagination {
+  border: 1px solid var(--uni-gray-5, #e1e1e1);
+  border-radius: 5px;
+  height: 36px;
+  padding: 1px;
+  margin: 10px 0px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.uni-pagination > ::slotted(*),
+.uni-pagination > * > ::slotted(*) {
+  all: initial;
+  font-family: inherit;
+  font-size: 1em;
+  padding: 0 5px;
+  margin: 5px 2px;
+  border: 1px solid #fff;
+  color: var(--uni-primary);
+  cursor: pointer;
+  display: inline-block;
+}
+.uni-pagination > *,
+.uni.pagination > * > * {
+  all: initial;
+  font-family: inherit;
+  font-size: 1em;
+  padding: 0 5px;
+  margin: 5px 2px;
+  border: 1px solid #fff;
+  color: var(--uni-primary);
+  cursor: pointer;
+  display: inline-block;
+}
+
+.uni-pagination > .uni-pages > ::slotted([aria-current='true']) {
+  border: 1px solid var(--uni-primary);
+}
+.uni-pagination > .uni-pages > [aria-current='true'] {
+  border: 1px solid var(--uni-primary);
+}
+
+.uni-pagination > * > ::slotted([disabled]),
+.uni-pagination > * > ::slotted([disabled]) {
+  background: #eee;
+  color: #aaa;
+  cursor: default;
+}
+.uni-pagination > * > :disabled,
+.uni-pagination > * > [disabled] {
+  background: #eee;
+  color: #aaa;
+  cursor: default;
+}
+
+.uni-pagination > .uni-previous > ::slotted(*) {
+  padding-right: 1em;
+  border: 2px solid transparent;
+  border-right: 2px solid #ddd;
+  margin: 0px;
+  margin-right: 8px;
+  margin-left: 6px;
+}
+.uni-pagination > .uni-previous > * {
+  padding-right: 1em;
+  border: 2px solid transparent;
+  border-right: 2px solid #ddd;
+  margin: 0px;
+  margin-right: 8px;
+  margin-left: 6px;
+}
+
+.uni-pagination > .uni-next > ::slotted(*) {
+  padding-left: 1em;
+  border: 2px solid transparent;
+  border-left: 2px solid #ddd;
+  margin-left: 8px;
+  margin-right: 6px;
+}
+.uni-pagination > .uni-next > * {
+  padding-left: 1em;
+  border: 2px solid transparent;
+  border-left: 2px solid #ddd;
+  margin-left: 8px;
+  margin-right: 6px;
+}
+
+.uni-pagination
+  > .uni-pages
+  > ::slotted(*:hover:not([aria-current='true']):not(:disabled):not([disabled])) {
+  border: 1px solid rgb(105, 206, 243);
+}
+.uni-pagination
+  > .uni-pages
+  > *:hover:not([aria-current='true']):not(:disabled):not([disabled]) {
+  border: 1px solid rgb(105, 206, 243);
+}
+
+/**
+ Forms
+ */
+
+.uni-form > ::slotted(div) {
+  margin-bottom: 20px;
+}
+.uni-form > div {
+  margin-bottom: 20px;
+}
+
+.uni-form > ::slotted(div:last-child) {
+  margin-bottom: 10px;
+}
+.uni-form > div:last-child {
+  margin-bottom: 10px;
+}
+
+/**
+  Alerts
+  */
+.uni-alert-info > ::slotted(*),
+.uni-alert-danger > ::slotted(*),
+.uni-alert-success > ::slotted(*),
+.uni-alert-warning > ::slotted(*) {
+  padding: 20px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  position: relative;
+}
+.uni-alert-info > *,
+.uni-alert-danger > *,
+.uni-alert-success > *,
+.uni-alert-warning > * {
+  padding: 20px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  position: relative;
+}
+
+.uni-alert-info > ::slotted(*) {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+.uni-alert-info > * {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+.uni-alert-danger > ::slotted(*) {
+  color: var(--uni-white, #fff);
+  background-color: var(--uni-danger);
+  border-color: var(--uni-danger);
+}
+.uni-alert-danger > * {
+  color: var(--uni-white, #fff);
+  background-color: var(--uni-danger);
+  border-color: var(--uni-danger);
+}
+
+.uni-alert-success > ::slotted(*) {
+  color: var(--uni-white);
+  background-color: var(--uni-success);
+  border-color: var(--uni-success);
+}
+.uni-alert-success > * {
+  color: var(--uni-white);
+  background-color: var(--uni-success);
+  border-color: var(--uni-success);
+}
+
+.uni-alert-warning > ::slotted(*) {
+  color: var(--uni-dark);
+  background-color: var(--uni-warning);
+  border-color: var(--uni-warning);
+}
+.uni-alert-warning > * {
+  color: var(--uni-dark);
+  background-color: var(--uni-warning);
+  border-color: var(--uni-warning);
+}
+
+/*
+ * Card
+ */
+.uni-card {
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  color: var(--uni-dark);
+  background-color: var(--uni-white);
+  border-radius: 3px;
+  padding: 16px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+}
+/*
+ * Sections
+ */
+.uni-section-primary,
+.uni-section-secondary,
+.uni-section-tertiary {
+  padding: var(--uni-section-padding-vertical) var(--uni-section-padding-horizontal);
+}
+
+.uni-section-primary {
+  background: rgb(231, 236, 240);
+}
+
+.uni-section-secondary {
+  background: var(--uni-white);
+}
+
+.uni-section-tertiary {
+  background: rgb(27, 41, 54);
+  color: white;
+}

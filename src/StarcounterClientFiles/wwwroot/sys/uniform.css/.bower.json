@@ -29,14 +29,14 @@
     "declarative-shadow-dom": "^0.1.0",
     "underwear.css": "^0.0.2"
   },
-  "version": "0.0.4",
-  "_release": "0.0.4",
+  "version": "0.0.5",
+  "_release": "0.0.5",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.4",
-    "commit": "ff12e5cb205e37e69bceda7c21e0f9c8ad097a46"
+    "tag": "0.0.5",
+    "commit": "acda681fcc2ae90f79f8638bb1714cf1888cb4a7"
   },
   "_source": "https://github.com/Starcounter/Uniform.css.git",
-  "_target": "^0.0.4",
+  "_target": "^0.0.5",
   "_originalSource": "uniform.css"
 }
