@@ -9,7 +9,7 @@
     "starcounter-include": "^4.2.0",
     "polymer": "^2.0.0",
     "webcomponentsjs": "^1.0.0",
-    "underwear.css": "^0.0.4",
+    "underwear.css": "^0.0.5",
     "uniform.css": "^0.0.6"
   },
   "resolutions": {
