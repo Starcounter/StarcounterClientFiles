@@ -1,24 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
+<html lang="en"><head>
     <meta charset="utf-8">
     <title>Underwear.css</title>
-    <link rel="stylesheet" href="underwear.css">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="underwear.unminified.css">
+    <style>
+        html,
+        body {
+            width: 100%;
+            margin: 0px;
+        }
+
+        .container {
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 10px;
+            border: 1px solid #eee;
+        }
+
+        footer {
+            padding: 20px
+        }
+
+        header>div {
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 10px;
+            display: flex;
+            align-items: center
+        }
+
+        header>div>div {
+            width: 50%
+        }
+
+        .color-sample {
+            width: 25px;
+            height: 25px;
+            border-radius: 4px;
+            transition: transform 0.2s ease-in-out;
+            border: 1px solid #DDD;
+        }
+
+        .color-sample:hover {
+            transform: scale(5, 5);
+        }
+    </style>
 </head>
 
 <body>
-        <header>
+    <header>
         <div>
             <div>
                 <h1>
-                    <span class="emoji">👙</span> Underwear<span class="suffix">.css</span>
+                    👙 Underwear.css
                 </h1>
             </div>
             <div style="text-align: right">
                 <a href="https://github.com/Starcounter/Underwear.css" rel="noopener" target="_blank">
-                    <img src="assets/gh-logo.png">
+                    <img alt="GitHub Logo" title="View on GitHub" src="assets/gh-logo.png">
                 </a>
             </div>
         </div>
@@ -46,6 +85,12 @@
             </h6>
         </div>
         <div>
+            <h1>Horizontal line</h1>
+            <p>Here is a horizontal line (
+                <code>&lt;hr&gt;</code>) 👇</p>
+            <hr>
+        </div>
+        <div>
             <h1>Text</h1>
             <p>We're no strangers to love, You know the rules and so do I, A full commitment's what I'm thinking of, You wouldn't
                 get this from any other guy, I just wanna tell you how I'm feeling, Gotta make you understand, Never gonna
@@ -61,7 +106,7 @@
         <div>
             <h1>Button</h1>
             <table>
-                <tr>
+                <tbody><tr>
                     <th>
                         <p>Default</p>
                     </th>
@@ -71,21 +116,18 @@
                 </tr>
                 <tr>
                     <td>
-                        <button onclick="surprise.removeAttribute('invisible')">Default</button>
-                        <div id="surprise" invisible>
-                            I like your curiosity
-                        </div>
+                        <button>Default</button>
                     </td>
                     <td>
-                        <button disabled>Disabled</button>
+                        <button disabled="">Disabled</button>
                     </td>
                 </tr>
-            </table>
+            </tbody></table>
         </div>
         <div>
             <h1>Dropdown</h1>
             <table>
-                <tr>
+                <tbody><tr>
                     <th>
                         <p>Default</p>
                     </th>
@@ -101,13 +143,13 @@
                         </select>
                     </td>
                     <td>
-                        <select disabled>
+                        <select disabled="">
                             <option>Disabled</option>
                             <option>Or me</option>
                         </select>
                     </td>
                 </tr>
-            </table>
+            </tbody></table>
         </div>
         <div>
             <h1>Entry field</h1>
@@ -122,8 +164,8 @@
             <div>
                 <form>
                     <input type="text" value="Default">
-                    <input type="text" disabled value="Disabled">
-                    <input type="text" value="Default" placeholder="&lt;place holder&gt;">
+                    <input type="text" disabled="" value="Disabled">
+                    <input type="text" placeholder="Your placeholder">
                 </form>
             </div>
         </div>
@@ -167,7 +209,7 @@
                 <ol>
                     <li>Parent
                         <ul>
-                            That has some children
+                            <li>That has some children</li>
                         </ul>
                     </li>
                     <li>Grand parent
@@ -187,7 +229,8 @@
         <div>
             <h1>&lt;code&gt;</h1>
             <div>
-                <code>while(true) { stay(happy) }</code>
+                Here is some inlined code
+                <code>while(true) { stay(happy) }</code>, it's useful sometimes.
             </div>
         </div>
         <div>
@@ -202,10 +245,11 @@
                 <pre><code>while(true) { stay(happy) }</code></pre>
             </div>
         </div>
-        <div style="width: 700px">
+        <div>
             <h1>Table</h1>
             <table>
-                <tr>
+                <caption>This is a table</caption>
+                <tbody><tr>
                     <th>Entry Header 1</th>
                     <th>Entry Header 2</th>
                     <th>Entry Header 3</th>
@@ -229,86 +273,371 @@
                     <td>Entry Last Line 3</td>
                     <td>Entry Last Line 4</td>
                 </tr>
-            </table>
+            </tbody></table>
         </div>
         <div>
-            <span sider>
-                <h1>Checkbox</h1>
-                <div style="margin: 10px">
-                    <form>
-                        <input id="checkbox" type="checkbox" value="Checkbox">
-                        <label for="checkbox">Checkbox</label>
-                    </form>
-                </div>
-                <div style="margin: 10px">
-                    <form>
-                        <input id="checkbox2" disabled type="checkbox" value="Checkbox">
-                        <label for="checkbox2">Disabled unchecked</label>
-                    </form>
-                </div>
-                <div style="margin: 10px">
-                    <form>
-                        <input id="checkbox3" disabled checked type="checkbox" value="Checkbox">
-                        <label for="checkbox3">Disabled checked</label>
-                    </form>
-                </div>
+            <h1>Checkbox</h1>
+            <div>
+                <form>
+                    <input id="checkbox" type="checkbox" value="Checkbox">
+                    <label for="checkbox">Checkbox</label>
+                </form>
+            </div>
+            <div>
+                <form>
+                    <input id="checkbox2" disabled="" type="checkbox" value="Checkbox">
+                    <label for="checkbox2">Disabled unchecked</label>
+                </form>
+            </div>
+            <div>
+                <form>
+                    <input id="checkbox3" disabled="" checked="" type="checkbox" value="Checkbox">
+                    <label for="checkbox3">Disabled checked</label>
+                </form>
+            </div>
         </div>
         <div>
-            <h1>
-                Composition Example
-            </h1>
-            <div class="uniform-form">
-                <div style="width: 500px">
-                    <label style="width: 100%">
-                        <span>Email</span>
-                        <input style="width: 100%" type="text" value="stephen@fry.com">
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        <span>Firstname</span>
-                        <input type="text" value="Stephen">
-                    </label>
+            <h1>Input with type</h1>
+            <h3>Buttons</h3>
+            <p>
+                <code>&lt;input type="button"&gt;</code>,
+                <code>&lt;input type="submit"&gt;</code>, and
+                <code>&lt;input type="reset"&gt;</code>
+            </p>
+            <div>
+                <form>
+                    <input type="button" value="Button button">
+                    <input type="submit" value="Submit button">
+                    <input type="reset" value="Reset button">
+                </form>
+            </div>
+            <hr>
+            <h3>Color</h3>
+            <p>
+                <code>&lt;input type="color"&gt;</code>
+            </p>
+            <div>
+                <form>
+                    <input type="color" value="#CCCCFF">
+                </form>
+            </div>
 
-                    <label>
-                        <span>Lastname</span>
-                        <input type="text" value="Fry">
-                    </label>
-                </div>
+            <hr>
+            <h3>Input with no <code>type</code> attribute</h3>
+            <div>
+                <form>
+                    <input>
+                </form>
+            </div>
+
+            <hr>
+            <h3>Date</h3>
+            <p>
+                <code>&lt;input type="date"&gt;</code>
+            </p>
+            <div>
+                <form>
+                    <input type="date" value="2018-02-09">
+                </form>
+            </div>
+            <h3>Email</h3>
+            <p>
+                <code>&lt;input type="email"&gt;</code>
+            </p>
+            <div>
+                <form>
+                    <input type="email" value="Email input">
+                </form>
                 <div>
-                    <label>
-                        <span>Mobile phone number</span>
-                        <input type="text" value="+46 707 11 33 44">
-                    </label>
+                    <em>Enter an invalid email and press enter</em>
                 </div>
-                <div>
-                    <label>
-                        <span>Home number</span>
-                        <input type="text" value="+46 707 11 33 44">
-                    </label>
-                    <p>
-                        <a href="#">ADD PHONE NUMBER</a>
-                    </p>
-                </div>
-                <div>
-                    <label>
-                        <span>Home address</span>
-                        <input type="text" value="Bybrokajen 5, 111 48 Stockholm">
-                    </label>
-                    <p>
-                        <a href="#">ADD ADDRESS</a>
-                    </p>
-                </div>
-                <div>
-                    <button class="primary">Submit</button>
-                    <button>Cancel</button>
-                </div>
+            </div>
+            <hr>
+            <h3>File</h3>
+            <p>
+                <code>&lt;input type="file"&gt;</code>
+            </p>
+            <div>
+                <form>
+                    <input type="file">
+                </form>
+            </div>
+            <hr>
+            <h2>Image</h2>
+            <p>
+                <code>&lt;input type="image"&gt;</code>
+            </p>
+            <div>
+                <form>
+                    <input alt="Github Logo" type="image" src="assets/gh-logo.png">
+                </form>
+            </div>
+            <hr>
+            <h3>Number</h3>
+            <p>
+                <code>&lt;input type="number"&gt;</code>
+            </p>
+            <div>
+                <form>
+                    <input type="number" value="10">
+                </form>
+            </div>
+        </div>
+        <div>
+            <h1>Image example</h1>
+            <p>Images are responsive by default</p>
+            <img src="assets/sample-image.jpg" alt="Sample photo">
+            <!-- the following HTML is copied and pasted from unsplash.com to credit the image author -->
+            <p>Image by
+                <a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px;" href="https://unsplash.com/@chrisabney?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Chris Abney">
+                    <span style="display:inline-block;padding:2px 3px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-1px;fill:white;" viewBox="0 0 32 32">
+                            <title>unsplash-logo</title>
+                            <path d="M20.8 18.1c0 2.7-2.2 4.8-4.8 4.8s-4.8-2.1-4.8-4.8c0-2.7 2.2-4.8 4.8-4.8 2.7.1 4.8 2.2 4.8 4.8zm11.2-7.4v14.9c0 2.3-1.9 4.3-4.3 4.3h-23.4c-2.4 0-4.3-1.9-4.3-4.3v-15c0-2.3 1.9-4.3 4.3-4.3h3.7l.8-2.3c.4-1.1 1.7-2 2.9-2h8.6c1.2 0 2.5.9 2.9 2l.8 2.4h3.7c2.4 0 4.3 1.9 4.3 4.3zm-8.6 7.5c0-4.1-3.3-7.5-7.5-7.5-4.1 0-7.5 3.4-7.5 7.5s3.3 7.5 7.5 7.5c4.2-.1 7.5-3.4 7.5-7.5z"></path>
+                        </svg>
+                    </span>
+                    <span style="display:inline-block;padding:2px 3px;">Chris Abney</span>
+                </a>
+            </p>
+            <!-- end of attribution -->
+        </div>
+        <div>
+            <h1>CSS Custom Properties</h1>
+            <div>
+                <p>underwear.css uses CSS Custom Properties (CSS Variables) that you can configure. You can also use them by
+                    yourself, to adhere to the consistent look and feel.</p>
+                <table>
+                    <tbody><tr>
+                        <th>Name</th>
+                        <th>Default value</th>
+                        <th>Sample</th>
+                    </tr>
+                    </tbody><tbody id="propsTable">
+    <tr>
+        <td><code>--white</code></td>
+        <td><code>#fff</code></td>
+        <td><div class="color-sample" style="background-color: #fff"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--gray-1</code></td>
+        <td><code>#f9f9f9</code></td>
+        <td><div class="color-sample" style="background-color: #f9f9f9"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--gray-2</code></td>
+        <td><code>#f6f6f6</code></td>
+        <td><div class="color-sample" style="background-color: #f6f6f6"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--gray-3</code></td>
+        <td><code>#efefef</code></td>
+        <td><div class="color-sample" style="background-color: #efefef"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--gray-4</code></td>
+        <td><code>#e7e7e7</code></td>
+        <td><div class="color-sample" style="background-color: #e7e7e7"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--gray-5</code></td>
+        <td><code>#e1e1e1</code></td>
+        <td><div class="color-sample" style="background-color: #e1e1e1"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--gray-6</code></td>
+        <td><code>#868e96</code></td>
+        <td><div class="color-sample" style="background-color: #868e96"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--gray-7</code></td>
+        <td><code>#606c76</code></td>
+        <td><div class="color-sample" style="background-color: #606c76"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--transparent-black</code></td>
+        <td><code>#00000033</code></td>
+        <td><div class="color-sample" style="background-color: #00000033"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--blue</code></td>
+        <td><code>#0084b4</code></td>
+        <td><div class="color-sample" style="background-color: #0084b4"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--dark-blue</code></td>
+        <td><code>#1a587f</code></td>
+        <td><div class="color-sample" style="background-color: #1a587f"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--dark</code></td>
+        <td><code>#141d26</code></td>
+        <td><div class="color-sample" style="background-color: #141d26"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--green</code></td>
+        <td><code>#3fa13f</code></td>
+        <td><div class="color-sample" style="background-color: #3fa13f"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--inky</code></td>
+        <td><code>#1b2936</code></td>
+        <td><div class="color-sample" style="background-color: #1b2936"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--livid</code></td>
+        <td><code>#8696a5</code></td>
+        <td><div class="color-sample" style="background-color: #8696a5"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--mouse</code></td>
+        <td><code>#e7ecf0</code></td>
+        <td><div class="color-sample" style="background-color: #e7ecf0"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--red</code></td>
+        <td><code>#df4534</code></td>
+        <td><div class="color-sample" style="background-color: #df4534"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--yellow</code></td>
+        <td><code>#ffdb25</code></td>
+        <td><div class="color-sample" style="background-color: #ffdb25"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--anchor-color</code></td>
+        <td><code>var(--blue)</code></td>
+        <td><div class="color-sample" style="background-color: var(--blue)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--blockquote-border-color</code></td>
+        <td><code>var(--livid)</code></td>
+        <td><div class="color-sample" style="background-color: var(--livid)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--button-active-background-color</code></td>
+        <td><code>var(--gray-3)</code></td>
+        <td><div class="color-sample" style="background-color: var(--gray-3)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--button-background-color</code></td>
+        <td><code>var(--white)</code></td>
+        <td><div class="color-sample" style="background-color: var(--white)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--button-hover-background-color</code></td>
+        <td><code>var(--gray-1)</code></td>
+        <td><div class="color-sample" style="background-color: var(--gray-1)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--button-text-color</code></td>
+        <td><code>var(--dark)</code></td>
+        <td><div class="color-sample" style="background-color: var(--dark)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--code-block-background-color</code></td>
+        <td><code>var(--gray-2)</code></td>
+        <td><div class="color-sample" style="background-color: var(--gray-2)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--code-block-border-color</code></td>
+        <td><code>var(--blue)</code></td>
+        <td><div class="color-sample" style="background-color: var(--blue)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--code-block-color</code></td>
+        <td><code>var(--red)</code></td>
+        <td><div class="color-sample" style="background-color: var(--red)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--default-body-color</code></td>
+        <td><code>var(--dark)</code></td>
+        <td><div class="color-sample" style="background-color: var(--dark)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--default-font-size</code></td>
+        <td><code>14px</code></td>
+        <td>Hello World</td>
+    </tr>
+
+    <tr>
+        <td><code>--disabled-background-color</code></td>
+        <td><code>var(--gray-2)</code></td>
+        <td><div class="color-sample" style="background-color: var(--gray-2)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--disabled-text-color</code></td>
+        <td><code>var(--gray-6)</code></td>
+        <td><div class="color-sample" style="background-color: var(--gray-6)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--editable-background-color</code></td>
+        <td><code>var(--gray-2)</code></td>
+        <td><div class="color-sample" style="background-color: var(--gray-2)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--horizontal-line-color</code></td>
+        <td><code>var(--gray-4)</code></td>
+        <td><div class="color-sample" style="background-color: var(--gray-4)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--shadow-color</code></td>
+        <td><code>var(--transparent-black)</code></td>
+        <td><div class="color-sample" style="background-color: var(--transparent-black)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--table-border-color</code></td>
+        <td><code>var(--gray-5)</code></td>
+        <td><div class="color-sample" style="background-color: var(--gray-5)"><div></div></div></td>
+    </tr>
+
+    <tr>
+        <td><code>--font-family-sans-serif</code></td>
+        <td><code>"Roboto","Segoe UI","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"</code></td>
+        <td>Hello World</td>
+    </tr>
+
+    <tr>
+        <td><code>--font-family-monospace</code></td>
+        <td><code>SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace</code></td>
+        <td>Hello World</td>
+    </tr></tbody>
+                </table>
             </div>
         </div>
     </div>
     <footer>MIT License, Starcounter © 2018</footer>
-</body>
 
-</html>
-
-<body>
+</body></html>

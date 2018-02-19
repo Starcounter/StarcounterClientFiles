@@ -34,7 +34,7 @@ using Starcounter.Internal;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 // this works with Nuget, but I'm not sure if Starcounter Warehouse supports it. Either ways, we can delete this release when we release 3.0.0
-[assembly: AssemblyInformationalVersion("3.0.0-rc.5")]
+[assembly: AssemblyInformationalVersion("3.0.0-rc.6")]
 
 // this doesn't support semver, that's why it's 3.0.0, we can delete this release when we release actual 3.0.0
 [assembly: AssemblyVersion("3.0.0")]
