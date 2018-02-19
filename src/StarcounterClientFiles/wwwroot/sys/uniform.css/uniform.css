@@ -87,27 +87,22 @@
 
 .uni-label-control {
   display: grid;
-  grid-template-columns: 150px 1fr;
-  grid-column-gap: 10px;
+  grid-template: "label";
+  grid-gap: 1rem;
   align-items: baseline;
-}
-
-.uni-label-control > ::slotted(*) {
-  grid-column: 2 / 3;
-  width: 100%;
-}
-.uni-label-control > * {
-  grid-column: 2 / 3;
-  width: 100%;
+  justify-content: start;
+  justify-items: start;
 }
 
 .uni-label-control > ::slotted(label) {
   text-align: left;
-  grid-column: 1 / 2;
+  grid-area: label;
+  font-size: 12px;
 }
 .uni-label-control > label {
   text-align: left;
-  grid-column: 1 / 2;
+  grid-area: label;
+  font-size: 12px;
 }
 
 /**

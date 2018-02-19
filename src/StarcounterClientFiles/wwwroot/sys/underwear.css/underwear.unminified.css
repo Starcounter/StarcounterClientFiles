@@ -507,6 +507,59 @@ template {
     'Liberation Mono', 'Courier New', monospace;
 }
 
+/* 
+  PLEASE DO NOT MAINTAIN THE FOLLOWING PROPERTIES (in :host)
+  Instead, maintain the selector above (:root), then copy and paste the result as is to (:host).
+*/
+:host {
+  /* Starcounter default color variables */
+
+  --white: #ffffff;
+
+  --gray-1: #f9f9f9;
+  --gray-2: #f6f6f6;
+  --gray-3: #efefef;
+  --gray-4: #e7e7e7;
+  --gray-5: #e1e1e1;
+  --gray-6: #868e96;
+  --gray-7: #606c76;
+
+  --transparent-black: #00000033;
+
+  --blue: #0084b4;
+  --dark-blue: #1a587f;
+  --dark: #141d26;
+  --green: #3fa13f;
+  --inky: #1b2936;
+  --livid: #8696a5;
+  --mouse: #e7ecf0;
+  --red: #df4534;
+  --yellow: #ffdb25;
+
+  --anchor-color: var(--blue);
+  --blockquote-border-color: var(--livid);
+  --button-active-background-color: var(--gray-3);
+  --button-background-color: var(--white);
+  --button-hover-background-color: var(--gray-1);
+  --button-text-color: var(--dark);
+  --code-block-background-color: var(--gray-2);
+  --code-block-border-color: var(--blue);
+  --code-block-color: var(--red);
+  --default-body-color: var(--dark);
+  --default-font-size: 14px;
+  --disabled-background-color: var(--gray-2);
+  --disabled-text-color: var(--gray-6);
+  --editable-background-color: var(--gray-2);
+  --horizontal-line-color: var(--gray-4);
+  --shadow-color: var(--transparent-black);
+  --table-border-color: var(--gray-5);
+
+  --font-family-sans-serif: 'Roboto', 'Segoe UI', 'Helvetica Neue', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+}
+
 *,
 *:after,
 *:before {
@@ -592,6 +645,7 @@ input[type='submit'][disabled] {
   color: var(--disabled-text-color);
 }
 
+input:not([type]):disabled,
 input[type='text']:disabled {
   background-color: var(--disabled-background-color);
   color: var(--disabled-text-color);
@@ -645,6 +699,7 @@ input[type='password'],
 input[type='search'],
 input[type='tel'],
 input[type='text'],
+input:not([type]),
 input[type='url'],
 textarea {
   -webkit-appearance: none;
@@ -676,18 +731,6 @@ select:not([multiple]) {
 
 textarea {
   min-height: 6.5rem;
-}
-
-label,
-legend {
-  margin-bottom: 0.5rem;
-  display: inline-block;
-}
-
-label > span {
-  display: block;
-  font-size: 12px;
-  margin-bottom: 4px;
 }
 
 fieldset {
@@ -741,19 +784,6 @@ dl,
 ol,
 ul {
   margin-top: 0;
-}
-
-dl dl,
-dl ol,
-dl ul,
-ol dl,
-ol ol,
-ol ul,
-ul dl,
-ul ol,
-ul ul {
-  font-size: 90%;
-  margin: 1.5rem 0 1.5rem 3rem;
 }
 
 

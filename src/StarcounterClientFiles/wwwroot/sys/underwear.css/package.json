@@ -1,6 +1,6 @@
 {
   "name": "underwear",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Minimalistic CSS library to normalize UA styles",
   "main": "index.js",
   "devDependencies": {

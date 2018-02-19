@@ -12,6 +12,6 @@ starcounter-clientfiles#2.1.1 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 ├─┬ starcounter-include#4.2.0
 │ ├── imported-template#3.1.1
 │ └── translate-shadowdom#0.0.5
-├── underwear.css#0.0.3
-├── uniform.css#0.0.5
+├── underwear.css#0.0.4
+├── uniform.css#0.0.6
 └── webcomponentsjs#1.1.0

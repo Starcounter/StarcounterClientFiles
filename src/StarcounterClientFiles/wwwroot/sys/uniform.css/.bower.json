@@ -21,22 +21,20 @@
     "test",
     "tests",
     "assets",
-    "webpack.config.js",
-    "index.js",
     "src"
   ],
   "devDependencies": {
     "declarative-shadow-dom": "^0.1.0",
-    "underwear.css": "^0.0.2"
+    "underwear.css": "^0.0.3"
   },
-  "version": "0.0.5",
-  "_release": "0.0.5",
+  "version": "0.0.6",
+  "_release": "0.0.6",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.5",
-    "commit": "acda681fcc2ae90f79f8638bb1714cf1888cb4a7"
+    "tag": "0.0.6",
+    "commit": "1e62c22a901b13a292b67683f6095aa2be6f6059"
   },
   "_source": "https://github.com/Starcounter/Uniform.css.git",
-  "_target": "^0.0.5",
+  "_target": "^0.0.6",
   "_originalSource": "uniform.css"
 }

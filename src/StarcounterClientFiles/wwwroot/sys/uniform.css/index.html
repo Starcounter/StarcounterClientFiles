@@ -309,9 +309,9 @@
             </div>
         </section>
         <section>
-            <h2>Form control</h2>
+            <h2>Label control</h2>
             <code>.uni-label-control</code>
-            <p>Puts slotted input in the left column, everything else in the right column.</p>
+            <p>Puts slotted label to the top row, everything else in the bottom row.</p>
             <p>It works for distributed elements.</p>
             <pre><code>&lt;shadowroot mode="open"&gt;
     &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
@@ -329,7 +329,7 @@
                     </div>
                 </template>
                 <label>Label</label>
-                <input>
+                <input type="text">
             </div>
             <hr>
             <p>You can use it as well for styling any elements in the same tree.</p>
@@ -337,10 +337,13 @@
     &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
     &lt;div class="uni-label-control"&gt;
         &lt;label&gt;Label&lt;/label&gt;
-        &lt;slot&gt;&lt;/slot&gt;
+        &lt;div&gt;
+            &lt;slot&gt;&lt;/slot&gt;
+        &lt;/div&gt;
     &lt;/div&gt;
 &lt;/shadowroot&gt;
 &lt;input&gt;
+&lt;select&gt;&lt;option&gt;select&lt;/option&gt;&lt;/select&gt;
 &lt;input&gt;
 &lt;span&gt;message&lt;/span&gt;</code></pre>
             <div data-shadow-host>
@@ -348,11 +351,14 @@
                     <style>@import 'uniform.css';</style>
                     <div class="uni-label-control">
                         <label>Label</label>
-                        <slot></slot>
+                        <div>
+                            <slot></slot>
+                        </div>
                     </div>
                 </template>
-                <input>
-                <input>
+                <input type="text">
+                <select><option>select</option></select>
+                <input type="text">
                 <span>message</span>
             </div>
         </section>
