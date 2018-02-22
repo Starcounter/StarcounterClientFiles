@@ -1,8 +1,8 @@
 ## Usage of StarcounterClientFiles 3.x in Level1 build automation
 
-Whatever is pushed on branch `3.x`, in NOT bundled in the Starcounter installer by the Level1 build automation.
+Whatever is pushed on branch `3.x`, will be bundled in the Starcounter installer by the Level1 build automation. See [the announcement](https://github.com/Starcounter/AdminTrack/issues/438) for more details. 
 
-The name of the StarcounterClientFiles branch used by the Level1 build is configured via the `GIT_CLIENTFILES_BRANCH` parameter in TeamCity. You can use this parameter to manually build Level1 with StarcounterClientFiles 3.x.
+The name of the StarcounterClientFiles branch used by the Level1 build is configured via the `GIT_CLIENTFILES_BRANCH` parameter in TeamCity.
 
 
 ## Releasing of a new version of StarcounterClientFiles 3.x
@@ -19,3 +19,5 @@ The developer process of releasing of a new version of StarcounterClientFiles `3
 6. Still in the feature branch, release new version (3.x) of StarcounterClientFiles on GitHub. Remember to write the release notes.
 7. Still in the feature branch, publish a package of this version to App Warehouse (built with Starcounter 2.4)
 8. Merge the PR to StarcounterClientFiles branch `3.x`.
+   - at this point, a new daily build of Starcounter 2.4 is started
+   - it will be detected and included in the next nightly build of Starcounter 2.4
