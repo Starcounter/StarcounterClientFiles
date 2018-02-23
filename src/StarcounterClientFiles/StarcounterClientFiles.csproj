@@ -80,7 +80,7 @@
   -->
 
   <Target Name="AfterBuild">
-      <Exec Command="powershell -noexit &quot;&amp; &quot;&quot;..\..\vulcanize-files.ps1&quot;&quot;&quot;"></Exec>
+      <Exec Command="cd ..\..\ &amp;&amp; node vulcanize-files.node.js &amp;&amp; cd src\StarcounterClientFiles"></Exec>
   </Target>
 
 </Project>
