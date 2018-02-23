@@ -1,6 +1,6 @@
 ## Usage of StarcounterClientFiles 2.x in Level1 build automation
 
-Whatever is pushed on branch `2.x`, in NOT bundled in the Starcounter installer by the Level1 build automation.
+Branch `2.x` is NOT bundled in the Starcounter installer by the Level1 build automation.
 
 The name of the StarcounterClientFiles branch used by the Level1 build is configured via the `GIT_CLIENTFILES_BRANCH` parameter in TeamCity. You can use this parameter to manually build Level1 with StarcounterClientFiles 2.x.
 
