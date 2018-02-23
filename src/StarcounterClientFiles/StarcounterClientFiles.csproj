@@ -78,4 +78,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+
+  <Target Name="AfterBuild">
+      <Exec Command="powershell -noexit &quot;&amp; &quot;&quot;..\..\vulcanize-files.ps1&quot;&quot;&quot;"></Exec>
+  </Target>
+
 </Project>
