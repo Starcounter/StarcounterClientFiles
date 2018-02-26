@@ -1,11 +1,9 @@
 const fs = require('fs');
 const { spawn } = require('child_process');
-const vulcanizer = spawn(
-  'cmd.exe',
-  [
-    '/c',
-    'vulcanize --inline-scripts --inline-css --strip-comments --polymer2 --out-request-list urls.txt src\\StarcounterClientFiles\\wwwroot\\sys\\starcounter.max.html > src\\StarcounterClientFiles\\wwwroot\\sys\\starcounter.html'
-  ]);
+const vulcanizer = spawn('cmd.exe', [
+  '/c',
+  'vulcanize --inline-scripts --inline-css --strip-comments --polymer2 --out-request-list urls.txt src\\StarcounterClientFiles\\wwwroot\\sys\\starcounter.max.html > src\\StarcounterClientFiles\\wwwroot\\sys\\starcounter.html'
+]);
 
 const distServiceWorkerWarning = `/** Please do not modify this file, instead modify service-worker.src.js in the root of this project */\n\n`;
 
@@ -41,7 +39,7 @@ vulcanizer.on('exit', code => {
 
     fs.unlinkSync('urls.txt');
 
-    console.log('All done.')
+    console.log('All done.');
   } else {
     console.log('Vulcanizing did not succeed and exited with code:', code);
   }
