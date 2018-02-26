@@ -4,7 +4,7 @@
 <!-- <link rel="import" href="iron-request.html"> -->
 
 <!-- include Palindrom with dependencies -->
-<script src="../Palindrom/dist/palindrom-dom.min.js"></script>
+<!-- <script src="../Palindrom/dist/palindrom-dom.min.js"></script> -->
 <!--
 The Polymer version of `palindrom-client` element binds [Palindrom](https://github.com/Palindrom/Palindrom) with [Polymer's template binding](https://www.polymer-project.org/2.0/docs/devguide/templates.html).
 That keeps your Polymer app, or just `dom-bind` template in sync with any server-side
@@ -120,7 +120,7 @@ All the changes from server are also received and propagated to your HTML.
             </div>
         </div>
     </template>
-    <script>      
+    <script>
 
 
         ((() => {
@@ -346,37 +346,72 @@ All the changes from server are also received and propagated to your HTML.
                     if (listenTo) {
                         listenTo = typeof listenTo == "string" ? document.getElementById(listenTo) : listenTo;
                     }
-                    this.palindrom = new PalindromDOM({
-                        remoteUrl: this.remoteUrl,
-                        pingIntervalS,
-                        listenTo,
-                        useWebSocket: this.useWebSocket,
-                        debug: this.debug,
-                        onLocalChange: this.onLocalChange.bind(this),
-                        onRemoteChange: this.onPatchApplied.bind(this),
-                        onPatchReceived: this.onPatchReceived.bind(this),
-                        onIncomingPatchValidationError: this.onGenericError.bind(this),
-                        onOutgoingPatchValidationError: this.onGenericError.bind(this),
-                        onError: this.onGenericError.bind(this),
-                        onPatchSent: this.onPatchSent.bind(this),
-                        onSocketStateChanged: this.onSocketStateChanged.bind(this),
-                        onConnectionError: this.onConnectionError.bind(this),
-                        onReconnectionCountdown: this.onReconnectionCountdown.bind(this),
-                        onReconnectionEnd: this.onReconnectionEnd.bind(this),
-                        localVersionPath: this.localVersionPath,
-                        remoteVersionPath: this.remoteVersionPath,
-                        ot: this.ot,
-                        purity: this.purity,
-                        onStateReset: obj => {
+
+                    let palindrom = PalindromDOM.instances.get(this.remoteUrl);
+                    if(!palindrom){
+                        this.palindrom = palindrom = new PalindromDOM({
+                            remoteUrl: this.remoteUrl,
+                            pingIntervalS,
+                            useWebSocket: this.useWebSocket,
+                            debug: this.debug,
+                            ot: this.ot,
+                            purity: this.purity,
+                            localVersionPath: this.localVersionPath,
+                            remoteVersionPath: this.remoteVersionPath,
+
+                            listenTo,
+
+                            onLocalChange: this.onLocalChange.bind(this),
+                            onRemoteChange: this.onPatchApplied.bind(this),
+                            onPatchReceived: this.onPatchReceived.bind(this),
+                            onIncomingPatchValidationError: this.onGenericError.bind(this),
+                            onOutgoingPatchValidationError: this.onGenericError.bind(this),
+                            onError: this.onGenericError.bind(this),
+                            onPatchSent: this.onPatchSent.bind(this),
+                            onSocketStateChanged: this.onSocketStateChanged.bind(this),
+                            onConnectionError: this.onConnectionError.bind(this),
+                            onReconnectionCountdown: this.onReconnectionCountdown.bind(this),
+                            onReconnectionEnd: this.onReconnectionEnd.bind(this),
+                            onStateReset: obj => {
+                                debugger
+                                this.obj = obj;
+                                if (whereToBind) {
+                                    this.bindTo(whereToBind);
+                                }
+                                this.onPatchApplied([{ op: 'replace', path: '', value: obj }], [{ removed: this.obj }])
+                            }
+                        });
+                        PalindromDOM.instances.set(this.remoteUrl, palindrom);
+                    } else {
+                        // with already established connection we cannot change listenTo parameter
+                        
+                        this.palindrom = palindrom;
+                        palindrom.onLocalChange =  this.onLocalChange.bind(this);
+                        palindrom.onRemoteChange =  this.onPatchApplied.bind(this);
+                        palindrom.onPatchReceived =  this.onPatchReceived.bind(this);
+                        palindrom.onIncomingPatchValidationError =  this.onGenericError.bind(this);
+                        palindrom.onOutgoingPatchValidationError =  this.onGenericError.bind(this);
+                        palindrom.onError =  this.onGenericError.bind(this);
+                        palindrom.onPatchSent =  this.onPatchSent.bind(this);
+                        palindrom.onSocketStateChanged =  this.onSocketStateChanged.bind(this);
+                        palindrom.onConnectionError =  this.onConnectionError.bind(this);
+                        palindrom.onReconnectionCountdown =  this.onReconnectionCountdown.bind(this);
+                        palindrom.onReconnectionEnd =  this.onReconnectionEnd.bind(this);
+                        palindrom.onStateReset =  obj => {
+                            console.info('reset');
                             this.obj = obj;
                             if (whereToBind) {
                                 this.bindTo(whereToBind);
                             }
                             this.onPatchApplied([{ op: 'replace', path: '', value: obj }], [{ removed: this.obj }])
                         }
-                    });
-                    this.network = this.palindrom.network;
-                    this.morphUrl = this.palindrom.morphUrl.bind(this.palindrom);
+                        // if already established (re-)set state
+                        if(palindrom.obj){
+                            palindrom.onStateReset(palindrom.obj);
+                        }
+                    }
+                    this.network = palindrom.network;
+                    this.morphUrl = palindrom.morphUrl.bind(palindrom);
                 },
                 bindTo(element) {
                     // use node id or node itself;

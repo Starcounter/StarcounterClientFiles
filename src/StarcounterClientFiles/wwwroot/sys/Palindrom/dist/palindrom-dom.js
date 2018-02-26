@@ -1631,7 +1631,7 @@ const PalindromDOM = (() => {
       // construct Palindrom
       super(options);
 
-      this.element = options.listenTo || document.body;
+      this.element = options.listenTo || document;
       this.clickHandler = this.clickHandler.bind(this);
       this.historyHandler = this.historyHandler.bind(this);
       this.morphUrlEventHandler = this.morphUrlEventHandler.bind(this);
@@ -1723,7 +1723,7 @@ const PalindromDOM = (() => {
 
     /**
      * Handles `palindrom-morph-url` event and channels its `detail.url` to `morphUrl`
-     * @param {palindrom-morph-url Event} event 
+     * @param {palindrom-morph-url Event} event
      */
     morphUrlEventHandler(event) {
       this.morphUrl(event.detail.url);
@@ -1804,7 +1804,7 @@ const PalindromDOM = (() => {
       );
     }
   }
-  
+
   return PalindromDOM;
 })();
 
@@ -1817,7 +1817,7 @@ module.exports.__esModule = true;
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {/*! Palindrom 
+/* WEBPACK VAR INJECTION */(function(global) {/*! Palindrom
  * https://github.com/Palindrom/Palindrom
  * (c) 2017 Joachim Wester
  * MIT license
@@ -1845,9 +1845,9 @@ const {
 } = __webpack_require__(42);
 
 /* We are going to hand `websocket` lib as an external to webpack
-  (see: https://webpack.js.org/configuration/externals/), 
-  this will make `w3cwebsocket` property `undefined`, 
-  and this will lead Palindrom to use Browser's WebSocket when it is used 
+  (see: https://webpack.js.org/configuration/externals/),
+  this will make `w3cwebsocket` property `undefined`,
+  and this will lead Palindrom to use Browser's WebSocket when it is used
   from the bundle. And use `websocket` lib in Node environment */
 const NodeWebSocket = __webpack_require__(43).w3cwebsocket;
 
@@ -2177,7 +2177,7 @@ const Palindrom = (() => {
           );
           return;
         }
-        this.onReceive(parsedMessage, this._ws.url, 'WS');        
+        this.onReceive(parsedMessage, this._ws.url, 'WS');
       };
       this._ws.onerror = event => {
         this.onStateChange(this._ws.readyState, upgradeURL, event.data);
@@ -2210,14 +2210,14 @@ const Palindrom = (() => {
           const message = [
             'WebSocket connection closed unexpectedly.',
             'reason: ' + event.reason,
-            'readyState: ' + this._ws.readyState, 
+            'readyState: ' + this._ws.readyState,
             'stateCode: ' + event.code
           ].join('\n');
 
           this.onFatalError(
             new PalindromConnectionError(message, SERVER, upgradeURL, 'WS')
           );
-          
+
         } else if (!event.wasClean) {
           const message = [
             'WebSocket connection closed unexpectedly.',
@@ -2712,7 +2712,7 @@ const Palindrom = (() => {
     }
 
     handleRemoteChange(data, url, method) {
-    
+
       if (this.onPatchReceived) {
         this.onPatchReceived(data, url, method);
       }
@@ -3103,7 +3103,7 @@ function unsupported(object){
 
 /*!
  * https://github.com/Palindrom/JSONPatcherProxy
- * (c) 2017 Starcounter 
+ * (c) 2017 Starcounter
  * MIT license
  */
 
@@ -3132,7 +3132,7 @@ const JSONPatcherProxy = (function() {
 
   /**
    * Walk up the parenthood tree to get the path
-   * @param {JSONPatcherProxy} instance 
+   * @param {JSONPatcherProxy} instance
    * @param {Object} obj the object you need to find its path
    */
   function findObjectPath(instance, obj) {
@@ -3185,11 +3185,11 @@ const JSONPatcherProxy = (function() {
     Why do we need to check instance.isProxifyingTreeNow?
 
     We need to make sure we mark revokables as inherited ONLY when we're observing,
-    because throughout the first proxification, a sub-object is proxified and then assigned to 
+    because throughout the first proxification, a sub-object is proxified and then assigned to
     its parent object. This assignment of a pre-proxified object can fool us into thinking
-    that it's a proxified object moved around, while in fact it's the first assignment ever. 
+    that it's a proxified object moved around, while in fact it's the first assignment ever.
 
-    Checking isProxifyingTreeNow ensures this is not happening in the first proxification, 
+    Checking isProxifyingTreeNow ensures this is not happening in the first proxification,
     but in fact is is a proxified object moved around the tree
     */
     if (revokableInstance && !instance.isProxifyingTreeNow) {
@@ -3268,7 +3268,7 @@ const JSONPatcherProxy = (function() {
       if (revokableProxyInstance) {
         if (revokableProxyInstance.inherited) {
           /*
-            this is an inherited proxy (an already proxified object that was moved around), 
+            this is an inherited proxy (an already proxified object that was moved around),
             we shouldn't revoke it, because even though it was removed from path1, it is still used in path2.
             And we know that because we mark moved proxies with `inherited` flag when we move them
 
@@ -3305,9 +3305,9 @@ const JSONPatcherProxy = (function() {
     this.isObserving = false;
   }
   /**
-    * Creates an instance of JSONPatcherProxy around your object of interest `root`. 
+    * Creates an instance of JSONPatcherProxy around your object of interest `root`.
     * @param {Object|Array} root - the object you want to wrap
-    * @param {Boolean} [showDetachedWarning = true] - whether to log a warning when a detached sub-object is modified @see {@link https://github.com/Palindrom/JSONPatcherProxy#detached-objects} 
+    * @param {Boolean} [showDetachedWarning = true] - whether to log a warning when a detached sub-object is modified @see {@link https://github.com/Palindrom/JSONPatcherProxy#detached-objects}
     * @returns {JSONPatcherProxy}
     * @constructor
     */
@@ -3962,7 +3962,7 @@ if(typeof JSONPatchQueue === 'undefined') {
  * @param {Function} transform function(seqenceA, sequences) that transforms `seqenceA` against `sequences`.
  * @param {Array<JSON-Pointer>} versionPaths JSON-Pointers to version numbers [local, remote]
  * @param {function} apply apply(JSONobj, JSONPatchSequence) function to apply JSONPatch to object. Must return the final state of the object.
- * @param {Boolean} purity 
+ * @param {Boolean} purity
  * @constructor
  * @extends {JSONPatchQueue}
  * @version: 2.0.0-rc.0
@@ -4914,7 +4914,7 @@ class PalindromError extends Error {
 
 class PalindromConnectionError extends PalindromError {
   /**
-   * 
+   *
    * @param {String} message the message that describes the error
    * @param {String} side <Server|Client> the side where the error occured
    * @param {String} url The relevant URL
