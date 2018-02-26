@@ -4,7 +4,7 @@ const vulcanizer = spawn(
   'cmd.exe',
   [
     '/c',
-    'vulcanize --inline-scripts --inline-css --strip-comments --polymer2 --out-request-list urls.txt src\\StarcounterClientFiles\\wwwroot\\sys\\starcounter.max.html > src\\StarcounterClientFiles\\wwwroot\\sys\\starcounter.min.html'
+    'vulcanize --inline-scripts --inline-css --strip-comments --polymer2 --out-request-list urls.txt src\\StarcounterClientFiles\\wwwroot\\sys\\starcounter.max.html > src\\StarcounterClientFiles\\wwwroot\\sys\\starcounter.html'
   ]);
 
 const distServiceWorkerWarning = `/** Please do not modify this file, instead modify service-worker.src.js in the root of this project */\n\n`;

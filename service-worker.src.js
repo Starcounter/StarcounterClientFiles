@@ -6,7 +6,7 @@ const RESOLVED_VULCANIZED_URLS = VULCANIZED_URLS.map(
 self.addEventListener('activate', event => {
   // this allows to to intercept the very first request after SW installation
   // without it, SW only takes effect after refreshing the page
-  clients.claim();
+  event.waitUntil(clients.claim());
 });
 
 self.addEventListener('fetch', event => {
