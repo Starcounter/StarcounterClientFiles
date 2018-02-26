@@ -474,7 +474,7 @@
                     <li><code>.uni-next</code> - to a list of pages,</li>
                     <li><code>.uni-pages</code> - to wrap the "next", or "last" link,</li>
                     <li><code>[disabled]</code> - to disable a link, simply put "disabled" attribute,</li>
-                    <li><code>[aria-current="true"]</code> - to mark current page, use ARIA attribute.</li>
+                    <li><code>[aria-current="true"]</code> - to mark current item, use ARIA attribute (see <a href="https://www.w3.org/TR/wai-aria-1.1/#aria-current">the spec</a> for more values).</li>
                 </ul>
             </p>
             <pre><code>&lt;shadowroot mode="open"&gt;
@@ -490,7 +490,7 @@
 &lt;span slot="foo/previous" onclick="doYourJobInJS()" href="orUseStaticLinks"&gt;Previous&lt;/span&gt;
 &lt;span&gt;2&lt;/span&gt;
 &lt;span aria-current="true"&gt;3&lt;/span&gt;
-&lt;span&gt;4&lt;/span&gt;
+&lt;span aria-current="false"&gt;4&lt;/span&gt;
 &lt;span disabled&gt;5&lt;/span&gt;
 &lt;span slot="foo/next" disabled&gt;Next&lt;/span&gt;</code></pre>
             <div data-shadow-host>
@@ -507,7 +507,7 @@
                 <span slot="foo/previous" onclick="doYourJobInJS()" href="orUseStaticLinks">Previous</span>
                 <span>2</span>
                 <span aria-current="true">3</span>
-                <span>4</span>
+                <span aria-current="false">4</span>
                 <span disabled>5</span>
                 <span slot="foo/next" disabled>Next</span>
             </div>
@@ -743,35 +743,49 @@ with distributed content.</code></pre>
                     <style>@import '../underwear.css/underwear.css';</style>
                     <style>@import 'uniform.css';</style>
                     <div class="uni-section-primary">
-                        <div class="uni-card">Default card in a section.</div>
-                    </div>
+                        <div class="uni-card">Default <code>div</code>(block) card in a section. Useful for full-width content.</div>
+                    </div>            
+                    <section class="uni-section-tertiary" style="display: grid; grid-template-columns: repeat(2, 1fr);grid-gap: var(--uni-section-padding-horizontal)">
+                        <div class="uni-card">The first of a pair of half-width cards in a section, achieved by setting <code>display: grid</code> on the section (with two columns and a gap).</div>
+                        <div class="uni-card">The second  of a pair of half-width cards</div>
+                    </section>
+                    <div class="uni-section-primary">
+                        <div class="uni-card" style="max-width: 500px;">Default <code>div</code>(block) card with <code>max-width: 500px</code> in a section. Useful for content that should be read vertically, not horizontally, such as forms.</div>
+                    </div>        
                     <div class="uni-section-secondary">
-                        <div class="uni-card" style="display: block">Full-width card in a section, achieved by setting <code>display: block</code> on the card</div>
+                        <span class="uni-card">Default <code>span</code>(inline)</span>
+                        <span class="uni-card">cards in a section.</span>
+                        <span class="uni-card">Useful for single-line content.</span>
                     </div>
-                    <div class="uni-section-primary" style="display: grid;">
-                        <div class="uni-card">Full-width card in a section, achieved by setting <code>display: grid</code> on the section.</div>
-                    </div>
-                    <div class="uni-section-tertiary" style="display: grid; grid-template-columns: repeat(2, 1fr);grid-gap: var(--uni-section-padding-horizontal)">
-                        <div class="uni-card">Two half-width cards in a section, achieved by setting <code>display: grid</code> on the section (with two columns and a gap).</div>
-                        <div class="uni-card">Two half-width cards in a section, achieved by setting <code>display: grid</code> on the section (with two columns and a gap).</div>
+                    <div class="uni-section-primary">
+                        <div class="uni-card" style="display: inline-block">Inline-block <br>cards, </div>
+                        <div class="uni-card" style="display: inline-block">achieved by <br>setting <code>display: inline-block</code> on the card,</div>
+                        <div class="uni-card" style="display: inline-block">useful<br>for<br> multi-line<br>content<br>of varied<br>height.</div>
                     </div>
                 </template>
             </div>
             <pre><code>&lt;shadowroot mode="open"&gt;
     &lt;style&gt;@import '../underwear.css/underwear.css';&lt;/style&gt;
     &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
-    &lt;div class=&quot;uni-section-primary&quot;&gt;
-        &lt;div class=&quot;uni-card&quot;&gt;Default card in a section.&lt;/div&gt;
+    &lt;div class="uni-section-primary"&gt;
+        &lt;div class="uni-card"&gt;Default &lt;code&gt;div&lt;/code&gt;(block) card in a section. Useful for full-width content.&lt;/div&gt;
+    &lt;/div&gt;            
+    &lt;section class="uni-section-tertiary" style="display: grid; grid-template-columns: repeat(2, 1fr);grid-gap: var(--uni-section-padding-horizontal)"&gt;
+        &lt;div class="uni-card"&gt;The first of a pair of half-width cards in a section, achieved by setting &lt;code&gt;display: grid&lt;/code&gt; on the section (with two columns and a gap).&lt;/div&gt;
+        &lt;div class="uni-card"&gt;The second  of a pair of half-width cards&lt;/div&gt;
+    &lt;/section&gt;
+    &lt;div class="uni-section-primary"&gt;
+        &lt;div class="uni-card" style="max-width: 500px;"&gt;Default &lt;code&gt;div&lt;/code&gt;(block) card with &lt;code&gt;max-width: 500px&lt;/code&gt; in a section. Useful for content that should be read vertically, not horizontally, such as forms.&lt;/div&gt;
+    &lt;/div&gt;        
+    &lt;div class="uni-section-secondary"&gt;
+        &lt;span class="uni-card"&gt;Default &lt;code&gt;span&lt;/code&gt;(inline)&lt;/span&gt;
+        &lt;span class="uni-card"&gt;cards in a section.&lt;/span&gt;
+        &lt;span class="uni-card"&gt;Useful for single-line content.&lt;/span&gt;
     &lt;/div&gt;
-    &lt;div class=&quot;uni-section-secondary&quot;&gt;
-        &lt;div class=&quot;uni-card&quot; style=&quot;display: block&quot;&gt;Full-width card in a section, achieved by setting &lt;code&gt;display: block&lt;/code&gt; on the card&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;uni-section-primary&quot; style=&quot;display: grid;&quot;&gt;
-        &lt;div class=&quot;uni-card&quot;&gt;Full-width card in a section, achieved by setting &lt;code&gt;display: grid&lt;/code&gt; on the section.&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;uni-section-tertiary&quot; style=&quot;display: grid; grid-template-columns: repeat(2, 1fr);grid-gap: var(--uni-section-padding-horizontal)&quot;&gt;
-        &lt;div class=&quot;uni-card&quot;&gt;Two half-width cards in a section, achieved by setting &lt;code&gt;display: grid&lt;/code&gt; on the section (with two columns and a gap).&lt;/div&gt;
-        &lt;div class=&quot;uni-card&quot;&gt;Two half-width cards in a section, achieved by setting &lt;code&gt;display: grid&lt;/code&gt; on the section (with two columns and a gap).&lt;/div&gt;
+    &lt;div class="uni-section-primary"&gt;
+        &lt;div class="uni-card" style="display: inline-block"&gt;Inline-block &lt;br&gt;cards, &lt;/div&gt;
+        &lt;div class="uni-card" style="display: inline-block"&gt;achieved by &lt;br&gt;setting &lt;code&gt;display: inline-block&lt;/code&gt; on the card,&lt;/div&gt;
+        &lt;div class="uni-card" style="display: inline-block"&gt;useful&lt;br&gt;for&lt;br&gt; multi-line&lt;br&gt;content&lt;br&gt;of varied&lt;br&gt;height.&lt;/div&gt;
     &lt;/div&gt;
 &lt;/shadowroot&gt;</code></pre>
         </section>

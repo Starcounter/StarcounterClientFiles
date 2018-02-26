@@ -1,6 +1,6 @@
 {
   "name": "uniform.css",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Lightweight, opinionated CSS library that plays nicely within Shadow DOM.",
   "main": "uniform.css",
   "repository": {
