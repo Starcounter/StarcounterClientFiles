@@ -16,16 +16,16 @@ Occasionally we'll close issues if they appear stale or are too vague - please d
 
 If you would like to start to fiddle with element's code, here is the flow we use.
 
-- Make a local clone of this repo: `git clone git@github.com:Juicy/imported-template.git`
+- Make a local clone of this repo: `git clone git@github.com:Juicy/juicy-html.git`
 
 In order to develop it locally we suggest to use [polyserve](https://npmjs.com/polyserve) tool to handle bower paths gently.
 
-0. Go to the repo's directory: `cd imported-template`
+0. Go to the repo's directory: `cd juicy-html`
 1. Install [bower](http://bower.io/) & [polyserve](https://npmjs.com/polyserve): `$ npm install -g bower polyserve`
 2. Install local dependencies: `$ bower install`
 3. Start development server `$ polyserve -p 8000`
-4. Open the demo/preview: [http://127.0.0.1:8001/components/imported-template/examples/](http://127.0.0.1:8001/components/imported-template/examples/)
-5. Open the test suite: [http://localhost:8000/components/imported-template/test/](http://localhost:8000/components/imported-template/test/)
+4. Open the demo/preview: [http://127.0.0.1:8001/components/juicy-html/examples/](http://127.0.0.1:8001/components/juicy-html/examples/)
+5. Open the test suite: [http://localhost:8000/components/juicy-html/test/](http://localhost:8000/components/juicy-html/test/)
 
 ## Contributing Pull Requests
 
@@ -64,3 +64,17 @@ to run tests on a subset of available browsers, or to run tests remotely using S
 
 See the [`web-component-tester` README](https://github.com/Polymer/web-component-tester) for
 information on configuring the tool.
+
+## Releasing a new version
+
+**The release is done from `master` branch.**
+
+1. Make sure that the browser tests pass in Chrome, Firefox, Edge and IE. This can be done manually or using `npm run test` (see instructions above).
+2. Call `git status` to verify that there are no uncommited files in the directory
+3. Call `grunt bump:patch`, `grunt bump:minor` or `grunt bump:major`. This command:
+ - increments the version number in the relevant files
+ - commits changes to Git with the version number as the commit message
+ - creates a Git tag wit the version
+4. Call `git push` to push the changes to `origin master`
+5. Call `git push --tags` to push the tag to `origin master`
+6. Explain the changes (at least an summary of the commit log) in [GitHub Releases](https://github.com/Juicy/juicy-html/releases).
