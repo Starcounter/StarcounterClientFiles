@@ -78,4 +78,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+
+<Target Name="AfterBuild">
+    <Exec Command="cd ..\..\ &amp;&amp; node vulcanize.node.js &amp;&amp; cd src\StarcounterClientFiles"></Exec>
+</Target>
+
 </Project>
