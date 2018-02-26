@@ -448,10 +448,7 @@ class StyleProperties {
  * @param {string} scopeId
  */
   _scopeKeyframes(rule, scopeId) {
-    // Animation names are of the form [\w-], so ensure that the name regex does not partially apply
-    // to similarly named keyframe names by checking for a word boundary at the beginning and
-    // a non-word boundary or `-` at the end.
-    rule.keyframesNameRx = new RegExp(`\\b${rule['keyframesName']}(?!\\B|-)`, 'g');
+    rule.keyframesNameRx = new RegExp(rule['keyframesName'], 'g');
     rule.transformedKeyframesName = rule['keyframesName'] + '-' + scopeId;
     rule.transformedSelector = rule.transformedSelector || rule['selector'];
     rule['selector'] = rule.transformedSelector.replace(

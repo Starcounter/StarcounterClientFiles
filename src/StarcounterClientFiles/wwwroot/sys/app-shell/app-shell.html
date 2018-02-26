@@ -3,14 +3,13 @@
 <head>
     <meta charset="utf-8">
     <title>{0}</title>
+
     <script src="/sys/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="/sys/polymer/polymer.html">
     <link rel="import" href="/sys/starcounter.html">
+    <link rel="import" href="/sys/starcounter-include/starcounter-include.html">
+    <link rel="stylesheet" href="/sys/underwear.css/underwear.css">    
     <link rel="manifest">
-    <script>
-        if ('serviceWorker' in navigator) {{
-            navigator.serviceWorker.register('/service-worker.js');
-        }}
-    </script>
 </head>
 <body>
     <dom-bind id="palindrom-root">
@@ -20,9 +19,5 @@
     </dom-bind>
     
     <palindrom-client ref="palindrom-root" remote-url="{1}"></palindrom-client>
-    
-    <link rel="stylesheet" href="/sys/underwear.css/underwear.css">
-    
-
 </body>
 </html>

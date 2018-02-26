@@ -279,30 +279,12 @@ Pagination
   cursor: pointer;
   display: inline-block;
 }
-.uni-pagination > .uni-pages {
-  display: flex;
-}
-.uni-pagination > .uni-pages > ::slotted([aria-current]:not([aria-current="false"])) {
+
+.uni-pagination > .uni-pages > ::slotted([aria-current='true']) {
   border: 1px solid var(--uni-primary);
 }
-.uni-pagination > .uni-pages > [aria-current]:not([aria-current="false"]) {
+.uni-pagination > .uni-pages > [aria-current='true'] {
   border: 1px solid var(--uni-primary);
-}
-.uni-pagination
-  > .uni-pages
-  > ::slotted(*:hover:not([aria-current]):not(:disabled):not([disabled])),
-.uni-pagination
-  > .uni-pages
-  > ::slotted(*:hover[aria-current="false"]:not(:disabled):not([disabled])) {
-  background-color: var(--uni-gray-2) !important;
-}
-.uni-pagination
-  > .uni-pages
-  > *:hover:not([aria-current]):not(:disabled):not([disabled]),
-.uni-pagination
-  > .uni-pages
-  > *:hover[aria-current="false"]:not(:disabled):not([disabled]) {
-  background-color: var(--uni-gray-2) !important;
 }
 
 .uni-pagination > * > ::slotted([disabled]),
@@ -350,6 +332,16 @@ Pagination
   margin-right: 6px;
 }
 
+.uni-pagination
+  > .uni-pages
+  > ::slotted(*:hover:not([aria-current='true']):not(:disabled):not([disabled])) {
+  border: 1px solid rgb(105, 206, 243);
+}
+.uni-pagination
+  > .uni-pages
+  > *:hover:not([aria-current='true']):not(:disabled):not([disabled]) {
+  border: 1px solid rgb(105, 206, 243);
+}
 
 /**
  Forms
@@ -439,6 +431,7 @@ Pagination
  * Card
  */
 .uni-card {
+  display: inline-block;
   position: relative;
   box-sizing: border-box;
   color: var(--uni-dark);
