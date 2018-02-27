@@ -33,8 +33,7 @@ using Starcounter.Internal;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-// this works with Nuget, but I'm not sure if Starcounter Warehouse supports it. Either ways, we can delete this release when we release 3.0.0
-[assembly: AssemblyInformationalVersion("3.0.0-rc.6")]
+[assembly: AssemblyInformationalVersion("3.0.0")]
 
 // this doesn't support semver, that's why it's 3.0.0, we can delete this release when we release actual 3.0.0
 [assembly: AssemblyVersion("3.0.0")]
