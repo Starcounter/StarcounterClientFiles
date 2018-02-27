@@ -51,7 +51,7 @@ See the full article on features, use cases and the way it's done at http://star
 
 ### Rationale
 
-`imported-template` evolved out of [x-html](https://github.com/PuppetJs/x-html) (now [`juicy-html`](https://github.com/Juicy/juicy-html) ) due to need for better control of `<scripts>` and HTML Imports execution. See discussion [here](https://github.com/Juicy/juicy-html/issues/8)
+`imported-template` evolved out of [x-html](https://github.com/Palindrom/x-html) (now [`juicy-html`](https://github.com/Juicy/juicy-html) ) due to need for better control of `<scripts>` and HTML Imports execution. See discussion [here](https://github.com/Juicy/juicy-html/issues/8)
 
 
 ## Install
@@ -127,13 +127,9 @@ Browser support relies mainly on polyfills support/spec compliance.
 
 | Chrome | IE11 | Edge | Firefox  | Safari 10 |
 |:------:|:----:|:----:|:--------:|:--------:|
-|  ✓     | ✓** | ✓*   | ✓*       | ✓*       |
+|  ✓     | ✓**  | ✓    | ✓        | ✓        |
 
-\*
-- **V0**: There is a workaround for [polyfill issue](https://github.com/webcomponents/webcomponentsjs/issues/470), to execute scripts and apply styles define inside the template in imported HTML. Also, some hacks are made to preserve correct position in DOM of scripts executed by polyfill, so `previousSibling` and Polymer's `dom-bind`/`dom-repeat` can be used as in native Web Components, see [more sample use cases](https://github.com/Juicy/imported-template/tree/master/test/use-cases)
-- **V1**: There is also a workaround for [polyfill issue wcjs#872](https://github.com/webcomponents/webcomponentsjs/issues/872)
-
-\*\* **V1**: In IE11 workaround for per-template scripts [polyfill issue wcjs#872](https://github.com/webcomponents/webcomponentsjs/issues/872) does not work
+\*\* **V1**: IE11 does not support `currentScript`, so a bunch of tests for useful cases fail.
 
 
 ## [Contributing and Development](CONTRIBUTING.md)
