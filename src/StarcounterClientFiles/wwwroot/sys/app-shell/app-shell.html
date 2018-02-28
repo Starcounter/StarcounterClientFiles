@@ -1,13 +1,37 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>{0}</title>
-
     <script src="/sys/webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="/sys/polymer/polymer.html">
+    <script src="/sys/Palindrom/dist/palindrom-dom.js"></script>
+    <!-- <script src="/sys/app-shell/palindrom-session-instance.js"></script> -->
+    <script>
+    (function(){{
+        const remoteURL = '{1}';
+        if(!window.PalindromDOM.instances){{
+            window.PalindromDOM.instances = new Map();
+        }}
+        const registry = window.PalindromDOM.instances;
+        if(!registry.get(remoteURL)){{
+            registry.set(remoteURL, new PalindromDOM({{
+                "remoteUrl": remoteURL,
+                "pingIntervalS": 60,
+                "useWebSocket": true,
+                "debug": false,
+                "ot":true,
+                "purity":false,
+                "localVersionPath": "/_ver#c$",
+                "remoteVersionPath": "/_ver#s"
+            }}));
+            // TODO: set also initial state, so we wan't need additional "establish" request
+        }}
+    }}());
+    </script>
+
     <link rel="import" href="/sys/starcounter.html">
-    <link rel="stylesheet" href="/sys/underwear.css/underwear.css">    
+    <link rel="stylesheet" href="/sys/underwear.css/underwear.css">
     <link rel="manifest">
 </head>
 <body>
