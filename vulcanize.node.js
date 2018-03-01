@@ -6,17 +6,16 @@ const path = require('path');
 if (
   fs.existsSync('src\\StarcounterClientFiles\\wwwroot\\sys\\polymer-source')
 ) {
-  fs.renameSync(
+  const copy = spawnSync('xcopy', ['/I', '/E', '/Y',
     'src\\StarcounterClientFiles\\wwwroot\\sys\\polymer-source',
     'src\\StarcounterClientFiles\\wwwroot\\sys\\polymer'
-  );
+  ]); 
 } else {
   // back up original if not
   const copy = spawnSync('xcopy', ['/I', '/E',
     'src\\StarcounterClientFiles\\wwwroot\\sys\\polymer',
     'src\\StarcounterClientFiles\\wwwroot\\sys\\polymer-source'
-  ]);
-  const out = (copy.stdout || copy.stderr).toString();
+  ]);  
 }
 
 // vulcanize polymer
