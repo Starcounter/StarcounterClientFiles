@@ -1,8 +1,6 @@
 {
   "directory": "wwwroot/sys",
   "ignoredDependencies": [
-    "bootstrap",
-    "jquery",
-    "platform"
+    "polymer"
   ]
 }
