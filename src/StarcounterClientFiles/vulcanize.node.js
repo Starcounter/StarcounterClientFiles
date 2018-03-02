@@ -1,4 +1,4 @@
-const fse = require('fs-extra');
+const fs = require('fs');
 const path = require('path');
 const { Bundler } = require('polymer-bundler');
 const bundler = new Bundler();
@@ -7,32 +7,41 @@ const parse5 = require('parse5');
 const sourceFile = 'wwwroot/sys/polymer-source/polymer.html';
 const destFile = 'wwwroot/sys/polymer/polymer.html';
 
-bundler.generateManifest([sourceFile]).then((manifest) => {
-    bundler.bundle(manifest).then((result) => {
-        var doc = result.documents.get(sourceFile);
-        var html = parse5.serialize(doc.ast)
-        fse.outputFileSync(destFile, html);
+bundler.generateManifest([sourceFile]).then(async manifest => {
+  try {
+    const result = await bundler.bundle(manifest);
+    const doc = result.documents.get(sourceFile);
+    const html = parse5.serialize(doc.ast);
 
-        const fileList = Array.from(manifest._bundleUrlForFile.keys());
+    fs.writeFileSync(destFile, html);
 
-        const polymerPath = fileList[0].replace('polymer-source', 'polymer');
+    const fileList = doc.files;
 
-        // remove `polymer.html` from bundled files and add polymer-element.html instead
-        fileList[0] = fileList[0].replace('polymer.html', 'polymer-element.html');
+    const polymerPath = fileList[0].replace('polymer-source', 'polymer');
 
-        fileList.forEach(filePath => {
-            if (filePath.indexOf('polymer-source') === -1) {
-                return; //some files are to shadycss; skip them
-            }
-            filePath = filePath.replace('polymer-source', 'polymer');
+    // remove `polymer.html` from bundled files and add polymer-element.html instead
+    fileList[0] = fileList[0].replace('polymer.html', 'polymer-element.html');
 
-            const fileDir = path.dirname(filePath); // path.relative expects `from` to be a directory
+    for (let filePath of fileList) {
+      //some files are to shadycss; skip them
+      if (filePath.includes('polymer-source')) {
+        filePath = filePath.replace('polymer-source', 'polymer');
 
-            const pathRelative = path
-                .relative(fileDir, polymerPath)
-                .replace(/\\/g, '/'); // windows paths to urls;
+        const fileDir = path.dirname(filePath); // path.relative expects `from` to be a directory
 
-            fse.outputFileSync(filePath, `<link rel="import" href="${pathRelative}">`);
-        });
-    });
+        const pathRelative = path
+          .relative(fileDir, polymerPath)
+          .replace(/\\/g, '/'); // Windows paths to urls;
+
+        fs.writeFileSync(
+          filePath,
+          `<link rel="import" href="${pathRelative}">`
+        );
+      }
+    }
+    console.log('Vulcanizing Polymer is now complete.');
+  } catch (error) {
+    console.error('Vulcanizing Polymer has failed, error:', error);
+    process.exit(1);
+  }
 });

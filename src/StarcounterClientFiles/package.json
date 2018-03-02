@@ -12,7 +12,6 @@
     "polymer-bundler": "^3.1.1"
   },
   "dependencies": {
-    "fs-extra": "^5.0.0",
     "parse5": "^4.0.0"
   }
 }

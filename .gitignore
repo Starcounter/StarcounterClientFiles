@@ -121,5 +121,7 @@ UpgradeLog*.XML
 
 # NPM packages
 node_modules
+package-lock.json
+
 
 dist/*
