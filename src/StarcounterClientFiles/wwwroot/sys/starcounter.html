@@ -1,2 +1,33 @@
 <link rel="import" href="palindrom-client/palindrom-client.html">
 <link rel="import" href="/sys/starcounter-include/starcounter-include.html">
+<script>
+(function() {
+
+    function updateCurrentLinks(currentHref) {
+        const nodes = document.querySelectorAll("a[href]");
+        let lastCurrent, nextCurrent;
+        nodes.forEach((node) => {
+            if (node.hasAttribute("aria-current")) {
+                lastCurrent = node;
+            }
+
+            if (node.href === currentHref) {
+                nextCurrent = node;
+            }
+        });
+
+        if (lastCurrent && lastCurrent !== nextCurrent) {
+            lastCurrent.removeAttribute("aria-current");
+        }
+        if (nextCurrent && lastCurrent !== nextCurrent) {
+            nextCurrent.setAttribute("aria-current", "page");
+        }
+    }
+
+    window.addEventListener("stamped", (event) => {
+        if (event.target.localName === "starcounter-include") {
+            updateCurrentLinks(window.location.href);
+        }
+    }, true);
+})();
+</script>
