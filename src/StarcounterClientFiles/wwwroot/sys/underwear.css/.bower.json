@@ -27,9 +27,9 @@
   "_resolution": {
     "type": "version",
     "tag": "0.0.7",
-    "commit": "637e21409fb434a7eb1600c78aa99f39c331209d"
+    "commit": "ba2b68e2509275d34aad23b4c8b84b1aa03f72b5"
   },
   "_source": "https://github.com/Starcounter/Underwear.css.git",
-  "_target": "^0.0.7",
+  "_target": "~0.0.7",
   "_originalSource": "underwear.css"
 }

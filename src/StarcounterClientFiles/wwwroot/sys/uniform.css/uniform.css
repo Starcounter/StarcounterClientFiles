@@ -268,7 +268,7 @@ Pagination
   display: inline-block;
 }
 .uni-pagination > *,
-.uni.pagination > * > * {
+.uni-pagination > * > * {
   all: initial;
   font-family: inherit;
   font-size: 1em;
@@ -467,4 +467,106 @@ Pagination
 .uni-section-tertiary {
   background: rgb(27, 41, 54);
   color: white;
+}
+
+
+/*
+ * Title
+ */
+
+.uni-title> ::slotted(*) {
+  letter-spacing: initial !important;
+  line-height: initial !important;
+  font-weight: initial !important;
+  font-size: 20px !important;
+}
+
+.uni-title>* {
+  letter-spacing: initial !important;
+  line-height: initial !important;
+  font-weight: initial !important;
+  font-size: 20px !important;
+}
+
+
+/* title in a section */
+
+.uni-section-primary>.uni-title> ::slotted(*),
+.uni-section-secondary>.uni-title> ::slotted(*),
+.uni-section-tertiary>.uni-title> ::slotted(*),
+.uni-section-primary.uni-title> ::slotted(*),
+.uni-section-secondary.uni-title> ::slotted(*),
+.uni-section-tertiary.uni-title> ::slotted(*) {
+  margin: 7px 0 1px 0 !important;
+}
+
+.uni-section-primary>.uni-title>*,
+.uni-section-secondary>.uni-title>*,
+.uni-section-tertiary>.uni-title>*,
+.uni-section-primary.uni-title>*,
+.uni-section-secondary.uni-title>*,
+.uni-section-tertiary.uni-title>* {
+  margin: 7px 0 1px 0 !important;
+}
+
+
+/* title in a card */
+
+.uni-card .uni-title {
+  margin-bottom: 20px;
+}
+
+.uni-card .uni-title> ::slotted(*) {
+  margin: 0 !important;
+}
+
+.uni-card .uni-title>* {
+  margin: 0 !important;
+}
+
+/* Layout with left side navigation */
+
+.uni-layout-left-nav {
+  display: grid;
+  height: 100%;
+  background-color: var(--uni-mouse);
+  grid-template-columns: 200px 1fr;
+}
+
+.uni-layout-left-nav > :first-child {
+  background-color: var(--uni-inky);
+  color: var(--gray-5);
+  padding: 20px 10px;
+}
+
+.uni-layout-left-nav > :first-child ::slotted(a) {
+  border-left: 3px solid transparent !important;
+  display: block !important;
+  padding: 9px 7px !important;
+  color: var(--uni-livid) !important;
+}
+
+.uni-layout-left-nav > :first-child a {
+  border-left: 3px solid transparent !important;
+  display: block !important;
+  padding: 9px 7px !important;
+  color: var(--uni-livid) !important;
+}
+
+.uni-layout-left-nav > :first-child ::slotted(a:hover) {
+  color: var(--uni-white) !important;
+}
+
+.uni-layout-left-nav > :first-child a:hover {
+  color: var(--uni-white) !important;
+}
+
+.uni-layout-left-nav > :first-child ::slotted(a[aria-current="page"]) {
+  border-left: 3px solid var(--uni-blue) !important;
+  color: var(--uni-white) !important;
+}
+
+.uni-layout-left-nav > :first-child a[aria-current="page"] {
+  border-left: 3px solid var(--uni-blue) !important;
+  color: var(--uni-white) !important;
 }

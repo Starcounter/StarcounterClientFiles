@@ -751,7 +751,8 @@ fieldset > legend {
   font-weight: bold;
 }
 
-input[type='checkbox'] {
+input[type='checkbox'],
+input[type='radio'] {
   margin-right: 5px;
   vertical-align: middle;
   background: #fff;
@@ -824,17 +825,18 @@ tr:last-of-type > td:last-of-type {
 
 td {
   border-top: 0.1rem solid var(--table-border-color);
+  background-color: var(--white);
 }
 
 tbody > tr:last-of-type > td {
   border-bottom: 0.1rem solid var(--table-border-color);
 }
 
-td:first-child {
+td:first-of-type {
   border-left: 0.1rem solid var(--table-border-color);
 }
 
-td:last-child {
+td:last-of-type {
   border-right: 0.1rem solid var(--table-border-color);
 }
 

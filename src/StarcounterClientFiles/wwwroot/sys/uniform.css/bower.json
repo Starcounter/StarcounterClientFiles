@@ -25,6 +25,6 @@
   ],
   "devDependencies": {
     "declarative-shadow-dom": "^0.1.0",
-    "underwear.css": "^0.0.3"
+    "underwear.css": "~0.0.3"
   }
 }

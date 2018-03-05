@@ -1,5 +1,15 @@
 # Uniform.css
+
 Lightweight, opinionated CSS library that plays nicely within Shadow DOM.
+
+It is a set of helper CSS classes to implement:
+
+- contextual look &amp; feel for native HTML elements using classes such as `.uni-primary-button`, `.uni-alert-success`, etc
+- typical UI patterns using classes such as `.uni-section-primary`, `.uni-card`, `.uni-label-control`, etc
+
+## Demo
+
+[Check it live!](https://starcounter.github.io/uniform.css/)
 
 ## Install
 
@@ -19,8 +29,8 @@ As this is library is designed to play well within Shadow DOM, we encourage you 
 <h3 slot="app/some">Some</h3>
 <custom-element slot="app/content">Content</custom-element>
 <template is="declarative-shadow-dom">
+    <link rel="stylesheet" href="/sys/uniform.css/uniform.css">
     <style>
-        @import '/sys/uniform.css/uniform.css';
         .app-header{
             color: var(--uni-info);
         }
@@ -30,7 +40,11 @@ As this is library is designed to play well within Shadow DOM, we encourage you 
 </template>
 ```
 
+When Uniform.css is used in more than one shadow root, you will need to load it more than once. This results in multiple network requests unless `link rel="preload"` is used. Preload leverages the web browser's caching mechanism to skip the consecutive requests to the same URL.
 
+```html
+<link rel="preload" href="/sys/uniform.css/uniform.css">
+```
 
 ## Usage, Elements, Classes
 To see how to use it, what elements and classes we define, check the [demo page](https://starcounter.github.io/uniform.css/).
@@ -89,9 +103,84 @@ We are actually forced to do so because some browsers, which does not support Sh
 ```CSS
 .uni-label-control > label,
 .uni-label-control > ::slotted(label) {
+    /*...*/
+}
 ```
 would make entire rule unreachable. Also, we do not provide both selectors, even for browsers that support SD natively, to be able to style elements within the same root.
 
 ## Contributing
 
 If you modify CSS, please make sure to modify only files in `src` directory.
+
+## FAQ
+
+### I can't simplify my DOM element to be just a childness slottable element. How I should handle styling in that case?
+You can either:
+1. Style your element using light DOM classes (remember to prefix your class names, not to collide with other apps).
+2. Create shadow root (for a native or a custom element) and put Uniform.css in its styling.
+3. Use `starcounter-include` with a nested view inside.
+4. We consider supporting the [`declarative-shadow-dom` custom element](https://tomalec.github.io/declarative-shadow-dom/), that will work anywhere in HTML.
+
+   If you feel the need for it please express it at [Starcounter/RebelsLounge#78](https://github.com/Starcounter/RebelsLounge/issues/78) with a GitHub reaction, or a comment with your use-case.
+
+   If you would also like to see this as a native feature check [whatwg/dom#510](https://github.com/whatwg/dom/issues/510).
+
+### Can I use Uniform.css classes in the light DOM?
+Technically you can import the stylesheet in the main document tree and use it there. But we do not recommend such use. It would become hard-coded into your app view. Then, a solution designer will not be able to change those classes and visual effects in his/her custom composition.
+
+### How should I approach customising CSS variables provided by Uniform.css?
+
+See the example at [starcounter.github.io/uniform.css](https://starcounter.github.io/uniform.css/)
+
+You can edit Uniform.css variables by adding new values in specific selector in `declarative-shadow-dom` of your page.
+
+See the [Smashing Magazine article](https://www.smashingmagazine.com/2017/04/start-using-css-custom-properties/) for more information about CSS variables, including scoping and inheritance.
+
+To change the values for the entire shadow host you can use `:host` selector, but it does not work in the polyfilled browsers.
+```html
+<link rel="stylesheet" href="/sys/uniform.css/uniform.css">
+<style>
+    :host {
+          --uni-section-padding-horizontal: 100px;
+    }
+</style>
+<div class="uni-section-primary">
+    <!-- this will get 100px padding -->
+    <slot name="myapp/header"></slot>
+</div>
+```
+
+A solution that works in all browsers is to specify the values at an element level.
+```html
+<link rel="stylesheet" href="/sys/uniform.css/uniform.css">
+<style>
+    .myapp-big-padded-section {
+          --uni-section-padding-horizontal: 100px;
+    }
+</style>
+<div class="myapp-big-padded-section">
+    <div class="uni-section-primary">
+        <!-- this will get 100px padding -->
+        <slot name="myapp/header"></slot>
+    </div>
+</div>
+<div class="uni-section-primary myapp-big-padded-section">
+    <!-- this will get 100px padding -->
+    <slot name="myapp/header"></slot>
+</div>
+```
+
+### Are elements slottable if they are part of a nested `<template>`, such as `<template is="dom-if">`?
+
+
+[`dom-if`](https://www.polymer-project.org/2.0/docs/devguide/templates) is a Polymer feature that stamps the content of the template as the sibling of that template. Therefore, it is fine to have the following code:
+
+```html
+<!-- light DOM -->
+<template is="dom-if" if="{{model.IsBirthday}}" restamp>
+    <div slot="appname/alert">Happy Birthday!</div>
+</template>
+
+<!-- shadow DOM -->
+<div class="uni-alert-success"><slot name="appname/alert"></slot></div>
+```
