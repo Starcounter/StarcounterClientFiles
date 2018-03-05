@@ -13,6 +13,11 @@ bundler.generateManifest([sourceFile]).then(async manifest => {
     const doc = result.documents.get(sourceFile);
     const html = parse5.serialize(doc.ast);
 
+    const dirname = path.dirname(destFile);
+    if (!fs.existsSync(dirname)){
+        ensurePath(dirname);
+    }
+
     fs.writeFileSync(destFile, html);
 
     const fileList = doc.files;
@@ -33,6 +38,10 @@ bundler.generateManifest([sourceFile]).then(async manifest => {
           .relative(fileDir, polymerPath)
           .replace(/\\/g, '/'); // Windows paths to urls;
 
+        if (!fs.existsSync(fileDir)){
+            ensurePath(fileDir);
+        }
+
         fs.writeFileSync(
           filePath,
           `<link rel="import" href="${pathRelative}">`
@@ -45,3 +54,17 @@ bundler.generateManifest([sourceFile]).then(async manifest => {
     process.exit(1);
   }
 });
+
+function ensurePath(location) {
+    let normalizedPath = path.normalize(location);
+    let parsedPathObj = path.parse(normalizedPath);
+    let curDir = parsedPathObj.root;
+    let folders = parsedPathObj.dir.split(path.sep);
+    folders.push(parsedPathObj.base);
+    for(let part of folders) {
+        curDir = path.join(curDir, part);
+        if (!fs.existsSync(curDir)) {
+            fs.mkdirSync(curDir);
+        }
+    }
+}
