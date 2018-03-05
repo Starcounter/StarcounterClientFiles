@@ -3,8 +3,6 @@
 <head>
     <meta charset="utf-8">
     <title>{0}</title>
-    <script src="/sys/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="/sys/polymer/polymer.html">
     <script src="/sys/Palindrom/dist/palindrom-dom.js"></script>
     <!-- <script src="/sys/app-shell/palindrom-session-instance.js"></script> -->
     <script>
@@ -14,6 +12,7 @@
             window.PalindromDOM.instances = new Map();
         }}
         const registry = window.PalindromDOM.instances;
+
         if(!registry.get(remoteURL)){{
             registry.set(remoteURL, new PalindromDOM({{
                 "remoteUrl": remoteURL,
@@ -30,8 +29,11 @@
     }}());
     </script>
 
+    <script defer src="/sys/webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="/sys/starcounter.html">
     <link rel="stylesheet" href="/sys/underwear.css/underwear.css">
+    <!-- Needed just for dom-bind -->
+    <link rel="import" href="/sys/polymer/polymer.html">
     <link rel="manifest">
 </head>
 <body>
@@ -40,7 +42,7 @@
             <starcounter-include view-model="{{{{model}}}}"></starcounter-include>
         </template>
     </dom-bind>
-    
+
     <palindrom-client ref="palindrom-root" remote-url="{1}"></palindrom-client>
 </body>
 </html>
