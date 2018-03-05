@@ -14,7 +14,7 @@
         let timeout;
         window.addEventListener("stamped", (event) => {
             if (event.target.localName === "starcounter-include") {
-                // debouce for 50ms to avoid doing the same thing for every stamped partial
+                // debounce for 50ms to avoid doing the same thing for every stamped partial
                 clearTimeout(timeout);
                 timeout = setTimeout(updateCurrentLinks, 50, window.location.href)
             }

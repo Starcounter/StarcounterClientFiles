@@ -1,6 +1,6 @@
 {
   "name": "starcounter-include",
-  "version": "4.2.0",
+  "version": "5.0.0",
   "description": "Custom Element to include HTML partials/templates from Starcounter",
   "main": "starcounter-include.html",
   "directories": {
@@ -13,15 +13,15 @@
     "grunt-cli": "^0.1.13",
     "grunt-contrib-watch": "^0.6.1",
     "path": "^0.12.7",
-    "web-component-tester": "github:tomalec/web-component-tester#88236713a7",
+    "web-component-tester": "^6.4.3",
     "concurrently": "^3.5.0"
   },
   "scripts": {
-    "serve": "concurrently \"npm run mockserver\" \"npm run polyserve\" --kill-others -s first",
+    "serve": "concurrently -n \"mocked SC,polyserve\" \"npm run mockserver\" \"npm run polyserve\" --kill-others -s first",
     "polyserve": "polyserve --proxy-target http://127.0.0.1:9999/sc --proxy-path sc --hostname 0.0.0.0",
-    "test": "concurrently \"npm run mockserver\" \"npm run wct\" --kill-others -s first",
-    "test:no-sauce": "concurrently \"npm run mockserver\" \"npm run wct:no-sauce\" --kill-others -s first",
-    "test:sauce-only": "concurrently \"npm run mockserver\" \"npm run wct:sauce-only\" --kill-others -s first",
+    "test": "concurrently -n \"mocked SC,WCT\" \"npm run mockserver\" \"npm run wct\" --kill-others -s first",
+    "test:no-sauce": "concurrently -n \"mocked SC,WCT\" \"npm run mockserver\" \"npm run wct:no-sauce\" --kill-others -s first",
+    "test:sauce-only": "concurrently -n \"mocked SC,WCT\" \"npm run mockserver\" \"npm run wct:sauce-only\" --kill-others -s first",
     "mockserver": "node test/mocked_sc_htmlmerger.js",
     "wct": "wct",
     "wct:no-sauce": "wct --skip-plugin sauce",

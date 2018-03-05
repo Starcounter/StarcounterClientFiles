@@ -29,21 +29,20 @@
     "sc"
   ],
   "dependencies": {
-    "imported-template": "^3.1.0",
-    "translate-shadowdom": ">=0.0.4"
+    "imported-template": "^3.1.0"
   },
   "devDependencies": {
     "web-component-tester": "^6.0.0",
     "polymer": "^2.2.0"
   },
-  "version": "4.2.0",
-  "_release": "4.2.0",
+  "version": "5.0.0",
+  "_release": "5.0.0",
   "_resolution": {
     "type": "version",
-    "tag": "4.2.0",
-    "commit": "27016c8c965618218385971d2b6d2caaa1ac1c02"
+    "tag": "5.0.0",
+    "commit": "cb4e3bd288d6294ee478a06a44415dc51641c359"
   },
   "_source": "https://github.com/Starcounter/starcounter-include.git",
-  "_target": "^4.2.0",
+  "_target": "^5.0.0",
   "_originalSource": "starcounter-include"
 }
