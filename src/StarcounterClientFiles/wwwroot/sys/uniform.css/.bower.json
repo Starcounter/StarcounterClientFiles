@@ -25,16 +25,16 @@
   ],
   "devDependencies": {
     "declarative-shadow-dom": "^0.1.0",
-    "underwear.css": "^0.0.3"
+    "underwear.css": "~0.0.3"
   },
-  "version": "0.0.7",
-  "_release": "0.0.7",
+  "version": "0.0.8",
+  "_release": "0.0.8",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.7",
-    "commit": "367211ab46da97acba460350522114206dbcf45b"
+    "tag": "0.0.8",
+    "commit": "173210cc1d41d22dc4dbfa6127fef9915dba6439"
   },
   "_source": "https://github.com/Starcounter/Uniform.css.git",
-  "_target": "^0.0.7",
+  "_target": "~0.0.7",
   "_originalSource": "uniform.css"
 }

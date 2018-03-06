@@ -1,0 +1,17 @@
+{
+  "name": "starcounterclientfiles",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node vulcanize.node.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "polymer-bundler": "^3.1.1"
+  },
+  "dependencies": {
+    "parse5": "^4.0.0"
+  }
+}

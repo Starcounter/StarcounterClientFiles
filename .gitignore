@@ -1,3 +1,6 @@
+# Vulcanize output
+urls.txt 
+
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
 [Bb]in/
 [Oo]bj/
@@ -118,5 +121,7 @@ UpgradeLog*.XML
 
 # NPM packages
 node_modules
+package-lock.json
+
 
 dist/*

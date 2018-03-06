@@ -14,10 +14,11 @@ The developer process of releasing of a new version of StarcounterClientFiles `3
    - by updating `bower.json` and running `bower install`,
    - or by calling `bower install --save packagename[#version]`
 3. Update `bower-list.txt` by calling `bower list > bower-list.txt`
-4. When you push to a feature branch of StarcounterClientFiles, TeamCity will run a integration test of this branch with KitchenSink and Blending. Make sure these tests are passing.
-5. Make a PR for someone to review the complete set of changes.
-6. Still in the feature branch, release new version (3.x) of StarcounterClientFiles on GitHub. Remember to write the release notes.
-7. Still in the feature branch, publish a package of this version to App Warehouse (built with Starcounter 2.4)
-8. Merge the PR to StarcounterClientFiles branch `3.x`.
+4. Build the project using `build.bat` or VS. This triggers `msbuild`, which also triggers `npm run build`
+5. When you push to a feature branch of StarcounterClientFiles, TeamCity will run a integration test of this branch with KitchenSink and Blending. Make sure these tests are passing.
+6. Make a PR for someone to review the complete set of changes.
+7. Still in the feature branch, release new version (3.x) of StarcounterClientFiles on GitHub. Remember to write the release notes.
+8. Still in the feature branch, publish a package of this version to App Warehouse (built with Starcounter 2.4)
+9. Merge the PR to StarcounterClientFiles branch `3.x`.
    - at this point, a new daily build of Starcounter 2.4 is started
    - it will be detected and included in the next nightly build of Starcounter 2.4
