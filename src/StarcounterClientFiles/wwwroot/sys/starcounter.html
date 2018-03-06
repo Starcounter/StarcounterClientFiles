@@ -1,2 +1,24 @@
 <link rel="import" href="palindrom-client/palindrom-client.html">
 <link rel="import" href="/sys/starcounter-include/starcounter-include.html">
+<script>
+    (function () {
+        function updateCurrentLinks(currentHref) {
+            document.querySelectorAll("a[href]").forEach(el => {
+                if (el.href === currentHref) {
+                    el.setAttribute('aria-current', "page")
+                } else if (el.hasAttribute('aria-current')) {
+                    el.removeAttribute('aria-current')
+                }
+            });
+        }
+        let timeout;
+        window.addEventListener("stamped", (event) => {
+            if (event.target.localName === "starcounter-include") {
+                // debounce for 50ms to avoid doing the same thing for every stamped partial
+                clearTimeout(timeout);
+                timeout = setTimeout(updateCurrentLinks, 50, window.location.href)
+            }
+        }, true);
+
+    })();
+</script>

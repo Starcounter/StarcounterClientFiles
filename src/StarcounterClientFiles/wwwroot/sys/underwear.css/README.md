@@ -15,8 +15,9 @@ Or [download as ZIP](https://github.com/Starcounter/Underwear.css/archive/master
 
 1. Clone this repository.
 2. Run `npm install`.
-3. Run `npm run start`, this should open a browser window for you.
-4. Modify any CSS file in `src`, and refresh the browser page to see your changes.
+3. Run `npm run watch`.
+4. HTTP serve the files, we prefer [`polyserve`](https://www.npmjs.com/package/polyserve).
+5. Modify any file in `src`, and refresh the browser page to see your changes.
 
 ## Modifying CSS
 

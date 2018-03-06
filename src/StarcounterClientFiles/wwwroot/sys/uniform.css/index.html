@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,7 +11,7 @@
         We strongly suggest to use Uniform in shadow roots,
         then the outer tree could be free of opinionated classes
     -->
-    <link rel="stylesheet" href="uniform.css">
+    <link rel="preload" as="style" href="uniform.css">
 
     <!-- As a user of uniform you don't need any of the styles & imports below -->
     <!-- Styles for this demo page only -->
@@ -44,13 +44,14 @@
             border-bottom: 1px solid #eee;
         }
 
-        header>h1 { grid-area: logo; }
+        header>h1 { grid-area: logo; margin-bottom: 0; }
         header>a { grid-area: links; }
-        header>p {
+        header>div {
             grid-area: desc;
             margin: 1em 0;
-            font-size: 1.3em;
         }
+        header h4 { margin-top: 0; }
+
         [data-shadow-host]{
             border: 1px solid #eee;
         }
@@ -72,41 +73,70 @@
         <a href="https://github.com/Starcounter/Uniform.css" rel="noopener" target="_blank">
             <img src="assets/gh-logo.png" width="32">
         </a>
-        <p>
-            Lightweight, opinionated CSS library that plays nicely within <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM">Shadow DOM</a>.
-        </p>
+        <div>
+            <h4>
+                Lightweight, opinionated CSS library that plays nicely within <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM">Shadow DOM</a>.
+            </h4>
+            <p>
+                It is a set of helper CSS classes to implement:
+            </p>
+            <ul>
+                <li>contextual look &amp; feel for native HTML elements using classes such as <code>.uni-primary-button</code>, <code>.uni-alert-success</code>, etc</li>
+                <li>typical UI patterns using classes such as <code>.uni-section-primary</code>, <code>.uni-card</code>, <code>.uni-label-control</code>, etc</li>
+            </ul>
+        </div>
     </header>
     <div>
         <section>
-            <h2><a href="https://github.com/Starcounter/Underwear.css">Underwear.css</a></h2>
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#usage-with-underwear.css">Usage with Underwear.css</a></li>
+                <li><a href="#custom-properties">Custom Properties</a></li>
+                <li><a href="#label-control">Label Control</a></li>
+                <li><a href="#button">Button</a></li>
+                <li><a href="#pagination">Pagination</a></li>
+                <li><a href="#form">Form</a></li>
+                <li><a href="#alert">Alert</a></li>
+                <li><a href="#card">Card</a></li>
+                <li><a href="#section">Section</a></li>
+                <li><a href="#title">Title</a></li>
+                <li><a href="#layout-left-nav">Layout with left side navigation</a></li>
+            </ul>
+        </section>
+    </div>
+    <div>
+        <section>
+            <h2 id="usage-with-underwear.css">Usage with <a href="https://github.com/Starcounter/Underwear.css">Underwear.css</a></h2>
             <p>Usually, it's recommended to put some <a href="https://github.com/Starcounter/Underwear.css">Underwear</a> before putting the Uniform.</p>
             <p>
                 Underwear is a minimalistic library that normalizes User Agent styles and puts a tiny layer of sugar on top. They are designed to play well together.
                 <ul>
-                    <li>Underwear unifies your light DOM content, using just native HTML semantics,</li>
+                    <li>Underwear unifies the look of your DOM content, using just native HTML semantics,</li>
                     <li>Uniform allows you to put your opinionated styling, with specific classes into shadow roots.</li>
+                </ul>
             </p>
-            <p>You can try how it looks with or without Underwear.</p>
-            <div>
-                Put Underwear.css
-                <label><input type="radio" checked name="underwear-light" value="on">on</label><label><input type="radio" name="underwear-light" value="off">off</label>
-                for this document (light DOM).
-            </div>
-            <div>
-                Put Underwear.css
-                <label><input type="radio" checked name="underwear-shadow" value="on">on</label><label><input type="radio" name="underwear-shadow" value="off">off</label>
-                for all sample shadow roots.
-            </div>
-            <p>Please note that above distintion works best for browsers that support Shadow DOM, otherwise styles may leak. Without Shadow DOM, outer underwear may bleed into shadow roots, and inner underwear may leak outside. Uniform selectors are more specific, explicit and should not make so many problems.</p>
+            <p>Underwear can be used both in light DOM and in Shadow DOM. Because of the shadow tree boundary, to style  native HTML elements in a shadow root with Underwear, you have to explicitly load it in that shadow root.</p>
+            <p>You can see how this page looks with or without Underwear:</p>
+            <ul>
+                <li>
+                    <label><input type="checkbox" checked name="underwear-light">Put Underwear.css
+                    on for this document (light DOM).</label>
+                </li>
+                <li>
+                    <label><input type="checkbox" checked name="underwear-shadow">Put Underwear.css
+                    on for all sample shadow roots.</label>
+                </li>
+            </ul>
+            <p>Please note that above distintion works best for browsers that support Shadow DOM, otherwise styles may leak. Without Shadow DOM, outer Underwear may bleed into shadow roots, and inner Underwear may leak outside. Uniform selectors are more specific, explicit and should not make so many problems.</p>
         </section>
         <section>
-            <h2>Custom Properties</h2>
+            <h2 id="custom-properties">Custom Properties</h2>
             <p>Uniform.css uses CSS Custom Properties (CSS Variables) that you can configure per (shadow) root in which you included <code>uniform.css</code>. You can also use them by yourself, to adhere to the consistent look and feel.</p>
             <div data-shadow-host>
                 <template is="declarative-shadow-dom" mode="open">
+                    <link rel="stylesheet" href="../underwear.css/underwear.css">
+                    <link rel="stylesheet" href="uniform.css">
                     <style>
-                        @import '../underwear.css/underwear.css';
-                        @import 'uniform.css';
                         .color-sample{
                             width: 25px;
                             height: 25px;
@@ -252,7 +282,7 @@
                             <td>
                                 <div data-shadow-host style="border: 1px solid #eee;">
                                     <template is="declarative-shadow-dom" mode="open">
-                                        <style>@import '../uniform.css/uniform.css';</style>
+                                        <link rel="stylesheet" href="uniform.css">
                                         <div style="padding: 0 var(--uni-section-padding-horizontal);"><slot></slot></div>
                                     </template>
                                     padded
@@ -265,7 +295,7 @@
                             <td>
                                 <div data-shadow-host style="border: 1px solid #eee;">
                                     <template is="declarative-shadow-dom" mode="open">
-                                        <style>@import '../uniform.css/uniform.css';</style>
+                                        <link rel="stylesheet" href="uniform.css">
                                         <div style="padding: var(--uni-section-padding-vertical) 0;"><slot></slot></div>
                                     </template>
                                     padded
@@ -280,8 +310,8 @@
             <pre><code>&lt;style&gt;.pinky-host{ --uni-primary: pink;}&lt;/style&gt;
 &lt;div class="pinky-host"&gt;
     &lt;shadowroot mode="open"&gt;
+        &lt;link rel="stylesheet" href="uniform.css"&gt;
         &lt;style&gt;
-            @import 'uniform.css';
             .app-header{
               color: var(--uni-danger);
             }
@@ -295,8 +325,8 @@
             <style>.pinky-host{ --uni-primary: pink;}</style>
             <div data-shadow-host class="pinky-host">
                 <template is="declarative-shadow-dom" mode="open">
+                    <link rel="stylesheet" href="uniform.css">
                     <style>
-                        @import 'uniform.css';
                         .app-header{
                           color: var(--uni-danger);
                         }
@@ -309,12 +339,12 @@
             </div>
         </section>
         <section>
-            <h2>Label control</h2>
+            <h2 id="label-control">Label Control</h2>
             <code>.uni-label-control</code>
             <p>Puts slotted label to the top row, everything else in the bottom row.</p>
             <p>It works for distributed elements.</p>
             <pre><code>&lt;shadowroot mode="open"&gt;
-    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
     &lt;div class="uni-label-control"&gt;
         &lt;slot&gt;&lt;/slot&gt;
     &lt;/div&gt;
@@ -323,7 +353,7 @@
 &lt;input&gt;</code></pre>
             <div data-shadow-host>
                 <template is="declarative-shadow-dom" mode="open">
-                    <style>@import 'uniform.css';</style>
+                    <link rel="stylesheet" href="uniform.css">
                     <div class="uni-label-control">
                         <slot></slot>
                     </div>
@@ -334,7 +364,7 @@
             <hr>
             <p>You can use it as well for styling any elements in the same tree.</p>
             <pre><code>&lt;shadowroot mode="open"&gt;
-    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
     &lt;div class="uni-label-control"&gt;
         &lt;label&gt;Label&lt;/label&gt;
         &lt;div&gt;
@@ -348,7 +378,7 @@
 &lt;span&gt;message&lt;/span&gt;</code></pre>
             <div data-shadow-host>
                 <template is="declarative-shadow-dom" mode="open">
-                    <style>@import 'uniform.css';</style>
+                    <link rel="stylesheet" href="uniform.css">
                     <div class="uni-label-control">
                         <label>Label</label>
                         <div>
@@ -363,7 +393,7 @@
             </div>
         </section>
         <section>
-            <h2>Buttons</h2>
+            <h2 id="button">Button</h2>
             <code>.uni-*-button</code>
             <p>Makes a specific type of a button</p>
             <p>
@@ -373,8 +403,8 @@
             </p>
             <div data-shadow-host>
                 <template is="declarative-shadow-dom" mode="open">
-                    <style>@import '../underwear.css/underwear.css';</style>
-                    <style>@import 'uniform.css';</style>
+                    <link rel="stylesheet" href="../underwear.css/underwear.css">
+                    <link rel="stylesheet" href="uniform.css">
                     <table>
                         <tr>
                             <th>Normal</th>
@@ -425,7 +455,7 @@
             </div>
             <p>You can style distributed buttons.</p>
             <pre><code>&lt;shadowroot mode="open"&gt;
-    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
     &lt;div class="uni-success-button"&gt;
         &lt;slot&gt;&lt;/slot&gt;
     &lt;/div&gt;
@@ -433,7 +463,7 @@
 &lt;button&gt;light&lt;/button&gt;</code></pre>
             <div data-shadow-host>
                 <template is="declarative-shadow-dom" mode="open">
-                    <style>@import 'uniform.css';</style>
+                    <link rel="stylesheet" href="uniform.css">
                     <div class="uni-success-button">
                         <slot></slot>
                     </div>
@@ -443,8 +473,8 @@
             <hr>
             <p>As well as the elements from the same tree</p>
             <pre><code>&lt;shadowroot mode="open"&gt;
-    &lt;style&gt;@import 'underwear.css';&lt;/style&gt;
-    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;link rel="stylesheet" href="../underwear.css/underwear.css"&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
     &lt;div class="uni-success-button"&gt;
         &lt;slot&gt;&lt;/slot&gt;
         &lt;button&gt;shadow&lt;/button&gt;
@@ -453,8 +483,8 @@
 &lt;button&gt;light&lt;/button&gt;</code></pre>
             <div data-shadow-host>
                 <template is="declarative-shadow-dom" mode="open">
-                    <style>@import '../underwear.css/underwear.css';</style>
-                    <style>@import 'uniform.css';</style>
+                    <link rel="stylesheet" href="../underwear.css/underwear.css">
+                    <link rel="stylesheet" href="uniform.css">
                     <div class="uni-success-button">
                         <slot></slot>
                         <button>shadow</button>
@@ -464,7 +494,7 @@
             </div>
         </section>
         <section>
-            <h2>Pagination</h2>
+            <h2 id="pagination">Pagination</h2>
             <code>.uni-pagination, .uni-previous, .uni-next, .uni-pages</code>
             <p>
                 To style pagination widget use:
@@ -478,9 +508,7 @@
                 </ul>
             </p>
             <pre><code>&lt;shadowroot mode="open"&gt;
-    &lt;style&gt;
-        @import "uniform.css";
-    &lt;/style&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
     &lt;div class="uni-pagination"&gt;
         &lt;div class="uni-previous"&gt;&lt;slot name="foo/previous"&gt;&lt;/slot&gt;&lt;/div&gt;
         &lt;div class="uni-pages"&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/div&gt;
@@ -495,9 +523,7 @@
 &lt;span slot="foo/next" disabled&gt;Next&lt;/span&gt;</code></pre>
             <div data-shadow-host>
                 <template is="declarative-shadow-dom" mode="open">
-                    <style>
-                        @import "uniform.css";
-                    </style>
+                    <link rel="stylesheet" href="uniform.css">
                     <div class="uni-pagination">
                         <div class="uni-previous"><slot name="foo/previous"></slot></div>
                         <div class="uni-pages"><slot></slot></div>
@@ -514,16 +540,12 @@
             <p>As with other Uniform classes you can use them to style elements from the same tree as you style distributed elements.</p>
         </section>
         <section>
-            <h2>
-                Forms
-            </h2>
+            <h2 id="form">Form</h2>
             <code>.uniform-form</code>
             🚧 Currently, it just sets <code>margin-bottom</code> for <code>div</code>s. That does not serve the purpose well. But we have plans...
 
             <pre><code>&lt;shadowroot mode="open"&gt;
-    &lt;style&gt;
-        @import "uniform.css";
-    &lt;/style&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
     &lt;div class="uni-form"&gt;
         &lt;slot&gt;&lt;/slot&gt;
     &lt;/div&gt;
@@ -547,9 +569,7 @@
             <form>
                 <div data-shadow-host>
                     <template is="declarative-shadow-dom" mode="open">
-                        <style>
-                            @import "uniform.css";
-                        </style>
+                        <link rel="stylesheet" href="uniform.css">
                         <div class="uni-form">
                             <slot></slot>
                         </div>
@@ -574,12 +594,12 @@
             </form>
         </section>
         <section>
-            <h2>Alerts</h2>
+            <h2 id="alert">Alert</h2>
             <code>.uni-alert-info, .uni-alert-warning, .uni-alert-danger</code>
             <div data-shadow-host>
                 <template is="declarative-shadow-dom" mode="open">
-                    <style>@import '../underwear.css/underwear.css';</style>
-                    <style>@import 'uniform.css';</style>
+                    <link rel="stylesheet" href="../underwear.css/underwear.css">
+                    <link rel="stylesheet" href="uniform.css">
 
                     <div class="uni-alert-info">
                         <slot name="myapp/info"></slot>
@@ -605,8 +625,8 @@
                 </div>
             </div>
             <pre><code>&lt;shadowroot mode="open"&gt;
-    &lt;style&gt;@import '../underwear.css/underwear.css';&lt;/style&gt;
-    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;link rel="stylesheet" href="../underwear.css/underwear.css"&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
 
     &lt;div class="uni-alert-info"&gt;
         &lt;slot name="myapp/info"&gt;&lt;/slot&gt;
@@ -634,8 +654,8 @@
                 <h3>Dynamic content as an alert</h3>
                 <div data-shadow-host>
                     <template is="declarative-shadow-dom" mode="open">
-                        <style>@import '../underwear.css/underwear.css';</style>
-                        <style>@import 'uniform.css';</style>
+                        <link rel="stylesheet" href="../underwear.css/underwear.css">
+                        <link rel="stylesheet" href="uniform.css">
                         <slot></slot>
                         <div class="uni-alert-success">
                             <slot name="myapp/success"></slot>
@@ -655,8 +675,8 @@
                     }())</script>
                 </div>
                 <pre><code>&lt;shadowroot mode="open"&gt;
-    &lt;style&gt;@import '../underwear.css/underwear.css';&lt;/style&gt;
-    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;link rel="stylesheet" href="../underwear.css/underwear.css"&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
     &lt;slot&gt;&lt;/slot&gt;
     &lt;div class="uni-alert-success"&gt;
         &lt;slot name="myapp/success"&gt;&lt;/slot&gt;
@@ -678,11 +698,11 @@
 
         </section>
         <section>
-            <h2>Card</h2>
+            <h2 id="card">Card</h2>
             To create slightly elevated card, use <code>.uni-card</code>.
             <div data-shadow-host>
                 <template is="declarative-shadow-dom" mode="open">
-                    <style>@import 'uniform.css';</style>
+                    <link rel="stylesheet" href="uniform.css">
                     <div class="uni-card">
                         I'm an elevated panel,
                         <slot></slot>
@@ -691,9 +711,7 @@
                 with distributed content.
             </div>
             <pre><code>&lt;shadowroot mode="open"&gt;
-    &lt;style&gt;
-        @import 'uniform.css';
-    &lt;/style&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
     &lt;div class="uni-card"&gt;
         I'm an elevated panel,
     &lt;/div&gt;
@@ -701,7 +719,7 @@
 with distributed content.</code></pre>
         </section>
         <section>
-            <h2>Sections</h2>
+            <h2 id="section">Section</h2>
             To create different kinds of sections, use:
             <ul>
                 <li><code>.uni-section-primary</code> - to have a greyish background,</li>
@@ -711,7 +729,7 @@ with distributed content.</code></pre>
             Note, that those sections stick to the sides of padded host.
             <div data-shadow-host>
                 <template is="declarative-shadow-dom" mode="open">
-                    <style>@import 'uniform.css';</style>
+                    <link rel="stylesheet" href="uniform.css">
                     <div class="uni-section-primary">
                         Primary section
                     </div>
@@ -724,7 +742,7 @@ with distributed content.</code></pre>
                 </template>
             </div>
             <pre><code>&lt;shadowroot mode="open"&gt;
-    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
     &lt;div class="uni-section-primary"&gt;
         Primary section
     &lt;/div&gt;
@@ -740,18 +758,18 @@ with distributed content.</code></pre>
 
             <div data-shadow-host>
                 <template is="declarative-shadow-dom" mode="open">
-                    <style>@import '../underwear.css/underwear.css';</style>
-                    <style>@import 'uniform.css';</style>
+                    <link rel="stylesheet" href="../underwear.css/underwear.css">
+                    <link rel="stylesheet" href="uniform.css">
                     <div class="uni-section-primary">
                         <div class="uni-card">Default <code>div</code>(block) card in a section. Useful for full-width content.</div>
-                    </div>            
+                    </div>
                     <section class="uni-section-tertiary" style="display: grid; grid-template-columns: repeat(2, 1fr);grid-gap: var(--uni-section-padding-horizontal)">
                         <div class="uni-card">The first of a pair of half-width cards in a section, achieved by setting <code>display: grid</code> on the section (with two columns and a gap).</div>
                         <div class="uni-card">The second  of a pair of half-width cards</div>
                     </section>
                     <div class="uni-section-primary">
                         <div class="uni-card" style="max-width: 500px;">Default <code>div</code>(block) card with <code>max-width: 500px</code> in a section. Useful for content that should be read vertically, not horizontally, such as forms.</div>
-                    </div>        
+                    </div>
                     <div class="uni-section-secondary">
                         <span class="uni-card">Default <code>span</code>(inline)</span>
                         <span class="uni-card">cards in a section.</span>
@@ -765,18 +783,18 @@ with distributed content.</code></pre>
                 </template>
             </div>
             <pre><code>&lt;shadowroot mode="open"&gt;
-    &lt;style&gt;@import '../underwear.css/underwear.css';&lt;/style&gt;
-    &lt;style&gt;@import 'uniform.css';&lt;/style&gt;
+    &lt;link rel="stylesheet" href="../underwear.css/underwear.css"&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
     &lt;div class="uni-section-primary"&gt;
         &lt;div class="uni-card"&gt;Default &lt;code&gt;div&lt;/code&gt;(block) card in a section. Useful for full-width content.&lt;/div&gt;
-    &lt;/div&gt;            
+    &lt;/div&gt;
     &lt;section class="uni-section-tertiary" style="display: grid; grid-template-columns: repeat(2, 1fr);grid-gap: var(--uni-section-padding-horizontal)"&gt;
         &lt;div class="uni-card"&gt;The first of a pair of half-width cards in a section, achieved by setting &lt;code&gt;display: grid&lt;/code&gt; on the section (with two columns and a gap).&lt;/div&gt;
         &lt;div class="uni-card"&gt;The second  of a pair of half-width cards&lt;/div&gt;
     &lt;/section&gt;
     &lt;div class="uni-section-primary"&gt;
         &lt;div class="uni-card" style="max-width: 500px;"&gt;Default &lt;code&gt;div&lt;/code&gt;(block) card with &lt;code&gt;max-width: 500px&lt;/code&gt; in a section. Useful for content that should be read vertically, not horizontally, such as forms.&lt;/div&gt;
-    &lt;/div&gt;        
+    &lt;/div&gt;
     &lt;div class="uni-section-secondary"&gt;
         &lt;span class="uni-card"&gt;Default &lt;code&gt;span&lt;/code&gt;(inline)&lt;/span&gt;
         &lt;span class="uni-card"&gt;cards in a section.&lt;/span&gt;
@@ -789,6 +807,97 @@ with distributed content.</code></pre>
     &lt;/div&gt;
 &lt;/shadowroot&gt;</code></pre>
         </section>
+        <section>
+            <h2 id="title">Title</h2>
+            <p>Use <code>.uni-title</code> inside <code>.uni-section</code> or <code>.uni-card</code> to apply consistently formatted page or card title. <code>.uni-title</code> overwrites the font style of the slotted element.</p>
+            <p>It is recommended that you use semantic HTML elements for the title content, such as <code>h2</code> for the page title and <code>h3</code> for the card title.</p>
+            <p>Page title:</p>
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <link rel="stylesheet" href="uniform.css">
+                    <div class="uni-section-primary">
+                        <div class="uni-title">
+                            <slot></slot>
+                        </div>
+                    </div>
+                </template>
+                <h1>Page title</h1>
+            </div>
+            <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
+    &lt;div class="uni-section-primary"&gt;
+        &lt;div class="uni-title"&gt;
+            &lt;slot&gt;&lt;/slot&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/shadowroot&gt;
+&lt;h1&gt;Page title&lt;/h1&gt;</code></pre>
+            <p>Card title:</p>
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <link rel="stylesheet" href="uniform.css">
+                    <div class="uni-card">
+                        <div class="uni-title">
+                            <slot></slot>
+                        </div>
+                    </div>
+                </template>
+                <h2>Card title</h2>
+            </div>
+            <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
+    &lt;div class="uni-card"&gt;
+        &lt;div class="uni-title"&gt;
+            &lt;slot&gt;&lt;/slot&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/shadowroot&gt;
+&lt;h2&gt;Card title&lt;/h2&gt;</code></pre>
+        </section>
+    <section>
+        <h2 id="layout-left-nav">Layout</h2>
+        <h3>Layout with left side navigation</h3>
+        <p>Class <code>.uni-layout-left-nav</code> implements a commonly used two-column layout.</p>
+        <p>It uses two child elements:</p>
+        <ul>
+            <li>first element child is the left column used for navigation</li>
+            <li>second element is the right column used for the main content</li>
+        </ul>
+        <p>Anchor elements <code>&lt;a&gt;</code> element within the left column that have the attribute <code>aria-current="page"</code> will be highlighted.</p>
+        <div data-shadow-host>
+            <template is="declarative-shadow-dom" mode="open">
+                <link rel="stylesheet" href="uniform.css">
+                <div class="uni-layout-left-nav">
+                    <slot name="navigation"></slot>
+                    <div class="uni-section-primary">
+                        <slot name="main-content"></slot>
+                    </div>
+                </div>
+            </template>
+            <nav slot="navigation">
+                <a href=".">Navigation link 1</a>
+                <a href=".">Navigation link 2</a>
+                <a href=".">Navigation link 3</a>
+            </nav>
+            <label slot="main-content">Main content</label>
+        </div>
+        <pre><code>&lt;shadowroot mode="open"&gt;
+&lt;template is="declarative-shadow-dom" mode="open"&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
+    &lt;div class="uni-layout-left-nav"&gt;
+        &lt;slot name="navigation"&gt;&lt;/slot&gt;
+        &lt;div class="uni-section-primary"&gt;
+            &lt;slot name="main-content"&gt;&lt;/slot&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/shadowroot&gt;
+&lt;nav slot="navigation"&gt;
+    &lt;a href="."&gt;Navigation link 1&lt;/a&gt;
+    &lt;a href="."&gt;Navigation link 2&lt;/a&gt;
+    &lt;a href="."&gt;Navigation link 3&lt;/a&gt;
+&lt;/nav&gt;
+&lt;label slot="main-content"&gt;Main content&lt;/label&gt;</code></pre>
+    </section>
     </div>
     <footer>MIT License, Starcounter © 2018</footer>
 </body>

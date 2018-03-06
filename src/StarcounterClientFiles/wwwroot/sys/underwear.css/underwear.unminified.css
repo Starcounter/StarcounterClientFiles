@@ -563,11 +563,10 @@ template {
 *,
 *:after,
 *:before {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 html {
-  box-sizing: border-box;
   font-size: 62.5%;
 }
 
@@ -613,7 +612,6 @@ input[type='submit'] {
   padding-right: 16px;
   height: 32px;
   cursor: pointer;
-  box-sizing: border-box;
   white-space: nowrap;
   min-width: 120px;
   box-shadow: 0px 1px 3px 0 var(--shadow-color);
@@ -708,7 +706,6 @@ textarea {
   background-color: var(--editable-background-color);
   border: none;
   box-shadow: none;
-  box-sizing: border-box;
   height: 38px;
   padding-left: 16px;
   padding-right: 20px;
@@ -754,7 +751,8 @@ fieldset > legend {
   font-weight: bold;
 }
 
-input[type='checkbox'] {
+input[type='checkbox'],
+input[type='radio'] {
   margin-right: 5px;
   vertical-align: middle;
   background: #fff;
@@ -827,17 +825,18 @@ tr:last-of-type > td:last-of-type {
 
 td {
   border-top: 0.1rem solid var(--table-border-color);
+  background-color: var(--white);
 }
 
 tbody > tr:last-of-type > td {
   border-bottom: 0.1rem solid var(--table-border-color);
 }
 
-td:first-child {
+td:first-of-type {
   border-left: 0.1rem solid var(--table-border-color);
 }
 
-td:last-child {
+td:last-of-type {
   border-right: 0.1rem solid var(--table-border-color);
 }
 
