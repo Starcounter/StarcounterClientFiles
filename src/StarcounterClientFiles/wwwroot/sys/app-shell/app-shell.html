@@ -1,22 +1,21 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>{0}</title>
     <script src="/sys/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="/sys/polymer/polymer.html">
     <script src="/sys/Palindrom/dist/palindrom-dom.js"></script>
     <!-- <script src="/sys/app-shell/palindrom-session-instance.js"></script> -->
     <script>
     (function(){{
-        const remoteURL = '{1}';
-        if(!window.PalindromDOM.instances){{
-            window.PalindromDOM.instances = new Map();
+        const remoteUrl = '{1}';
+        if(!PalindromDOM.instances){{
+            PalindromDOM.instances = new Map();
         }}
-        const registry = window.PalindromDOM.instances;
-        if(!registry.get(remoteURL)){{
-            registry.set(remoteURL, new PalindromDOM({{
-                "remoteUrl": remoteURL,
+        const registry = PalindromDOM.instances;
+        if(!registry.get(remoteUrl)){{
+            registry.set(remoteUrl, new PalindromDOM({{
+                remoteUrl,
                 "pingIntervalS": 60,
                 "useWebSocket": true,
                 "debug": false,
@@ -29,6 +28,7 @@
         }}
     }}());
     </script>
+    <link rel="import" href="/sys/polymer/polymer.html">
 
     <link rel="import" href="/sys/starcounter.html">
     <link rel="stylesheet" href="/sys/underwear.css/underwear.css">
