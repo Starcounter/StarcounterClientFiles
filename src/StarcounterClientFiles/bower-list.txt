@@ -1,4 +1,4 @@
-bower check-new     Checking for new versions of the project dependencies...
+﻿bower check-new     Checking for new versions of the project dependencies...
 starcounter-clientfiles#2.1.1 C:\Work\Starcounter\StarcounterClientFiles\src\StarcounterClientFiles
 ├─┬ imported-template#3.2.0
 │ └── juicy-html#4.0.0
@@ -12,5 +12,5 @@ starcounter-clientfiles#2.1.1 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 ├─┬ starcounter-include#5.0.0
 │ └── imported-template#3.2.0
 ├── underwear.css#0.0.7
-├── uniform.css#0.0.8
+├── uniform.css#0.0.9
 └── webcomponentsjs#1.1.0

@@ -5,80 +5,77 @@
 
 :host {
   /* all non-uni-prefixed variables (--blue, --dark-blue, etc..) are inherited from "underwear.css" */
-  --uni-white: var(--white, #ffffff);
+  --uni-default-white: var(--white, #ffffff);
 
-  --uni-gray-1: var(--gray-1, #f9f9f9);
-  --uni-gray-2: var(--gray-2, #f6f6f6);
-  --uni-gray-3: var(--gray-3, #efefef);
-  --uni-gray-4: var(--gray-4, #e7e7e7);
-  --uni-gray-5: var(--gray-5, #e1e1e1);
-  --uni-gray-6: var(--gray-6, #868e96);
-  --uni-gray-7: var(--gray-7, #606c76);
+  --uni-default-gray-1: var(--gray-1, #f9f9f9);
+  --uni-default-gray-2: var(--gray-2, #f6f6f6);
+  --uni-default-gray-3: var(--gray-3, #efefef);
+  --uni-default-gray-4: var(--gray-4, #e7e7e7);
+  --uni-default-gray-5: var(--gray-5, #e1e1e1);
+  --uni-default-gray-6: var(--gray-6, #868e96);
+  --uni-default-gray-7: var(--gray-7, #606c76);
 
-  --uni-transparent-black: var(--transparent-black, #00000033);
+  --uni-default-transparent-black: var(--transparent-black, #00000033);
 
-  --uni-blue: var(--blue, #0084b4);
-  --uni-dark-blue: var(--dark-blue, #1a587f);
-  --uni-dark: var(--dark, #141d26);
-  --uni-green: var(--green, #3fa13f);
-  --uni-inky: var(--inky, #1b2936);
-  --uni-livid: var(--livid, #8696a5);
-  --uni-mouse: var(--mouse, #e7ecf0);
-  --uni-red: var(--red, #df4534);
-  --uni-yellow: var(--yellow, #ffdb25);
+  --uni-default-blue: var(--blue, #0084b4);
+  --uni-default-dark-blue: var(--dark-blue, #1a587f);
+  --uni-default-dark: var(--dark, #141d26);
+  --uni-default-green: var(--green, #3fa13f);
+  --uni-default-inky: var(--inky, #1b2936);
+  --uni-default-livid: var(--livid, #8696a5);
+  --uni-default-mouse: var(--mouse, #e7ecf0);
+  --uni-default-red: var(--red, #df4534);
+  --uni-default-yellow: var(--yellow, #ffdb25);
 
   /* only use uni colors below this line */
 
-  --uni-default: var(--uni-gray-2);
-  --uni-primary: var(--uni-blue);
-  --uni-secondary: var(--uni-blue);
-  --uni-success: var(--uni-green);
-  --uni-danger: var(--uni-red);
-  --uni-warning: var(--uni-yellow);
-  --uni-disabled: var(--uni-gray-5);
+  --uni-default-primary: var(--uni-blue, var(--uni-default-blue));
+  --uni-default-secondary: var(--uni-blue, var(--uni-default-blue));
+  --uni-default-success: var(--uni-green, var(--uni-default-green));
+  --uni-default-danger: var(--uni-red, var(--uni-default-red));
+  --uni-default-warning: var(--uni-yellow, var(--uni-default-yellow));
+  --uni-default-disabled: var(--uni-gray-5, var(--uni-default-gray-5));
 
-  --uni-section-padding-horizontal: 40px;
-  --uni-section-padding-vertical: 20px;
+  --uni-default-section-padding-horizontal: 40px;
+  --uni-default-section-padding-vertical: 20px;
 }
 /* We need sepearate selector for browsers that does not support :host */
 :root {
   /* all non-uni-prefixed variables (--blue, --dark-blue, etc..) are inherited from "underwear.css" */
-  --uni-white: var(--white, #ffffff);
+  --uni-default-white: var(--white, #ffffff);
 
-  --uni-gray-1: var(--gray-1, #f9f9f9);
-  --uni-gray-2: var(--gray-2, #f6f6f6);
-  --uni-gray-3: var(--gray-3, #efefef);
-  --uni-gray-4: var(--gray-4, #e7e7e7);
-  --uni-gray-5: var(--gray-5, #e1e1e1);
-  --uni-gray-6: var(--gray-6, #868e96);
-  --uni-gray-7: var(--gray-7, #606c76);
+  --uni-default-gray-1: var(--gray-1, #f9f9f9);
+  --uni-default-gray-2: var(--gray-2, #f6f6f6);
+  --uni-default-gray-3: var(--gray-3, #efefef);
+  --uni-default-gray-4: var(--gray-4, #e7e7e7);
+  --uni-default-gray-5: var(--gray-5, #e1e1e1);
+  --uni-default-gray-6: var(--gray-6, #868e96);
+  --uni-default-gray-7: var(--gray-7, #606c76);
 
-  --uni-transparent-black: var(--transparent-black, #00000033);
+  --uni-default-transparent-black: var(--transparent-black, #00000033);
 
-  --uni-blue: var(--blue, #0084b4);
-  --uni-dark-blue: var(--dark-blue, #1a587f);
-  --uni-dark: var(--dark, #141d26);
-  --uni-green: var(--green, #3fa13f);
-  --uni-inky: var(--inky, #1b2936);
-  --uni-livid: var(--livid, #8696a5);
-  --uni-mouse: var(--mouse, #e7ecf0);
-  --uni-red: var(--red, #df4534);
-  --uni-yellow: var(--yellow, #ffdb25);
+  --uni-default-blue: var(--blue, #0084b4);
+  --uni-default-dark-blue: var(--dark-blue, #1a587f);
+  --uni-default-dark: var(--dark, #141d26);
+  --uni-default-green: var(--green, #3fa13f);
+  --uni-default-inky: var(--inky, #1b2936);
+  --uni-default-livid: var(--livid, #8696a5);
+  --uni-default-mouse: var(--mouse, #e7ecf0);
+  --uni-default-red: var(--red, #df4534);
+  --uni-default-yellow: var(--yellow, #ffdb25);
 
   /* only use uni colors below this line */
 
-  --uni-default: var(--uni-gray-2);
-  --uni-primary: var(--uni-blue);
-  --uni-secondary: var(--uni-blue);
-  --uni-success: var(--uni-green);
-  --uni-danger: var(--uni-red);
-  --uni-warning: var(--uni-yellow);
-  --uni-disabled: var(--uni-gray-5);
+  --uni-default-primary: var(--uni-blue, var(--uni-default-blue));
+  --uni-default-secondary: var(--uni-blue, var(--uni-default-blue));
+  --uni-default-success: var(--uni-green, var(--uni-default-green));
+  --uni-default-danger: var(--uni-red, var(--uni-default-red));
+  --uni-default-warning: var(--uni-yellow, var(--uni-default-yellow));
+  --uni-default-disabled: var(--uni-gray-5, var(--uni-default-gray-5));
 
-  --uni-section-padding-horizontal: 40px;
-  --uni-section-padding-vertical: 20px;
+  --uni-default-section-padding-horizontal: 40px;
+  --uni-default-section-padding-vertical: 20px;
 }
-
 
 /**
   * .uni-label-control
@@ -122,37 +119,37 @@ Buttons
 /* Style a button that is a light DOM content, probably functional element bound to the database */
 .uni-primary-button > ::slotted(button) {
   color: #fff !important;
-  background-color: var(--uni-primary) !important;
+  background-color: var(--uni-primary, var(--uni-default-primary)) !important;
 }
 /* In case a button is used in Shadow DOM, for example, to perform visual-only action, like collapsing the accordion.
   This approach is also required to cover polyfill browsers and polyfill limitations.
 */
 .uni-primary-button > button {
   color: #fff !important;
-  background-color: var(--uni-primary) !important;
+  background-color: var(--uni-primary, var(--uni-default-primary)) !important;
 }
 
 .uni-success-button > ::slotted(button) {
-  background-color: var(--uni-success) !important;
-  color: var(--uni-white) !important;
+  background-color: var(--uni-success, var(--uni-default-success)) !important;
+  color: var(--uni-white, var(--uni-default-white)) !important;
 }
 .uni-success-button > button {
-  background-color: var(--uni-success) !important;
-  color: var(--uni-white) !important;
+  background-color: var(--uni-success, var(--uni-default-success)) !important;
+  color: var(--uni-white, var(--uni-default-white)) !important;
 }
 
 .uni-danger-button > ::slotted(button) {
-  background-color: var(--uni-danger) !important;
-  color: var(--uni-white) !important;
+  background-color: var(--uni-danger, var(--uni-default-danger)) !important;
+  color: var(--uni-white, var(--uni-default-white)) !important;
 }
 .uni-danger-button > button {
-  background-color: var(--uni-danger) !important;
-  color: var(--uni-white) !important;
+  background-color: var(--uni-danger, var(--uni-default-danger)) !important;
+  color: var(--uni-white, var(--uni-default-white)) !important;
 }
 
 .uni-flat-button > ::slotted(button) {
   background-color: transparent !important;
-  color: var(--uni-blue) !important;
+  color: var(--uni-blue, var(--uni-default-blue)) !important;
   box-shadow: none !important;
   min-width: auto !important;
   margin-left: 16px !important;
@@ -161,7 +158,7 @@ Buttons
 }
 .uni-flat-button > button {
   background-color: transparent !important;
-  color: var(--uni-blue) !important;
+  color: var(--uni-blue, var(--uni-default-blue)) !important;
   box-shadow: none !important;
   min-width: auto !important;
   padding-left: 16px !important;
@@ -180,7 +177,7 @@ Buttons
 }
 .uni-flat-button > ::slotted(button:hover),
 .uni-flat-button > ::slotted(button:focus) {
-  background-color: var(--uni-gray-2) !important;
+  background-color: var(--uni-gray-2, var(--uni-default-gray-2)) !important;
 }
 .uni-primary-button > button:hover,
 .uni-primary-button > button:focus,
@@ -192,7 +189,7 @@ Buttons
 }
 .uni-flat-button > button:hover,
 .uni-flat-button > button:focus {
-  background-color: var(--uni-gray-2) !important;
+  background-color: var(--uni-gray-2, var(--uni-default-gray-2)) !important;
 }
 
 .uni-primary-button > ::slotted(button[disabled]),
@@ -203,7 +200,7 @@ Buttons
   box-shadow: initial !important;
 }
 .uni-flat-button > ::slotted(button[disabled]) {
-  color: var(--uni-livid) !important;
+  color: var(--uni-livid, var(--uni-default-livid)) !important;
 }
 .uni-primary-button > button[disabled],
 .uni-success-button > button[disabled],
@@ -213,7 +210,7 @@ Buttons
   box-shadow: initial !important;
 }
 .uni-flat-button > button[disabled] {
-  color: var(--uni-livid) !important;
+  color: var(--uni-livid, var(--uni-default-livid)) !important;
 }
 
 .uni-primary-button > ::slotted(button[disabled]:hover),
@@ -246,7 +243,7 @@ Pagination
 */
 
 .uni-pagination {
-  border: 1px solid var(--uni-gray-5, #e1e1e1);
+  border: 1px solid var(--uni-gray-5, var(--uni-default-gray-5));
   border-radius: 5px;
   height: 36px;
   padding: 1px;
@@ -263,7 +260,7 @@ Pagination
   padding: 0 5px;
   margin: 5px 2px;
   border: 1px solid #fff;
-  color: var(--uni-primary);
+  color: var(--uni-primary, var(--uni-default-primary));
   cursor: pointer;
   display: inline-block;
 }
@@ -275,7 +272,7 @@ Pagination
   padding: 0 5px;
   margin: 5px 2px;
   border: 1px solid #fff;
-  color: var(--uni-primary);
+  color: var(--uni-primary, var(--uni-default-primary));
   cursor: pointer;
   display: inline-block;
 }
@@ -283,10 +280,10 @@ Pagination
   display: flex;
 }
 .uni-pagination > .uni-pages > ::slotted([aria-current]:not([aria-current="false"])) {
-  border: 1px solid var(--uni-primary);
+  border: 1px solid var(--uni-primary, var(--uni-default-primary));
 }
 .uni-pagination > .uni-pages > [aria-current]:not([aria-current="false"]) {
-  border: 1px solid var(--uni-primary);
+  border: 1px solid var(--uni-primary, var(--uni-default-primary));
 }
 .uni-pagination
   > .uni-pages
@@ -294,7 +291,7 @@ Pagination
 .uni-pagination
   > .uni-pages
   > ::slotted(*:hover[aria-current="false"]:not(:disabled):not([disabled])) {
-  background-color: var(--uni-gray-2) !important;
+  background-color: var(--uni-gray-2, var(--uni-default-gray-2)) !important;
 }
 .uni-pagination
   > .uni-pages
@@ -302,7 +299,7 @@ Pagination
 .uni-pagination
   > .uni-pages
   > *:hover[aria-current="false"]:not(:disabled):not([disabled]) {
-  background-color: var(--uni-gray-2) !important;
+  background-color: var(--uni-gray-2, var(--uni-default-gray-2)) !important;
 }
 
 .uni-pagination > * > ::slotted([disabled]),
@@ -403,36 +400,36 @@ Pagination
 }
 
 .uni-alert-danger > ::slotted(*) {
-  color: var(--uni-white, #fff);
-  background-color: var(--uni-danger);
-  border-color: var(--uni-danger);
+  color: var(--uni-white, var(--uni-default-white));
+  background-color: var(--uni-danger, var(--uni-default-danger));
+  border-color: var(--uni-danger, var(--uni-default-danger));
 }
 .uni-alert-danger > * {
-  color: var(--uni-white, #fff);
-  background-color: var(--uni-danger);
-  border-color: var(--uni-danger);
+  color: var(--uni-white, var(--uni-default-white));
+  background-color: var(--uni-danger, var(--uni-default-danger));
+  border-color: var(--uni-danger, var(--uni-default-danger));
 }
 
 .uni-alert-success > ::slotted(*) {
-  color: var(--uni-white);
-  background-color: var(--uni-success);
-  border-color: var(--uni-success);
+  color: var(--uni-white, var(--uni-default-white));
+  background-color: var(--uni-success, var(--uni-default-success));
+  border-color: var(--uni-success, var(--uni-default-success));
 }
 .uni-alert-success > * {
-  color: var(--uni-white);
-  background-color: var(--uni-success);
-  border-color: var(--uni-success);
+  color: var(--uni-white, var(--uni-default-white));
+  background-color: var(--uni-success, var(--uni-default-success));
+  border-color: var(--uni-success, var(--uni-default-success));
 }
 
 .uni-alert-warning > ::slotted(*) {
-  color: var(--uni-dark);
-  background-color: var(--uni-warning);
-  border-color: var(--uni-warning);
+  color: var(--uni-dark, var(--uni-default-dark));
+  background-color: var(--uni-warning, var(--uni-default-warning));
+  border-color: var(--uni-warning, var(--uni-default-warning));
 }
 .uni-alert-warning > * {
-  color: var(--uni-dark);
-  background-color: var(--uni-warning);
-  border-color: var(--uni-warning);
+  color: var(--uni-dark, var(--uni-default-dark));
+  background-color: var(--uni-warning, var(--uni-default-warning));
+  border-color: var(--uni-warning, var(--uni-default-warning));
 }
 
 /*
@@ -441,8 +438,8 @@ Pagination
 .uni-card {
   position: relative;
   box-sizing: border-box;
-  color: var(--uni-dark);
-  background-color: var(--uni-white);
+  color: var(--uni-dark, var(--uni-default-dark));
+  background-color: var(--uni-white, var(--uni-default-white));
   border-radius: 3px;
   padding: 16px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
@@ -453,7 +450,7 @@ Pagination
 .uni-section-primary,
 .uni-section-secondary,
 .uni-section-tertiary {
-  padding: var(--uni-section-padding-vertical) var(--uni-section-padding-horizontal);
+  padding: var(--uni-section-padding-vertical, var(--uni-default-section-padding-vertical)) var(--uni-section-padding-horizontal, var(--uni-default-section-padding-horizontal));
 }
 
 .uni-section-primary {
@@ -461,7 +458,7 @@ Pagination
 }
 
 .uni-section-secondary {
-  background: var(--uni-white);
+  background: var(--uni-white, var(--uni-default-white));
 }
 
 .uni-section-tertiary {
@@ -529,13 +526,13 @@ Pagination
 .uni-layout-left-nav {
   display: grid;
   height: 100%;
-  background-color: var(--uni-mouse);
+  background-color: var(--uni-mouse, var(--uni-default-mouse));
   grid-template-columns: 200px 1fr;
 }
 
 .uni-layout-left-nav > :first-child {
-  background-color: var(--uni-inky);
-  color: var(--gray-5);
+  background-color: var(--uni-inky, var(--uni-default-inky));
+  color: var(--uni-gray-5, var(--uni-default-gray-5));
   padding: 20px 10px;
 }
 
@@ -543,30 +540,30 @@ Pagination
   border-left: 3px solid transparent !important;
   display: block !important;
   padding: 9px 7px !important;
-  color: var(--uni-livid) !important;
+  color: var(--uni-livid, var(--uni-default-livid)) !important;
 }
 
 .uni-layout-left-nav > :first-child a {
   border-left: 3px solid transparent !important;
   display: block !important;
   padding: 9px 7px !important;
-  color: var(--uni-livid) !important;
+  color: var(--uni-livid, var(--uni-default-livid)) !important;
 }
 
 .uni-layout-left-nav > :first-child ::slotted(a:hover) {
-  color: var(--uni-white) !important;
+  color: var(--uni-white, var(--uni-default-white)) !important;
 }
 
 .uni-layout-left-nav > :first-child a:hover {
-  color: var(--uni-white) !important;
+  color: var(--uni-white, var(--uni-default-white)) !important;
 }
 
 .uni-layout-left-nav > :first-child ::slotted(a[aria-current="page"]) {
-  border-left: 3px solid var(--uni-blue) !important;
-  color: var(--uni-white) !important;
+  border-left: 3px solid var(--uni-blue, var(--uni-default-blue)) !important;
+  color: var(--uni-white, var(--uni-default-white)) !important;
 }
 
 .uni-layout-left-nav > :first-child a[aria-current="page"] {
-  border-left: 3px solid var(--uni-blue) !important;
-  color: var(--uni-white) !important;
+  border-left: 3px solid var(--uni-blue, var(--uni-default-blue)) !important;
+  color: var(--uni-white, var(--uni-default-white)) !important;
 }
