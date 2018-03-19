@@ -19,8 +19,10 @@ IF EXIST "%programfiles(x86)%\Microsoft Visual Studio\2017\Community\Common7\Too
 )
 POPD
 
+set /p version= < src\StarcounterClientFiles\version.txt
+
 PUSHD %~dp0
-msbuild /m
+msbuild /m /p:VersionNumber=%version%
 POPD
 
 ENDLOCAL

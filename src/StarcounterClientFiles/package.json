@@ -1,10 +1,14 @@
 {
   "name": "starcounterclientfiles",
   "version": "1.0.0",
-  "description": "",
+  "description": "An app that provides Starcounter with all the client-side libraries it needs to function.",
   "main": "index.js",
   "scripts": {
-    "build": "node vulcanize.node.js"
+    "build": "node vulcanize-and-populate-version-file.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Starcounter/StarcounterClientFiles"
   },
   "author": "",
   "license": "ISC",
