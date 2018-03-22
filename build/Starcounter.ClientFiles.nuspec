@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Starcounter.ClientFiles</id>
+    <version>$version$</version>
+    <authors>Starcounter</authors>
+    <owners>Starcounter</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Starcounter 2.3 Client Files.</description>
+    <contentFiles>
+      <files include="any/any/**/*" copyToOutput="true" buildAction="None" />
+    </contentFiles>
+  </metadata>
+  <files>
+    <file src="..\src\StarcounterClientFiles\wwwroot\sys\**" target="contentFiles/any/any/ClientFiles/StaticFiles/sys" />
+    <file src="..\src\StarcounterClientFiles\bower.json" target="contentFiles/any/any/ClientFiles" />
+    <file src="..\src\StarcounterClientFiles\bower-list.txt" target="contentFiles/any/any/ClientFiles" />
+  </files>
+</package>
