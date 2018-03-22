@@ -86,6 +86,9 @@ publish
 
 # NuGet Packages Directory
 packages
+artifacts
+build/tools
+
 
 # Windows Azure Build Output
 csx
