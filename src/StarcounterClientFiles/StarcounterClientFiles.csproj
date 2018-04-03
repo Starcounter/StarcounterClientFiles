@@ -43,6 +43,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
+
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -79,8 +80,9 @@
   </Target>
   -->
 
-<Target Name="AfterBuild">
-    <Exec Command="npm install &amp;&amp; npm run build"></Exec>
-</Target>
+  <Target Name="AfterBuild">
+    <!-- ContinueOnError makes node and npm optional to complete the build -->
+    <Exec ContinueOnError="true" Command="WHERE npm &amp;&amp; WHERE node &amp;&amp; npm install &amp;&amp; npm run build"></Exec>
+  </Target>
 
 </Project>

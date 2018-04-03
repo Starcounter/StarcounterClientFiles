@@ -48,9 +48,12 @@ bundler.generateManifest([sourceFile]).then(async manifest => {
         );
       }
     }
-    console.log('Vulcanizing Polymer is now complete.');
+    console.log('Vulcanizing: Vulcanizing Polymer is now complete.');
+
+    populateVersionFile();
+
   } catch (error) {
-    console.error('Vulcanizing Polymer has failed, error:', error);
+    console.error('Vulcanizing: Vulcanizing Polymer has failed, error:', error);
     process.exit(1);
   }
 });
@@ -67,4 +70,11 @@ function ensurePath(location) {
             fs.mkdirSync(curDir);
         }
     }
+}
+
+function populateVersionFile() {
+  console.log('Populating version.txt file');
+  const AssemblyInfo = fs.readFileSync("Properties\\AssemblyInfo.cs").toString();
+  const version = AssemblyInfo.match(/^\[assembly: AssemblyVersion\(\"(.+)\"\)\]/m)[1];
+  fs.writeFileSync("version.txt", version);
 }
