@@ -1623,10 +1623,6 @@ const PalindromDOM = (() => {
         );
       }
 
-      options.onStateReset = function addDOMListeners(obj) {
-        this.listen();
-        onStateReset && onStateReset.call(this, obj);
-      };
 
       // construct Palindrom
       super(options);
@@ -1641,6 +1637,11 @@ const PalindromDOM = (() => {
         'palindrom-redirect-pushstate',
         this.historyHandler
       );
+      
+      options.onStateReset = function addDOMListeners(obj) {
+        this.listen();
+        onStateReset && onStateReset.call(this, obj);
+      };
     }
 
     listen() {
@@ -2289,6 +2290,12 @@ const Palindrom = (() => {
      * @returns {XMLHttpRequest} performed XHR
      */
     xhr(url, accept, data, callback, setReferer) {
+      if(accept == "application/json") {
+        setTimeout(() => {
+          callback.call(this.palindrom, this.palindrom.initialModel, 'GET');
+        }, 0);
+        return;
+      }
       const method = data ? 'PATCH' : 'GET';
       const headers = {};
       let requestPromise;
@@ -2457,6 +2464,8 @@ const Palindrom = (() => {
           '`ignoreAdd` is removed in favour of local state objects. see https://github.com/Palindrom/Palindrom/issues/136'
         );
       }
+
+      this.initialModel = options.model;
 
       this.debug = options.debug != undefined ? options.debug : true;
 

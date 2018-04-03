@@ -1,22 +1,69 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>{0}</title>
+    <script src="/sys/Palindrom/dist/palindrom-dom.js"></script>
+    <script>        
+        const remoteUrl = '{1}';
+        fetch(remoteUrl, {{
+            headers: {{
+                accept: 'application/json'
+            }}
+            }})
+            .then(res => res.json())
+            .then(model => {{
+                if (!PalindromDOM.instances) {{
+                    PalindromDOM.instances = new Map();
+                }}
+                const registry = PalindromDOM.instances;
+                if (!registry.get(remoteUrl)) {{
+                registry.set(
+                    remoteUrl,
+                    new PalindromDOM({{
+                    listenTo: document,
+                    model: {{data: model}}, // Palindrom is modified to use this model instead of XHRing
+                    remoteUrl,
+                    pingIntervalS: 60,
+                    useWebSocket: true,
+                    debug: false,
+                    ot: true,
+                    purity: false,
+                    localVersionPath: '/_ver#c$',
+                    remoteVersionPath: '/_ver#s'
+                    }})
+                );
+                window.addEventListener('WebComponentsReady', () => document.querySelector('palindrom-client').connect());
+                // TODO: set also initial state, so we wan't need additional "establish" request
+                }}
+            }});
+    </script>
+
+    <link rel="import" href="/sys/palindrom-client/palindrom-client.html">
+
+    <link rel="import" href="/sys/starcounter.html">
 
     <script src="/sys/webcomponentsjs/webcomponents-lite.js"></script>
+    
+    <!-- <script src="/sys/app-shell/palindrom-session-instance.js"></script> -->
+
     <link rel="import" href="/sys/polymer/polymer.html">
-    <link rel="import" href="/sys/starcounter.html">
-    <link rel="stylesheet" href="/sys/underwear.css/underwear.css">    
+
+    <link rel="stylesheet" href="/sys/underwear.css/underwear.css">
     <link rel="manifest">
 </head>
+
 <body>
+    
     <dom-bind id="palindrom-root">
         <template>
             <starcounter-include view-model="{{{{model}}}}"></starcounter-include>
         </template>
     </dom-bind>
-    
-    <palindrom-client ref="palindrom-root" remote-url="{1}"></palindrom-client>
+
+    <palindrom-client id="PC" ref="palindrom-root" remote-url="{1}"></palindrom-client>
+
 </body>
+
 </html>
