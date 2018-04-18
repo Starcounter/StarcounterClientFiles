@@ -1,9 +1,12 @@
+## Testing your PR in TeamCity
+
+For your PR to be honoured by TeamCity, its name needs to start with `3.x` if you plan to merge it to `3.x` and with `1.x` if you plan to merge it to `1.x`. (eg: `3.x/fix-something`).
+
 ## Usage of StarcounterClientFiles 3.x in Level1 build automation
 
 Whatever is pushed on branch `3.x`, will be bundled in the Starcounter installer by the Level1 build automation. See [the announcement](https://github.com/Starcounter/AdminTrack/issues/438) for more details. 
 
 The name of the StarcounterClientFiles branch used by the Level1 build is configured via the `GIT_CLIENTFILES_BRANCH` parameter in TeamCity.
-
 
 ## Releasing of a new version of StarcounterClientFiles 3.x
 
@@ -33,7 +36,6 @@ Note that the newly added functionality is executed through Cake scripts, which 
    - it will be detected and included in the next nightly build of Starcounter 2.4
 
 12. Check the next section and decide if you need to follow the instructions in it.
-
 
 #### Bumping level1 to use the new version
 
