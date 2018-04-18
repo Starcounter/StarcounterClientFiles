@@ -19,6 +19,24 @@ The developer process of releasing of a new version of StarcounterClientFiles `3
 6. Make a PR for someone to review the complete set of changes.
 7. Still in the feature branch, release new version (3.x) of StarcounterClientFiles on GitHub. Remember to write the release notes.
 8. Still in the feature branch, publish a package of this version to App Warehouse (built with Starcounter 2.4)
-9. Merge the PR to StarcounterClientFiles branch `3.x`.
+9. Execute [package.bat](https://github.com/Starcounter/StarcounterClientFiles/blob/3.x/package.bat)
+    * this will create a nuget package of StarcounterClientFiles called `Starcounter.ClientFiles` to folder `/StarcounterClientFiles/artifacts/Starcounter.ClientFiles.X.Y.Z.nupkg`
+10. Execute [push_nuget_package.bat](https://github.com/Starcounter/StarcounterClientFiles/blob/3.x/push_nuget_package.bat)
+    * Requires full path to nupkg file + MyGet api key: 
+```
+push_nuget_package.bat C:\StarcounterClientFiles\artifacts\Starcounter.ClientFiles.X.Y.Z.nupkg XXXXXXXXXXXXXXXXXXXXXX
+```
+Note that the newly added functionality is executed through Cake scripts, which makes it possible to execute through Bifrost as well. **This means that this new workflow adds the `nuget.exe` dependency. Simply add the directory where your `nuget.exe` file is located to `%PATH%` environment variable**.
+
+11. Merge the PR to StarcounterClientFiles branch `3.x`.
    - at this point, a new daily build of Starcounter 2.4 is started
    - it will be detected and included in the next nightly build of Starcounter 2.4
+
+12. Check the next section and decide if you need to follow the instructions in it.
+
+
+#### Bumping level1 to use the new version
+
+Starcounter Level1 pulls this app as a Nuget package as a source for Client Files. But level1 is locked to a certain version of this app. This configuration in level can be found in [this file](https://github.com/Starcounter/level1/blob/develop/src/BuildSystem/ClientFiles/ClientFiles.csproj). If you release a version and want it to be pulled by level1, you must bump [this line](https://github.com/Starcounter/level1/blob/develop/src/BuildSystem/ClientFiles/ClientFiles.csproj#L9). Please make sure to bump level1 only after you release SCF to avoid broken level1 builds.
+
+You may also use wildcards (eg `3.*`), in which case the SCF package will be pulled immediately after it's released (assuming it matches the wildcard) and it will be bundled within the next release of Starcounter. Kindly release with care.
