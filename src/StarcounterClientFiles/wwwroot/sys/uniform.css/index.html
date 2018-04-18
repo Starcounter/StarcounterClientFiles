@@ -84,6 +84,8 @@
                 <li>contextual look &amp; feel for native HTML elements using classes such as <code>.uni-primary-button</code>, <code>.uni-alert-success</code>, etc</li>
                 <li>typical UI patterns using classes such as <code>.uni-section-primary</code>, <code>.uni-card</code>, <code>.uni-label-control</code>, etc</li>
             </ul>
+
+            <p>If you are looking for UI Components library check <a href="components/">&lt;🥋/&gt; Uniform components</a>.</p>
         </div>
     </header>
     <div>
@@ -296,6 +298,36 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <td><code>--uni-layout-left-nav-background</code></td>
+                            <td><code>var(--uni-mouse, var(--uni-default-mouse))</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-mouse, var(--uni-default-mouse));"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-layout-left-nav-side-background</code></td>
+                            <td><code>var(--uni-inky, var(--uni-default-inky))</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-inky, var(--uni-default-inky));"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-layout-left-nav-side-color</code></td>
+                            <td><code>var(--uni-gray-5, var(--uni-default-gray-5))</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-gray-5, var(--uni-default-gray-5));"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-layout-left-nav-side-link-color</code></td>
+                            <td><code>var(--uni-livid, var(--uni-default-livid))</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-livid, var(--uni-default-livid));"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-layout-left-nav-side-link-color-hover</code></td>
+                            <td><code>var(--uni-white, var(--uni-default-white))</code></td>
+                            <td><div class="color-sample" style="background-color: var(--uni-white, var(--uni-default-white));"></div></td>
+                        </tr>
+                        <tr>
+                            <td><code>--uni-layout-left-nav-side-link-highlight</code></td>
+                            <td><code>3px solid var(--uni-blue, var(--uni-default-blue))</code></td>
+                            <td><div class="color-sample" style="border-left: 3px solid var(--uni-blue, var(--uni-default-blue))"></div></td>
+                        </tr>
                     </table>
                     <slot></slot>
                 </template>
@@ -403,11 +435,6 @@
             <h2 id="button">Button</h2>
             <code>.uni-*-button</code>
             <p>Makes a specific type of a button</p>
-            <p>
-                We would love to use just <code>.uni-*-button</code> class,
-                but we have to use <code></code>  suffix and demand an additional wrapping element to support polyfilled browsers.
-                You can read more at <a href="https://github.com/Starcounter/Uniform.css#wrapping-slots-and--selectors">README.md</a>
-            </p>
             <div data-shadow-host>
                 <template is="declarative-shadow-dom" mode="open">
                     <link rel="stylesheet" href="../underwear.css/underwear.css">
@@ -770,7 +797,7 @@ with distributed content.</code></pre>
                     <div class="uni-section-primary">
                         <div class="uni-card">Default <code>div</code>(block) card in a section. Useful for full-width content.</div>
                     </div>
-                    <section class="uni-section-tertiary" style="display: grid; grid-template-columns: repeat(2, 1fr);grid-gap: var(--uni-section-padding-horizontal)">
+                    <section class="uni-section-tertiary" style="display: grid; grid-template-columns: repeat(2, 1fr);grid-gap: var(--uni-section-padding-horizontal, var(--uni-default-section-padding-horizontal))">
                         <div class="uni-card">The first of a pair of half-width cards in a section, achieved by setting <code>display: grid</code> on the section (with two columns and a gap).</div>
                         <div class="uni-card">The second  of a pair of half-width cards</div>
                     </section>
@@ -795,7 +822,7 @@ with distributed content.</code></pre>
     &lt;div class="uni-section-primary"&gt;
         &lt;div class="uni-card"&gt;Default &lt;code&gt;div&lt;/code&gt;(block) card in a section. Useful for full-width content.&lt;/div&gt;
     &lt;/div&gt;
-    &lt;section class="uni-section-tertiary" style="display: grid; grid-template-columns: repeat(2, 1fr);grid-gap: var(--uni-section-padding-horizontal)"&gt;
+    &lt;section class="uni-section-tertiary" style="display: grid; grid-template-columns: repeat(2, 1fr);grid-gap: var(--uni-section-padding-horizontal, var(--uni-default-section-padding-horizontal))"&gt;
         &lt;div class="uni-card"&gt;The first of a pair of half-width cards in a section, achieved by setting &lt;code&gt;display: grid&lt;/code&gt; on the section (with two columns and a gap).&lt;/div&gt;
         &lt;div class="uni-card"&gt;The second  of a pair of half-width cards&lt;/div&gt;
     &lt;/section&gt;
@@ -875,33 +902,35 @@ with distributed content.</code></pre>
             <template is="declarative-shadow-dom" mode="open">
                 <link rel="stylesheet" href="uniform.css">
                 <div class="uni-layout-left-nav">
-                    <slot name="navigation"></slot>
+                    <nav>
+                        <slot name="navigation"></slot>
+                    </nav>
                     <div class="uni-section-primary">
                         <slot name="main-content"></slot>
                     </div>
                 </div>
             </template>
-            <nav slot="navigation">
-                <a href=".">Navigation link 1</a>
-                <a href=".">Navigation link 2</a>
-                <a href=".">Navigation link 3</a>
-            </nav>
+            <a aria-current="page" slot="navigation" href="#layout-left-nav">Navigation link 1</a>
+            <a slot="navigation" href="#layout-left-nav">Navigation link 2</a>
+            <a slot="navigation" href="#layout-left-nav">Navigation link 3</a>
             <label slot="main-content">Main content</label>
         </div>
         <pre><code>&lt;shadowroot mode="open"&gt;
 &lt;template is="declarative-shadow-dom" mode="open"&gt;
     &lt;link rel="stylesheet" href="uniform.css"&gt;
     &lt;div class="uni-layout-left-nav"&gt;
-        &lt;slot name="navigation"&gt;&lt;/slot&gt;
+        &lt;nav&gt;
+            &lt;slot name="navigation"&gt;&lt;/slot&gt;
+        &lt;/nav&gt;
         &lt;div class="uni-section-primary"&gt;
             &lt;slot name="main-content"&gt;&lt;/slot&gt;
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;/shadowroot&gt;
 &lt;nav slot="navigation"&gt;
-    &lt;a href="."&gt;Navigation link 1&lt;/a&gt;
-    &lt;a href="."&gt;Navigation link 2&lt;/a&gt;
-    &lt;a href="."&gt;Navigation link 3&lt;/a&gt;
+    &lt;a href="#layout-left-nav"&gt;Navigation link 1&lt;/a&gt;
+    &lt;a href="#layout-left-nav"&gt;Navigation link 2&lt;/a&gt;
+    &lt;a href="#layout-left-nav"&gt;Navigation link 3&lt;/a&gt;
 &lt;/nav&gt;
 &lt;label slot="main-content"&gt;Main content&lt;/label&gt;</code></pre>
     </section>

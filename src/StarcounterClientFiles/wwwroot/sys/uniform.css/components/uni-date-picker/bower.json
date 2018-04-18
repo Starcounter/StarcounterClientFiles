@@ -1,0 +1,34 @@
+{
+  "name": "uni-date-picker",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Decorator-like custom element for `input type='date'` -> `vaadin-date-picker`",
+  "license": "MIT",
+  "main": "uni-date-picker.html",
+  "keywords": [
+    "web-components",
+    "uniform",
+    "datepicker",
+    "date-picker",
+    "date",
+    "vaadin"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "preview.png",
+    "package.json",
+    "Gruntfile.json"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "^1.1.1",
+    "vaadin-date-picker": "vaadin/vaadin-date-picker#^2.0.7"
+  },
+  "devDependencies": {
+    "web-component-tester": "^6.5.0",
+    "vaadin-material-theme": "vaadin/vaadin-material-theme#^0.3.0",
+    "polymer": "^2.6.0"
+  }
+}
