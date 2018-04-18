@@ -1,11 +1,13 @@
 # Uniform.css
 
-Lightweight, opinionated CSS library that plays nicely within Shadow DOM.
+Opinionated CSS library that plays nicely within Shadow DOM, plus a set of elements to be used as wrappers in Shadow DOM for distributed native elements.
 
 It is a set of helper CSS classes to implement:
 
 - contextual look &amp; feel for native HTML elements using classes such as `.uni-primary-button`, `.uni-alert-success`, etc
-- typical UI patterns using classes such as `.uni-section-primary`, `.uni-card`, `.uni-label-control`, etc
+- typical UI patterns using classes such as `.uni-section-primary`, `.uni-card`, `.uni-label-control`, etc.
+
+If you are looking for UI Components library check [Uniform components](components/).
 
 ## Demo
 

@@ -1,0 +1,222 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <title>&lt;uni-date-picker&gt;</title>
+    <link rel="stylesheet" href="../../../underwear.css/underwear.css">
+
+    <!-- Imports polyfill -->
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <!-- Import Vaadin material theme -->
+    <link rel="import" href="../../../vaadin-material-theme/vaadin-date-picker.html">
+    <!-- Imports custom element -->
+    <link rel="import" href="uni-date-picker.html">
+    <style>
+        html {
+            display: flex;
+            justify-content: center;
+        }
+
+        body {
+            max-width: calc(100% - 1em);
+            display: grid;
+            /* grid-template-columns: auto auto; */
+            grid-column-gap: 2em;
+            margin: 0.5em;
+        }
+
+        body>* {
+            grid-column: 1 / span 3;
+        }
+
+        body>.uniform {
+            grid-column: 1;
+        }
+
+        body>.uniform-sd {
+            grid-column: 2;
+        }
+
+        body>.vaadin {
+            grid-column: 3;
+        }
+
+        .compare {
+            display: flex;
+        }
+
+        .example{
+            display: contents;
+        }
+        .markdown-body pre>code{
+            font-size: 70%;
+        }
+        .markdown-body pre{
+            padding: 0.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Uniform, Uniform in Shadow DOM & Vaadin examples</h2>
+
+    <h3>Plain date picker</h3>
+    <p>With theme CSS custom property overwritten <code>--material-primary-color: green</code> in declarative shadow root</p>
+
+    <div class="uniform"><div>
+        <uni-date-picker><input type="date"/></uni-date-picker>
+    </div></div>
+    <div class="uniform-sd"><div>
+        <div>
+            <input type="date"/>
+            <template is="shadow-root">
+                <style>
+                    uni-date-picker{
+                        --material-primary-color: green;
+                    }
+                </style>
+                <uni-date-picker><slot></slot></uni-date-picker>
+            </template>
+        </div>
+    </div></div>
+    <div class="vaadin"><div>
+        <vaadin-date-picker></vaadin-date-picker>
+    </div></div>
+
+    <h3>Label attribute</h3>
+    <div class="uniform"><div>
+        <uni-date-picker><label>Pick a date</label><input type="date" /></uni-date-picker>
+    </div></div>
+    <div class="uniform-sd"><div>
+        <label>Pick a date</label>
+        <input type="date" />
+        <template is="shadow-root">
+            <uni-date-picker><slot></slot></uni-date-picker>
+        </template>
+    </div></div>
+    <div class="vaadin"><div>
+        <vaadin-date-picker label="Pick a date"></vaadin-date-picker>
+    </div></div>
+
+
+    <h3>Placeholder attribute</h3>
+
+    <div class="example">
+        <div class="uniform"><div>
+            <uni-date-picker><input type="date" placeholder="Pick a date" /></uni-date-picker>
+        </div></div>
+        <div class="uniform-sd"><div>
+            <input type="date" placeholder="Pick a date" />
+            <template is="shadow-root">
+                <uni-date-picker><slot></slot></uni-date-picker>
+            </template>
+        </div></div>
+        <div class="vaadin"><div>
+            <vaadin-date-picker placeholder="Pick a date"></vaadin-date-picker>
+        </div></div>
+    </div>
+
+    <h3>Label and placeholder attributes together</h3>
+
+    <div class="uniform"><div>
+        <uni-date-picker><label>Birthday</label><input type="date" placeholder="Pick a date" /></uni-date-picker>
+    </div></div>
+    <div class="uniform-sd"><div>
+        <label slot="my-label">Birthday</label>
+        <input slot="my-date" type="date" placeholder="Pick a date" />
+        <template is="shadow-root">
+            <!-- You can use default slot or individual slots if you need -->
+            <uni-date-picker><slot name="my-date"></slot><slot name="my-label"></slot></uni-date-picker>
+        </template>
+    </div></div>
+    <div class="vaadin"><div>
+        <vaadin-date-picker label="Birthday" placeholder="Pick a date"></vaadin-date-picker>
+    </div></div>
+
+    <h3>Pre-selected value</h3>
+
+    <div class="uniform"><div>
+        <uni-date-picker><label>Birthday</label><input type="date" value="1980-08-14"/></uni-date-picker>
+    </div></div>
+    <div class="uniform-sd"><div>
+        <label>Birthday</label>
+        <input type="date" value="1980-08-14"/>
+        <template is="shadow-root">
+            <!-- You can use default slot or individual slots if you need -->
+            <uni-date-picker><slot></slot></uni-date-picker>
+        </template>
+    </div></div>
+    <div class="vaadin"><div>
+        <vaadin-date-picker label="Birthday" value="1980-08-14"></vaadin-date-picker>
+    </div></div>
+
+    <h3>Disabled and readonly</h3>
+
+    <div class="uniform"><div>
+        <uni-date-picker><label>Disabled input</label><input disabled type="date" value="1980-08-14"/></uni-date-picker>
+        <uni-date-picker><label>Readonly input</label><input readonly type="date" value="1980-08-14"/></uni-date-picker>
+    </div></div>
+    <div class="uniform-sd"><div>
+        <label slot="disabled">Disabled input</label>
+        <input slot="disabled" disabled type="date" value="1980-08-14"/>
+        <label slot="readonly">Readonly input</label>
+        <input slot="readonly" readonly type="date" value="1980-08-14"/>
+        <template is="shadow-root">
+            <!-- You can use default slot or individual slots if you need -->
+            <uni-date-picker><slot name="disabled"></slot></uni-date-picker>
+            <uni-date-picker><slot name="readonly"></slot></uni-date-picker>
+        </template>
+    </div></div>
+    <div class="vaadin"><div>
+        <vaadin-date-picker disabled label="Disabled input" value="1980-08-14"></vaadin-date-picker>
+        <vaadin-date-picker readonly label="Readonly input" value="1980-08-14"></vaadin-date-picker>
+    </div></div>
+
+    <h3>Min and max dates</h3>
+
+
+    <div class="uniform"><div>
+        <uni-date-picker>
+            <label>June 2017</label>
+            <input type="date" min="2017-06-01" max="2017-06-30"/>
+        </uni-date-picker>
+    </div></div>
+    <div class="uniform-sd"><div>
+        <label slot="my-label">June 2017</label>
+        <input slot="my-date" type="date" min="2017-06-01" max="2017-06-30"/>
+        <template is="shadow-root">
+                <!-- You can use default slot or individual slots if you need -->
+                <uni-date-picker><slot name="my-date"></slot><slot name="my-label"></slot></uni-date-picker>
+            </template>
+    </div></div>
+    <div class="vaadin"><div>
+        <vaadin-date-picker label="June 2017" min="2017-06-01" max="2017-06-30"></vaadin-date-picker>
+    </div></div>
+
+
+</body>
+<script>
+    // apply declarative shadow roots
+    Array.from(document.querySelectorAll('template[is="shadow-root"]'), (templ) => {
+        const sroot = templ.parentNode.attachShadow({
+            mode: 'open'
+        });
+        sroot.appendChild(document.importNode(templ.content, true));
+    });
+    // show code snippets
+    Array.from(document.querySelectorAll('.uniform > div, .uniform-sd > div, .vaadin > div'), (section) => {
+        var clonedSection = section.cloneNode(true);
+        clonedSection.innerHTML =  '<pre><code>' +
+                              section.innerHTML.replace(/</g, '&lt;')
+                                            .replace(/>/g,'&gt;')
+                                            .replace(/        /g,'')
+                                            .trim() +
+                              '</code></pre>';
+        section.after && section.after(clonedSection) || section.parentNode.insertBefore(clonedSection, section.nextSibling);
+    });
+</script>
+
+</html>

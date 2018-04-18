@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>&lt;🥋/&gt; Uniform components</title>
+
+    <!-- We prefer to wear underwear under our uniform -->
+    <link rel="stylesheet" href="../../underwear.css/underwear.css">
+
+    <!-- As a user of uniform you don't need any of the styles & imports below -->
+    <!-- Styles for this demo page only -->
+    <style>
+        html,
+        body {
+            width: 100%;
+            margin: 0;
+        }
+
+        body>div {
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        /* We need to increase specificity for native elements selectors,
+         to override rules applied by Underwear loaded after due to leaky ShadyCSS*/
+
+        body>footer {
+            border-top: 1px solid #eee;
+            padding: 0 5%;
+        }
+
+        body>header {
+            padding: 0 5%;
+            display: grid;
+            grid-template: "logo links"
+                           "desc desc"/ minmax(min-content, 1fr) auto;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        header>h1 { grid-area: logo; margin-bottom: 0; }
+        header>a { grid-area: links; }
+        header>div {
+            grid-area: desc;
+            margin: 1em 0;
+        }
+        header h4 { margin-top: 0; }
+    </style>
+
+</head>
+
+<body>
+    <header>
+        <h1>
+            <span style="opacity: 0.7;">&lt;🥋/&gt;</span> Uniform components
+        </h1>
+        <a href="https://github.com/Starcounter/Uniform.css" rel="noopener" target="_blank">
+            <img src="../assets/gh-logo.png" width="32">
+        </a>
+        <div>
+            <p>
+                Collection of UI components that are used as wrappers over native elements.
+                Custom elements that work well in light DOM as well as in shadow DOM to render custom UI controls based on data from native elements distributed from a different tree.
+            </p>
+        </div>
+    </header>
+    <div>
+        <section>
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="README.md">Principles & solution overview</a></li>
+                <li><a href="uni-date-picker/">&lt;uni-date-picker&gt;</a> - date picker UI for native <code>&lt;input type="date"&gt;</code></li>
+            </ul>
+        </section>
+    </div>
+    <footer>MIT License, Starcounter © 2018</footer>
+</body>
+
+</html>
+
+<body>

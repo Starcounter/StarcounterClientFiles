@@ -1,6 +1,7 @@
 /**
  * Uniform.css
  * (c) Starcounter
+ * version: 0.1.0
  */
 
 :host {
@@ -526,44 +527,46 @@ Pagination
 .uni-layout-left-nav {
   display: grid;
   height: 100%;
-  background-color: var(--uni-mouse, var(--uni-default-mouse));
+  background: var(--uni-layout-left-nav-background, var(--uni-mouse, var(--uni-default-mouse)));
   grid-template-columns: 200px 1fr;
 }
 
 .uni-layout-left-nav > :first-child {
-  background-color: var(--uni-inky, var(--uni-default-inky));
-  color: var(--uni-gray-5, var(--uni-default-gray-5));
-  padding: 20px 10px;
+  background: var(--uni-layout-left-nav-side-background, var(--uni-inky, var(--uni-default-inky)));
+  color: var(--uni-layout-left-nav-side-color, var(--uni-gray-5, var(--uni-default-gray-5)));
+  padding: 20px 10px 20px 20px;
 }
 
 .uni-layout-left-nav > :first-child ::slotted(a) {
   border-left: 3px solid transparent !important;
   display: block !important;
   padding: 9px 7px !important;
-  color: var(--uni-livid, var(--uni-default-livid)) !important;
+  color: var(--uni-layout-left-nav-side-link-color, var(--uni-livid, var(--uni-default-livid))) !important;
+  margin: 0 0 0 -10px !important;
 }
 
 .uni-layout-left-nav > :first-child a {
   border-left: 3px solid transparent !important;
   display: block !important;
   padding: 9px 7px !important;
-  color: var(--uni-livid, var(--uni-default-livid)) !important;
+  color: var(--uni-layout-left-nav-side-link-color, var(--uni-livid, var(--uni-default-livid))) !important;
+  margin: 0 0 0 -10px !important;
 }
 
 .uni-layout-left-nav > :first-child ::slotted(a:hover) {
-  color: var(--uni-white, var(--uni-default-white)) !important;
+  color: var(--uni-layout-left-nav-side-link-color-hover, var(--uni-white, var(--uni-default-white))) !important;
 }
 
 .uni-layout-left-nav > :first-child a:hover {
-  color: var(--uni-white, var(--uni-default-white)) !important;
+  color: var(--uni-layout-left-nav-side-link-color-hover, var(--uni-white, var(--uni-default-white))) !important;
 }
 
 .uni-layout-left-nav > :first-child ::slotted(a[aria-current="page"]) {
-  border-left: 3px solid var(--uni-blue, var(--uni-default-blue)) !important;
-  color: var(--uni-white, var(--uni-default-white)) !important;
+  border-left: var(--uni-layout-left-nav-side-link-highlight, 3px solid var(--uni-blue, var(--uni-default-blue))) !important;
+  color: var(--uni-layout-left-nav-side-link-color-hover, var(--uni-white, var(--uni-default-white))) !important;
 }
 
 .uni-layout-left-nav > :first-child a[aria-current="page"] {
-  border-left: 3px solid var(--uni-blue, var(--uni-default-blue)) !important;
-  color: var(--uni-white, var(--uni-default-white)) !important;
+  border-left: var(--uni-layout-left-nav-side-link-highlight, 3px solid var(--uni-blue, var(--uni-default-blue))) !important;
+  color: var(--uni-layout-left-nav-side-link-color-hover, var(--uni-white, var(--uni-default-white))) !important;
 }
