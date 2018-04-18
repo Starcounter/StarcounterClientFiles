@@ -1,3 +1,7 @@
+## Testing your PR in TeamCity
+
+For your feature branch to be honoured by TeamCity, its name needs to start with `1.x` (eg: `1.x/fix-something`).
+
 ## Usage of StarcounterClientFiles 1.x in Level1 build automation
 
 Whatever is pushed on branch `1.x`, will be bundled in the Starcounter installer by the Level1 build automation. See [the announcement](https://github.com/Starcounter/AdminTrack/issues/438) for more details. 
