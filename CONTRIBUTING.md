@@ -1,6 +1,6 @@
 ## Testing your PR in TeamCity
 
-For your PR to be honoured by TeamCity, its name needs to start with `3.x` if you plan to merge it to `3.x` and with `1.x` if you plan to merge it to `1.x`. (eg: `3.x/fix-something`).
+For your feature branch to be honoured by TeamCity, its name needs to start with `3.x` (eg: `3.x/fix-something`).
 
 ## Usage of StarcounterClientFiles 3.x in Level1 build automation
 
