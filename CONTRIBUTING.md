@@ -26,10 +26,12 @@ The developer process of releasing of a new version of StarcounterClientFiles `3
     * this will create a nuget package of StarcounterClientFiles called `Starcounter.ClientFiles` to folder `/StarcounterClientFiles/artifacts/Starcounter.ClientFiles.X.Y.Z.nupkg`
 10. Execute [push_nuget_package.bat](https://github.com/Starcounter/StarcounterClientFiles/blob/3.x/push_nuget_package.bat)
     * Requires full path to nupkg file + MyGet api key: 
-```
-push_nuget_package.bat C:\StarcounterClientFiles\artifacts\Starcounter.ClientFiles.X.Y.Z.nupkg XXXXXXXXXXXXXXXXXXXXXX
-```
-Note that the newly added functionality is executed through Cake scripts, which makes it possible to execute through Bifrost as well. **This means that this new workflow adds the `nuget.exe` dependency. Simply add the directory where your `nuget.exe` file is located to `%PATH%` environment variable**.
+    
+    ```
+    push_nuget_package.bat C:\StarcounterClientFiles\artifacts\Starcounter.ClientFiles.X.Y.Z.nupkg XXXXXXXXXXXXXXXXXXXXXX
+    ```
+    
+    Note that the newly added functionality is executed through Cake scripts, which makes it possible to execute through Bifrost as well. **This means that this new workflow adds the `nuget.exe` dependency. Simply add the directory where your `nuget.exe` file is located to `%PATH%` environment variable**.
 
 11. Merge the PR to StarcounterClientFiles branch `3.x`.
    - at this point, a new daily build of Starcounter 2.4 is started
