@@ -1,16 +1,30 @@
 {
   "name": "uniform.css",
-  "version": "0.0.9",
-  "description": "Lightweight, opinionated CSS library that plays nicely within Shadow DOM.",
+  "version": "0.1.0",
+  "description": "Opinionated CSS library that plays nicely within Shadow DOM, plus a set of elements to be used as decorators in Shadow DOM",
   "main": "uniform.css",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Starcounter/Uniform.css.git"
   },
-  "author": "Omar Alshaker",
+  "contributors": [
+    "Omar Alshaker",
+    "Tomek Wytrebowicz"
+  ],
   "license": "MIT",
+  "scripts": {
+    "test": "wct",
+    "wct": "wct",
+    "wct:no-sauce": "wct --skip-plugin sauce",
+    "wct:sauce-only": "wct --skip-plugin local --plugin sauce"
+  },
   "bugs": {
     "url": "https://github.com/Starcounter/Uniform.css/issues"
   },
-  "homepage": "https://github.com/Starcounter/Uniform.css#readme"
+  "homepage": "https://github.com/Starcounter/Uniform.css#readme",
+  "devDependencies": {
+    "grunt": "^1.0.2",
+    "grunt-bump": "^0.8.0",
+    "grunt-cli": "^1.2.0"
+  }
 }

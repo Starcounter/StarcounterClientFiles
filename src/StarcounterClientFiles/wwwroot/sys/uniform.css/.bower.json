@@ -1,17 +1,21 @@
 {
   "name": "uniform.css",
-  "description": "Lightweight, opinionated CSS library that plays nicely within Shadow DOM.",
+  "description": "Opinionated CSS library that plays nicely within Shadow DOM, plus a set of elements to be used as decorators in Shadow DOM",
   "main": "uniform.css",
   "authors": [
-    "Omar Alshaker"
+    "Omar Alshaker",
+    "Tomek Wytrebowicz"
   ],
   "license": "MIT",
   "keywords": [
     "css",
     "shadowdom",
     "shadow-dom",
+    "custom-elements",
     "lightweight",
-    "framework"
+    "framework",
+    "components",
+    "UI"
   ],
   "homepage": "https://github.com/Starcounter/Uniform.css",
   "ignore": [
@@ -23,18 +27,25 @@
     "assets",
     "src"
   ],
+  "dependencies": {
+    "webcomponentsjs": "^1.1.1",
+    "vaadin-date-picker": "vaadin/vaadin-date-picker#^2.0.7"
+  },
   "devDependencies": {
     "declarative-shadow-dom": "^0.1.0",
-    "underwear.css": "~0.0.3"
+    "underwear.css": "~0.0.3",
+    "web-component-tester": "^6.5.0",
+    "vaadin-material-theme": "vaadin/vaadin-material-theme#^0.3.0",
+    "polymer": "^2.6.0"
   },
-  "version": "0.0.9",
-  "_release": "0.0.9",
+  "version": "0.1.0",
+  "_release": "0.1.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.9",
-    "commit": "105a8d7aa48bee09903b4da39251c643722f6402"
+    "tag": "0.1.0",
+    "commit": "01ea22576a43f23f632cf80f99e7f14e1aa509c1"
   },
   "_source": "https://github.com/Starcounter/Uniform.css.git",
-  "_target": "~0.0.7",
+  "_target": "^0.1.0",
   "_originalSource": "uniform.css"
 }
