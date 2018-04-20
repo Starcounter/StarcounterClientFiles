@@ -12,6 +12,7 @@ The name of the StarcounterClientFiles branch used by the Level1 build is config
 
 The developer process of releasing of a new version of StarcounterClientFiles `3.x` to Starcounter:
 
+0. Make sure you have [`npm`](https://nodejs.org/en/), `bower`(`npm install -g bower`) and [`nuget` cli](https://www.nuget.org/downloads) installed,
 1. Commit changes to individual client-side package's repo, like https://github.com/Starcounter/starcounter-include, and release a version there,
 2. Bump files in a feature branch of StarcounterClientFiles started from `3.x`, either:
    - by updating `bower.json` and running `bower install`,
