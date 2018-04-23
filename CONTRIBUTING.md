@@ -21,7 +21,7 @@ The developer process of releasing of a new version of StarcounterClientFiles `3
 4. Build the project using `build.bat` or VS. This triggers `msbuild`, which also triggers `npm run build`
 5. When you push to a feature branch of StarcounterClientFiles, TeamCity will run a integration test of this branch with KitchenSink and Blending. Make sure these tests are passing.
 6. Make a PR for someone to review the complete set of changes.
-7. Still in the feature branch, release new version (3.x) of StarcounterClientFiles on GitHub. Remember to write the release notes.
+7. Still in the feature branch, push a tag (3.x.y), and add release notes to GitHub release of StarcounterClientFiles.
 8. Still in the feature branch, publish a package of this version to App Warehouse (built with Starcounter 2.4)
 9. Execute [package.bat](https://github.com/Starcounter/StarcounterClientFiles/blob/3.x/package.bat)
     * this will create a nuget package of StarcounterClientFiles called `Starcounter.ClientFiles` to folder `/StarcounterClientFiles/artifacts/Starcounter.ClientFiles.X.Y.Z.nupkg`
