@@ -38,14 +38,14 @@
     "vaadin-material-theme": "vaadin/vaadin-material-theme#^0.3.0",
     "polymer": "^2.6.0"
   },
-  "version": "0.1.0",
-  "_release": "0.1.0",
+  "version": "0.2.0",
+  "_release": "0.2.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.1.0",
-    "commit": "01ea22576a43f23f632cf80f99e7f14e1aa509c1"
+    "tag": "0.2.0",
+    "commit": "f5927a04b216c09785b9de8d19c861f1ac8565ba"
   },
   "_source": "https://github.com/Starcounter/Uniform.css.git",
-  "_target": "^0.1.0",
+  "_target": "^0.2.0",
   "_originalSource": "uniform.css"
 }
