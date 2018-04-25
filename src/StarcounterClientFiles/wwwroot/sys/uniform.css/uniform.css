@@ -1,7 +1,7 @@
 /**
  * Uniform.css
  * (c) Starcounter
- * version: 0.1.0
+ * version: 0.2.0
  */
 
 :host {
@@ -445,6 +445,56 @@ Pagination
   padding: 16px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
 }
+
+.uni-card > details summary {
+  text-align: right;
+  box-sizing: border-box;
+  padding: 6px;
+  
+  outline: none;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+.uni-card > details summary:focus {
+  outline-color: #999;
+  outline-style: dotted;
+  outline-width: 1em;
+  outline-width: 1px;
+}
+
+.uni-card > details:last-of-type {
+  /* to make up for the card padding */
+  margin-bottom: -10px;
+}
+
+.uni-card > details > div {
+  border-top: 1px solid #eee;
+  box-sizing: border-box;
+  padding: 6px 0px 2px;
+}
+
+@keyframes fadeInDown {
+  0% {
+      opacity: 0;
+      transform: translateY(-1.25em);
+  }
+  100% {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.uni-card > details[open]  > div {
+  animation-name: fadeInDown;
+  animation-duration: 0.5s;
+}
+
 /*
  * Sections
  */

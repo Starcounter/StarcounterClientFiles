@@ -751,6 +751,33 @@
     &lt;/div&gt;
 &lt;/shadowroot&gt;
 with distributed content.</code></pre>
+            You can add expandable part to <code>.uni-card</code>by using <code>details</code>.
+            <div data-shadow-host>
+                <template is="declarative-shadow-dom" mode="open">
+                    <link rel="stylesheet" href="uniform.css">
+                    <div class="uni-card">
+                        I'm an elevated panel...
+                        <details>
+                            <summary>Expand</summary>
+                            <div>
+                                <p>and this is my expanded section.</p>
+                            </div>
+                        </details>
+                    </div>
+                </template>
+            </div>
+            <pre><code>&lt;shadowroot mode="open"&gt;
+    &lt;link rel="stylesheet" href="uniform.css"&gt;
+    &lt;div class="uni-card"&gt;
+        I'm an elevated panel...
+        &lt;details&gt;
+            &lt;summary&gt;Expand&lt;/summary&gt;
+            &lt;div&gt;
+                &lt;p&gt;and this is my expanded section.&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/details&gt;
+    &lt;/div&gt;
+&lt;/shadowroot&gt;</code></pre>
         </section>
         <section>
             <h2 id="section">Section</h2>
