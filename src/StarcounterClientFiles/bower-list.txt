@@ -7,24 +7,24 @@ starcounter-clientfiles#2.1.1 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 │ └── polymer not installed
 ├── palindrom-redirect#1.0.0
 ├─┬ polymer-source#2.5.0 (2.6.0 available)
-│ ├── shadycss#1.1.3
-│ └── webcomponentsjs#1.2.0
+│ ├── shadycss#1.1.3 (1.2.0-0 available)
+│ └── webcomponentsjs#1.2.0 (latest is 2.0.0-beta.2)
 ├─┬ starcounter-include#5.0.0
 │ └── imported-template#3.2.0
 ├── underwear.css#0.0.7
-├─┬ uniform.css#0.2.0
+├─┬ uniform.css#0.2.2
 │ ├─┬ vaadin-date-picker#2.0.7 (latest is 3.0.0)
 │ │ ├─┬ iron-a11y-announcer#2.1.0
 │ │ │ └── polymer not installed
-│ │ ├─┬ iron-a11y-keys-behavior#2.1.0
+│ │ ├─┬ iron-a11y-keys-behavior#2.1.0 (2.1.1 available)
 │ │ │ └── polymer not installed
 │ │ ├─┬ iron-dropdown#2.2.0
 │ │ │ ├─┬ iron-behaviors#2.1.1
-│ │ │ │ ├── iron-a11y-keys-behavior#2.1.0
+│ │ │ │ ├── iron-a11y-keys-behavior#2.1.0 (2.1.1 available)
 │ │ │ │ └── polymer not installed
-│ │ │ ├─┬ iron-overlay-behavior#2.3.3
+│ │ │ ├─┬ iron-overlay-behavior#2.3.3 (2.3.4 available)
 │ │ │ │ ├── iron-a11y-keys-behavior#2.1.0
-│ │ │ │ ├─┬ iron-fit-behavior#2.1.1
+│ │ │ │ ├─┬ iron-fit-behavior#2.1.1 (2.2.0 available)
 │ │ │ │ │ └── polymer not installed
 │ │ │ │ ├─┬ iron-resizable-behavior#2.1.0
 │ │ │ │ │ └── polymer not installed
@@ -37,7 +37,7 @@ starcounter-clientfiles#2.1.1 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 │ │ │ └── polymer not installed
 │ │ ├─┬ iron-media-query#2.1.0
 │ │ │ └── polymer not installed
-│ │ ├── iron-overlay-behavior#2.3.3
+│ │ ├── iron-overlay-behavior#2.3.3 (2.3.4 available)
 │ │ ├── iron-resizable-behavior#2.1.0
 │ │ ├── polymer not installed
 │ │ ├─┬ vaadin-button#1.0.5 (latest is 2.0.0)
@@ -53,5 +53,5 @@ starcounter-clientfiles#2.1.1 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 │ │ │   └── polymer not installed
 │ │ └─┬ vaadin-themable-mixin#1.1.6
 │ │   └── polymer not installed
-│ └── webcomponentsjs#1.2.0
-└── webcomponentsjs#1.2.0
+│ └── webcomponentsjs#1.2.0 (latest is 2.0.0-beta.2)
+└── webcomponentsjs#1.2.0 (latest is 2.0.0-beta.2)

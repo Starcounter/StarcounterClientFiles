@@ -1,4 +1,4 @@
-<!-- uni-date-picker @version: 0.2.0 @license: MIT -->
+<!-- uni-date-picker @version: 0.2.2 @license: MIT -->
 <link rel="import" href="../../../vaadin-date-picker/vaadin-date-picker.html">
 <script>
 (function(){
@@ -91,6 +91,14 @@
             this.attachShadow({
                 mode: 'open'
             });
+            this.shadowRoot.innerHTML = `<style>
+    :host{display: inline-flex;}
+    /* Workaround https://github.com/vaadin/vaadin-date-picker/issues/546#issuecomment-385168535 */
+    :host > vaadin-date-picker{flex: 1; display: inline-flex;}
+    /* For polyfilled browsers */
+    uni-date-picker{display: inline-flex;}
+    uni-date-picker > vaadin-date-picker{flex: 1; display: inline-flex;}
+</style>`;
             this._inputChangedValue = this._inputChangedValue.bind(this);
             this.slotChangedCallback = this.slotChangedCallback.bind(this);
 
@@ -129,6 +137,8 @@
                 date.setDate(parseInt(parts[3], 10));
                 return date;
             };
+            // Hardcode Monday as the first day of a week
+            this.vaadinElement.i18n.firstDayOfWeek = 1;
 
 
             // Hide distributed content, so we could observe it without showing it
