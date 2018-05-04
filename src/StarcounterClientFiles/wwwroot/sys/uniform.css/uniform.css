@@ -1,7 +1,7 @@
 /**
  * Uniform.css
  * (c) Starcounter
- * version: 0.2.0
+ * version: 0.2.2
  */
 
 :host {
@@ -283,6 +283,7 @@ Pagination
 .uni-pagination > .uni-pages > ::slotted([aria-current]:not([aria-current="false"])) {
   border: 1px solid var(--uni-primary, var(--uni-default-primary));
 }
+
 .uni-pagination > .uni-pages > [aria-current]:not([aria-current="false"]) {
   border: 1px solid var(--uni-primary, var(--uni-default-primary));
 }
@@ -305,13 +306,13 @@ Pagination
 
 .uni-pagination > * > ::slotted([disabled]),
 .uni-pagination > * > ::slotted([disabled]) {
-  background: #eee;
+  background-color: #eee!important; /* to override normalize.css anchor transparent bg */
   color: #aaa;
   cursor: default;
 }
 .uni-pagination > * > :disabled,
 .uni-pagination > * > [disabled] {
-  background: #eee;
+  background: #eee!important; /* to override normalize.css anchor transparent bg */
   color: #aaa;
   cursor: default;
 }

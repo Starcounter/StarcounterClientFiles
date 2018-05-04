@@ -87,13 +87,16 @@
     </div></div>
 
     <h3>Label attribute</h3>
+    <p>You can use regular CSS rules to style, like <code>uni-date-picker {width: 256px; height: 100px;}</code></p>
+
     <div class="uniform"><div>
-        <uni-date-picker><label>Pick a date</label><input type="date" /></uni-date-picker>
+        <uni-date-picker style="width: 256px; height: 100px;"><label>Pick a date</label><input type="date" /></uni-date-picker>
     </div></div>
     <div class="uniform-sd"><div>
         <label>Pick a date</label>
         <input type="date" />
         <template is="shadow-root">
+            <style>uni-date-picker {width: 256px; height: 100px;}</style>
             <uni-date-picker><slot></slot></uni-date-picker>
         </template>
     </div></div>
