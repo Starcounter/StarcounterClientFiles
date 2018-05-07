@@ -10,7 +10,8 @@
     "polymer-source": "polymer#^2.0.0",
     "webcomponentsjs": "^1.0.0",
     "underwear.css": "~0.0.7",
-    "uniform.css": "^0.2.2"
+    "uniform.css": "^0.2.2",
+    "enlighted-link": "^0.0.1"
   },
   "resolutions": {
     "fast-json-patch": "^1.1.0",
