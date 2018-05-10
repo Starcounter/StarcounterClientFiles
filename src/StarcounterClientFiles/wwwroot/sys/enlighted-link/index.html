@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <title>&lt;enlighted-link&gt;</title>
+    <link rel="stylesheet" href="https://juicy.github.io/github-markdown-css/github-markdown.css">
+
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.10/webcomponents-lite.js"></script> -->
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+
+
+
+    <!-- Imports custom element -->
+    <link rel="import" href="enlighted-link.html">
+</head>
+<body class="markdown-body">
+    <template is="shadow-root" mode="open">
+        <enlighted-link rel="import" href="../juicy-ace-editor/juicy-ace-editor.html"></enlighted-link>
+        <style>
+            :host(.markdown-body){
+                height: 100%;
+                margin: 1em auto;
+                width: 70%;
+            }
+            img{
+                position: absolute;
+                top: 0;
+                right: 0;
+                border: 0;
+            }
+            #panes{
+                display: grid;
+                gap: 1em;
+                grid-template: "solves codehead" min-content
+                               "solves codesample" minmax(6em, 1fr) / 50% 50%;
+            }
+            #panes>:first-child{
+                grid-area: solves;
+            }
+            /** Support for ShadyDOM polyfilled browsers FF and Edge
+            https://github.com/webcomponents/shadycss/issues/128     */
+            .markdown-body{
+                height: 100%;
+                margin: 1em auto;
+                width: 70%;
+            }
+        </style>
+        <a href="https://github.com/Juicy/enlighted-link"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+        <slot name="header"></slot>
+        <div id="panes">
+            <div>
+                <slot name="solves"></slot>
+            </div>
+            <div><slot name="code-heading"></slot></div>
+            <juicy-ace-editor>&lt;anyelement&gt;
+    &lt;shadow-root&gt;
+        &lt;enlighted-link rel="import" href="path/to/your-element.html"&gt;
+        &lt;your-element&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/your-element&gt;
+    &lt;/shadow-root&gt;
+    Light DOM content here
+&lt;/anyelement&gt;<slot name="code-sample"><!-- To be updated after https://github.com/Juicy/juicy-ace-editor/issues/40 --></slot></juicy-ace-editor>
+            </div>
+        </div>
+        <slot></slot>
+    </template>
+    <h1 slot="header">enlighted-link</h1>
+    <blockquote slot="header">
+        Custom element to enlight your <code>&lt;link&gt;</code>`s from Shadow DOM to the Light.
+    </blockquote>
+
+    <p slot="solves">
+        By current spec <a href="https://github.com/w3c/webcomponents/issues/628">HTML Imports do not work in Shadow DOM</a>.
+        That makes it hard to import definitions of custom elements that you use in a shadow root.
+    </p>
+    <p slot="solves">
+        This element allows you to do that. You could import your dependencies exactly where and when you need them.
+    </p>
+    <strong slot="code-heading">
+        Check the source of this page. Now, you can simply do:
+    </strong>
+    <code slot="code-sample">&lt;anyelement&gt;
+&lt;shadow-root&gt;
+    &lt;enlighted-link rel="import" href="path/to/your-element.html"&gt;
+    &lt;your-element&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/your-element&gt;
+&lt;/shadow-root&gt;
+Light DOM content here
+&lt;/anyelement&gt;
+    </code>
+    <p>For more check the <a href="https://github.com/Juicy/enlighted-link/blob/master/README.md">README.md</a></p>
+
+</body>
+<script>
+(function(){
+    Array.from(document.querySelectorAll('[is="shadow-root"]'), (templ)=>{
+        templ.parentNode.attachShadow({mode: templ.getAttribute('mode')});
+        templ.parentNode.shadowRoot.appendChild(document.importNode(templ.content, true));
+    })
+}())
+</script>
+</html>

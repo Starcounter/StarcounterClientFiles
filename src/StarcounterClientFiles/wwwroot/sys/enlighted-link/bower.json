@@ -1,0 +1,27 @@
+{
+  "name": "enlighted-link",
+  "version": "0.0.1",
+  "description": "Awesome, Juicy Custom Element",
+  "license": "MIT",
+  "main": "enlighted-link.html",
+  "keywords": [
+    "web-components",
+    "juicy"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "preview.png",
+    "package.json",
+    "Gruntfile.json"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "^1.1.1"
+  },
+  "devDependencies": {
+    "web-component-tester": "^6.5.0",
+    "juicy-ace-editor": "^2.0.5"
+  }
+}
