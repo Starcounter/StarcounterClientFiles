@@ -22,14 +22,14 @@
     "webpack.config.js",
     "src"
   ],
-  "version": "0.0.7",
-  "_release": "0.0.7",
+  "version": "0.0.8",
+  "_release": "0.0.8",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.7",
-    "commit": "ba2b68e2509275d34aad23b4c8b84b1aa03f72b5"
+    "tag": "0.0.8",
+    "commit": "067d3f0c549d100587af226d9067da61ed6b1955"
   },
   "_source": "https://github.com/Starcounter/Underwear.css.git",
-  "_target": "~0.0.7",
+  "_target": "~0.0.8",
   "_originalSource": "underwear.css"
 }
