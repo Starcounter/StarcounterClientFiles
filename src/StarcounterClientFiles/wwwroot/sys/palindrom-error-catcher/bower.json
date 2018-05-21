@@ -1,0 +1,33 @@
+{
+  "name": "palindrom-error-catcher",
+  "version": "1.0.0",
+  "description":
+    "Handles palindrom-client disconnection events and creates the needed UI to give the user control over them",
+  "private": true,
+  "authors": ["Omar Alshaker"],
+  "keywords": [
+    "web-components",
+    "polymer",
+    "json-patch",
+    "palindrom",
+    "binding",
+    "puppetjs",
+    "template",
+    "web-socket",
+    "http",
+    "json"
+  ],
+  "main": "palindrom-error-catcher.html",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Palindrom/palindrom-error-catcher.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Palindrom/palindrom-error-catcher",
+  "ignore": ["**/.*", "node_modules", "bower_components", "test/"],
+  "devDependencies": {
+    "test-fixture": "PolymerElements/test-fixture#^3.0.0",
+    "web-component-tester": "^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
+  }
+}

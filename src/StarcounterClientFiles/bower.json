@@ -3,7 +3,7 @@
   "version": "3.8.0",
   "private": true,
   "dependencies": {
-    "palindrom-client": "Palindrom/palindrom-polymer-client#^5.0.0",
+    "palindrom-client": "^7.0.0",
     "imported-template": "^3.2.0",
     "palindrom-redirect": "~1.0.0",
     "starcounter-include": "^5.0.0",
@@ -11,7 +11,8 @@
     "webcomponentsjs": "^1.0.0",
     "underwear.css": "~0.0.8",
     "uniform.css": "^0.2.2",
-    "enlighted-link": "^0.0.1"
+    "enlighted-link": "^0.0.1",
+    "palindrom-error-catcher": "^1.0.0"
   },
   "resolutions": {
     "fast-json-patch": "^1.1.0",
