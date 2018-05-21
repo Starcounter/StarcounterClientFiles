@@ -3,12 +3,12 @@
   "trackConsoleError": false,
   "plugins": {
     "local": {
-      "browsers": ["chrome"]
+      "browsers": ["chrome", "firefox"]
     },
     "sauce": {
       "disabled": false,
       "browsers": [{
-        "browserName": "firefox",
+        "browserName": "MicrosoftEdge",
         "platform": "Windows 10"
       },
       {

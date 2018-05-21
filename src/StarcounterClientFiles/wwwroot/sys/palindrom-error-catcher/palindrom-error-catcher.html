@@ -1,0 +1,181 @@
+<!-- palindrom-error-catcher version: 1.0.0 | MIT License -->
+
+<!--
+   Custom Element that binds with [palindrom-client](https://github.com/Palindrom/palindrom-client) connection events and shows a simple UX that allows the user to interact with them. It is can be used as an example of designing your own error catcher.
+-->
+
+<template id="palindrom-error-catcher">
+    <style>
+        .box-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .box-container[hidden] {
+            display: none;
+        }
+
+        .box {
+            padding: 5px 5px;
+            background-color: #fee;
+            border: 1px solid #f9c1c1;
+            border-top: none;
+            color: #444;
+            cursor: pointer;
+        }
+
+        .hourglass {
+            animation: rotateHG 2s cubic-bezier(.03, 1, 1, 0) infinite;
+            transform-origin: 50% 50%;
+            display: inline-block;
+            text-decoration: none !important;
+        }
+
+        @keyframes rotateHG {
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+    </style>
+    <div class="box-container connection-error-pane" hidden>
+        <div class="box error tappable">
+            <span class="hourglass">⏳</span> Connection error.</strong> See console for details.
+            <a class="reloading-in-message">
+                Reloading page in
+                <span class="reconnection-seconds">5</span>... •
+                <a href="javascript:;" class="cancel-reloading-btn">Do not reload</a> •
+            </a>
+            <a href="javascript:;" class="reload-btn">Reload now</a>
+        </div>
+    </div>
+    <div class="box-container generic-error-pane" hidden>
+        <div class="box error tappable">
+            <strong>⚠️ An error has occurred.</strong> See console for details.
+            <span>Click here to reload</span>
+        </div>
+    </div>
+</template>
+
+<script>
+    (function () {
+        const template = document.currentScript.ownerDocument.querySelector('#palindrom-error-catcher');
+
+        function bindCallbacks(to) {
+            to.handleConnectionError = to.handleConnectionError.bind(to);
+            to.handleReconnectionCountdownTick = to.handleReconnectionCountdownTick.bind(to);
+            to.handleReconnectionEnd = to.handleReconnectionEnd.bind(to);
+            to.handleGenericError = to.handleGenericError.bind(to);
+            to.cancelReloading = to.cancelReloading.bind(to);
+        }
+
+        function reload() {
+            location.reload();
+        }
+
+        function bindToElement(instance) {
+            instance.target = instance.getRootNode().querySelector(instance.targetSelector) || document.querySelector(instance.targetSelector);
+        }
+
+        function subscribeToEvents(instance) {
+            unsubscribeToEvents(instance);
+            instance.target.addEventListener('generic-error', instance.handleGenericError);
+            instance.target.addEventListener('connection-error', instance.handleConnectionError);
+            instance.target.addEventListener('reconnection-countdown', instance.handleReconnectionCountdownTick);
+            instance.target.addEventListener('reconnection-end', instance.handleReconnectionEnd);
+            instance.cancelReloadingBtn.addEventListener('click', instance.cancelReloading);
+            instance.reloadNowBtn.addEventListener('click', reload);
+            instance.genericErrorPane.addEventListener('click', reload);
+            instance.subscribed = true;
+        }
+
+        function unsubscribeToEvents(instance) {
+            if (instance.subscribed) {
+                instance.target.removeEventListener('generic-error', instance.handleGenericError);
+                instance.target.removeEventListener('connection-error', instance.handleConnectionError);
+                instance.target.removeEventListener('reconnection-countdown', instance.handleReconnectionCountdownTick);
+                instance.target.removeEventListener('reconnection-end', instance.handleReconnectionEnd);
+                instance.genericErrorPane.removeEventListener('click', reload);
+                instance.cancelReloadingBtn.removeEventListener('click', instance.cancelReloading);
+                instance.reloadNowBtn.removeEventListener('click', reload);
+                instance.subscribed = false;
+            }
+        }
+
+        class PalindromErrorCatcher extends HTMLElement {
+            static get observedAttributes() {
+                return ['target-selector']
+            }
+
+            constructor() {
+                super();
+
+                // Creates the shadow root
+                const shadowRoot = this.attachShadow({ mode: 'open' });
+                const clone = document.importNode(template.content, true);
+                shadowRoot.appendChild(clone);
+
+                this.connectionErrorPane = shadowRoot.querySelector('.connection-error-pane');
+                this.genericErrorPane = shadowRoot.querySelector('.generic-error-pane');
+                this.reconnectionSecondsSpan = shadowRoot.querySelector('.reconnection-seconds');
+                this.cancelReloadingBtn = shadowRoot.querySelector('.cancel-reloading-btn');
+                this.reloadNowBtn = shadowRoot.querySelector('.reload-btn');
+
+                bindCallbacks(this);
+            }
+
+
+            connectedCallback() {
+                this.targetSelector = this.getAttribute('target-selector') || 'palindrom-client';
+                bindToElement(this);
+                subscribeToEvents(this);
+            }
+
+            disconnectedCallback() {
+                unsubscribeToEvents(this);
+            }
+
+            handleGenericError(event) {
+                this.genericErrorPane.removeAttribute('hidden');
+                console.error(event.detail.error);
+            }
+
+            cancelReloading() {
+                this.connectionErrorPane.setAttribute('hidden', '');
+                clearInterval(this.reloadInterval);
+                delete this.reloadInterval;
+            }
+
+            handleConnectionError(event) {
+                this.connectionErrorPane.removeAttribute('hidden');
+                let timeout = 4;
+                // in case two consequtive errors happen, we don't want to schedule reloading twice
+                if (!this.reloadInterval) {
+                    this.reloadInterval = setInterval(() => {
+                        this.reconnectionSecondsSpan.textContent = timeout--;
+                        if (timeout === 0) {
+                            reload();
+                        }
+                    }, 1000);
+                }
+                console.error(event.detail.error);
+            }
+            handleReconnectionCountdownTick(event) {
+                /* you can use this method to add your logic to handle reconnection timer ticks */
+                console.info('Reconnection tick', event)
+            }
+            handleReconnectionEnd() {
+                /* you can use this method to add your logic to handle reconnection initiation. */
+                console.info('Reconnection will happen now...')
+            }
+            attributeChangedCallback(name, oldVal, newVal) {
+                this.targetSelector = newVal;
+                this.bindToElement(this);
+                this.subscribeToEvents(this);
+            }
+        }
+        customElements.define('palindrom-error-catcher', PalindromErrorCatcher)
+    })();
+</script>
