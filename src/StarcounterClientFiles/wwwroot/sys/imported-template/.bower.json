@@ -1,6 +1,6 @@
 {
   "name": "imported-template",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "keywords": [
     "include",
     "partials",
@@ -43,11 +43,11 @@
     "polymer": "^2.0.0",
     "webcomponentsjs": "^1.0.0"
   },
-  "_release": "3.2.0",
+  "_release": "3.2.1",
   "_resolution": {
     "type": "version",
-    "tag": "3.2.0",
-    "commit": "1a0fc660682a182d9d3ac19b8a94669e02abcbc4"
+    "tag": "3.2.1",
+    "commit": "803a2448cbe73a397ef3a49e1f757d57bfd141e8"
   },
   "_source": "https://github.com/Juicy/imported-template.git",
   "_target": "^3.2.0",

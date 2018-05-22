@@ -2,7 +2,7 @@ bower check-new     Checking for new versions of the project dependencies...
 starcounter-clientfiles#3.8.0 C:\Work\Starcounter\StarcounterClientFiles\src\StarcounterClientFiles
 ├─┬ enlighted-link#0.0.1
 │ └── webcomponentsjs#1.2.0 (latest is 2.0.0)
-├─┬ imported-template#3.2.0
+├─┬ imported-template#3.2.1
 │ └── juicy-html#4.0.0
 ├─┬ palindrom-client#7.0.0
 │ └── Palindrom#5.1.0
@@ -11,8 +11,8 @@ starcounter-clientfiles#3.8.0 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 ├─┬ polymer-source#2.6.0 (latest is 3.0.2)
 │ ├── shadycss#1.2.1
 │ └── webcomponentsjs#1.2.0 (latest is 2.0.0)
-├─┬ starcounter-include#5.0.0
-│ └── imported-template#3.2.0
+├─┬ starcounter-include#5.0.1
+│ └── imported-template#3.2.1
 ├── underwear.css#0.0.8
 ├─┬ uniform.css#0.2.2
 │ ├─┬ vaadin-date-picker#2.0.7 (latest is 3.0.1)

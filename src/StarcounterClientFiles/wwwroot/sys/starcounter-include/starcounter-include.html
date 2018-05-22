@@ -4,7 +4,7 @@ Custom Element (w/ Polymer's TemplateBinding)
 with predefined template content, which should be used to include partials.
 It's just <imported-template> wrapped within Shadow Root for `declarative-shadow-dom` bindable by layout editor.
 Uses Shadow DOM given from DB as `Starcounter.MergedPartial.{_compositionProvider_}.Composition$`.
-version: 5.0.0
+version: 5.0.1
 
 -->
 <!-- Import dependencies -->
@@ -296,6 +296,7 @@ version: 5.0.0
         };
         // to fool Polymer into thinking `starcounter-include` is a polymer element thus forwarding notifications to it.
         StarcounterIncludePrototype.__dataHasAccessor = {partial: true, viewModel: true};
+        StarcounterIncludePrototype.__isPropertyEffectsClient = true;
 
         // Polymer doesn't set props on its own components, rather, it calls this function
         StarcounterIncludePrototype._setPendingProperty = function (path, value) {
