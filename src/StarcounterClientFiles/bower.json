@@ -1,6 +1,6 @@
 {
   "name": "starcounter-clientfiles",
-  "version": "3.8.0",
+  "version": "3.9.0",
   "private": true,
   "dependencies": {
     "palindrom-client": "^7.0.0",
