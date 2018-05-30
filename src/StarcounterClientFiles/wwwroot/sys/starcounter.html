@@ -21,5 +21,12 @@
             }
         }, true);
 
+        function handler(event) {
+            console.error(event.detail.error);
+        }
+        
+        const palindromClient = document.querySelector('palindrom-client');
+        palindromClient.addEventListener('generic-error', handler);
+        palindromClient.addEventListener('connection-error', handler);
     })();
 </script>
