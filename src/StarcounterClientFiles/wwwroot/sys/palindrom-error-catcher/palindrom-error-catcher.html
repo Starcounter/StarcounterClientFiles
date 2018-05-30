@@ -1,4 +1,4 @@
-<!-- palindrom-error-catcher version: 1.0.0 | MIT License -->
+<!-- palindrom-error-catcher version: 1.1.0 | MIT License -->
 
 <!--
    Custom Element that binds with [palindrom-client](https://github.com/Palindrom/palindrom-client) connection events and shows a simple UX that allows the user to interact with them. It is can be used as an example of designing your own error catcher.
@@ -139,7 +139,6 @@
 
             handleGenericError(event) {
                 this.genericErrorPane.removeAttribute('hidden');
-                console.error(event.detail.error);
             }
 
             cancelReloading() {
@@ -160,7 +159,6 @@
                         }
                     }, 1000);
                 }
-                console.error(event.detail.error);
             }
             handleReconnectionCountdownTick(event) {
                 /* you can use this method to add your logic to handle reconnection timer ticks */

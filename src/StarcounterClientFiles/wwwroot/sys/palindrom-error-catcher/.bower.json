@@ -1,6 +1,6 @@
 {
   "name": "palindrom-error-catcher",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Handles palindrom-client disconnection events and creates the needed UI to give the user control over them",
   "private": true,
   "authors": [
@@ -36,14 +36,13 @@
     "web-component-tester": "^6.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
   },
-  "_release": "1.0.0",
+  "_release": "1.1.0",
   "_resolution": {
     "type": "version",
-    "tag": "1.0.0",
-    "commit": "05b9dd1509e12f1e101ad4319fd775d5a8a072a9"
+    "tag": "1.1.0",
+    "commit": "55e6dbd907636b96791a85aa2ce1a3dbb718f7f7"
   },
   "_source": "https://github.com/Palindrom/palindrom-error-catcher.git",
   "_target": "^1.0.0",
-  "_originalSource": "palindrom-error-catcher",
-  "_direct": true
+  "_originalSource": "palindrom-error-catcher"
 }

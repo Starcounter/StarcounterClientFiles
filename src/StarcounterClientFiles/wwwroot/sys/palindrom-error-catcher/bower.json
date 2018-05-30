@@ -1,6 +1,6 @@
 {
   "name": "palindrom-error-catcher",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description":
     "Handles palindrom-client disconnection events and creates the needed UI to give the user control over them",
   "private": true,
