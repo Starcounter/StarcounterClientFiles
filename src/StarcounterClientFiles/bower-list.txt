@@ -1,12 +1,22 @@
 bower check-new     Checking for new versions of the project dependencies...
-starcounter-clientfiles#3.8.0 C:\Work\Starcounter\StarcounterClientFiles\src\StarcounterClientFiles
+starcounter-clientfiles#3.9.0 D:\repos\apps\StarcounterClientFiles\src\StarcounterClientFiles
 ├─┬ enlighted-link#0.0.1
 │ └── webcomponentsjs#1.2.0 (latest is 2.0.0)
 ├─┬ imported-template#3.2.1
 │ └── juicy-html#4.0.0
+├─┬ iron-fit-behavior#2.2.1 extraneous
+│ └── polymer not installed
+├─┬ iron-overlay-behavior#2.3.4 extraneous
+│ ├─┬ iron-a11y-keys-behavior#2.1.1
+│ │ └── polymer not installed
+│ ├─┬ iron-fit-behavior#2.2.1 extraneous
+│ │ └── polymer not installed
+│ ├─┬ iron-resizable-behavior#2.1.0
+│ │ └── polymer not installed
+│ └── polymer not installed
 ├─┬ palindrom-client#7.0.0
 │ └── Palindrom#5.1.0
-├── palindrom-error-catcher#1.0.0
+├── palindrom-error-catcher#1.0.0 (1.1.0 available)
 ├── palindrom-redirect#1.0.0
 ├─┬ polymer-source#2.6.0 (latest is 3.0.2)
 │ ├── shadycss#1.2.1
@@ -14,43 +24,36 @@ starcounter-clientfiles#3.8.0 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 ├─┬ starcounter-include#5.0.1
 │ └── imported-template#3.2.1
 ├── underwear.css#0.0.8
-├─┬ uniform.css#0.2.2
-│ ├─┬ vaadin-date-picker#2.0.7 (latest is 3.0.1)
+├─┬ uniform.css#0.3.0
+│ ├─┬ vaadin-date-picker#3.1.0 (3.2.0-alpha1 available)
 │ │ ├─┬ iron-a11y-announcer#2.1.0
 │ │ │ └── polymer not installed
 │ │ ├─┬ iron-a11y-keys-behavior#2.1.1
 │ │ │ └── polymer not installed
-│ │ ├─┬ iron-dropdown#2.2.0
-│ │ │ ├─┬ iron-behaviors#2.1.1
-│ │ │ │ ├── iron-a11y-keys-behavior#2.1.1
-│ │ │ │ └── polymer not installed
-│ │ │ ├─┬ iron-overlay-behavior#2.3.4
-│ │ │ │ ├── iron-a11y-keys-behavior#2.1.1
-│ │ │ │ ├─┬ iron-fit-behavior#2.2.0
-│ │ │ │ │ └── polymer not installed
-│ │ │ │ ├─┬ iron-resizable-behavior#2.1.0
-│ │ │ │ │ └── polymer not installed
-│ │ │ │ └── polymer not installed
-│ │ │ ├─┬ neon-animation#2.2.1
-│ │ │ │ ├── iron-resizable-behavior#2.1.0
-│ │ │ │ ├─┬ iron-selector#2.1.0
-│ │ │ │ │ └── polymer not installed
-│ │ │ │ └── polymer not installed
-│ │ │ └── polymer not installed
 │ │ ├─┬ iron-media-query#2.1.0
 │ │ │ └── polymer not installed
-│ │ ├── iron-overlay-behavior#2.3.4
-│ │ ├── iron-resizable-behavior#2.1.0
+│ │ ├─┬ iron-resizable-behavior#2.1.0
+│ │ │ └── polymer not installed
 │ │ ├── polymer not installed
-│ │ ├─┬ vaadin-button#1.0.5 (latest is 2.0.0)
+│ │ ├─┬ vaadin-button#2.0.1 (2.1.0-alpha1 available)
 │ │ │ ├── polymer not installed
-│ │ │ ├─┬ vaadin-control-state-mixin#1.1.9 (latest is 2.0.3)
+│ │ │ ├─┬ vaadin-control-state-mixin#2.0.3
 │ │ │ │ └── polymer not installed
+│ │ │ ├── vaadin-element-mixin not installed
+│ │ │ ├── vaadin-lumo-styles not installed
 │ │ │ └─┬ vaadin-themable-mixin#1.1.6
 │ │ │   └── polymer not installed
-│ │ ├─┬ vaadin-text-field#1.2.0 (latest is 2.0.1)
+│ │ ├─┬ vaadin-control-state-mixin#2.0.3
+│ │ │ └── polymer not installed
+│ │ ├── vaadin-element-mixin not installed
+│ │ ├── vaadin-lumo-styles not installed
+│ │ ├── vaadin-overlay not installed
+│ │ ├─┬ vaadin-text-field#2.0.1 (2.1.0-alpha1 available)
 │ │ │ ├── polymer not installed
-│ │ │ ├── vaadin-control-state-mixin#1.1.9 (latest is 2.0.3)
+│ │ │ ├─┬ vaadin-control-state-mixin#2.0.3
+│ │ │ │ └── polymer not installed
+│ │ │ ├── vaadin-element-mixin not installed
+│ │ │ ├── vaadin-lumo-styles not installed
 │ │ │ └─┬ vaadin-themable-mixin#1.1.6
 │ │ │   └── polymer not installed
 │ │ └─┬ vaadin-themable-mixin#1.1.6

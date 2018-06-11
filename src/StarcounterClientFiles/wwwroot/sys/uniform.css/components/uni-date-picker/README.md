@@ -6,9 +6,9 @@ Let's you decorate native `input type="date"`, with prettier date-picker.
 
 ## Demo
 
-[Check it live!](http://tomalec.github.io/uni-date-picker)
-[Themed](http://tomalec.github.io/uni-date-picker/index-material.html)
-[Integrated with Polymer notification protocol](http://tomalec.github.io/uni-date-picker/index-polymer-binding.html)
+[Check it live!](http://Starcounter.github.io/Uniform.css/components/uni-date-picker)
+[Themed](http://Starcounter.github.io/Uniform.css/components/uni-date-picker/theming.html)
+[Integrated with Polymer notification protocol](http://Starcounter.github.io/Uniform.css/components/uni-date-picker/polymer-binding.html)
 
 ## Install
 
@@ -18,7 +18,7 @@ Install the component using [Bower](http://bower.io/):
 $ bower install uni-date-picker --save
 ```
 
-Or [download as ZIP](https://github.com/tomalec/uni-date-picker/archive/master.zip).
+Or [download as ZIP](https://github.com/Starcounter/Uniform.css/archive/master.zip).
 
 ## Usage
 
@@ -31,7 +31,7 @@ Or [download as ZIP](https://github.com/tomalec/uni-date-picker/archive/master.z
 2. Import custom element:
 
     ```html
-    <link rel="import" href="bower_components/uni-date-picker/uni-date-picker.html">
+    <link rel="import" href="bower_components/uniform.css/components/uni-date-picker/uni-date-picker.html">
     ```
 
 3. Start using it!
@@ -72,7 +72,7 @@ Decorated `<label>`'s `.textContent` gets translated to the `label` attribute of
 
 ## History
 
-For detailed changelog, check [Releases](https://github.com/tomalec/uni-date-picker/releases).
+For detailed changelog, check [Releases](https://github.com/Starcounter/Uniform.css/releases).
 
 ## License
 

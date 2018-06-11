@@ -1,6 +1,6 @@
 {
   "name": "vaadin-button",
-  "homepage": "https://vaadin.com/elements",
+  "homepage": "https://vaadin.com/components",
   "authors": [
     "Vaadin Ltd"
   ],
@@ -18,7 +18,6 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "test",
     "gulpfile.js",
     "package-lock.json",
     "wct.conf.js"
@@ -26,6 +25,7 @@
   "devDependencies": {
     "iron-component-page": "^3.0.0",
     "iron-demo-helpers": "^2.0.0",
+    "iron-icon": "^2.0.1",
     "iron-test-helpers": "^2.0.0",
     "webcomponentsjs": "^1.0.0",
     "web-component-tester": "^6.1.5",
@@ -33,17 +33,19 @@
   },
   "dependencies": {
     "polymer": "^2.0.0",
-    "vaadin-control-state-mixin": "vaadin/vaadin-control-state-mixin#^1.0.0",
-    "vaadin-themable-mixin": "^1.1.0"
+    "vaadin-control-state-mixin": "vaadin/vaadin-control-state-mixin#^2.0.0",
+    "vaadin-themable-mixin": "^1.1.0",
+    "vaadin-lumo-styles": "vaadin/vaadin-lumo-styles#^1.0.0",
+    "vaadin-element-mixin": "vaadin/vaadin-element-mixin#^1.0.1"
   },
-  "version": "1.0.5",
-  "_release": "1.0.5",
+  "version": "2.0.1",
+  "_release": "2.0.1",
   "_resolution": {
     "type": "version",
-    "tag": "v1.0.5",
-    "commit": "9770d4e37f727544c25a71f79ad56005750c8607"
+    "tag": "v2.0.1",
+    "commit": "423f0a7a595e7a5ec9feffa85ce3cb4cead7397b"
   },
   "_source": "https://github.com/vaadin/vaadin-button.git",
-  "_target": "^1.0.0",
+  "_target": "^2.0.0",
   "_originalSource": "vaadin-button"
 }

@@ -4,6 +4,7 @@
 <head>
 
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>&lt;uni-date-picker&gt;</title>
     <link rel="stylesheet" href="../../../underwear.css/underwear.css">
 
@@ -20,40 +21,37 @@
 
         body {
             max-width: calc(100% - 1em);
-            display: grid;
-            /* grid-template-columns: auto auto; */
-            grid-column-gap: 2em;
-            margin: 0.5em;
         }
-
-        body>* {
-            grid-column: 1 / span 3;
-        }
-
-        body>.uniform {
-            grid-column: 1;
-        }
-
-        body>.uniform-sd {
-            grid-column: 2;
-        }
-
-        body>.vaadin {
-            grid-column: 3;
-        }
-
-        .compare {
-            display: flex;
+        h4 {
+            margin: 0.5rem 0;
+            font-size: 1.8rem;
         }
 
         .example{
             display: contents;
         }
-        .markdown-body pre>code{
-            font-size: 70%;
-        }
-        .markdown-body pre{
-            padding: 0.5em;
+
+        /* It's a magical number when the source snippets
+        kind of fit the most important part, 1280 is not enough */
+        @media screen and (min-width: 1750px) {
+            body{
+                display: grid;
+                /* grid-template-columns: 33% 34% 33%; without a gap gap*/
+                grid-template-columns: calc(33% - 1em) calc(34% - 1em) calc(33% - 1em);
+                grid-column-gap: 1.5em;
+            }
+            body > * {
+                grid-column: 1 / span 3;
+            }
+            body>.uniform {
+                grid-column: 1;
+            }
+            body>.uniform-sd {
+                grid-column: 2;
+            }
+            body>.vaadin {
+                grid-column: 3;
+            }
         }
     </style>
 </head>
@@ -63,10 +61,10 @@
 
     <h3>Plain date picker</h3>
 
-    <div class="uniform"><div>
+    <div class="uniform"><h4>Uniform</h4><div>
         <uni-date-picker><input type="date"/></uni-date-picker>
     </div></div>
-    <div class="uniform-sd"><div>
+    <div class="uniform-sd"><h4>Uniform in shadow root</h4><div>
         <div>
             <input type="date"/>
             <template is="shadow-root">
@@ -74,66 +72,60 @@
             </template>
         </div>
     </div></div>
-    <div class="vaadin"><div>
+    <div class="vaadin"><h4>Vaadin</h4><div>
         <vaadin-date-picker></vaadin-date-picker>
     </div></div>
 
-    <h3>Label attribute</h3>
-    <div class="uniform"><div>
-        <uni-date-picker><label>Pick a date</label><input type="date" /></uni-date-picker>
+    <h3>Label for the control</h3>
+    <p>
+        We try to embrace native HTML Elements composition.
+        Use regular <code>&lt;label&gt;</code> element to provide a label to the <code>&lt;input type="date"&gt;</code>.
+    </p>
+    <p>
+        Note that Vaadin date picker includes an implementation of a label within <code>&lt;vaadin-date-picker&gt;</code> via attribute,
+         but the Uniform component does not use that.
+    </p>
+    <div class="uniform"><h4>Uniform</h4><div>
+        <label for="uni-input">Pick a date</label>
+        <uni-date-picker><input type="date" id="uni-input"/></uni-date-picker>
     </div></div>
-    <div class="uniform-sd"><div>
-        <label>Pick a date</label>
-        <input type="date" />
+    <div class="uniform-sd"><h4>Uniform in shadow root</h4><div>
+        <label for="uni-sd-input">Pick a date</label>
+        <input type="date" id="uni-sd-input" slot="input"/>
         <template is="shadow-root">
-            <uni-date-picker><slot></slot></uni-date-picker>
+            <slot></slot>
+            <uni-date-picker><slot name="input"></slot></uni-date-picker>
         </template>
     </div></div>
-    <div class="vaadin"><div>
-        <vaadin-date-picker label="Pick a date"></vaadin-date-picker>
+    <div class="vaadin"><h4>Vaadin</h4><div>
+        <label for="vaadin-input">Pick a date</label>
+        <vaadin-date-picker id="vaadin-input"></vaadin-date-picker>
     </div></div>
 
 
     <h3>Placeholder attribute</h3>
 
     <div class="example">
-        <div class="uniform"><div>
+        <div class="uniform"><h4>Uniform</h4><div>
             <uni-date-picker><input type="date" placeholder="Pick a date" /></uni-date-picker>
         </div></div>
-        <div class="uniform-sd"><div>
+        <div class="uniform-sd"><h4>Uniform in shadow root</h4><div>
             <input type="date" placeholder="Pick a date" />
             <template is="shadow-root">
                 <uni-date-picker><slot></slot></uni-date-picker>
             </template>
         </div></div>
-        <div class="vaadin"><div>
+        <div class="vaadin"><h4>Vaadin</h4><div>
             <vaadin-date-picker placeholder="Pick a date"></vaadin-date-picker>
         </div></div>
     </div>
 
-    <h3>Label and placeholder attributes together</h3>
-
-    <div class="uniform"><div>
-        <uni-date-picker><label>Birthday</label><input type="date" placeholder="Pick a date" /></uni-date-picker>
-    </div></div>
-    <div class="uniform-sd"><div>
-        <label slot="my-label">Birthday</label>
-        <input slot="my-date" type="date" placeholder="Pick a date" />
-        <template is="shadow-root">
-            <!-- You can use default slot or individual slots if you need -->
-            <uni-date-picker><slot name="my-date"></slot><slot name="my-label"></slot></uni-date-picker>
-        </template>
-    </div></div>
-    <div class="vaadin"><div>
-        <vaadin-date-picker label="Birthday" placeholder="Pick a date"></vaadin-date-picker>
-    </div></div>
-
     <h3>Pre-selected value</h3>
 
-    <div class="uniform"><div>
+    <div class="uniform"><h4>Uniform</h4><div>
         <uni-date-picker><label>Birthday</label><input type="date" value="1980-08-14"/></uni-date-picker>
     </div></div>
-    <div class="uniform-sd"><div>
+    <div class="uniform-sd"><h4>Uniform in shadow root</h4><div>
         <label>Birthday</label>
         <input type="date" value="1980-08-14"/>
         <template is="shadow-root">
@@ -141,17 +133,17 @@
             <uni-date-picker><slot></slot></uni-date-picker>
         </template>
     </div></div>
-    <div class="vaadin"><div>
+    <div class="vaadin"><h4>Vaadin</h4><div>
         <vaadin-date-picker label="Birthday" value="1980-08-14"></vaadin-date-picker>
     </div></div>
 
     <h3>Disabled and readonly</h3>
 
-    <div class="uniform"><div>
+    <div class="uniform"><h4>Uniform</h4><div>
         <uni-date-picker><label>Disabled input</label><input disabled type="date" value="1980-08-14"/></uni-date-picker>
         <uni-date-picker><label>Readonly input</label><input readonly type="date" value="1980-08-14"/></uni-date-picker>
     </div></div>
-    <div class="uniform-sd"><div>
+    <div class="uniform-sd"><h4>Uniform in shadow root</h4><div>
         <label slot="disabled">Disabled input</label>
         <input slot="disabled" disabled type="date" value="1980-08-14"/>
         <label slot="readonly">Readonly input</label>
@@ -162,7 +154,7 @@
             <uni-date-picker><slot name="readonly"></slot></uni-date-picker>
         </template>
     </div></div>
-    <div class="vaadin"><div>
+    <div class="vaadin"><h4>Vaadin</h4><div>
         <vaadin-date-picker disabled label="Disabled input" value="1980-08-14"></vaadin-date-picker>
         <vaadin-date-picker readonly label="Readonly input" value="1980-08-14"></vaadin-date-picker>
     </div></div>
@@ -170,13 +162,13 @@
     <h3>Min and max dates</h3>
 
 
-    <div class="uniform"><div>
+    <div class="uniform"><h4>Uniform</h4><div>
         <uni-date-picker>
             <label>June 2017</label>
             <input type="date" min="2017-06-01" max="2017-06-30"/>
         </uni-date-picker>
     </div></div>
-    <div class="uniform-sd"><div>
+    <div class="uniform-sd"><h4>Uniform in shadow root</h4><div>
         <label slot="my-label">June 2017</label>
         <input slot="my-date" type="date" min="2017-06-01" max="2017-06-30"/>
         <template is="shadow-root">
@@ -184,14 +176,14 @@
                 <uni-date-picker><slot name="my-date"></slot><slot name="my-label"></slot></uni-date-picker>
             </template>
     </div></div>
-    <div class="vaadin"><div>
+    <div class="vaadin"><h4>Vaadin</h4><div>
         <vaadin-date-picker label="June 2017" min="2017-06-01" max="2017-06-30"></vaadin-date-picker>
     </div></div>
 
     <h3>More demos</h3>
     <ul>
         <li>
-            <a href="material.html">Vaadin Material theme + CSS Variables</a>
+            <a href="theming.html">theming and styling</a>
         </li>
         <li>
             <a href="polymer-binding.html">Polymer data binding integration</a>
@@ -202,14 +194,14 @@
 </body>
 <script>
     // apply declarative shadow roots
-    Array.from(document.querySelectorAll('template[is="shadow-root"]'), (templ) => {
+    document.querySelectorAll('template[is="shadow-root"]').forEach((templ) => {
         const sroot = templ.parentNode.attachShadow({
             mode: 'open'
         });
         sroot.appendChild(document.importNode(templ.content, true));
     });
     // show code snippets
-    Array.from(document.querySelectorAll('.uniform > div, .uniform-sd > div, .vaadin > div'), (section) => {
+    document.querySelectorAll('.uniform > div, .uniform-sd > div, .vaadin > div').forEach((section) => {
         var clonedSection = section.cloneNode(true);
         clonedSection.innerHTML =  '<pre><code>' +
                               section.innerHTML.replace(/</g, '&lt;')
@@ -217,7 +209,7 @@
                                             .replace(/        /g,'')
                                             .trim() +
                               '</code></pre>';
-        section.after && section.after(clonedSection) || section.parentNode.insertBefore(clonedSection, section.nextSibling);
+        section.insertAdjacentElement('afterend', clonedSection);
     });
 </script>
 

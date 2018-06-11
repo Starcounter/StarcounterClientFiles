@@ -71,6 +71,12 @@
           });
         });
 
+        ['autocapitalize'].forEach(function(prop) {
+          it('should set boolean attribute ' + prop, function() {
+            assertAttrCanBeSet(prop, 'off');
+          });
+        });
+
         ['autocomplete', 'autocorrect', 'readonly', 'required'].forEach(function(prop) {
           it('should set boolean attribute ' + prop, function() {
             assertAttrCanBeSet(prop, true);
@@ -92,28 +98,48 @@
 
         it('setting input value updates has-value attribute', function() {
           textField.value = 'foo';
-          expect(textField.hasValue).to.be.true;
+          expect(textField.hasAttribute('has-value')).to.be.true;
         });
 
         it('setting value to undefine should not update has-value attribute', function() {
           textField.value = undefined;
-          expect(textField.hasValue).to.be.false;
+          expect(textField.hasAttribute('has-value')).to.be.false;
         });
 
-        it('setting empty value does not update has-value property', function() {
+        it('setting empty value does not update has-value attribute', function() {
           textField.value = '';
-          expect(textField.hasValue).to.be.false;
+          expect(textField.hasAttribute('has-value')).to.be.false;
         });
 
         // User could accidently set a 0 or false value
-        it('setting number value updates has-value property', function() {
+        it('setting number value updates has-value attribute', function() {
           textField.value = 0;
-          expect(textField.hasValue).to.be.true;
+          expect(textField.hasAttribute('has-value')).to.be.true;
         });
 
-        it('setting boolean value updates has-value property', function() {
+        it('setting boolean value updates has-value attribute', function() {
           textField.value = false;
-          expect(textField.hasValue).to.be.true;
+          expect(textField.hasAttribute('has-value')).to.be.true;
+        });
+
+        it('setting label updates has-label attribute', function() {
+          textField.label = 'foo';
+          expect(textField.hasAttribute('has-label')).to.be.true;
+        });
+
+        it('setting label to empty string does not update has-label attribute', function() {
+          textField.label = '';
+          expect(textField.hasAttribute('has-label')).to.be.false;
+        });
+
+        it('setting label to null does not update has-label attribute', function() {
+          textField.label = null;
+          expect(textField.hasAttribute('has-label')).to.be.false;
+        });
+
+        it('setting number label updates has-label attribute', function() {
+          textField.label = 0;
+          expect(textField.hasAttribute('has-label')).to.be.true;
         });
       });
 
@@ -123,11 +149,80 @@
             textField.disabled = true;
             const label = textField.root.querySelector('[part="label"]');
             label.click();
-            expect(textField.focused).to.be.false;
+            expect(textField.getAttribute('focused')).to.be.null;
           });
         });
       }
+    });
 
+    describe('events', function() {
+      let textField, input;
+
+      beforeEach(function() {
+        textField = fixture('default');
+        input = textField.focusElement;
+      });
+
+      it('should dispatch change event on native input change', done => {
+        const changeEvent = new Event('change');
+
+        textField.addEventListener('change', e => {
+          expect(e.detail.sourceEvent).to.equal(changeEvent);
+          done();
+        });
+
+        input.dispatchEvent(changeEvent);
+      });
+
+      // IE11 placeholder bug
+      const IE = navigator.userAgent.match(/Trident/);
+
+      (IE ? it : it.skip)('should not dispatch input event in IE on focus, when placeholder is set', done => {
+        const spy = sinon.spy();
+        textField.placeholder = 'foo';
+
+        textField.addEventListener('input', spy);
+
+        textField.focus();
+
+        setTimeout(() => {
+          expect(spy.called).to.be.false;
+          done();
+        });
+      });
+
+      (IE ? it : it.skip)('should not dispatch input event in IE on blur, when placeholder is set', done => {
+        const spy = sinon.spy();
+        textField.placeholder = 'foo';
+
+        textField.addEventListener('input', spy);
+
+        textField.focus();
+
+        // needs timeout to reproduce
+        setTimeout(() => {
+          textField.blur();
+
+          setTimeout(() => {
+            expect(spy.called).to.be.false;
+            done();
+          });
+        });
+      });
+
+      (IE ? it : it.skip)('should not dispatch input event in IE on placeholder value change', done => {
+        const spy = sinon.spy();
+        textField.placeholder = 'foo';
+
+        textField.addEventListener('input', spy);
+
+        textField.placeholder = 'bar';
+
+        setTimeout(() => {
+          expect(spy.called).to.be.false;
+          done();
+        });
+      });
     });
   </script>
 </body>

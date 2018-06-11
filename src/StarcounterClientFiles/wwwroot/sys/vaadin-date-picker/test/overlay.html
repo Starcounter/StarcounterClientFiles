@@ -8,14 +8,15 @@
   <script src="../../iron-test-helpers/mock-interactions.js"></script>
   <script src="common.js"></script>
 
-  <link rel="import" href="../vaadin-date-picker-overlay.html">
+  <link rel="import" href="../src/vaadin-date-picker-overlay-content.html">
+  <link rel="import" href="../../polymer/lib/utils/render-status.html">
 </head>
 
 <body>
 
   <test-fixture id="overlay">
     <template>
-      <vaadin-date-picker-overlay></vaadin-date-picker-overlay>
+      <vaadin-date-picker-overlay-content></vaadin-date-picker-overlay-content>
     </template>
   </test-fixture>
 
@@ -32,7 +33,6 @@
         overlay.initialPosition = new Date();
         Polymer.RenderStatus.afterNextRender(overlay.$.monthScroller,
           () => waitUntilScrolledTo(overlay, new Date(), done));
-
       });
 
       it('should stop tap events from bubbling outside the overlay', () => {
@@ -179,7 +179,7 @@
 
         it('should reflect value in label', () => {
           overlay.i18n.formatDate = date => {
-            return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
+            return (date.month + 1) + '/' + date.day + '/' + date.year;
           };
 
           overlay.selectedDate = new Date(2000, 1, 1);
@@ -192,18 +192,15 @@
 
         it('should show clear button if value is set', () => {
           overlay.selectedDate = new Date();
-          expect(window.getComputedStyle(clearButton).display).to.equal('flex');
+          expect(window.getComputedStyle(clearButton).display).to.not.equal('none');
         });
 
-        it('should clear the value and fire a close on clear', () => {
+        it('should clear the value', () => {
           overlay.selectedDate = new Date();
-          var spy = sinon.spy();
-          overlay.addEventListener('close', spy);
 
-          tap(clearButton);
+          click(clearButton);
 
           expect(overlay.selectedDate).to.equal('');
-          expect(spy.calledOnce).to.be.true;
         });
 
       });
