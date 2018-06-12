@@ -77,4 +77,4 @@ information on configuring the tool.
  - creates a Git tag wit the version
 4. Call `git push` to push the changes to `origin master`
 5. Call `git push --tags` to push the tag to `origin master`
-6. Explain the changes (at least an summary of the commit log) in [GitHub Releases](https://github.com/tomalec/uni-date-picker/releases).
+6. Explain the changes (at least an summary of the commit log) in [GitHub Releases](https://github.com/Starcounter/Uniform.css/releases).

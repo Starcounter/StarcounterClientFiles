@@ -1,16 +1,18 @@
-<!-- uni-date-picker @version: 0.2.2 @license: MIT -->
+<!-- uni-date-picker @version: 0.3.0 @license: MIT -->
 <link rel="import" href="../../../vaadin-date-picker/vaadin-date-picker.html">
 <script>
 (function(){
     /**
      * Copies property from one object to the other, if different.
+     * `to` receives lowercase names
      * @param {Object} from
      * @param {Object} to
      * @param {String} name
      */
     function copyProperty(from, to, name){
-        if(from[name] !== to[name]){
-            to[name] = from[name];
+        const toName = name.toLowerCase();
+        if(from[name] !== to[toName]){
+            to[toName] = from[name];
         }
     }
     /**
@@ -39,15 +41,6 @@
             to[name] = newVal;
         }
     }
-    /**
-     * Copy label's text content into label property
-     * @param  {HTMLLabelElement} label element to copy textContent from
-     * @param  {Any} to    object to set label propery at
-     */
-    function copyLabelsData(label, to){
-        to.label = label.textContent;
-    }
-
 
     customElements.define('uni-date-picker', class extends HTMLElement {
         /**
@@ -65,6 +58,20 @@
             ];
         }
         /**
+         * Static list of native boolean properties forwarded to Vaadin API
+         */
+        static get clonedBooleanPropAPI(){
+            return [
+                'autofocus',
+                'disabled',
+                // 'invalid',
+                // 'opened',
+                'readOnly',
+                'required',
+                // 'showWeekNumbers'
+            ];
+        }
+        /**
          * Static list of native string attributes forwarded to Vaadin API
          */
         static get clonedStringAPI(){
@@ -72,8 +79,14 @@
                 // 'errorMessage',
                 // 'i18n',
                 // Purposefully blocked as considered anti-pattern.
-                // Use value attribute (opesed to proerty) for that
+                // Use value attribute (opesed to property) for that
                 //     'initialPosition',
+                // We try to embrace native HTML Elements composition
+                // over reimplementing it with attributes
+                // Use regular <code>&lt;label&gt;</code> element to provide
+                // a label to the <code>&lt;input type="date"&gt;</code>.
+                // We will provide `<uni-form-item>` that will let you achive
+                // uni- custom look and feel with wrapped native `<label>` element.
                 // 'label',
                 'max',
                 'min',
@@ -84,7 +97,7 @@
         }
         /*
          Fires when an instance of the element is created
-         listen to slotChange to observe label and input elements
+         listen to slotChange to observe input element
          */
         constructor() {
             super();
@@ -103,7 +116,7 @@
             this.slotChangedCallback = this.slotChangedCallback.bind(this);
 
             this.slotElement = document.createElement('slot');
-            this.slotElement.addEventListener('slotchange', (ev)=>this.slotChangedCallback(ev));
+            this.slotElement.addEventListener('slotchange', this.slotChangedCallback);
 
             this.vaadinElement = document.createElement('vaadin-date-picker');
             // Listen to vaading changing the value
@@ -119,9 +132,12 @@
                 }
             });
             // Hardcode International date format
+            // A function to format given `Object` as
+            // date string. Object is in the format `{ day: ..., month: ..., year: ... }`
             this.vaadinElement.i18n.formatDate = d => {
-                return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+                return d.year + '-' + ('0' + (d.month + 1)).slice(-2) + '-' + ('0' + d.day).slice(-2);
             };
+
             this.vaadinElement.i18n.parseDate = text => {
                 // Parses a string in 'MM/DD/YY', 'MM/DD' or 'DD' -format to
                 // an `Object` in the format `{ day: ..., month: ..., year: ... }`.
@@ -131,11 +147,11 @@
                   return;
                 }
 
-                var date = new Date(0, 0); // Wrong date (1900-01-01), but with midnight in local time
-                date.setFullYear(parseInt(parts[1], 10));
-                date.setMonth(parseInt(parts[2], 10) - 1);
-                date.setDate(parseInt(parts[3], 10));
-                return date;
+                return {
+                    year: Number(parts[1]),
+                    month: Number(parts[2]) - 1,
+                    day: Number(parts[3])
+                };
             };
             // Hardcode Monday as the first day of a week
             this.vaadinElement.i18n.firstDayOfWeek = 1;
@@ -147,11 +163,9 @@
             hiddenBox.appendChild(this.slotElement);
             this.shadowRoot.appendChild(hiddenBox);
             this.shadowRoot.appendChild(this.vaadinElement);
-
-
         }
         /**
-         Assign new input and label if changed
+         Assign new input if changed
         */
         slotChangedCallback(){
             // Use assignedNodes whtn polyfill does not support assignedElements -
@@ -160,7 +174,6 @@
                 this.slotElement.assignedElements({flatten: true}) :
                 this.slotElement.assignedNodes({flatten: true}).filter(n=>n.nodeType === Node.ELEMENT_NODE);
             const input = flattenedChildren.find(e=>e.matches('input[type="date"]'));
-            const label = flattenedChildren.find(e=>e.matches('label'));
 
             if(this.input !== input){
                 this._unobserveInput();
@@ -168,17 +181,9 @@
                 this._observeInput();
                 // Copy all native, semantics to vaadin API
                 this._copyingInput = true;
-                this.constructor.clonedBooleanAPI.forEach(copyProperty.bind(null, this.input, this.vaadinElement));
-                this.constructor.clonedStringAPI.forEach(copyProperty.bind(null, this.input, this.vaadinElement));
+                this.constructor.clonedBooleanPropAPI.forEach(property => copyProperty(this.input, this.vaadinElement, property));
+                this.constructor.clonedStringAPI.forEach(property => copyProperty(this.input, this.vaadinElement, property));
                 this._copyingInput = false;
-            }
-            if(this.label !== label){
-                // unobserve old lable element
-                this._unobserveLabel();
-                // set, copy value and observe the new label element
-                this.label = label;
-                copyLabelsData(label, this.vaadinElement);
-                this._observeLabel();
             }
         }
         /*
@@ -186,7 +191,6 @@
         */
         disconnectedCallback() {
             this._unobserveInput();
-            this._unobserveLabel();
         }
         /**
          * Observe any kind of changes that may happen to wrapped input element: attribute & property changes, `change` event
@@ -203,7 +207,7 @@
                 for(var mutation of mutationsList) {
                     let name = mutation.attributeName;
                     if(this.constructor.clonedBooleanAPI.includes(name)){
-                        copyBooleanAttrToProp(input, this.vaadinElement, name, mutation.oldValue);
+                        copyBooleanAttrToProp(input, this.vaadinElement, name.toLowerCase(), mutation.oldValue);
                     } else if(this.constructor.clonedStringAPI.includes(name)){
                         copyStringAttrToProp(input, this.vaadinElement, name, mutation.oldValue);
                     }
@@ -240,7 +244,8 @@
                 },
                 get(){
                     return previousValueDesc.get.call(this);
-                }
+                },
+                configurable: true
             });
 
 
@@ -257,20 +262,6 @@
             this._inputObserver && this._inputObserver.disconnect();
         }
         /**
-         * Unobserve text changes in label element.
-         * @private
-         */
-        _observeLabel(){
-            this._labelObserver = new MutationObserver(()=>{
-                copyLabelsData(this.label, this.vaadinElement)
-            });
-            this._labelObserver.observe(this.label, {
-                characterData: true,
-                childList: true,
-                subtree: true
-            });
-        }
-        /**
          * Copy input value to vaadin element if not being set by it already
          * @private
          */
@@ -280,13 +271,6 @@
                 this.vaadinElement.value = this.input.value;
                 this._copyingInput = false;
             }
-        }
-        /**
-         * Stop observing changes made to label
-         * @private
-         */
-        _unobserveLabel(){
-            this._labelObserver && this._labelObserver.disconnect();
         }
     });
 }());

@@ -48,6 +48,35 @@ When Uniform.css is used in more than one shadow root, you will need to load it 
 <link rel="preload" href="/sys/uniform.css/uniform.css">
 ```
 
+### Load stylesheet and element in custom element definition
+You can as well use Uniform.css and components in your custom element definitions.
+
+```HTML
+<!-- load Uniform component -->
+<link rel="import" href="/sys/uniform.css/components/uni-date-picker/uni-date-picker.html">
+<script>
+customElements.define('my-element', class extends HTMLElement{
+    constructor(){
+        super();
+        this.attachShadow({mode: 'open'}).innerHTML = `
+            <!-- load Uniform.css -->
+            <link rel="stylesheet" href="/sys/uniform.css/uniform.css"/>
+            <style>
+                :host{display: block;}
+                /* use Uniform CSS Variables */
+                span{color: var(--uni-default-primary);}
+            </style>
+            <!-- use Uniform classes -->
+            <div class="uni-section-secondary"><div class="uni-alert-success"><div><slot></slot></div></div></div>
+            <span>--uni-default-primary</span>
+            <!-- use Uniform component -->
+            <uni-date-picker><inupt type="date"></uni-date-picker>
+        `;
+    }
+});
+</script>
+```
+
 ## Usage, Elements, Classes
 To see how to use it, what elements and classes we define, check the [demo page](https://starcounter.github.io/uniform.css/).
 

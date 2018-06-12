@@ -4,6 +4,7 @@
 <head>
 
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>&lt;uni-date-picker&gt;</title>
     <link rel="stylesheet" href="../../../underwear.css/underwear.css">
 
@@ -20,41 +21,27 @@
         }
 
         body {
-            display: grid;
             max-width: calc(100% - 1em);
-            /* grid-template-columns: 30% 30% 30%; */
-            grid-column-gap: 2em;
-            margin: 0.5em;
         }
 
-        body>* {
-            grid-column: 1 / span 3;
-        }
-
-        body>.uniform {
-            grid-column: 1;
-        }
-
-        body>.uniform-sd {
-            grid-column: 2;
-        }
-
-        body>.vaadin {
-            grid-column: 3;
-        }
-
-        .compare {
-            display: flex;
-        }
-
-        .example{
-            display: contents;
-        }
-        .markdown-body pre>code{
-            font-size: 70%;
-        }
-        .markdown-body pre{
-            padding: 0.5em;
+        /* Most large desktops and laptops according to MD & UXPin*/
+        @media screen and (min-width: 1280px) {
+            body{
+                display: grid;
+                grid-column-gap: 1.5em;
+            }
+            body>* {
+                grid-column: 1 / span 3;
+            }
+            body>.uniform {
+                grid-column: 1;
+            }
+            body>.uniform-sd {
+                grid-column: 2;
+            }
+            body>.vaadin {
+                grid-column: 3;
+            }
         }
     </style>
 </head>
@@ -121,10 +108,8 @@
 </body>
 <script>
     const templ = document.querySelector('#for-dom-bind');
-    Array.from(
-        templ.content
-            .querySelectorAll('.uniform > div, .uniform-sd > div, .vaadin > div'),
-        (section) => {
+    templ.content.querySelectorAll('.uniform > div, .uniform-sd > div, .vaadin > div')
+        .forEach((section) => {
             var clonedSection = section.cloneNode(true);
             clonedSection.innerHTML =  '<pre><code>' +
             section.innerHTML.replace(/</g, '&lt;')
@@ -134,13 +119,13 @@
             .replace(/}\"/g, "}\"\n  ")
             .trim() +
             '</code></pre>';
-            section.after && section.after(clonedSection) || section.parentNode.insertBefore(clonedSection, section.nextSibling);
+            section.insertAdjacentElement('afterend', clonedSection);
     });
     const domBind = document.createElement('dom-bind');
 
     domBind.addEventListener('dom-change',() => {
         // apply declarative shadow roots
-        Array.from(document.querySelectorAll('template[is="shadow-root"]'), (templ) => {
+        document.querySelectorAll('template[is="shadow-root"]').forEach((templ) => {
             const host = templ.hasAttribute('for') ? document.querySelector(templ.getAttribute('for')) : templ.parentNode;
             const sroot = host.attachShadow({
                 mode: 'open'

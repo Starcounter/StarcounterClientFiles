@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>&lt;uni-date-picker&gt;</title>
+    <link rel="stylesheet" href="../../../underwear.css/underwear.css">
+
+    <!-- Imports polyfill -->
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <!-- Imports custom element -->
+    <link rel="import" href="uni-date-picker.html">
+    <style>
+        html {
+            display: flex;
+            justify-content: center;
+        }
+
+        body {
+            max-width: calc(100% - 1em);
+        }
+        /* It's a magical number when the source snippets
+        kind of fit the most important part, 1280 is not enough */
+        @media screen and (min-width: 1750px) {
+            body{
+                display: grid;
+                /* grid-template-columns: 33% 34% 33%; without a gap gap*/
+                grid-template-columns: calc(33% - 1em) calc(34% - 1em) calc(33% - 1em);
+                grid-column-gap: 1.5em;
+            }
+            body > * {
+                grid-column: 1 / span 3;
+            }
+            body>.uniform {
+                grid-column: 1;
+            }
+            body>.uniform-sd {
+                grid-column: 2;
+            }
+            body>.vaadin {
+                grid-column: 3;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Uniform, Uniform in Shadow DOM & Vaadin examples</h2>
+
+    <h3>CSS</h3>
+    <p>You can use regular CSS rules to style, like <code>uni-date-picker {width: 256px; height: 100px;}</code></p>
+
+    <div class="uniform"><div>
+        <uni-date-picker style="width: 256px; height: 100px;"><input type="date"/></uni-date-picker>
+    </div></div>
+    <div class="uniform-sd"><div>
+        <div>
+            <input type="date"/>
+            <template is="shadow-root">
+                <style>
+                uni-date-picker{
+                    width: 256px; height: 100px;
+                }
+                </style>
+                <uni-date-picker><slot></slot></uni-date-picker>
+            </template>
+        </div>
+    </div></div>
+    <div class="vaadin"><div>
+        <vaadin-date-picker style="width: 256px; height: 100px;"></vaadin-date-picker>
+    </div></div>
+
+    <h3>CSS Variables</h3>
+    <p>With CSS custom property set <code>--lumo-contrast-60pct: red</code></p>
+
+    <div class="uniform"><div>
+        <uni-date-picker style="--lumo-contrast-60pct: red;"><input type="date"/></uni-date-picker>
+    </div></div>
+    <div class="uniform-sd"><div>
+        <div>
+            <input type="date"/>
+            <template is="shadow-root">
+                <style>
+                    uni-date-picker{
+                        --lumo-contrast-60pct: red;
+                    }
+                </style>
+                <uni-date-picker><slot></slot></uni-date-picker>
+            </template>
+        </div>
+    </div></div>
+    <div class="vaadin"><div>
+        <vaadin-date-picker style="--lumo-contrast-60pct: red;"></vaadin-date-picker>
+    </div></div>
+</body>
+<script>
+    // apply declarative shadow roots
+    document.querySelectorAll('template[is="shadow-root"]').forEach((templ) => {
+        const sroot = templ.parentNode.attachShadow({
+            mode: 'open'
+        });
+        sroot.appendChild(document.importNode(templ.content, true));
+    });
+    // show code snippets
+    document.querySelectorAll('.uniform > div, .uniform-sd > div, .vaadin > div').forEach((section) => {
+        var clonedSection = section.cloneNode(true);
+        clonedSection.innerHTML =  '<pre><code>' +
+                              section.innerHTML.replace(/</g, '&lt;')
+                                            .replace(/>/g,'&gt;')
+                                            .replace(/        /g,'')
+                                            .trim() +
+                              '</code></pre>';
+        section.insertAdjacentElement('afterend', clonedSection);
+    });
+</script>
+
+</html>
