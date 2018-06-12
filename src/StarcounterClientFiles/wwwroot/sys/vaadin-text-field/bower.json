@@ -1,6 +1,6 @@
 {
   "name": "vaadin-text-field",
-  "homepage": "https://vaadin.com/elements",
+  "homepage": "https://vaadin.com/components",
   "authors": [
     "Vaadin Ltd"
   ],
@@ -30,11 +30,14 @@
     "iron-test-helpers": "^2.0.0",
     "webcomponentsjs": "^1.0.0",
     "web-component-tester": "^6.1.5",
-    "vaadin-demo-helpers": "^1.0.0"
+    "vaadin-demo-helpers": "^1.0.0",
+    "vaadin-button": "^2.0.0"
   },
   "dependencies": {
     "polymer": "^2.0.0",
     "vaadin-themable-mixin": "^1.1.0",
-    "vaadin-control-state-mixin": "vaadin/vaadin-control-state-mixin#^1.0.1"
+    "vaadin-control-state-mixin": "vaadin/vaadin-control-state-mixin#^2.0.0",
+    "vaadin-lumo-styles": "vaadin/vaadin-lumo-styles#^1.0.0",
+    "vaadin-element-mixin": "vaadin/vaadin-element-mixin#^1.0.1"
   }
 }

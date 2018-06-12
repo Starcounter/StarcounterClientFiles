@@ -9,11 +9,12 @@
 
   <link rel="import" href="../../iron-form/iron-form.html">
   <link rel="import" href="../vaadin-date-picker.html">
+  <link rel="import" href="not-animated-styles.html">
 </head>
 
 <body>
   <script>
-    document.addEventListener('WebComponentsReady', () => {
+    listenForEvent(document, 'WebComponentsReady', () => {
       class DatePicker2016Element extends Vaadin.DatePickerElement {
         checkValidity(value) {
           return new Date(value).getFullYear() === 2016;
@@ -36,9 +37,9 @@
   </test-fixture>
 
   <test-fixture id="datepicker-in-form">
-    <template is="dom-template">
+    <template>
       <iron-form>
-        <form is="iron-form">
+        <form>
           <vaadin-date-picker name="foo"></vaadin-date-picker>
         </form>
       </iron-form>
@@ -57,8 +58,9 @@
 
       beforeEach(done => {
         datepicker = fixture('datepicker');
-        datepicker.$.overlay.$.monthScroller.bufferSize = 0;
-        datepicker.$.overlay.$.yearScroller.bufferSize = 0;
+        const overlayContent = datepicker.$.overlay.content.querySelector('#overlay-content');
+        overlayContent.$.monthScroller.bufferSize = 0;
+        overlayContent.$.yearScroller.bufferSize = 0;
         // Needed so as iron-input has time to look for it's inputElement
         setTimeout(done);
       });
@@ -135,19 +137,25 @@
         expect(datepicker._inputElement.invalid).to.be.true;
       });
 
+      it('should re-validate old input after selecting date', done => {
+        // Set invalid value.
+        inputValue('foo');
+        expect(datepicker.validate()).to.equal(false);
+
+        datepicker.$.overlay.addEventListener('vaadin-overlay-close', () => {
+          expect(datepicker.invalid).to.equal(false);
+          done();
+        });
+
+        datepicker.open();
+        datepicker.value = '2000-02-01';
+        datepicker.close();
+      });
+
       it('should display the error-message when invalid', () => {
         datepicker.invalid = true;
         datepicker.errorMessage = 'Not cool';
         expect(datepicker._inputElement.errorMessage).to.equal(datepicker.errorMessage);
-      });
-
-      it('should not display the error-message when undefined', done => {
-        datepicker.invalid = true;
-        flush(() => {
-          var error = datepicker.$$('paper-input-error');
-          expect(error).to.equal(null);
-          done();
-        });
       });
 
       it('should have disabled vaadin-text-field', () => {
@@ -159,7 +167,7 @@
       it('should validate keyboard input (invalid)', done => {
         inputValue('foo');
 
-        datepicker.addEventListener('iron-overlay-closed', () => {
+        datepicker.$.overlay.addEventListener('vaadin-overlay-close', () => {
           expect(datepicker.validate()).to.equal(false);
           expect(datepicker.invalid).to.be.equal(true);
           done();
@@ -170,7 +178,7 @@
       it('should validate keyboard input (valid)', done => {
         inputValue('01/01/2000');
 
-        datepicker.addEventListener('iron-overlay-closed', () => {
+        datepicker.$.overlay.addEventListener('vaadin-overlay-close', () => {
           expect(datepicker.validate()).to.equal(true);
           expect(datepicker.invalid).to.be.equal(false);
           done();
@@ -182,7 +190,7 @@
         datepicker.min = '2001-01-01';
         inputValue('01/01/2000');
 
-        datepicker.addEventListener('iron-overlay-closed', () => {
+        datepicker.$.overlay.addEventListener('vaadin-overlay-close', () => {
           expect(datepicker.validate()).to.equal(false);
           expect(datepicker.invalid).to.be.equal(true);
           done();
@@ -192,14 +200,14 @@
     });
 
     describe('using as a field in an iron-form', () => {
-      var datepicker, ironForm, form;
+      var datepicker, ironForm;
 
       beforeEach(done => {
         ironForm = fixture('datepicker-in-form');
         datepicker = ironForm.querySelector('vaadin-date-picker');
-        form = ironForm.querySelector('form');
-        datepicker.$.overlay.$.monthScroller.bufferSize = 0;
-        datepicker.$.overlay.$.yearScroller.bufferSize = 0;
+        const overlayContent = datepicker.$.overlay.content.querySelector('#overlay-content');
+        overlayContent.$.monthScroller.bufferSize = 0;
+        overlayContent.$.yearScroller.bufferSize = 0;
         setTimeout(done);
       });
 

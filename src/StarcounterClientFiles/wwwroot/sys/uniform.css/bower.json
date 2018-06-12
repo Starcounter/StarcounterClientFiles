@@ -29,13 +29,12 @@
   ],
   "dependencies": {
       "webcomponentsjs": "^1.1.1",
-      "vaadin-date-picker": "vaadin/vaadin-date-picker#^2.0.7"
+      "vaadin-date-picker": "vaadin/vaadin-date-picker#^3.1.0"
   },
   "devDependencies": {
     "declarative-shadow-dom": "^0.1.0",
     "underwear.css": "~0.0.3",
     "web-component-tester": "^6.5.0",
-    "vaadin-material-theme": "vaadin/vaadin-material-theme#^0.3.0",
     "polymer": "^2.6.0"
   }
 }

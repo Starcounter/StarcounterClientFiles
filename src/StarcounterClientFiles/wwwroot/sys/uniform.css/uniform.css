@@ -1,7 +1,7 @@
 /**
  * Uniform.css
  * (c) Starcounter
- * version: 0.2.2
+ * version: 0.3.0
  */
 
 :host {
@@ -253,9 +253,8 @@ Pagination
   align-items: center;
 }
 
-.uni-pagination > ::slotted(*),
-.uni-pagination > * > ::slotted(*) {
-  all: initial;
+.uni-pagination > ::slotted(a),
+.uni-pagination > * > ::slotted(a) {
   font-family: inherit;
   font-size: 1em;
   padding: 0 5px;
@@ -265,9 +264,8 @@ Pagination
   cursor: pointer;
   display: inline-block;
 }
-.uni-pagination > *,
-.uni-pagination > * > * {
-  all: initial;
+
+.uni-pagination > .uni-pages > a {
   font-family: inherit;
   font-size: 1em;
   padding: 0 5px;
@@ -277,9 +275,21 @@ Pagination
   cursor: pointer;
   display: inline-block;
 }
+
+.uni-pagination > .uni-pages > a {
+  font-family: inherit;
+  font-size: 1em;
+  margin: 5px 2px;
+  color: var(--uni-primary, var(--uni-default-primary));
+  cursor: pointer;
+  display: inline-block;
+  padding: 0px 7px;
+}
+
 .uni-pagination > .uni-pages {
   display: flex;
 }
+
 .uni-pagination > .uni-pages > ::slotted([aria-current]:not([aria-current="false"])) {
   border: 1px solid var(--uni-primary, var(--uni-default-primary));
 }
@@ -287,6 +297,7 @@ Pagination
 .uni-pagination > .uni-pages > [aria-current]:not([aria-current="false"]) {
   border: 1px solid var(--uni-primary, var(--uni-default-primary));
 }
+
 .uni-pagination
   > .uni-pages
   > ::slotted(*:hover:not([aria-current]):not(:disabled):not([disabled])),
@@ -295,6 +306,7 @@ Pagination
   > ::slotted(*:hover[aria-current="false"]:not(:disabled):not([disabled])) {
   background-color: var(--uni-gray-2, var(--uni-default-gray-2)) !important;
 }
+
 .uni-pagination
   > .uni-pages
   > *:hover:not([aria-current]):not(:disabled):not([disabled]),
@@ -325,6 +337,15 @@ Pagination
   margin-right: 8px;
   margin-left: 6px;
 }
+
+.uni-pagination > .uni-previous > ::slotted(*:hover) {
+  background-color: var(--uni-default-gray-2)
+}
+
+.uni-pagination > .uni-next > ::slotted(*:hover) {
+  background-color: var(--uni-default-gray-2)
+}
+
 .uni-pagination > .uni-previous > * {
   padding-right: 1em;
   border: 2px solid transparent;
@@ -332,6 +353,7 @@ Pagination
   margin: 0px;
   margin-right: 8px;
   margin-left: 6px;
+  cursor: pointer;
 }
 
 .uni-pagination > .uni-next > ::slotted(*) {
@@ -340,13 +362,21 @@ Pagination
   border-left: 2px solid #ddd;
   margin-left: 8px;
   margin-right: 6px;
+  cursor: pointer;
 }
+
 .uni-pagination > .uni-next > * {
   padding-left: 1em;
   border: 2px solid transparent;
   border-left: 2px solid #ddd;
   margin-left: 8px;
   margin-right: 6px;
+  cursor: pointer;
+}
+
+.uni-pagination > .uni-previous > *:hover,
+.uni-pagination > .uni-next > *:hover {
+  background-color: var(--uni-default-gray-2)
 }
 
 

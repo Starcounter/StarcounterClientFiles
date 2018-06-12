@@ -17,7 +17,7 @@ This program is available under Apache License Version 2.0, available at https:/
         /**
          * Internal property needed to listen to `tabindex` attribute changes.
          *
-         * For changing the tabindex of this component use the native `tabIndex` propety.
+         * For changing the tabindex of this component use the native `tabIndex` property.
          * @private
          */
         tabindex: {
@@ -29,7 +29,7 @@ This program is available under Apache License Version 2.0, available at https:/
       };
 
       if (window.ShadyDOM) {
-        // ShadyDOM browsers need the `tabIndex` in order to notify when the user changes it programatically.
+        // ShadyDOM browsers need the `tabIndex` in order to notify when the user changes it programmatically.
         properties['tabIndex'] = properties.tabindex;
       }
 
@@ -53,21 +53,6 @@ This program is available under Apache License Version 2.0, available at https:/
         },
 
         /**
-         * If true, the element currently has focus.
-         * This property is @deprecated and will not be accessible in the next major version
-         * of the component.
-         * @private
-         */
-        focused: {
-          type: Boolean,
-          value: false,
-          notify: true,
-          readOnly: true,
-          observer: '_focusedChanged',
-          reflectToAttribute: true
-        },
-
-        /**
          * Stores the previous value of tabindex attribute of the disabled element
          */
         _previousTabIndex: {
@@ -83,7 +68,9 @@ This program is available under Apache License Version 2.0, available at https:/
           reflectToAttribute: true
         },
 
-        _isShiftTabbing: Boolean,
+        _isShiftTabbing: {
+          type: Boolean
+        }
       };
     }
 
@@ -144,12 +131,24 @@ This program is available under Apache License Version 2.0, available at https:/
 
       document.body.removeEventListener('keydown', this._boundKeydownListener, true);
       document.body.removeEventListener('keyup', this._boundKeyupListener, true);
+
+      // in non-Chrome browsers, blur does not fire on the element when it is disconnected.
+      // reproducible in `<vaadin-date-picker>` when closing on `Cancel` or `Today` click.
+      if (this.hasAttribute('focused')) {
+        this._setFocused(false);
+      }
     }
 
-    _focusedChanged(focused) {
+    _setFocused(focused) {
+      if (focused) {
+        this.setAttribute('focused', '');
+      } else {
+        this.removeAttribute('focused');
+      }
+
       // focus-ring is true when the element was focused from the keyboard.
       // Focus Ring [A11ycasts]: https://youtu.be/ilj2P5-5CjI
-      if (this.focused && this._tabPressed) {
+      if (focused && this._tabPressed) {
         this.setAttribute('focus-ring', '');
       } else {
         this.removeAttribute('focus-ring');

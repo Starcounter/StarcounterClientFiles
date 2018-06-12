@@ -19,7 +19,7 @@ function getDefaultI18n() {
     today: 'Today',
     cancel: 'Cancel',
     formatDate: function(d) {
-      return (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear();
+      return (d.month + 1) + '/' + d.day + '/' + d.year;
     },
     formatTitle: function(monthName, fullYear) {
       return monthName + ' ' + fullYear;
@@ -36,17 +36,21 @@ function listenForEvent(elem, type, callback) {
 }
 
 function open(datepicker, callback) {
-  listenForEvent(datepicker, 'iron-overlay-opened', callback);
+  listenForEvent(datepicker.$.overlay, 'vaadin-overlay-open', callback);
   datepicker.open();
 }
 
 function close(datepicker, callback) {
-  listenForEvent(datepicker, 'iron-overlay-closed', callback);
+  listenForEvent(datepicker.$.overlay, 'vaadin-overlay-close', callback);
   datepicker.close();
 }
 
 function tap(element) {
   element.dispatchEvent(new CustomEvent('tap', {bubbles: true, detail: {}, composed: true}));
+}
+
+function click(element) {
+  element.dispatchEvent(new CustomEvent('click', {bubbles: true, detail: {}, composed: true}));
 }
 
 function monthsEqual(date1, date2) {
@@ -108,6 +112,8 @@ function monkeyPatchNativeFocus() {
     Vaadin.ButtonElement.prototype.focus = function() {
       this._setFocused(true);
     };
+  }
+  if (window.Vaadin && Vaadin.DatePickerElement) {
     Vaadin.DatePickerElement.prototype.blur = function() {
       this._inputElement._setFocused(false);
     };
