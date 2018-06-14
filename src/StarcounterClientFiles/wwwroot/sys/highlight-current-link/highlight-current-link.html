@@ -1,0 +1,35 @@
+<script>
+    (function () {
+        function findAndUpdateSlots(host, currentHref) {
+            const slots = host.querySelectorAll("slot");
+            slots.forEach((slot) => {
+                updateAssignedLinks(slot, currentHref);
+            });
+        }
+        function updateAssignedLinks(slot, currentHref) {
+            // Use assignedNodes whtn polyfill does not support assignedElements -
+            // even though we are interested in elements only.
+            const nodes = slot.assignedElements ?
+                slot.assignedElements({ flatten: true }) :
+                slot.assignedNodes({ flatten: true });
+
+            nodes.forEach((node) => {
+                if (node.href === currentHref) {
+                    node.setAttribute("aria-current", "page");
+                } else {
+                    node.removeAttribute("aria-current");
+                }
+            });
+        }
+        class HighlightCurrentLink extends HTMLElement {
+            connectedCallback() {
+                window.addEventListener("patch-applied", (event) => {
+                    findAndUpdateSlots(this, window.location.href);
+                });
+
+                setTimeout(findAndUpdateSlots, 0, this, window.location.href);
+            }
+        }
+        customElements.define('highlight-current-link', HighlightCurrentLink);
+    })();
+</script>

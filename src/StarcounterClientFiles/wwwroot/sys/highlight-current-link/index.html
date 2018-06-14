@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <title>&lt;highligh-current-link&gt; ✨</title>
+    <style>
+        html {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            background: -webkit-linear-gradient(left, #feffff 0%, #f0f0f0 100%);
+        }
+
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            color: maroon;
+            border-left: 2px solid #9999FF;
+            font-size: 1.2em
+        }
+
+        a {
+            display: inline-block;
+            margin: 10px;
+            font-size: 1.2em;
+            text-decoration: none;
+        }
+
+        [aria-current] {
+            border-bottom: 5px orange solid
+        }
+    </style>
+    <!-- Imports polyfill -->
+    <script src="https://juicy.github.io/webcomponentsjs/webcomponents-lite.js"></script>
+
+    <!-- Imports custom element -->
+    <link rel="import" href="highlight-current-link.html">
+</head>
+
+<body>
+    <h1>&lt;highlight-current-link /&gt; ✨</h1>
+    <div>
+        <div>
+            <div class="snippet">
+                <a slot="menu-item-1" href="#link1">Link 1</a>
+                <a slot="menu-item-2" href="#link2">Link 2</a>
+                <a slot="menu-item-3" href="#link3">Link 3</a>
+                <a slot="menu-item-4" href="#link4">Link 4</a>
+
+                <template is="shadow-root">
+                    <highlight-current-link>
+                        <nav>
+                            <slot name="menu-item-1"></slot>
+                            <slot name="menu-item-2"></slot>
+                            <slot name="menu-item-3"></slot>
+                            <slot name="menu-item-4"></slot>
+                        </nav>
+                    </highlight-current-link>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // apply declarative shadow roots
+        document.querySelectorAll('template[is="shadow-root"]').forEach((templ) => {
+            const sroot = templ.parentNode.attachShadow({
+                mode: 'open'
+            });
+            sroot.appendChild(document.importNode(templ.content, true));
+        });
+
+        // show code snippets
+        document.querySelectorAll('.snippet').forEach((section) => {
+            var clonedSection = section.cloneNode(true);
+            clonedSection.innerHTML = '<pre><code>' +
+                section.innerHTML.replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/^                /gm, '')
+                    .trim() +
+                '</code></pre>';
+            section.insertAdjacentElement('afterend', clonedSection);
+        });
+        // emulate Palindrom 
+        document.querySelectorAll('a').forEach(el => el.addEventListener('click', () => {
+            setTimeout(dispatchEvent, 10, new CustomEvent('patch-applied'));
+        }));
+    </script>
+</body>
+
+</html>
