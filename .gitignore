@@ -90,7 +90,7 @@ publish
 # NuGet Packages Directory
 packages
 artifacts
-build/tools
+bifrost/tools
 
 # Windows Azure Build Output
 csx

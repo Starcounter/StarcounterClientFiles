@@ -63,7 +63,7 @@ Task("PackClientFiles").Does(() =>
     {
         Version                 = version,
         NoPackageAnalysis       = true,
-        BasePath                = clientFilesRootPath + "/build",
+        BasePath                = clientFilesRootPath + "/bifrost",
         Properties              = new Dictionary<string, string>()
         {
             {"Configuration", clientFilesConfiguration} 
@@ -71,7 +71,7 @@ Task("PackClientFiles").Does(() =>
         OutputDirectory         = clientFilesStarNugetPath
     };
     
-    NuGetPack(clientFilesRootPath + "/build/Starcounter.ClientFiles.nuspec", nuGetPackSettings);
+    NuGetPack(clientFilesRootPath + "/bifrost/Starcounter.ClientFiles.nuspec", nuGetPackSettings);
 });
 
 ///
