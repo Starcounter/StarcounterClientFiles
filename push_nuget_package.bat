@@ -14,7 +14,7 @@ if "%2" == "" (
     goto end
 )
 
-call %~dp0build/restore_cake.bat || goto error
+call %~dp0bifrost/restore_cake.bat || goto error
 
 set executeCommand=%~dp0bifrost/tools/Cake/Cake.exe %~dp0bifrost/build.cake --targets="PushClientFiles" --clientFilesNupkgFile="%1" --mygetApiKey="%2" --verbosity=Normal
 echo Executing: %executeCommand%
