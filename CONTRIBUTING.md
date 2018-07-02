@@ -21,23 +21,23 @@ The developer process of releasing of a new version of StarcounterClientFiles `3
 4. Build the project using `build.bat` or VS. This triggers `msbuild`, which also triggers `npm run build`
 5. When you push to a feature branch of StarcounterClientFiles, TeamCity will run a integration test of this branch with KitchenSink and Blending. Make sure these tests are passing.
 6. Make a PR for someone to review the complete set of changes.
-7. Still in the feature branch, after PR approval, bump assembly version (in `AssemblyInfo.cs` under `Properties`), publish a package of this version to App Warehouse (built with Starcounter 2.4), and release to GitHub. You may follow the steps to do this [here](https://github.com/Starcounter/CompanyTrack/blob/master/AppsTeam/Guidelines/releasing-to-warehouse.md). 
-8. Execute [package.bat](https://github.com/Starcounter/StarcounterClientFiles/blob/3.x/package.bat)
-    * this will create a nuget package of StarcounterClientFiles called `Starcounter.ClientFiles` to folder `/StarcounterClientFiles/artifacts/Starcounter.ClientFiles.X.Y.Z.nupkg`
-9. Execute [push_nuget_package.bat](https://github.com/Starcounter/StarcounterClientFiles/blob/3.x/push_nuget_package.bat)
+7. Still in the feature branch, after PR approval, bump assembly version (in `AssemblyInfo.cs` under `Properties`). 
+8. Commit a version commit `commit -m 'X.X.X'`.
+9. Publish a package of this version to App Warehouse (built with Starcounter 2.4), and release to GitHub. You may follow the steps to do this [here](https://github.com/Starcounter/CompanyTrack/blob/master/AppsTeam/Guidelines/releasing-to-warehouse.md). 
+10. Execute [push_nuget_package.bat](https://github.com/Starcounter/StarcounterClientFiles/blob/3.x/push_nuget_package.bat)
     * Requires full path to nupkg file + MyGet api key: 
     
     ```
     push_nuget_package.bat C:\StarcounterClientFiles\artifacts\Starcounter.ClientFiles.X.Y.Z.nupkg XXXXXXXXXXXXXXXXXXXXXX
     ```
     
-    Note that the newly added functionality is executed through Cake scripts, which makes it possible to execute through Bifrost as well. **This means that this new workflow adds the `nuget.exe` dependency. Simply add the directory where your `nuget.exe` file is located to `%PATH%` environment variable**.
+    Note that the newly added functionality is executed through Cake scripts, which makes it possible to execute through Bifrost as well. **This means that this new workflow adds the `nuget.exe` dependency. Please add the directory where your `nuget.exe` file is located to `%PATH%` environment variable**.
 
-10. Merge the PR to StarcounterClientFiles branch `3.x`.
+11. Merge the PR to StarcounterClientFiles branch `3.x`.
    - at this point, a new daily build of Starcounter 2.4 is started
    - it will be detected and included in the next nightly build of Starcounter 2.4
 
-11. Check the next section and decide if you need to follow the instructions in it.
+12. Check the next section and decide if you need to follow the instructions in it.
 
 #### Bumping level1 to use the new version
 
