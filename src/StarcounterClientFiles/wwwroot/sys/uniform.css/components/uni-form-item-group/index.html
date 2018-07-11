@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <title>&lt;uni-form-item-group&gt;</title>
+    <link rel="stylesheet" href="../../dist/underwear.css">
+
+    <!-- Imports polyfill -->
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <!-- Imports custom element -->
+    <link rel="import" href="uni-form-item-group.html">
+    <link rel="import" href="../uni-form-item/uni-form-item.html">
+
+    <!-- Styles for this demo page only -->
+    <style>
+        body {
+            margin: 5% 10%;
+        }
+
+        .uniform,
+        .uniform-sd {
+            margin: 0 0 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Uniform and Uniform in Shadow DOM examples</h2>
+
+    <h3>Plain from group</h3>
+
+    <div class="uniform">
+        <view-example>
+            <template>
+                <uni-form-item-group>
+                    <label>Full name</label>
+                    <uni-form-item>
+                        <label>First name</label>
+                        <input>
+                        <output>Example: Jane</output>
+                    </uni-form-item>
+                    <uni-form-item>
+                        <label>Last name</label>
+                        <input>
+                        <output>Example: Doe</output>
+                    </uni-form-item>
+                    <output>Required</output>
+                </uni-form-item-group>
+            </template>
+        </view-example>
+    </div>
+    <div class="uniform-sd">
+        <view-example>
+            <template>
+                <label slot="MyApp/full-name-group">Full name</label>
+                <output slot="MyApp/full-name-group">Required</output>
+
+                <label slot="MyApp/first-name-item">First name</label>
+                <input slot="MyApp/first-name-item">
+                <output slot="MyApp/first-name-item">Example: Jane</output>
+
+                <label slot="MyApp/last-name-item">Last name</label>
+                <input slot="MyApp/last-name-item">
+                <output slot="MyApp/last-name-item">Example: Doe</output>
+
+                <template is="shadow-root">
+                    <uni-form-item-group>
+                        <slot name="MyApp/full-name-group"></slot>
+
+                        <uni-form-item>
+                            <slot name="MyApp/first-name-item"></slot>
+                        </uni-form-item>
+
+                        <uni-form-item>
+                            <slot name="MyApp/last-name-item"></slot>
+                        </uni-form-item>
+                    </uni-form-item-group>
+                </template>
+            </template>
+        </view-example>
+    </div>
+
+    <h3>Error message</h3>
+    <div class="uniform">
+        <view-example>
+            <template>
+                <uni-form-item-group>
+                    <label>Address</label>
+                    <uni-form-item>
+                        <label>City</label>
+                        <input value="Stockholm">
+                    </uni-form-item>
+                    <uni-form-item>
+                        <label>Post code</label>
+                        <input value="100 00">
+                    </uni-form-item>
+                    <output aria-invalid="true">The post code does not match the city</output>
+                </uni-form-item-group>
+            </template>
+        </view-example>
+    </div>
+
+    <h3>Success message</h3>
+    <div class="uniform">
+        <view-example>
+            <template>
+                <uni-form-item-group>
+                    <label>Address</label>
+                    <uni-form-item>
+                        <label>City</label>
+                        <input value="Stockholm">
+                    </uni-form-item>
+                    <uni-form-item>
+                        <label>Post code</label>
+                        <input value="111 48">
+                    </uni-form-item>
+                    <output aria-invalid="false">Looks good</output>
+                </uni-form-item-group>
+            </template>
+        </view-example>
+</body>
+<script>
+    customElements.define('view-example', class extends HTMLElement {
+        connectedCallback() {
+            const template = this.firstElementChild;
+            // Stamp the template into the demo container
+            const demo = document.createElement('div');
+            demo.appendChild(document.importNode(template.content, true));
+            this.appendChild(demo);
+            // Append the source code
+            const codeSnippet = template.innerHTML
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/^ {16}/gm, '')
+                .trim();
+            const pre = document.createElement('pre');
+            pre.innerHTML = `<code>${codeSnippet}</code>`;
+            this.appendChild(pre);
+            // Apply shadow roots
+            Array.from(this.querySelectorAll('template[is="shadow-root"]')).forEach(template => {
+                const shadowRoot = template.parentNode.attachShadow({mode: 'open'});
+                shadowRoot.appendChild(document.importNode(template.content, true));
+            });
+        }
+    });
+</script>
+
+</html>

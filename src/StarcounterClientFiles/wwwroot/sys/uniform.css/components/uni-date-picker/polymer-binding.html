@@ -24,14 +24,14 @@
             max-width: calc(100% - 1em);
         }
 
-        /* Most large desktops and laptops according to MD & UXPin*/
+        /* Most large desktops and laptops according to MD & UXPin */
         @media screen and (min-width: 1280px) {
             body{
                 display: grid;
                 grid-column-gap: 1.5em;
             }
             body>* {
-                grid-column: 1 / span 3;
+                grid-column: 1 / span 2;
             }
             body>.uniform {
                 grid-column: 1;
@@ -39,15 +39,12 @@
             body>.uniform-sd {
                 grid-column: 2;
             }
-            body>.vaadin {
-                grid-column: 3;
-            }
         }
     </style>
 </head>
 
 <body>
-    <h2>Uniform, Uniform in Shadow DOM & Vaadin examples</h2>
+    <h2>Uniform and Uniform in Shadow DOM examples</h2>
 
     <h3>Plain date picker</h3>
     <template id="for-dom-bind">
@@ -76,15 +73,6 @@
             </template>
         </div>
     </div></div>
-    <div class="vaadin"><div>
-        <vaadin-date-picker
-            value="{{value}}"
-            placeholder="{{placeholder}}"
-            disabled="{{disabled}}"
-            readonly="{{readonly}}"
-            min="{{min}}"
-            max="{{max}}"></vaadin-date-picker>
-    </div></div>
     <section>
         <h3>Data</h3>
         <ul>
@@ -108,13 +96,13 @@
 </body>
 <script>
     const templ = document.querySelector('#for-dom-bind');
-    templ.content.querySelectorAll('.uniform > div, .uniform-sd > div, .vaadin > div')
+    templ.content.querySelectorAll('.uniform > div, .uniform-sd > div')
         .forEach((section) => {
             var clonedSection = section.cloneNode(true);
             clonedSection.innerHTML =  '<pre><code>' +
             section.innerHTML.replace(/</g, '&lt;')
             .replace(/>/g,'&gt;')
-            .replace(/        /g,'')
+            .replace(/^        /gm,'')
             .replace(/{{/g, '{&shy;{')
             .replace(/}\"/g, "}\"\n  ")
             .trim() +

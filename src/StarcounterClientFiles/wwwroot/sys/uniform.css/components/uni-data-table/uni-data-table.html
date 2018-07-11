@@ -1,0 +1,167 @@
+<!-- uni-data-table @version: 0.4.0 @license: MIT -->
+<link rel="import" href="../../../polymer/polymer.html">
+<link rel="import" href="../../../polymer/lib/utils/flattened-nodes-observer.html">
+<link rel="import" href="../../../vaadin-grid/vaadin-grid.html">
+<link rel="import" href="uni-data-table-column.html">
+
+<dom-module id="uni-data-table">
+    <template>
+        <style>
+            :host {
+                /* Expected: the host uses avaiable width from the parent */
+                display: block;
+
+                /* Expected: the host has some default height */
+                height: 400px;
+            }
+
+            :host([hidden]) {
+                /* Restore the `hidden` attribute effect */
+                display: none !important;
+            }
+
+            vaadin-grid {
+                /* Expected: vaadin-grid follows the host width and height */
+                height: 100%;
+            }
+        </style>
+        <vaadin-grid id="vaadinGrid"
+                     page-size="[[pageSize]]"
+                     size="[[size]]">
+            <slot></slot>
+        </vaadin-grid>
+    </template>
+</dom-module>
+<script>
+(function(){
+    /**
+     * A custom element providing a data table with lazy loading and rich
+     * declarative cell content.
+     *
+     * ```html
+     * <uni-data-table rows-data='[{"FirstName": "Jane", "LastName": "Doe"}, {"FirstName": "Judy", "LastName": "Roe"}]'>
+     *     <uni-data-table-column>
+     *         <template slot="header">First Name</template>
+     *         <template>[[item.FirstName]]</template>
+     *     </uni-data-table-column>
+     * </uni-data-table>
+     * ```
+     */
+    class UniDataTableElement extends Polymer.Element {
+        static get is() {
+            return 'uni-data-table';
+        }
+
+        static get properties() {
+            return {
+                /**
+                 * The requested page number. Used as a trigger to load another page.
+                 */
+                page: {
+                    type: Number,
+                    notify: true
+                },
+
+                /**
+                 * The number of rows to load in one request.
+                 */
+                pageSize: {
+                  type: Number,
+                  value: 50
+                },
+
+                /**
+                 * The array of loaded pages with rows.
+                 */
+                rowsData: {
+                    type: Array,
+                    value: () => []
+                },
+
+                /**
+                 * The total number of rows in the data set.
+                 */
+                size: Number,
+
+                /**
+                 * Keeps `<vaadin-grid>`’s dataProvider callback for every page being loaded.
+                 */
+                __callbacksByPageMap: {
+                    type: Map,
+                    value: () => new Map()
+                }
+            };
+        }
+
+        static get observers() {
+            return [
+                '__rowsDataObserver(rowsData, rowsData.splices, size)'
+            ];
+        }
+
+        connectedCallback() {
+            super.connectedCallback();
+            // Assign `__rowsDataProvider` as a `dataProvider` in `<vaadin-grid>`
+            this.$.vaadinGrid.dataProvider = this.__rowsDataProvider.bind(this);
+        }
+
+        /**
+         * The `dataProvider` function property value for `<vaadin-grid>`. The
+         * grid invokes this method to fetch the data for the given page number,
+         * sorters, filters, etc.
+         */
+        __rowsDataProvider({ page } = params, callback) {
+            if (this.__hasPageInRowsData(page)) {
+                // If the page was loaded, invoke the callback right away
+                this.__invokePageCallback(page, callback);
+            } else {
+                // Otherwise, fetch the page from the server
+                // Store the pending callback for the page given number
+                this.__callbacksByPageMap.set(page, callback);
+                // Set the trigger property to invoke the server’s handler
+                this.page = page;
+                // Now we wait for the server to add the page to the `rowsData`
+                // array, for example, like so:
+                // setTimeout(() => {
+                //     this.set(['rowsData', page], {"Rows": [ /* ... */ ]});
+                // }, 1000);
+                // This should trigger `__rowsDataObserver`.
+            }
+        }
+
+        /**
+         * The observer for the `rowsData` array property and the `size` total
+         * number of rows. Detects incoming data pages from the server and
+         * invokes the pending `__rowsDataProvider` callbacks, and
+         * `clearCache()` to update the `<vaadin-grid>`.
+         */
+        __rowsDataObserver(rowsData, splices, size) {
+            if (rowsData === undefined) return;
+            this.__callbacksByPageMap.forEach((callback, page) => {
+                if (this.__hasPageInRowsData(page)) {
+                    this.__invokePageCallback(page, callback);
+                    this.__callbacksByPageMap.delete(page);
+                }
+            });
+            this.$.vaadinGrid.clearCache();
+        }
+
+        /**
+         * Returns true if the given page was already loaded into `rowsData`.
+         */
+        __hasPageInRowsData(page) {
+            return this.rowsData[page] && this.rowsData[page].Rows &&
+                this.rowsData[page].Rows.length > 0;
+        }
+
+        /**
+         * Invoke the `__rowsDataProvider` method callback for the given page.
+         */
+        __invokePageCallback(page, callback) {
+            callback(this.rowsData[page].Rows, this.size);
+        }
+    }
+
+    customElements.define(UniDataTableElement.is, UniDataTableElement);
+})();
+</script>

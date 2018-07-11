@@ -1,0 +1,57 @@
+<!-- uni-data-table-column @version: 0.0.1 @license: MIT -->
+<link rel="import" href="../../../polymer/polymer.html">
+<link rel="import" href="../../../vaadin-grid/vaadin-grid-column.html">
+
+<script>
+(function() {
+    /**
+     * The component defining a column in `<uni-data-table>`.
+     *
+     * See also: <vaadin-grid-column> API for the inherited properties.
+     */
+    class UniDataTableColumnElement extends Vaadin.GridColumnElement {
+        /**
+         * Enables `_findTemplate(type)` custom finder method override for
+         * the header template.
+         * @override
+         */
+        _prepareHeaderTemplate() {
+            return this._prepareTemplatizer(this._findTemplate('header'));
+        }
+
+        /**
+         * Enables `_findTemplate(type)` custom finder method override for
+         * the footer template.
+         * @override
+         */
+        _prepareFooterTemplate() {
+            return this._prepareTemplatizer(this._findTemplate('footer'));
+        }
+
+        /**
+         * Enables `_findTemplate(type)` custom finder method override for
+         * the body template.
+         * @override
+         */
+        _prepareBodyTemplate() {
+            return this._prepareTemplatizer(this._findTemplate());
+        }
+
+        /**
+         * Finds and returns the template for the column header, footer, or body cells.
+         * @param {string=} type Template type. Valid options: `'header'`, `'footer'`. When omitted, means body templates.
+         * @returns {HTMLTemplateElement} The column template.
+         */
+        _findTemplate(type = '') {
+            const tmpl = Polymer.FlattenedNodesObserver.getFlattenedNodes(this)
+                .find(node =>
+                    node.localName === 'template' &&
+                    (node.getAttribute('slot') || '') === type
+                );
+            return tmpl;
+        }
+    }
+
+    customElements.define('uni-data-table-column', UniDataTableColumnElement);
+})();
+</script>

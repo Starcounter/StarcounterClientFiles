@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <title>&lt;uni-form-item&gt;</title>
+    <link rel="stylesheet" href="../../dist/underwear.css">
+
+    <!-- Imports polyfill -->
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <!-- Imports custom element -->
+    <link rel="import" href="uni-form-item.html">
+
+    <!-- Styles for this demo page only -->
+    <style>
+        body {
+            margin: 5% 10%;
+        }
+
+        .uniform,
+        .uniform-sd {
+            margin: 0 0 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Uniform and Uniform in Shadow DOM examples</h2>
+
+    <h3>Plain from item</h3>
+
+    <div class="uniform">
+        <view-example>
+            <template>
+                <uni-form-item>
+                    <label>Label</label>
+                    <input>
+                    <output>Message</output>
+                </uni-form-item>
+            </template>
+        </view-example>
+    </div>
+    <div class="uniform-sd">
+        <view-example>
+            <template>
+                <label slot="MyApp/form-item">Label</label>
+                <input slot="MyApp/form-item">
+                <output slot="MyApp/form-item">Message</output>
+                <template is="shadow-root">
+                    <uni-form-item>
+                        <slot name="MyApp/form-item"></slot>
+                    </uni-form-item>
+                </template>
+            </template>
+        </view-example>
+    </div>
+
+    <h3>Error message</h3>
+    <div class="uniform">
+        <view-example>
+            <template>
+                <uni-form-item>
+                    <label>Label</label>
+                    <input aria-invalid="true">
+                    <output>Invalid value</output>
+                </uni-form-item>
+            </template>
+        </view-example>
+    </div>
+
+    <h3>Success message</h3>
+    <div class="uniform">
+        <view-example>
+            <template>
+                <uni-form-item>
+                    <label>Label</label>
+                    <input aria-invalid="false">
+                    <output>Accepted</output>
+                </uni-form-item>
+            </template>
+        </view-example>
+    </div>
+</body>
+<script>
+    customElements.define('view-example', class extends HTMLElement {
+        connectedCallback() {
+            const template = this.firstElementChild;
+            // Stamp the template into the demo container
+            const demo = document.createElement('div');
+            demo.appendChild(document.importNode(template.content, true));
+            this.appendChild(demo);
+            // Append the source code
+            const codeSnippet = template.innerHTML
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/^ {16}/gm, '')
+                .trim();
+            const pre = document.createElement('pre');
+            pre.innerHTML = `<code>${codeSnippet}</code>`;
+            this.appendChild(pre);
+            // Apply shadow roots
+            Array.from(this.querySelectorAll('template[is="shadow-root"]')).forEach(template => {
+                const shadowRoot = template.parentNode.attachShadow({mode: 'open'});
+                shadowRoot.appendChild(document.importNode(template.content, true));
+            });
+        }
+    });
+</script>
+
+</html>

@@ -29,22 +29,21 @@
   ],
   "dependencies": {
     "webcomponentsjs": "^1.1.1",
-    "vaadin-date-picker": "vaadin/vaadin-date-picker#^3.1.0"
+    "vaadin-date-picker": "vaadin/vaadin-date-picker#^3.1.0",
+    "vaadin-grid": "vaadin/vaadin-grid#^5.0.0"
   },
   "devDependencies": {
-    "declarative-shadow-dom": "^0.1.0",
-    "underwear.css": "~0.0.3",
     "web-component-tester": "^6.5.0",
     "polymer": "^2.6.0"
   },
-  "version": "0.3.0",
-  "_release": "0.3.0",
+  "version": "0.4.0",
+  "_release": "0.4.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.3.0",
-    "commit": "ff61b230706cefe9fde0d05cdafea7b175190239"
+    "tag": "0.4.0",
+    "commit": "9071a0bb2702614bf67c4668bc3d1ffd7f982be7"
   },
   "_source": "https://github.com/Starcounter/Uniform.css.git",
-  "_target": "^0.3.0",
+  "_target": "^0.4.0",
   "_originalSource": "uniform.css"
 }

@@ -1,0 +1,405 @@
+<!-- uni-pagination @version: 0.4.0 @license: MIT -->
+
+<template id="uni-pagination-template">
+    <style>
+        #uni-pagination-wrapper {
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            display: inline-block;
+        }
+
+        #uni-pagination-wrapper * {
+            vertical-align: middle;
+        }
+
+        ul {
+            list-style-type: none;
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+        }
+
+        li[hidden] {
+            display: none !important
+        }
+
+        li:hover:not([disabled]) {
+            background-color: #eee;
+            cursor: pointer;
+        }
+
+        [disabled] {
+            background-color: #eee;
+        }
+
+        li[disabled] button {
+            color: #999;
+        }
+
+        button {
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            min-width: 2em;
+        }
+
+        li {
+            display: inline-block;
+            margin: 4px;
+            vertical-align: middle;
+            padding-bottom: 3px;
+            line-height: 1em;
+        }
+
+        li.page-number {
+            border: 1px solid transparent;
+            text-align: center
+        }
+
+        li.page-number[aria-current] {
+            border-color: #0084b4;
+        }
+
+        .seperator {
+            display: inline-block;
+            width: 2px;
+            height: 20px;
+            background-color: #ddd;
+            vertical-align: middle
+        }
+
+        #uni-pagination-left-buttons-wrapper {
+            margin-left: 10px;
+            display: inline-block;
+        }
+
+        #uni-pagination-right-buttons-wrapper {
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        .uni-pagination-special-button {
+            display: inline-block;
+            margin: 3px 5px;
+            padding: 3px;
+        }
+
+        .uni-pagination-special-button:not([disabled]):hover {
+            background: #eee
+        }
+    </style>
+    <div id="uni-pagination-wrapper">
+        <div id="uni-pagination-left-buttons-wrapper"></div>
+        <ul></ul>
+        <div id="uni-pagination-right-buttons-wrapper"></div>
+        <div hidden>
+            <slot></slot>
+        </div>
+    </div>
+</template>
+
+<template id="uni-pagination-page-template">
+    <li>
+        <button></button>
+    </li>
+</template>
+
+
+<!-- uni-pagination @version: 0.0.0 @license: MIT -->
+<script>
+    (function () {
+        const thisDoc = (document._currentScript || document.currentScript).ownerDocument;
+        const fullTemplate = thisDoc.querySelector('#uni-pagination-template');
+        const pageTemplate = thisDoc.querySelector('#uni-pagination-page-template');
+
+        if (window.ShadyCSS) {
+            ShadyCSS.prepareTemplate(fullTemplate, 'uni-pagination');
+            ShadyCSS.prepareTemplate(pageTemplate, 'uni-pagination');
+        }
+
+        function createSeperator() {
+            const span = document.createElement('span');
+            span.className = 'seperator';
+            return span;
+        }
+        const FIRST_PAGE = "FIRST";
+        const LAST_PAGE = "LAST";
+        const PREVIOUS_PAGE = "PREVIOUS";
+        const NEXT_PAGE = "NEXT";
+
+        function createPage(number, clickHandler, text, isListItem = true) {
+            let button, wrapper;
+            if (isListItem) {
+                const page = pageTemplate.content.cloneNode(true);
+                wrapper = page.querySelector('li');
+                wrapper.dataset.number = number;
+                wrapper.className = "page-number";
+                button = page.querySelector('button');
+
+                wrapper.appendChild(button);
+            } else {
+                button = wrapper = document.createElement('button');
+                button.classList.add('uni-pagination-special-button');
+            }
+
+            button.addEventListener('click', function (event) {
+                if (!event.currentTarget.hasAttribute('disabled')) {
+                    clickHandler(number);
+                }
+            });
+
+            button.textContent = text || number;
+            return wrapper;
+        }
+
+        customElements.define('uni-pagination', class extends HTMLElement {
+            constructor() {
+                super();
+
+                this.attachShadow({ mode: 'open' });
+                this.shadowRoot.appendChild(fullTemplate.content.cloneNode(true));
+
+                this._inputChangedValue = this._inputChangedValue.bind(this);
+                this._slotChangedCallback = this._slotChangedCallback.bind(this);
+
+                this.slotElement = this.shadowRoot.querySelector('slot');
+                this.slotElement.addEventListener('slotchange', this._slotChangedCallback);
+
+                this.$ = {
+                    ul: this.shadowRoot.querySelector('ul'),
+                    leftButtonsWrapper: this.shadowRoot.querySelector('#uni-pagination-left-buttons-wrapper'),
+                    rightButtonsWrapper: this.shadowRoot.querySelector('#uni-pagination-right-buttons-wrapper'),
+                };
+                this._pageClickHandler = this._pageClickHandler.bind(this);
+            }
+            _inputChangedValue() {
+                const page = Number(this.input.value);
+                if (this.value !== page) {
+                    this._pageClickHandler(page);
+                }
+            }
+            /**
+             Assign new input if changed
+            */
+            _slotChangedCallback() {
+                // Use assignedNodes whtn polyfill does not support assignedElements -
+                // even though we are interested in elements only.
+                const slottedElements = this.slotElement.assignedElements ?
+                    this.slotElement.assignedElements({ flatten: true }) :
+                    this.slotElement.assignedNodes({ flatten: true });
+
+                const input = slottedElements.find(el => el.tagName === 'INPUT' && el.getAttribute('type') === 'range');
+
+                if (!input) {
+                    throw new TypeError('uni-pagination needs an input[type="range"] element as a child');
+                }
+
+                if (this.input !== input) {
+                    this._unobserveInput();
+                    this.input = input;
+                    this._copySettingsFromInput(input);
+                    this._createPages();
+                    this._observeInput();
+                }
+            }
+            _copySettingsFromInput(input) {
+                this.start = Number(input.getAttribute('start') || input.start || 1);
+                this.end = Number(input.getAttribute('end') || input.end || 1);
+                this.value = Number(input.getAttribute('value') || input.value || this.start);
+            }
+            _createPages() {
+                const startFrom = this.start;
+                const endAt = this.end; // Number returns 0 when null
+                const currentPage = this.value || startFrom;
+
+                const firstPageText = "First";
+                const lastPageText = "Last";
+
+                const nextPageText = "Next";
+                const previousPageText = "Previous";
+
+                // empty list if it has any elements
+                while (this.$.ul.firstChild) {
+                    this.$.ul.removeChild(this.$.ul.firstChild);
+                }
+
+                this.$.pages = [];
+
+                // only create special buttons once
+                if (!this.$.firstPage) {
+                    this.$.firstPage = createPage(FIRST_PAGE, this._pageClickHandler, firstPageText, false);
+                    this.$.leftButtonsWrapper.appendChild(this.$.firstPage);
+                    this.$.leftButtonsWrapper.appendChild(createSeperator());
+
+                    this.$.previousPage = createPage(PREVIOUS_PAGE, this._pageClickHandler, previousPageText, false);
+                    this.$.leftButtonsWrapper.appendChild(this.$.previousPage);
+                    this.$.leftButtonsWrapper.appendChild(createSeperator());
+
+                    this.$.nextPage = createPage(NEXT_PAGE, this._pageClickHandler, nextPageText, false);
+                    this.$.rightButtonsWrapper.appendChild(createSeperator());
+                    this.$.rightButtonsWrapper.appendChild(this.$.nextPage);
+
+                    this.$.lastPage = createPage(LAST_PAGE, this._pageClickHandler, lastPageText, false);
+                    this.$.rightButtonsWrapper.appendChild(createSeperator());
+                    this.$.rightButtonsWrapper.appendChild(this.$.lastPage);
+                }
+
+                for (let i = startFrom; i <= endAt; i++) {
+                    const page = createPage(i, this._pageClickHandler, i);
+                    this.$.pages.push(page);
+                    this.$.ul.appendChild(page);
+                }
+
+                this._refresh()
+            }
+            _refresh() {
+                const startFrom = this.start;
+                const currentPage = this.value;
+                const endAt = this.end;
+
+                // unhighlight non-current pages and highlight current page
+                this.$.pages.forEach(li => {
+                    const number = li.dataset.number;
+                    if (number == currentPage) {
+                        li.setAttribute('aria-current', 'page');
+                    } else {
+                        li.removeAttribute('aria-current');
+                    }
+                });
+
+                // disable first-page and previous button on first page
+                if (currentPage === startFrom) {
+                    this.$.firstPage.setAttribute('disabled', '');
+                    this.$.previousPage.setAttribute('disabled', '');
+                } else {
+                    this.$.firstPage.removeAttribute('disabled');
+                    this.$.previousPage.removeAttribute('disabled');
+                }
+                // disable last-page and next button on last page
+                if (currentPage === endAt) {
+                    this.$.lastPage.setAttribute('disabled', '');
+                    this.$.nextPage.setAttribute('disabled', '');
+                } else {
+                    this.$.lastPage.removeAttribute('disabled');
+                    this.$.nextPage.removeAttribute('disabled');
+                }
+
+                let currentPageIndex = this.$.pages.findIndex(el => el.dataset.number == currentPage);
+
+                /** show only 10 elements together at most */
+
+                let startPoint = Math.min(endAt - 10, currentPageIndex - 5);
+                let visibleElementsStart = Math.max(0, startPoint);
+                let visibleElementsEnd = visibleElementsStart + 9;
+
+                for (let i = 0; i < this.$.pages.length; i++) {
+                    if (i >= visibleElementsStart && i <= visibleElementsEnd) {
+                        this.$.pages[i].removeAttribute('hidden');
+                    } else {
+                        this.$.pages[i].setAttribute('hidden', '');
+                    }
+                }
+            }
+            _pageClickHandler(number) {
+                const startFrom = this.start || 1;
+                const endAt = this.end || 1;
+                const currentPage = this.value || startFrom;
+
+                switch (number) {
+                    case FIRST_PAGE:
+                        this.value = startFrom;
+                        break;
+                    case LAST_PAGE:
+                        this.value = endAt;
+                        break;
+                    case NEXT_PAGE:
+                        if (currentPage < endAt) {
+                            this.value = currentPage + 1;
+                            break;
+                        } else {
+                            throw new RangeError(`Cannot go to the next page (${currentPage + 1}), already at last page (${endAt})`);
+                        }
+                    case PREVIOUS_PAGE:
+                        if (currentPage > startFrom) {
+                            this.value = currentPage - 1;
+                            break;
+                        } else {
+                            throw new RangeError(`Cannot go to the previous page (${currentPage - 1}), already at first page (${startFrom})`);
+                        }
+                    default:
+                        if (number < startFrom || number > endAt) {
+                            throw new RangeError(`Cannot go to the page (${number}), it's outside the range [${startFrom}, ${endAt}]`);
+                        }
+                        this.value = number;
+                        break;
+                }
+                this._refresh();
+
+                this.input.value = this.value;
+                this.input.dispatchEvent(new Event('change'));
+            }
+            disconnectedCallback() {
+                this._unobserveInput();
+            }
+            /**
+             * Observe any kind of changes that may happen to wrapped input element: attribute & property changes, `change` event
+             */
+            _observeInput() {
+                // Observe **attribute** changes
+                // For initial value or changes done through:
+                // declarative markup, for Polymers `$={{` binding,
+                // VanillaJS/non-polymer data binding, a11y tools, Browser Dev Tools, browser plugins
+                // Please note, such change is reflected in property change, but does not call setter, nor trigger event.
+                const input = this.input;
+                this._inputObserver = new MutationObserver((mutationsList) => {
+                    this._copySettingsFromInput(input);
+                    const needsPagesRecreation = mutationsList.some(change => change.attributeName !== 'value');
+                    // recreate pages for `start` and `end` changes. Only refresh for `value` changes
+                    if (needsPagesRecreation) {
+                        this._createPages();
+                    } else {
+                        this._refresh();
+                    }
+                });
+                this._inputObserver.observe(input, {
+                    attributes: true
+                });
+                // Listen to user changes
+                // Whenever user clicks, or interact with the element in the way that changes the value
+                // event is triggered.
+                // Please note, that according to spec this SHOULD NOT change the attribute.
+                input.addEventListener('change', this._inputChangedValue);
+                // Observe value **property** changes
+                // Polymer's `={{` binding,
+                // VanillaJS/non-polymer data binding, through property, a11y tools, Browser Dev Tools, browser plugins
+                // Please note, that according to spec this SHOULD NOT change the attribute nor trigger event.
+                // For more on content attributes, IDL attributes (DOM interfaces) and events
+                // see https://www.w3.org/TR/html5/sec-forms.html#the-input-element
+                const uniElement = this;
+                const previousValueDesc = Object.getOwnPropertyDescriptor(input, 'value') || Object.getOwnPropertyDescriptor(input.constructor.prototype, 'value');
+                this._previousValueDesc = previousValueDesc;
+                Object.defineProperty(input, 'value', {
+                    set(val) {
+                        previousValueDesc.set.call(this, val);
+                        uniElement._inputChangedValue();
+                    },
+                    get() {
+                        return previousValueDesc.get.call(this);
+                    },
+                    configurable: true
+                });
+            }
+            /**
+             * Unobserve change event, attribute and property changes.
+             * @private
+             */
+            _unobserveInput() {
+                if (this.input) {
+                    Object.defineProperty(this.input, 'value', this._previousValueDesc);
+                    this.input.removeEventListener('change', this._inputChangedValue);
+                }
+                this._inputObserver && this._inputObserver.disconnect();
+            }
+        });
+    })();
+</script>
