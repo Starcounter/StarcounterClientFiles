@@ -1,0 +1,172 @@
+<!-- uni-form-item-group @version: 0.4.1 @license: MIT -->
+<template>
+    <style>
+        :host {
+            /* Expected: items stack horizontally and wrap */
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+        }
+
+        /* Make the `hidden` attribute work again */
+        :host([hidden]) {
+            display: none !important;
+        }
+
+        ::slotted(uni-form-item) {
+            /* Expected: items in the middle */
+            order: 2;
+            /* Expected: original size */
+            flex: none;
+            /* Expected: gaps between items */
+            --uni-form-item-gap-content: '';
+        }
+
+        ::slotted(label),
+        ::slotted(output) {
+            padding: 0 8px;
+            /* Expected: label and message make horizontal rows */
+            flex: 1 1 100%;
+            margin: 8px 0;
+        }
+
+        ::slotted(label) {
+            /* Expected: a bit different look from <uni-form-item> label */
+            border-bottom: 1px solid black;
+            /* Expected: label is first */
+            order: 1;
+        }
+
+        ::slotted(output) {
+            /* Expected: message is last */
+            order: 3;
+            font-size: 12px;
+        }
+
+        /* Error controls should have red border */
+        :host([error]) {
+            --uni-form-item-control-border: 2px solid var(--red, red);
+        }
+
+        /* Error message should be red */
+        :host([error]) ::slotted(output) {
+            color: var(--red, red);
+        }
+
+        /* Success message should be green */
+        :host([success]) ::slotted(output) {
+            color: var(--green, green);
+        }
+    </style>
+    <slot></slot>
+</template>
+<script>
+(function(){
+    // The element’s Shadow DOM template with styles
+    const template = document.currentScript.previousElementSibling;
+
+    // If available, invoke ShadyCSS to prepare the styles from the template
+    if (window.ShadyCSS) {
+      ShadyCSS.prepareTemplate(template, 'uni-form-item-group');
+    }
+
+    /**
+     * Provides a form group for two or more form items. Supports an optional
+     * label and an optional validation message.
+     *
+     * ```html
+     * <uni-form-item-group>
+     *     <label>Full name</label>
+     *     <uni-form-item>
+     *         <label>First name</label>
+     *         <input>
+     *         <output>Example: Jane</output>
+     *     </uni-form-item>
+     *     <uni-form-item>
+     *         <label>Last name</label>
+     *         <input>
+     *         <output>Example: Doe</output>
+     *     </uni-form-item>
+     *     <output>Required</output>
+     * </uni-form-item-group>
+     * ```
+     */
+    class UniFormItemGroupElement extends HTMLElement {
+        constructor() {
+            super();
+            this.attachShadow({
+                mode: 'open'
+            });
+            this.shadowRoot.appendChild(
+                document.importNode(template.content, true)
+            );
+            // Style with ShadyCSS, if available
+            if (window.ShadyCSS) {
+                ShadyCSS.styleElement(this);
+            }
+
+            // Observer for the `aria-invalid` attribute on the message
+            this.__ariaInvalidObserver = new MutationObserver(
+                () => this.__updateValidationState()
+            );
+
+            const updateFromSlot = slot => {
+                // Find the slotted feature elements
+                const found = {};
+                slot.assignedNodes({flatten: true}).forEach(node => {
+                    if (node.nodeType !== Node.ELEMENT_NODE) return;
+                    const feature = node.localName === 'output' ? 'message' : 'other';
+                    if (found[feature]) return;
+                    found[feature] = node;
+                });
+                if (found.message !== this.__message) {
+                    if (this.__message) {
+                        // Another control was slotted already, stop observing it
+                        this.__ariaInvalidObserver.disconnect();
+                    }
+                    this.__message = found.message;
+                    if (this.__message) {
+                        // The new control was slotted
+                        this.__updateValidationState();
+                        // Start observing
+                        this.__ariaInvalidObserver.observe(this.__message, {
+                            attributes: true,
+                            attributeFilter: ['aria-invalid']
+                        });
+                    }
+                }
+            };
+
+
+            const slot = this.shadowRoot.querySelector('slot');
+            updateFromSlot(slot);
+            slot.addEventListener('slotchange', e => updateFromSlot(slot));
+        }
+
+        /**
+         * Trigger the host attributes to style the message depending
+         * on the message’s `aria-invalid` presence and value.
+         */
+        __updateValidationState() {
+            const ariaInvalid = this.__message.getAttribute('aria-invalid');
+            this.__toggleBooleanAttribute('error', ariaInvalid === 'true');
+            this.__toggleBooleanAttribute('success', ariaInvalid === 'false');
+        }
+
+        /**
+         * Helper method, adds or removes the boolean attribue on the element
+         */
+        __toggleBooleanAttribute(attribute, value, element = this) {
+            if (element.hasAttribute(attribute) !== value) {
+                if (value) {
+                    element.setAttribute(attribute, '');
+                } else {
+                    element.removeAttribute(attribute);
+                }
+            }
+        }
+    }
+
+    customElements.define('uni-form-item-group', UniFormItemGroupElement);
+})();
+</script>

@@ -1,0 +1,320 @@
+<!-- uni-data-table @version: 0.4.1 @license: MIT -->
+<link rel="import" href="../../../polymer/polymer.html">
+<link rel="import" href="../../../polymer/lib/elements/dom-if.html">
+<link rel="import" href="../../../polymer/lib/utils/flattened-nodes-observer.html">
+<link rel="import" href="../../../polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../../vaadin-grid/vaadin-grid.html">
+<link rel="import" href="../uni-pagination/uni-pagination.html">
+<link rel="import" href="uni-data-table-column.html">
+
+<dom-module id="uni-data-table">
+    <template>
+        <style>
+            :host {
+                /* Expected: the host uses avaiable width from the parent */
+                display: block;
+
+                /*
+                    Expected: the host has some default height, becasue the
+                    constrained height is required for infinite scrolling mode.
+                 */
+                height: 400px;
+            }
+
+            :host([hidden]) {
+                /* Restore the `hidden` attribute effect */
+                display: none !important;
+            }
+
+            vaadin-grid {
+                /* Expected: vaadin-grid follows the host width and height */
+                height: 100%;
+            }
+
+            /*
+                Expected: In auto-pagination mode, the height is `auto` and is
+                defined by the height of all rows on the current page.
+            */
+            :host([auto-pagination]),
+            :host([auto-pagination]) > vaadin-grid {
+                height: auto;
+            }
+        </style>
+        <vaadin-grid id="vaadinGrid"
+                     page-size="[[__valueWithFallback(provider.Pagination.PageSize$, 50)]]"
+                     size="[[provider.TotalRows]]"
+                     height-by-rows="[[autoPagination]]">
+            <template is="dom-repeat" items="[[__generatedColumns]]" as="column">
+                <template is="dom-if" if="[[column]]">
+                    <uni-data-table-column index="[[index]]"
+                                           __table-provider="[[provider]]">
+                    </uni-data-table-column>
+                </template>
+            </template>
+            <slot id="slot"></slot>
+        </vaadin-grid>
+        <template is="dom-if" if="[[__hasPagination(autoPagination, provider.TotalRows, provider.Pagination.PageSize$)]]">
+          <uni-pagination>
+              <input id="paginationInput"
+                  type="range"
+                  start="1"
+                  end$="[[__getLastPageNumber(provider.TotalRows, provider.Pagination.PageSize$)]]"
+                  value="{{__displayPageNumber::change}}">
+          </uni-pagination>
+        </template>
+    </template>
+</dom-module>
+<script>
+(function(){
+    /**
+     * A custom element providing a data table with lazy loading and rich
+     * declarative cell content.
+     *
+     * ```html
+     * <uni-data-table provider='{"Pages": [{"FirstName": "Jane", "LastName": "Doe"}, {"FirstName": "Judy", "LastName": "Roe"}]}'>
+     *     <uni-data-table-column>
+     *         <template slot="header">First Name</template>
+     *         <template>[[item.FirstName]]</template>
+     *     </uni-data-table-column>
+     * </uni-data-table>
+     * ```
+     */
+    class UniDataTableElement extends Polymer.Element {
+        static get is() {
+            return 'uni-data-table';
+        }
+
+        static get properties() {
+            return {
+                /**
+                 * Switch from using “infinite” scrollling to explicit pagination.
+                 * When enabled, <uni-pagination> is shown below the data table
+                 * in case if the `size` total number of rows exceeds the `pageSize`.
+                 *
+                 * When enabled, the height `<uni-data-table>` is set `auto`,
+                 * meaning that it is defined by the height of all rows
+                 * on the current page.
+                 */
+                autoPagination: {
+                    type: Boolean,
+                    reflectToAttribute: true
+                },
+
+                /**
+                 * The table provider view-model. See README.md for description.
+                 */
+                provider: {
+                    type: Object
+                },
+
+                /**
+                 * Array of `provider.Columns` objects, with slotted columns
+                 * in the DOM filtered-out. Used in `dom-repeat` for generating
+                 * `<uni-data-table-column>` elements from `provider.Columns`.
+                 */
+                __generatedColumns: {
+                    type: Array,
+                    value: () => []
+                },
+
+                /**
+                 * Keeps `<vaadin-grid>`’s dataProvider callback for every page being loaded.
+                 */
+                __callbacksByPageMap: {
+                    type: Map,
+                    value: () => new Map()
+                },
+
+                /**
+                 * When `autoPagination` is true, equals the number of rows
+                 * on the current page. Otherwise, equals the total number of rows.
+                 */
+                __computedSize: {
+                    type: Number,
+                    computed: '__computeSize(provider.TotalRows, autoPagination, provider.Pagination.PageSize$, provider.Pagination.CurrentPageIndex$)'
+                },
+
+                /**
+                 * Two-way mirror of the `page`, but based on 1, while
+                 * the `page` is based on `0`.
+                 */
+                __displayPageNumber: {
+                    type: Number,
+                    value: 1,
+                    observer: '__displayPageNumberChanged'
+                }
+            };
+        }
+
+        static get observers() {
+            return [
+                '__columnsObserver(provider, provider.Columns, provider.Columns.splices)',
+                '__rowsDataObserver(provider.Pages, provider.Pages.splices, provider.TotalRows)',
+                '__paginationObserver(autoPagination, provider.Pagination.CurrentPageIndex$)',
+                '__pageChanged(provider.Pagination.CurrentPageIndex$)'
+            ];
+        }
+
+        connectedCallback() {
+            super.connectedCallback();
+
+            this.$.slot.addEventListener('slotchange', () =>
+                this.__columnsObserver(this.provider)
+            );
+            // Assign `__rowsDataProvider` as a `dataProvider` in `<vaadin-grid>`
+            this.$.vaadinGrid.dataProvider = this.__rowsDataProvider.bind(this);
+        }
+
+        /**
+         * Match the slotted columns with the `provider.Columns`, and update
+         * `__generatedColumns`.
+         */
+        __columnsObserver(provider, Columns, splices) {
+            if (Columns === undefined) return;
+            const columnElementsByIndex = [];
+            this.$.slot.assignedNodes({flatten: true}).filter(node => {
+                if (node.nodeType === Node.ELEMENT_NODE &&
+                    node.localName === 'uni-data-table-column') {
+                    let index = node.index;
+                    if (columnElementsByIndex[index] === undefined) {
+                        // Assign `__tableProvider` for the slotted column
+                        node.__tableProvider = provider;
+                        // Remember that there is a slotted column for the index
+                        columnElementsByIndex[index] = node;
+                    }
+                }
+            });
+            this.__generatedColumns = Columns.map((column, index) =>
+                // Do not generate if there is a slotted column for the index
+                columnElementsByIndex[index] ? null : column
+            );
+        }
+
+        __valueWithFallback(value, fallback) {
+            return value !== undefined ? value : fallback;
+        }
+
+        /**
+         * The `dataProvider` function property value for `<vaadin-grid>`. The
+         * grid invokes this method to fetch the data for the given page number,
+         * sorters, filters, etc.
+         */
+        __rowsDataProvider({ page } = params, callback) {
+            if (this.autoPagination) {
+                // When `autoPagination` is enabled, the current page should
+                // be provided, although `<vaadin-grid>` requests page 0.
+                page = this.provider.Pagination.CurrentPageIndex$;
+            }
+            if (!this.provider) {
+                return;
+            }
+            if (this.__hasPageInPages(page)) {
+                // If the page was loaded, invoke the callback right away
+                this.__invokePageCallback(page, callback);
+            } else {
+                // Otherwise, fetch the page from the server
+                // Store the pending callback for the page given number
+                this.__callbacksByPageMap.set(page, callback);
+                // Set the trigger property to invoke the server’s handler
+                if (this.provider.Pagination.CurrentPageIndex$ !== page) {
+                    // With `autoPagination`, `this.provider.Pagination.CurrentPageIndex$` is already set
+                    this.set(['provider', 'Pagination', 'CurrentPageIndex$'], page);
+                }
+                // Now we wait for the server to add the page to the `Pages`
+                // array, for example, like so:
+                // setTimeout(() => {
+                //     this.set(['provider', 'Pages', page], {"Rows": [ /* ... */ ]});
+                // }, 1000);
+                // This should trigger `__rowsDataObserver`.
+            }
+        }
+
+        /**
+         * The observer for the `Pages` array and the `TotalRows` total
+         * number of rows. Detects incoming data pages from the server and
+         * invokes the pending `__rowsDataProvider` callbacks, and
+         * `clearCache()` to update the `<vaadin-grid>`.
+         */
+        __rowsDataObserver(Pages, splices, TotalRows) {
+            if (Pages === undefined) return;
+            this.__callbacksByPageMap.forEach((callback, page) => {
+                if (this.__hasPageInPages(page)) {
+                    this.__invokePageCallback(page, callback);
+                    this.__callbacksByPageMap.delete(page);
+                }
+            });
+            this.$.vaadinGrid.clearCache();
+        }
+
+        /**
+         * Returns true if the given page was already loaded into `Pages`.
+         */
+        __hasPageInPages(page) {
+            return this.provider.Pages[page] &&
+                this.provider.Pages[page].Rows &&
+                this.provider.Pages[page].Rows.length > 0;
+        }
+
+        /**
+         * Invoke the `__rowsDataProvider` method callback for the given page.
+         */
+        __invokePageCallback(page, callback) {
+            callback(this.provider.Pages[page].Rows, this.__computedSize);
+        }
+
+        /**
+         * Decide if the builtin `<uni-pagination>` is shown.
+         */
+        __hasPagination(autoPagination, size, pageSize) {
+            return autoPagination && size > pageSize;
+        }
+
+        /**
+         * Returns the displayed number of rows. Bound to `size` property of
+         * `<vaadin-grid>`, and also returned in the dataProvider callback.
+         */
+        __computeSize(size, autoPagination, pageSize, page) {
+            return !autoPagination ? size : Math.min(pageSize, size - page * pageSize);
+        }
+
+        /**
+         * The displayed number for the last page, bound to the `end` property
+         * of the `<uni-pagination>`-decorated `<input>`.
+         */
+        __getLastPageNumber(size, pageSize) {
+            return Math.ceil(size / pageSize);
+        }
+
+        /**
+         * Handles changes of the pagination state. In particular, when
+         * `autoPagination` is in use, calls `clearCache()` in `<vaadin-grid>`
+         * on every pagination `page` change, this makes `<vaadin-grid>` invoke
+         * the dataProvider again and update the displayed rows.
+         */
+        __paginationObserver(autoPagination, page) {
+            if (autoPagination) {
+                this.$.vaadinGrid.clearCache();
+            }
+        }
+
+        /**
+         * Reflect `__displayPageNumber` changes to 0-based `page`.
+         */
+        __displayPageNumberChanged(displayPageNumber) {
+            if (!this.provider) return;
+            if (displayPageNumber === this.provider.Pagination.CurrentPageIndex$ + 1) return;
+            this.set(['provider', 'Pagination', 'CurrentPageIndex$'], displayPageNumber - 1);
+        }
+
+        /**
+         * Reflect `page` changes to 1-based `__displayPageNumber`.
+         */
+        __pageChanged(page) {
+            if (page === this.__displayPageNumber - 1) return;
+            this.__displayPageNumber = page + 1;
+        }
+    }
+
+    customElements.define(UniDataTableElement.is, UniDataTableElement);
+})();
+</script>

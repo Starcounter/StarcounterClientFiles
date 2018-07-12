@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <title>&lt;uni-data-table&gt;</title>
+    <link rel="stylesheet" href="../../dist/underwear.css">
+
+    <!-- Imports polyfill -->
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <!-- Imports custom element -->
+    <link rel="import" href="uni-data-table.html">
+
+</head>
+
+<body>
+    <h2>Uniform and Uniform in Shadow DOM examples</h2>
+
+    <h3>Plain data table</h3>
+    <div class="uniform">
+        <div>
+            <uni-data-table
+                provider='{
+                    "Pages": [
+                        {
+                            "Rows": [
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1981-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1982-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1983-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1984-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1985-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1986-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1987-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1988-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1989-01-01"}
+                            ]
+                        },
+                        {
+                            "Rows": [
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1990-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1991-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1992-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1993-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1994-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1995-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1996-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1997-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1998-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1999-01-01"}
+                            ]
+                        },
+                        {
+                            "Rows": [
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "2000-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "2001-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "2002-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "2003-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "2004-01-01"}
+                            ]
+                        }
+                    ],
+                    "TotalRows": 25,
+                    "Pagination": {
+                        "CurrentPageIndex$": 0,
+                        "PageSize$": 10,
+                        "PagesCount": 3
+                    }
+                }'>
+                <uni-data-table-column width="50px" flex-grow="0">
+                    <template slot="header">Index</template>
+                    <template>[[index]]</template>
+                </uni-data-table-column>
+                <uni-data-table-column>
+                    <template slot="header">First Name</template>
+                    <template>[[item.FirstName]]</template>
+                </uni-data-table-column>
+                <uni-data-table-column>
+                    <template slot="header">Last Name</template>
+                    <template>[[item.LastName]]</template>
+                </uni-data-table-column>
+                <uni-data-table-column>
+                    <template slot="header">Date of Birth</template>
+                    <template>[[item.DOB]]</template>
+                </uni-data-table-column>
+            </uni-data-table>
+        </div>
+    </div>
+
+    <h3>Data table with builtin pagination</h3>
+    <div class="uniform">
+        <div>
+            <uni-data-table
+                auto-pagination
+                provider='{
+                    "Pages": [
+                        {
+                            "Rows": [
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1981-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1982-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1983-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1984-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1985-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1986-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1987-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1988-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1989-01-01"}
+                            ]
+                        },
+                        {
+                            "Rows": [
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1990-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1991-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1992-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1993-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1994-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1995-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1996-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1997-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1998-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1999-01-01"}
+                            ]
+                        },
+                        {
+                            "Rows": [
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "2000-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "2001-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "2002-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "2003-01-01"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "2004-01-01"}
+                            ]
+                        }
+                    ],
+                    "TotalRows": 25,
+                    "Pagination": {
+                        "CurrentPageIndex$": 0,
+                        "PageSize$": 10,
+                        "PagesCount": 3
+                    }
+                }'>
+                <uni-data-table-column>
+                    <template slot="header">First Name</template>
+                    <template>[[item.FirstName]]</template>
+6               </uni-data-table-column>
+                <uni-data-table-column>
+                    <template slot="header">Last Name</template>
+                    <template>[[item.LastName]]</template>
+                </uni-data-table-column>
+                <uni-data-table-column>
+                    <template slot="header">Date of Birth</template>
+                    <template>[[item.DOB]]</template>
+                </uni-data-table-column>
+            </uni-data-table>
+        </div>
+    </div>
+    <h3>JSON-configured data table</h3>
+    <div class="uniform">
+        <div>
+            <uni-data-table
+                provider='{
+                    "Columns": [
+                        {
+                            "DisplayName": "First Name",
+                            "PropertyName": "FirstName",
+                            "Type": "String",
+                            "IsSortable": true,
+                            "IsFilterable": true,
+                            "Sort$": null,
+                            "Filter$": ""
+                        },
+                        {
+                            "DisplayName": "Last Name",
+                            "PropertyName": "LastName",
+                            "Type": "String",
+                            "IsSortable": true,
+                            "IsFilterable": true,
+                            "Sort$": "asc",
+                            "Filter$": ""
+                        },
+                        {
+                            "DisplayName": "Date of Birth",
+                            "PropertyName": "DOB",
+                            "Type": "String",
+                            "IsSortable": true,
+                            "IsFilterable": true,
+                            "Sort$": null,
+                            "Filter$": ""
+                        }
+                    ],
+                    "Pages": [
+                        {
+                            "Rows": [
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-01"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1980-01-02"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-03"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1980-01-04"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-05"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1980-01-06"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-07"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1980-01-08"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-09"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1980-01-10"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-11"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1980-01-12"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-13"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1980-01-14"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-15"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1980-01-16"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-17"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1980-01-18"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-19"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1980-01-20"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-21"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1980-01-22"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-23"},
+                                {"FirstName": "Judy", "LastName": "Roe", "DOB": "1980-01-24"},
+                                {"FirstName": "Jane", "LastName": "Doe", "DOB": "1980-01-25"}
+                            ]
+                        }
+                    ],
+                    "TotalRows": 25,
+                    "Pagination": {
+                        "CurrentPageIndex$": 0,
+                        "PageSize$": 25,
+                        "PagesCount": 1
+                    }
+                }'>
+                <!-- Override a column from the `provider.Columns` -->
+                <uni-data-table-column index="2">
+                    <template slot="header">{{column.DisplayName}} (ISO)</template>
+                    <template><code>{{item.DOB}}</code></template>
+                </uni-data-table-column>
+            </uni-data-table>
+        </div>
+    </div>
+</body>
+</html>

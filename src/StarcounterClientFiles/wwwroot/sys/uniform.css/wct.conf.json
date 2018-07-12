@@ -1,6 +1,9 @@
 {
     "suites":[
-        "components/uni-date-picker/test"
+        "components/uni-date-picker/test",
+        "components/uni-form-item/test",
+        "components/uni-form-item-group/test",
+        "components/uni-data-table/test"
     ],
     "plugins": {
         "local": {

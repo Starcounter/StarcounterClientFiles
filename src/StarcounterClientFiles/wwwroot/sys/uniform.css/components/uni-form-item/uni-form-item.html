@@ -1,0 +1,194 @@
+<!-- uni-form-item @version: 0.3.0 @license: MIT -->
+<template>
+    <style>
+        :host {
+            display: grid;
+            grid-template: "label" / auto;
+            grid-gap: 0.5rem;
+            align-items: baseline;
+            justify-content: start;
+            justify-items: start;
+        }
+
+        /* Make the `hidden` attribute work again */
+        :host([hidden]) {
+            display: none !important;
+        }
+
+        /* Support <uni-form-item-group> to toggle a gap column in the item */
+        :host::after {
+            content: var(--uni-form-item-gap-content, none);
+            display: block;
+            width: 0.5rem;
+            grid-column: 2;
+        }
+
+        ::slotted(*) {
+            grid-column: 1;
+        }
+
+        ::slotted(label),
+        ::slotted(output) {
+            padding: 0 8px;
+        }
+
+        ::slotted(label) {
+            grid-area: label;
+        }
+
+        ::slotted(output) {
+            font-size: 12px;
+        }
+
+        /* Enable border style overrides on control from outside */
+        ::slotted(:not(label):not(output)) {
+            border: var(--uni-form-item-control-border) !important;
+        }
+
+        /* Error message should be red */
+        :host([error]) ::slotted(output) {
+            color: var(--red, red);
+        }
+
+        /* Success message should be green */
+        :host([success]) ::slotted(output) {
+            color: var(--green, green);
+        }
+    </style>
+    <slot></slot>
+</template>
+<script>
+(function(){
+
+    // Internal counter for generating IDs for controls
+    let counter = 0;
+
+    // The element’s Shadow DOM template with styles
+    const template = document.currentScript.previousElementSibling;
+
+    // If available, invoke ShadyCSS to prepare the styles from the template
+    if (window.ShadyCSS) {
+      ShadyCSS.prepareTemplate(template, 'uni-form-item');
+    }
+
+    /**
+     * Provides a form item look and feel. Consists of an optional label,
+     * a form control and an optional validation message.
+     *
+     * ```html
+     * <uni-form-item>
+     *     <label>Label</label>
+     *     <input/>
+     *     <output>Message</output>
+     * </uni-form-item>
+     * ```
+     */
+    class UniFormItemElement extends HTMLElement {
+        constructor() {
+            super();
+            this.attachShadow({
+                mode: 'open'
+            });
+            this.shadowRoot.appendChild(
+                document.importNode(template.content, true)
+            );
+            // Style with ShadyCSS, if available
+            if (window.ShadyCSS) {
+                ShadyCSS.styleElement(this);
+            }
+
+            // Observer for the `aria-invalid` attribute on the control
+            this.__ariaInvalidObserver = new MutationObserver(
+                () => this.__updateValidationState()
+            );
+
+            const updateFromSlot = slot => {
+                // Find the slotted feature elements
+                const found = {};
+                slot.assignedNodes({flatten: true}).forEach(node => {
+                    if (node.nodeType !== Node.ELEMENT_NODE) return;
+                    const feature = node.localName === 'label' ? 'label' :
+                        node.localName === 'output' ? 'message' : 'control';
+                    if (found[feature]) return;
+                    found[feature] = node;
+                });
+                if (found.control !== this.__control) {
+                    if (this.__control) {
+                        // Another control was slotted already, stop observing it
+                        this.__ariaInvalidObserver.disconnect();
+                    }
+                    this.__control = found.control;
+                    if (this.__control) {
+                        // The new control was slotted
+                        this.__updateValidationState();
+                        // Start observing
+                        this.__ariaInvalidObserver.observe(this.__control, {
+                            attributes: true,
+                            attributeFilter: ['aria-invalid']
+                        });
+                    }
+                }
+                this.__label = found.label;
+                this.__message = found.message;
+                this.__associate();
+            };
+
+            const slot = this.shadowRoot.querySelector('slot');
+            updateFromSlot(slot);
+            slot.addEventListener('slotchange', e => updateFromSlot(slot));
+        }
+
+        /**
+         * Updates the accessible bindings between the label, the control and
+         * the message.
+         */
+        __associate() {
+            if (!this.__control) return;
+            // Ensure the contol has an ID, assign a generated ID if needed
+            if (!this.__control.id) {
+                this.__control.id = `uni-control-${++counter}`;
+            }
+            if (this.__label) {
+                // Associate the label with the control
+                this.__label.setAttribute('for', this.__control.id);
+            }
+            if (this.__message) {
+                // Ensure the message has an ID
+                if (!this.__message.id) {
+                    this.__message.id = `${this.__control.id}-message`;
+                }
+                // Use the message as ARIA description for the control
+                this.__control.setAttribute(
+                    'aria-describedby',
+                    `${this.__message.id} ${this.__control.getAttribute('aria-describedby') || ''}`
+                );
+            }
+        }
+
+        /**
+         * Trigger the host attributes to style the message depending
+         * on the control’s `aria-invalid` presence and value.
+         */
+        __updateValidationState() {
+            const ariaInvalid = this.__control.getAttribute('aria-invalid');
+            this.__toggleBooleanAttribute('error', ariaInvalid === 'true');
+            this.__toggleBooleanAttribute('success', ariaInvalid === 'false');
+        }
+
+        /**
+         * Helper method, adds or removes the boolean attribue on the element
+         */
+        __toggleBooleanAttribute(attribute, value, element = this) {
+            if (element.hasAttribute(attribute) !== value) {
+                if (value) {
+                    element.setAttribute(attribute, '');
+                } else {
+                    element.removeAttribute(attribute);
+                }
+            }
+        }
+    }
+
+    customElements.define('uni-form-item', UniFormItemElement);
+})();
+</script>

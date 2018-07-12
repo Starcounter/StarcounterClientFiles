@@ -1,0 +1,188 @@
+<!-- uni-data-table-column @version: 0.0.1 @license: MIT -->
+<link rel="import" href="../../../polymer/polymer.html">
+<link rel="import" href="../../../vaadin-grid/vaadin-grid-column.html">
+<link rel="import" href="uni-data-table-sorter.html">
+<link rel="import" href="uni-data-table-filter.html">
+
+<script>
+(function() {
+    /**
+     * The component defining a column in `<uni-data-table>`.
+     *
+     * See also: <vaadin-grid-column> API for the inherited properties.
+     */
+    class UniDataTableColumnElement extends Vaadin.GridColumnElement {
+        static get properties() {
+            return {
+                /**
+                 * The index of the column in `provider.Columns`.
+                 */
+                index: Number,
+
+                /**
+                 * Table provider object, set from parent `<uni-data-table>`.
+                 */
+                __tableProvider: Object,
+
+                /**
+                 * The column object from table provider.
+                 */
+                __column: Object
+            }
+        }
+
+        static get observers() {
+            return [
+                `__selectColumnFromProvider(
+                    index,
+                    __tableProvider,
+                    __tableProvider.Columns,
+                    __tableProvider.Columns.splices
+                )`,
+                '__updateHeaderTemplate(__column, __column.*)',
+                '__updateBodyTemplate(__column, __column.*)'
+            ];
+        }
+
+        /**
+         * Find the column in `__tableProvider.Columns` by `index`, and store
+         * as `__column`
+         */
+        __selectColumnFromProvider(index, __tableProvider) {
+            if (index === undefined || !__tableProvider) return;
+            this.__column = __tableProvider.Columns && __tableProvider.Columns[index];
+        }
+
+        /**
+         * Updates the header template after column object changes.
+         */
+        __updateHeaderTemplate() {
+            this._headerTemplate = this._prepareHeaderTemplate();
+            this.__updateInstancesOfTemplate(this._headerTemplate);
+        }
+
+        /**
+         * Updates the body template after column object changes.
+         */
+        __updateBodyTemplate() {
+            this._bodyTemplate = this._prepareBodyTemplate();
+            this.__updateInstancesOfTemplate(this._bodyTemplate);
+        }
+
+        /**
+         * Marches all instances of the template and updates the `column`
+         * variables, in order to propagate changes of `__column`
+         * to template bindings with `{{column}}`.
+         */
+        __updateInstancesOfTemplate(template) {
+            if (!template || this.__column || !this._grid) return;
+            template.templatizer._templateInstances
+                .forEach(inst => inst.column = this.__column)
+        }
+
+        /**
+         * Enables `_findTemplate(type)` custom finder method override for
+         * the header template.
+         * @override
+         */
+        _prepareHeaderTemplate() {
+            return this._prepareTemplatizer(this._findTemplate('header'), {});
+        }
+
+        /**
+         * Enables `_findTemplate(type)` custom finder method override for
+         * the footer template.
+         * @override
+         */
+        _prepareFooterTemplate() {
+            return this._prepareTemplatizer(this._findTemplate('footer'), {});
+        }
+
+        /**
+         * Enables `_findTemplate(type)` custom finder method override for
+         * the body template.
+         * @override
+         */
+        _prepareBodyTemplate() {
+            return this._prepareTemplatizer(this._findTemplate());
+        }
+
+        /**
+         * Enables using `{{column}}` binginds in the templates.
+         * @override
+         */
+        _prepareTemplatizer(...args) {
+            const template = super._prepareTemplatizer(...args);
+            if (template) {
+                const templatizer = template.templatizer;
+                // Add `column` to `instanceProps`
+                templatizer._instanceProps.column = true;
+                // Make sure the `_grid` is up-to-date
+                templatizer._grid = this._grid;
+                // Override `createInstance` to append the `column` initial
+                // value to every instance of the template.
+                const originalCreateInstance = templatizer.createInstance;
+                templatizer.createInstance = (...args) => {
+                    const inst = originalCreateInstance.apply(templatizer, args);
+                    inst.column = this.__column;
+                    return inst;
+                };
+                return template;
+            }
+        }
+
+        /**
+         * Finds or generates and returns the template for the column header,
+         * footer, or body cells.
+         * @param {string=} type Template type. Valid options: `'header'`, `'footer'`. When omitted, means body templates.
+         * @returns {HTMLTemplateElement} The column template.
+         */
+        _findTemplate(type = '') {
+            const tmpl = Polymer.FlattenedNodesObserver.getFlattenedNodes(this)
+                .find(node =>
+                    node.localName === 'template' &&
+                    (node.getAttribute('slot') || '') === type
+                );
+            // If the template is not found in DOM, generate it for the column
+            if (tmpl === undefined && this.__column !== undefined) {
+                // Do not generate footer templates. Otherwise every data table
+                // would have a footer, which is unexpected by default.
+                if (type === 'footer') return;
+                const template = document.createElement('template');
+
+                // `slot` does not affect anything for generated templates,
+                // but nice to have for debugging
+                template.setAttribute('slot', type); 
+
+                if (type === 'header') {
+                    // Show `DisplayName` the column header
+                    template.innerHTML = '[[column.DisplayName]]'
+                    // Wrap with `<uni-data-table-sorter>`, if sorting is enabled
+                    if (this.__column.IsSortable) {
+                        template.innerHTML = `
+                            <uni-data-table-sorter direction="{{column.Sort$}}">
+                                ${template.innerHTML}
+                            </uni-data-table-sorter>
+                        `;
+                    }
+                    // Append with `<uni-data-table-filter>`, if filtering is enabled
+                    if (this.__column.IsFilterable) {
+                        template.innerHTML = `
+                            ${template.innerHTML}
+                            <uni-data-table-filter value="{{column.Filter$}}">
+                            </uni-data-table-filter>
+                        `;
+                    }
+                } else if (type === '') {
+                    // Show `PropertyName` in the column body cells
+                    template.innerHTML = `[[item.${this.__column.PropertyName}]]`;
+                }
+                return template;
+            }
+            return tmpl;
+        }
+    }
+
+    customElements.define('uni-data-table-column', UniDataTableColumnElement);
+})();
+</script>

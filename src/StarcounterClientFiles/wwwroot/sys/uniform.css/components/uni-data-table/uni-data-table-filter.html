@@ -1,0 +1,15 @@
+<!-- uni-data-table-filter @version: 0.0.1 @license: MIT -->
+<link rel="import" href="../../../vaadin-grid/vaadin-grid-filter.html">
+
+<script>
+(function() {
+    /**
+     * The component providing a helper filter text input field for using
+     * in `<uni-data-table>` header and footer templates.
+     *
+     * See also: <vaadin-grid-filter> API for the inherited properties.
+     */
+    class UniDataTableFilterElement extends Vaadin.GridFilterElement { }
+    customElements.define('uni-data-table-filter', UniDataTableFilterElement);
+})();
+</script>

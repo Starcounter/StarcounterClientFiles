@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <title>&lt;uni-pagination&gt;</title>
+    <style>
+        html {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            color: maroon;
+            border-left: 2px solid #9999FF;
+            font-size: 1.2em
+        }
+    </style>
+    <!-- Imports polyfill -->
+    <script src="https://juicy.github.io//webcomponentsjs/webcomponents-lite.js"></script>
+
+    <!-- Imports custom element -->
+    <link rel="import" href="uni-pagination.html">
+</head>
+
+<body>
+    <h1>&lt;uni-pagination /&gt;</h1>
+    <div class="snippet">
+        <h2>In Shadow DOM</h1>
+            <div>
+                <input slot="uni-pagination-slot" type="range" start="1" end="20" value="1" />
+
+                <template is="shadow-root">
+                    <uni-pagination>
+                        <slot name="uni-pagination-slot"></slot>
+                    </uni-pagination>
+                </template>
+            </div>
+    </div>
+    <hr />
+    <div class="snippet">
+        <h2>In Light DOM</h1>
+            <div>
+                <uni-pagination>
+                    <input type="range" start="1" end="20" value="1" />
+                </uni-pagination>
+            </div>
+    </div>
+    <script>
+        // apply declarative shadow roots
+        document.querySelectorAll('template[is="shadow-root"]').forEach((templ) => {
+            const sroot = templ.parentNode.attachShadow({
+                mode: 'open'
+            });
+            sroot.appendChild(document.importNode(templ.content, true));
+        });
+        // show code snippets
+        document.querySelectorAll('.snippet div').forEach((section) => {
+            var clonedSection = section.cloneNode(true);
+            clonedSection.innerHTML = '<pre><code>' +
+                section.innerHTML.replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/^                /gm, '')
+                    .trim() +
+                '</code></pre>';
+            section.insertAdjacentElement('afterend', clonedSection);
+        });
+    </script>
+</body>
+
+</html>

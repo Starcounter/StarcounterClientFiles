@@ -9,8 +9,7 @@
     "starcounter-include": "^5.0.0",
     "polymer-source": "polymer#^2.0.0",
     "webcomponentsjs": "^1.0.0",
-    "underwear.css": "~0.0.8",
-    "uniform.css": "^0.3.0",
+    "uniform.css": "^0.4.0",
     "enlighted-link": "^0.0.1",
     "palindrom-error-catcher": "^1.0.0"
   },
