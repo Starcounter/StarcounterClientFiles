@@ -43,7 +43,6 @@
     "commit": "b91cb9e98d8557b62b6bc8b42ff4400c0daec90b"
   },
   "_source": "https://github.com/Starcounter/starcounter-include.git",
-  "_target": "5.1.0",
-  "_originalSource": "starcounter-include",
-  "_direct": true
+  "_target": "^5.1.0",
+  "_originalSource": "starcounter-include"
 }
