@@ -1,0 +1,27 @@
+{
+  "name": "slot-all",
+  "version": "0.0.1",
+  "description": "A custom element to distribute all elements regardless of their slot name",
+  "license": "MIT",
+  "main": "slot-all.html",
+  "keywords": [
+    "web-components",
+    "juicy"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "preview.png",
+    "package.json",
+    "Gruntfile.json"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "^1.1.1"
+  },
+  "devDependencies": {
+    "web-component-tester": "^6.5.0",
+    "juicy-ace-editor": "^2.1.0"
+  }
+}

@@ -1,0 +1,140 @@
+<!-- slot-all @version: 0.0.1 @license: MIT -->
+<script>
+(function(){
+        /**
+         * A custom element to distribute all elements
+         * regardless of their slot name
+         *
+         * ```html
+         *     <div>
+         *         #shadow-root
+         *             <slot-all></slot-all>
+         *         <div slot="foo">Named slot</div>
+         *     </div>
+         * ```
+         */
+        customElements.define('slot-all', class SlotAll extends HTMLElement{
+            /**
+             * Initialize host observer and slots map.
+             */
+            constructor(){
+                super();
+                const slotAll = this;
+
+                // host observer instance
+                function mutationCallback(mutationsList){
+                    for(var mutation of mutationsList) {
+                        mutation.addedNodes.length && slotAll._createSlots(mutation.addedNodes);
+                        mutation.removedNodes.length && slotAll._removeSlots(mutation.removedNodes);
+                    }
+                }
+                // ShadyDOM breaks mutation observer, so we need to use its non-standard API
+                // workaround https://github.com/webcomponents/shadydom/issues/260
+                if(window.ShadyDOM && ShadyDOM.observeChildren){
+                    this.__shadyMutationCallback = mutationCallback;
+                } else {
+                    this._hostObserver = new MutationObserver(mutationCallback);
+                }
+                // map of created named slots
+                this.__createdSlots = new Map();
+            }
+            /**
+             * Observe adding and removing nodes to the shadow host,
+             * to create or remove named slots.
+             */
+            connectedCallback(){
+                const host = this.getRootNode().host;
+                // Start observing the shadow host for child list changes
+                // workaround https://github.com/webcomponents/shadydom/issues/260
+                if(window.ShadyDOM && this.__shadyMutationCallback){
+                    this.__shadyObserver = ShadyDOM.observeChildren(host, this.__shadyMutationCallback);
+                } else {
+                    this._hostObserver.observe(host, { childList: true });
+                }
+                // Create slots for initial list of children
+                this._createSlots(Array.from(host.children));
+            }
+            /**
+             * Disconnect host observer, remove created slots, clear the slots map.
+             */
+            disconnectedCallback(){
+                // unobserve host changes
+                this._hostObserver && this._hostObserver.disconnect();
+                // unobserve shady dom host changes
+                // workaround https://github.com/webcomponents/shadydom/issues/260
+                this.__shadyObserver && ShadyDOM.unobserveChildren(this.__shadyObserver);
+                for(let [name, slot] of this.__createdSlots){
+                    // workaround https://github.com/webcomponents/shadydom/issues/262
+                    // WC polyfill does not support .remove()
+                    // slot.remove();
+                    slot.parentNode && slot.parentNode.removeChild(slot);
+                }
+                this.__createdSlots.clear();
+            }
+            /**
+             * Create slots for given elements, if needed:
+             *  - element has a slot name,
+             *  - names slot was not yet created by this `slot-all``
+             * @param  {NodeList|HTMLCollection} nodeList list of host's children
+             */
+            _createSlots(nodeList){
+                const slotAll = this;
+                const slotsMap = slotAll.__createdSlots;
+
+                nodeList.forEach((element)=>{
+                    const name = element.slot;
+                    if(
+                        element.nodeType === Node.ELEMENT_NODE &&
+                        element.hasAttribute('slot') &&
+                        !slotsMap.has(name)
+                        // we do create a slot for elements already
+                        // assigned by other `slot(-all)`s
+                        // to handle distribution when others are removed.
+                        // !element.assignedSlot
+                    ){
+                        const namedSlot = document.createElement('slot');
+                        namedSlot.setAttribute('name', name);
+                        namedSlot.setAttribute('all-slotted', '');
+                        // add to the local map, to be able to clean it later
+                        slotsMap.set(name, namedSlot);
+                        // following is not supported by polyfill
+                        // slotAll.insertAdjacentElement('beforebegin', namedSlot);
+                        // workaround https://github.com/webcomponents/shadydom/issues/263
+                        slotAll.parentNode.insertBefore(namedSlot, slotAll);
+                    }
+                });
+            }
+            /**
+             * Remove slots for given elements, if needed:
+             *  - there are no more host's children with a slot name for the given slot name
+             * @param  {NodeList|HTMLCollection} nodeList list of removed host's children
+             */
+            _removeSlots(nodeList){
+                const slotAll = this;
+                let __createdSlots = this.__createdSlots;
+
+                nodeList.forEach((element)=>{
+                    if(element.nodeType === Node.ELEMENT_NODE){
+                        // element.assignedSlot no longer works,
+                        // we need to find the formerly assigned slot element manually
+                        const slotName = element.getAttribute('slot');
+                        // if host still has the elements with the same slot name,
+                        // we should keep the slot
+                        const slot = __createdSlots.get(slotName);
+                        // Polyfilled browsers do not have assignedElements
+                        // this time assignedNodes is somewhat safe to use
+                        // as we assume to support only names slots => elements
+                        // if(slot && slot.assignedElements().length == 0){
+                        if(slot && slot.assignedNodes().length == 0){
+                            // workaround https://github.com/webcomponents/shadydom/issues/262
+                            // WC polyfill does not support .remove()
+                            // slot.remove();
+                            slot.parentNode.removeChild(slot);
+                            __createdSlots.delete(slot);
+                        }
+                    }
+                });
+            }
+        });
+    })();
+</script>

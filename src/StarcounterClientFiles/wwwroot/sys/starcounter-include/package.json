@@ -1,6 +1,6 @@
 {
   "name": "starcounter-include",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "description": "Custom Element to include HTML partials/templates from Starcounter",
   "main": "starcounter-include.html",
   "directories": {

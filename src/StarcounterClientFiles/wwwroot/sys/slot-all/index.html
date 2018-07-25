@@ -1,0 +1,114 @@
+<head>
+    <meta charset="utf-8">
+    <title>&lt;slot-all&gt;</title>
+    <link rel="stylesheet" href="http://juicy.github.io/github-markdown-css/github-markdown.css">
+
+    <!-- Imports polyfill -->
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <!-- Imports ace editor for nicer demo -->
+    <link rel="import" href="../juicy-ace-editor/juicy-ace-editor.html">
+
+    <!-- Imports custom element -->
+    <link rel="import" href="slot-all.html">
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+        }
+
+        juicy-ace-editor{
+            margin: 15px;
+            width: calc(50% - 15px);
+            min-height: 10em;
+        }
+        div[shadow-host]{
+            width: calc(50% - 15px);
+        }
+
+        .markdown-body {
+            margin: 1em auto;
+            width: 70%;
+        }
+
+        .code-comparison {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        iframe {
+            float: right;
+        }
+    </style>
+</head>
+
+<body class="markdown-body">
+    <iframe src="http://ghbtns.com/github-btn.html?user=juicy&amp;repo=slot-all&amp;type=fork&amp;count=true&amp;size=medium" allowtransparency="true" frameborder="0" scrolling="0" width="90" height="30"></iframe>
+    <iframe src="http://ghbtns.com/github-btn.html?user=juicy&amp;repo=slot-all&amp;type=watch&amp;count=true&amp;size=medium" allowtransparency="true" frameborder="0" scrolling="0" width="90" height="30"></iframe>
+    <h1>&lt;slot-all&gt;</h1>
+    <blockquote>
+        <p>
+            Custom element to distribute all elements regardless of their slot name
+        </p>
+    </blockquote>
+    <div class="code-comparison">
+        <juicy-ace-editor
+            theme="ace/theme/monokai"
+            mode="ace/mode/html">&lt;a slot="named"&gt;link&lt;/a&gt;
+&lt;div slot="named"&gt;div&lt;/div&gt;
+&lt;span slot="baz"&gt;span&lt;/span&gt;
+&lt;p&gt;default&lt;/p&gt;
+&lt;template is="shadow-root"&gt;
+    &lt;h3&gt;
+        Distribute all elements for named slots without knowing their names
+    &lt;/h3&gt;
+    &lt;slot-all&gt;&lt;/slot-all&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+&lt;/template&gt;</juicy-ace-editor>
+
+        <div shadow-host>
+            <a slot="named">link</a>
+            <div slot="named">div</div>
+            <span slot="baz">span</span>
+            <p>default</p>
+            <template is="shadow-root">
+                <h3>
+                    Distribute all elements for named slots without knowing their names
+                </h3>
+                <slot-all></slot-all>
+                <slot></slot>
+            </template>
+        </div>
+    </div>
+
+
+    <h4>Looking for more specs? Check out the <a href="test/">test suite</a>.</h4>
+
+
+</body>
+<script>
+(function(){
+    // apply declarative shadow roots
+    function applyDSD(){
+        document.querySelectorAll('template[is="shadow-root"], template[is="declarative-shadow-dom"]').forEach((templ) => {
+            const host = templ.parentNode;
+            if(!host.shadowRoot){
+                host.attachShadow({
+                    mode: 'open'
+                });
+            } else {
+                host.shadowRoot.innerHTML = '';
+            }
+            host.shadowRoot.appendChild(document.importNode(templ.content, true));
+        });
+    }
+    // bound editor to the example
+    document.querySelector('juicy-ace-editor').addEventListener('change', (ev)=>{
+        document.querySelector('[shadow-host]').innerHTML = ev.target.value;
+        // trick Ace editor to adapt to the new content
+        window.dispatchEvent(new Event('resize'));
+        applyDSD();
+    });
+    applyDSD();
+}());
+</script>

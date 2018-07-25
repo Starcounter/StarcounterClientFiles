@@ -18,6 +18,7 @@ For more details see articles:
 
 - Fallback composition - a single `<style>:host{display: block;}</style><slot></slot>` to display all things from light DOM in case no composition was provided
 - Default composition - composition (or multiple concatenated compositions) found in the partial HTML view (`<template is="declarative-shadow-dom">` part)
+- Parent composition - composition found in the parent HTML view (content of `<starcounter-include ...><template is="declarative-shadow-dom" presentation="parent">`). It's used to enforce by parent view a given composition for any kind of elements.
 - Custom composition - stored composition provided in JSON by BlendingProvider
 - Temporary composition - explicit composition set directly in the shadow root of `starcounter-include` (for example by Chrome DevTools or `<starcounter-layout-html-editor>` in BlendingEditor)
 

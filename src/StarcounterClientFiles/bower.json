@@ -6,12 +6,13 @@
     "palindrom-client": "^7.0.0",
     "imported-template": "^3.2.0",
     "palindrom-redirect": "~1.0.0",
-    "starcounter-include": "^5.0.0",
+    "starcounter-include": "^5.1.0",
     "polymer-source": "polymer#^2.0.0",
     "webcomponentsjs": "^1.0.0",
     "uniform.css": "^0.4.0",
     "enlighted-link": "^0.0.1",
-    "palindrom-error-catcher": "^1.0.0"
+    "palindrom-error-catcher": "^1.0.0",
+    "slot-all": "^0.0.1"
   },
   "resolutions": {
     "fast-json-patch": "^1.1.0",

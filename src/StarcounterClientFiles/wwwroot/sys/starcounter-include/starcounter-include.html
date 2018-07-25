@@ -4,7 +4,7 @@ Custom Element (w/ Polymer's TemplateBinding)
 with predefined template content, which should be used to include partials.
 It's just <imported-template> wrapped within Shadow Root for `declarative-shadow-dom` bindable by layout editor.
 Uses Shadow DOM given from DB as `Starcounter.MergedPartial.{_compositionProvider_}.Composition$`.
-version: 5.0.1
+version: 5.1.0
 
 -->
 <!-- Import dependencies -->
@@ -13,7 +13,7 @@ version: 5.0.1
 <script>
     (function() {
         function warnAboutDeprecatedPartial() {
-            console.warn('`partial` attribute and property are deprecatrd from `starcounter-include` in fovour of (viewModel property or view-model attribute), they will soon be no longer be supported');
+            console.warn('`partial` attribute and property are deprecated from `starcounter-include` in favour of (viewModel property or view-model attribute), they will soon be no longer be supported');
         }
         const isWebkit = navigator.vendor && navigator.vendor.indexOf("Apple") > -1;
 
@@ -108,10 +108,11 @@ version: 5.0.1
                     const importedTemplate = document.createElement('imported-template');
                     importedTemplate.addEventListener('stamping', function fetchCompositions(event) {
                         var mergedComposition = null;
-                        const templates = event.detail.querySelectorAll('template[is="declarative-shadow-dom"]');
+                        const templates = event.detail.querySelectorAll('template[is="declarative-shadow-dom"][presentation=default],template[is="declarative-shadow-dom"]:not([presentation])');
                         if(templates.length){
                             mergedComposition = document.createDocumentFragment();
                             for(const individualComposition of templates) {
+                                individualComposition.setAttribute('presentation', 'default');
                                 mergedComposition.appendChild(individualComposition.content.cloneNode(true));
                             };
                         }
@@ -232,7 +233,8 @@ version: 5.0.1
          * Handles change of the composition.
          * Temporary composition can be given explicitely in the function argument
          * If temporary composition not given, fetches custom composition from provider.
-         * If custom composition not given, fetches default composition from the imported template.
+         * If custom composition not given, fetches parent composition from the child `template`.
+         * If parent composition not given, fetches default composition from the imported template.
          * If default composition not given, uses fallback composition.
          * Warning: the temporary composition might come from https://github.com/Starcounter/starcounter-layout-html-editor/blob/17b21f729facd9a8dcd4241fb5c48cb71de11af5/starcounter-layout-html-editor.html#L253
          * @see .stampComposition
@@ -284,6 +286,18 @@ version: 5.0.1
                     this.partialId = null;
                 }
 
+                // Find parent composition to clone (if have one)
+                const parentCompositionTemplate = Array.from(this.children)
+                    .find((element)=>{
+                        return element.matches
+                            && element.matches('template[is="declarative-shadow-dom"][presentation="parent"],template[is="declarative-shadow-dom"]:not([presentation])')
+                    });
+                const parentComposition = parentCompositionTemplate && parentCompositionTemplate.content;
+                if (parentComposition) {
+                    parentCompositionTemplate.setAttribute('presentation', 'parent');
+                    this.temporaryComposition = null;
+                    return this._renderCompositionChange(parentComposition, () => parentComposition.cloneNode(true));
+                }
                 if (this.defaultComposition) {
                     this.temporaryComposition = null;
                     return this._renderCompositionChange(this.defaultComposition, () => this.defaultComposition.cloneNode(true));
