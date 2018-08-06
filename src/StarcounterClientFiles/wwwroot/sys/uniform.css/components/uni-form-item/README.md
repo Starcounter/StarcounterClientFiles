@@ -5,7 +5,7 @@ form control element, and an optional `<output>` message as a form item.
 
 ## Demo
 
-[Check it live!](http://Starcounter.github.io/Uniform.css/components/uni-form-item)
+[Check it live!](https://starcounter.github.io/uniform.css/components/uni-form-item)
 
 ## Install
 
@@ -15,7 +15,7 @@ Install the component using [Bower](http://bower.io/):
 $ bower install uniform.css --save
 ```
 
-Or [download as ZIP](https://github.com/Starcounter/Uniform.css/archive/master.zip).
+Or [download as ZIP](https://github.com/Starcounter/uniform.css/archive/master.zip).
 
 ## Usage
 
@@ -127,11 +127,13 @@ The following CSS Custom Properties are supported:
 
 ```json
 {
-    "FieldName": {
-        "Label": "",
-        "Value$": "",
-        "Invalid": "",
-        "Message": ""
+    "FieldName$": "",
+    "FormItemMetadata": {
+        "FieldName": {
+            "Message": "",
+            "Invalid": ""
+        }
+    
     }
 }
 ```
@@ -142,11 +144,11 @@ Example view:
     <template>
         <dom-bind>
             <template>
-                <label slot="MyApp/FieldName">{{model.FieldName.Label}}</label>
+                <label slot="MyApp/FieldName">My field</label>
                 <input slot="MyApp/FieldName"
-                    value="{{model.FieldName.Value$::change}}"
-                    aria-invalid$="{{model.FieldName.Invalid}}">
-                <output slot="MyApp/FieldName">{{model.FieldName.Message}}</output>
+                    value="{{model.FieldName$::change}}"
+                    aria-invalid$="{{model.FormItemMetadata.FieldName.Invalid}}">
+                <output slot="MyApp/FieldName">{{model.FormItemMetadata.FieldName.Message}}</output>
             </template>
         </dom-bind>
         <template is="declarative-shadow-dom">

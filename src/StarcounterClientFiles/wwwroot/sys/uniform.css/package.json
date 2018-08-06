@@ -1,8 +1,8 @@
 {
   "name": "uniform.css",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Opinionated CSS library that plays nicely within Shadow DOM, plus a set of elements to be used as decorators in Shadow DOM",
-  "main": "uniform.css",
+  "main": "build.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Starcounter/Uniform.css.git"
@@ -14,7 +14,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack && node build.js",
     "test": "wct",
     "wct": "wct",
     "wct:no-sauce": "wct --skip-plugin sauce",
@@ -34,10 +34,10 @@
     "grunt-bump": "^0.8.0",
     "grunt-cli": "^1.2.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
+    "postcss": "^7.0.0",
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.10.1",
-    "webpack-shell-plugin": "^0.5.0"
+    "webpack-dev-server": "^2.10.1"
   },
   "dependencies": {
     "normalize.css": "^8.0.0"

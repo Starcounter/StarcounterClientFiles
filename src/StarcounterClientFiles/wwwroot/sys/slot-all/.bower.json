@@ -32,7 +32,6 @@
     "commit": "651f82eb6b72a9f26aa741cbf26ce28832695d7c"
   },
   "_source": "https://github.com/Juicy/slot-all.git",
-  "_target": "0.0.2",
-  "_originalSource": "slot-all",
-  "_direct": true
+  "_target": "^0.0.2",
+  "_originalSource": "slot-all"
 }

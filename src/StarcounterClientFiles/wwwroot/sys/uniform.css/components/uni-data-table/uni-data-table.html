@@ -1,4 +1,4 @@
-<!-- uni-data-table @version: 0.4.1 @license: MIT -->
+<!-- uni-data-table @version: 0.5.0 @license: MIT -->
 <link rel="import" href="../../../polymer/polymer.html">
 <link rel="import" href="../../../polymer/lib/elements/dom-if.html">
 <link rel="import" href="../../../polymer/lib/utils/flattened-nodes-observer.html">
@@ -45,11 +45,9 @@
                      size="[[provider.TotalRows]]"
                      height-by-rows="[[autoPagination]]">
             <template is="dom-repeat" items="[[__generatedColumns]]" as="column">
-                <template is="dom-if" if="[[column]]">
-                    <uni-data-table-column index="[[index]]"
-                                           __table-provider="[[provider]]">
-                    </uni-data-table-column>
-                </template>
+                <uni-data-table-column index="[[index]]"
+                                       __table-provider="[[provider]]">
+                </uni-data-table-column>
             </template>
             <slot id="slot"></slot>
         </vaadin-grid>

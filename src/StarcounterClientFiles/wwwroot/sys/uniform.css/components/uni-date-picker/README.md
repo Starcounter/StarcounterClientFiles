@@ -6,9 +6,9 @@ Let's you decorate native `input type="date"`, with prettier date-picker.
 
 ## Demo
 
-[Check it live!](http://Starcounter.github.io/Uniform.css/components/uni-date-picker)
-[Themed](http://Starcounter.github.io/Uniform.css/components/uni-date-picker/theming.html)
-[Integrated with Polymer notification protocol](http://Starcounter.github.io/Uniform.css/components/uni-date-picker/polymer-binding.html)
+[Check it live!](https://starcounter.github.io/uniform.css/components/uni-date-picker)
+[Themed](https://starcounter.github.io/uniform.css/components/uni-date-picker/theming.html)
+[Integrated with Polymer notification protocol](https://starcounter.github.io/uniform.css/components/polymer-binding.html)
 
 ## Install
 
@@ -18,7 +18,7 @@ Install the component using [Bower](http://bower.io/):
 $ bower install uni-date-picker --save
 ```
 
-Or [download as ZIP](https://github.com/Starcounter/Uniform.css/archive/master.zip).
+Or [download as ZIP](https://github.com/Starcounter/uniform.css/archive/master.zip).
 
 ## Usage
 

@@ -78,7 +78,7 @@
             border: 1px solid #eee;
             background: #eee
         }
-        
+
         .page-select>label>input{
             margin: 15px;
         }
@@ -94,7 +94,7 @@
         }
         .page-select small {
             display: block
-        }        
+        }
 
         .color-sample {
             width: 25px;
@@ -107,17 +107,14 @@
         .color-sample:hover {
             transform: scale(5, 5);
         }
-        
-        footer { 
+
+        footer {
             padding: 20px;
         }
     </style>
 
     <!-- Polyfill Shadow DOM used in demos -->
     <script src="../webcomponentsjs/webcomponents-hi-sd-ce.js"></script>
-
-    <!-- Load `declarative-shadow-dom` used in demo snippets -->
-    <script defer src="assets/declarative-sd.js"></script>
 </head>
 
 <body>
@@ -550,7 +547,7 @@
                             </tr>
                         </tbody>
                         <tbody id="underwearPropsTable">
-                            
+
                         </tbody>
                     </table>
                 </div>
@@ -632,7 +629,7 @@
                 <p>Uniform.css uses CSS Custom Properties (CSS Variables) that you can configure per (shadow) root in which
                     you included
                     <code>uniform.css</code>. You can also use them by yourself, to adhere to the consistent look and feel.</p>
-                <div data-shadow-host>
+                <div data-shadow-host id="uniformPropsTableHost">
                     <template is="declarative-shadow-dom" mode="open">
                         <link rel="stylesheet" href="./dist/uniform.css">
                         <style>
@@ -649,379 +646,15 @@
                             }
                         </style>
                         <table>
-                            <tr>
-                                <th>Name</th>
-                                <th>Default value</th>
-                                <th>Sample</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-white</code>
-                                </td>
-                                <td>
-                                    <code>var(--white, #ffffff);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-white);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-gray-1</code>
-                                </td>
-                                <td>
-                                    <code>var(--gray-1, #f9f9f9);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-gray-1);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-gray-2</code>
-                                </td>
-                                <td>
-                                    <code>var(--gray-2, #f6f6f6);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-gray-2);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-gray-3</code>
-                                </td>
-                                <td>
-                                    <code>var(--gray-3, #efefef);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-gray-3);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-gray-4</code>
-                                </td>
-                                <td>
-                                    <code>var(--gray-4, #e7e7e7);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-gray-4);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-gray-5</code>
-                                </td>
-                                <td>
-                                    <code>var(--gray-5, #e1e1e1);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-gray-5);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-gray-6</code>
-                                </td>
-                                <td>
-                                    <code>var(--gray-6, #868e96);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-gray-6);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-gray-7</code>
-                                </td>
-                                <td>
-                                    <code>var(--gray-7, #606c76);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-gray-7);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-transparent-black</code>
-                                </td>
-                                <td>
-                                    <code>var(--transparent-black, #00000033);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-transparent-black);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-blue</code>
-                                </td>
-                                <td>
-                                    <code>var(--blue, #0084b4);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-blue);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-dark-blue</code>
-                                </td>
-                                <td>
-                                    <code>var(--dark-blue, #1a587f);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-dark-blue);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-dark</code>
-                                </td>
-                                <td>
-                                    <code>var(--dark, #141d26);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-dark);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-green</code>
-                                </td>
-                                <td>
-                                    <code>var(--green, #3fa13f);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-green);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-inky</code>
-                                </td>
-                                <td>
-                                    <code>var(--inky, #1b2936);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-inky);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-livid</code>
-                                </td>
-                                <td>
-                                    <code>var(--livid, #8696a5);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-livid);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-mouse</code>
-                                </td>
-                                <td>
-                                    <code>var(--mouse, #e7ecf0);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-mouse);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-red</code>
-                                </td>
-                                <td>
-                                    <code>var(--red, #df4534);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-red);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-yellow</code>
-                                </td>
-                                <td>
-                                    <code>var(--yellow, #ffdb25);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-yellow);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-primary</code>
-                                </td>
-                                <td>
-                                    <code>var(--uni-blue);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-primary);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-secondary</code>
-                                </td>
-                                <td>
-                                    <code>var(--uni-blue);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-secondary);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-success</code>
-                                </td>
-                                <td>
-                                    <code>var(--uni-green);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-success);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-danger</code>
-                                </td>
-                                <td>
-                                    <code>var(--uni-red);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-danger);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-warning</code>
-                                </td>
-                                <td>
-                                    <code>var(--uni-yellow);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-warning);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-disabled</code>
-                                </td>
-                                <td>
-                                    <code>var(--uni-gray-5);</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-default-disabled);"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-section-padding-horizontal</code>
-                                </td>
-                                <td>
-                                    <code>40px</code>
-                                </td>
-                                <td>
-                                    <div data-shadow-host style="border: 1px solid #eee;">
-                                        <template is="declarative-shadow-dom" mode="open">
-                                            <link rel="stylesheet" href="./dist/uniform.css">
-                                            <div style="padding: 0 var(--uni-default-section-padding-horizontal);">
-                                                <slot></slot>
-                                            </div>
-                                        </template>
-                                        padded
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-section-padding-vertical</code>
-                                </td>
-                                <td>
-                                    <code>20px</code>
-                                </td>
-                                <td>
-                                    <div data-shadow-host style="border: 1px solid #eee;">
-                                        <template is="declarative-shadow-dom" mode="open">
-                                            <link rel="stylesheet" href="./dist/uniform.css">
-                                            <div style="padding: var(--uni-default-section-padding-vertical) 0;">
-                                                <slot></slot>
-                                            </div>
-                                        </template>
-                                        padded
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-layout-left-nav-background</code>
-                                </td>
-                                <td>
-                                    <code>var(--uni-mouse, var(--uni-default-mouse))</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-mouse, var(--uni-default-mouse));"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-layout-left-nav-side-background</code>
-                                </td>
-                                <td>
-                                    <code>var(--uni-inky, var(--uni-default-inky))</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-inky, var(--uni-default-inky));"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-layout-left-nav-side-color</code>
-                                </td>
-                                <td>
-                                    <code>var(--uni-gray-5, var(--uni-default-gray-5))</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-gray-5, var(--uni-default-gray-5));"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-layout-left-nav-side-link-color</code>
-                                </td>
-                                <td>
-                                    <code>var(--uni-livid, var(--uni-default-livid))</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-livid, var(--uni-default-livid));"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-layout-left-nav-side-link-color-hover</code>
-                                </td>
-                                <td>
-                                    <code>var(--uni-white, var(--uni-default-white))</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="background-color: var(--uni-white, var(--uni-default-white));"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <code>--uni-layout-left-nav-side-link-highlight</code>
-                                </td>
-                                <td>
-                                    <code>3px solid var(--uni-blue, var(--uni-default-blue))</code>
-                                </td>
-                                <td>
-                                    <div class="color-sample" style="border-left: 3px solid var(--uni-blue, var(--uni-default-blue))"></div>
-                                </td>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Default value</th>
+                                    <th>Sample</th>
+                                </tr>
+                            </tbody>
+                            <tbody id="uniformPropsTable">
+                            </tbody>
                         </table>
                         <slot></slot>
                     </template>
@@ -1037,14 +670,14 @@
                     <li>Using Uniform.css custom properties in your own CSS rule</li>
                     <li>Theming Uniform.css by providing your own value for a custom property</li>
                 </ul>
-                <pre><code>&lt;style&gt;.pinky-host{ --uni-primary: pink;}&lt;/style&gt;
+                <pre><code>&lt;style&gt;.pinky-host{ --uni-primary-color: pink;}&lt;/style&gt;
 &lt;div class="pinky-host"&gt;
     &lt;div&gt;
         &lt;shadowroot mode="open"&gt;
             &lt;link rel="stylesheet" href="./dist/uniform.css"&gt;
             &lt;style&gt;
                 .app-header{
-                  color: var(--uni-danger, var(--uni-default-danger));
+                  color: var(--uni-danger, var(--uni-default-danger-color));
                 }
             &lt;/style&gt;
             &lt;h3 class="app-header"&gt;&lt;slot name="app/some"&gt;&lt;/slot&gt;&lt;/h3&gt;
@@ -1056,7 +689,7 @@
 &lt;/div&gt;</code></pre>
                 <style>
                     .pinky-host {
-                        --uni-primary: pink;
+                        --uni-primary-color: pink;
                     }
                 </style>
                 <div class="pinky-host">
@@ -1065,7 +698,7 @@
                             <link rel="stylesheet" href="./dist/uniform.css">
                             <style>
                                 .app-header {
-                                    color: var(--uni-danger, var(--uni-default-danger));
+                                    color: var(--uni-danger, var(--uni-default-danger-color));
                                 }
                             </style>
                             <h3 class="app-header">
@@ -1467,7 +1100,7 @@ with distributed content.</code></pre> You can add expandable part to
                 Note, that those sections stick to the sides of padded host.
                 <div data-shadow-host>
                     <template is="declarative-shadow-dom" mode="open">
-                        <link rel="stylesheet" href="./dist/uniform.css">
+                        <link rel="stylesheet" href="./dist/uniform.unminified.css">
                         <div class="uni-section-primary">
                             Primary section
                         </div>
@@ -1618,14 +1251,18 @@ with distributed content.</code></pre> You can add expandable part to
                     <li>first element child is the left column used for navigation</li>
                     <li>second element is the right column used for the main content</li>
                 </ul>
+                <p>
+                    To style the navigation elements use <code>.uni-vertical-nav</code> class on their container.
+                    This container could be the first element of <code>.uni-layout-left-nav</code>, or its shadow-including descendant.
+                </p>
                 <p>Anchor elements
-                    <code>&lt;a&gt;</code> element within the left column that have the attribute
+                    <code>&lt;a&gt;</code> element within <code>.uni-vertical-nav</code> that have the attribute
                     <code>aria-current="page"</code> will be highlighted.</p>
                 <div data-shadow-host>
                     <template is="declarative-shadow-dom" mode="open">
                         <link rel="stylesheet" href="./dist/uniform.css">
                         <div class="uni-layout-left-nav">
-                            <nav>
+                            <nav class="uni-vertical-nav">
                                 <slot name="navigation"></slot>
                             </nav>
                             <div class="uni-section-primary">
@@ -1633,6 +1270,7 @@ with distributed content.</code></pre> You can add expandable part to
                             </div>
                         </div>
                     </template>
+                    <span slot="navigation">Header</span>
                     <a aria-current="page" slot="navigation" href="#layout-left-nav">Navigation link 1</a>
                     <a slot="navigation" href="#layout-left-nav">Navigation link 2</a>
                     <a slot="navigation" href="#layout-left-nav">Navigation link 3</a>
@@ -1642,7 +1280,7 @@ with distributed content.</code></pre> You can add expandable part to
 &lt;template is="declarative-shadow-dom" mode="open"&gt;
     &lt;link rel="stylesheet" href="./dist/uniform.css"&gt;
     &lt;div class="uni-layout-left-nav"&gt;
-        &lt;nav&gt;
+        &lt;nav class="uni-vertical-nav"&gt;
             &lt;slot name="navigation"&gt;&lt;/slot&gt;
         &lt;/nav&gt;
         &lt;div class="uni-section-primary"&gt;
@@ -1662,6 +1300,8 @@ with distributed content.</code></pre> You can add expandable part to
 
     <footer>MIT License, Starcounter © 2018</footer>
 
+    <!-- Load `declarative-shadow-dom` used in demo snippets -->
+    <script src="assets/declarative-sd.js"></script>
 
     <!-- Script for demo purposes only. Allows putting underwear.css on and off -->
     <script src="assets/toggle-styles.js"></script>

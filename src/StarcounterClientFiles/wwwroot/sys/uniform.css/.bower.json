@@ -36,14 +36,14 @@
     "web-component-tester": "^6.5.0",
     "polymer": "^2.6.0"
   },
-  "version": "0.4.1",
-  "_release": "0.4.1",
+  "version": "0.5.0",
+  "_release": "0.5.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.4.1",
-    "commit": "03276015d320187537be241ae1b438f1df6c6125"
+    "tag": "0.5.0",
+    "commit": "0928185baf8a7d142706252fca41cddfc63166fb"
   },
   "_source": "https://github.com/Starcounter/Uniform.css.git",
-  "_target": "^0.4.0",
+  "_target": "^0.5.0",
   "_originalSource": "uniform.css"
 }

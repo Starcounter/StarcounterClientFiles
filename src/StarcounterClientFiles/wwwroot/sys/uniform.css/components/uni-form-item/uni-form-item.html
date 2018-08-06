@@ -47,12 +47,12 @@
 
         /* Error message should be red */
         :host([error]) ::slotted(output) {
-            color: var(--red, red);
+            color: var(--uni-danger-color, hsl(5, 73%, 52%));
         }
 
         /* Success message should be green */
         :host([success]) ::slotted(output) {
-            color: var(--green, green);
+            color: var(--uni-success-color, hsl(120, 44%, 44%));
         }
     </style>
     <slot></slot>
