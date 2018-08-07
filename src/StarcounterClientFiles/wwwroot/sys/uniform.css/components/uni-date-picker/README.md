@@ -8,7 +8,7 @@ Let's you decorate native `input type="date"`, with prettier date-picker.
 
 [Check it live!](https://starcounter.github.io/uniform.css/components/uni-date-picker)
 [Themed](https://starcounter.github.io/uniform.css/components/uni-date-picker/theming.html)
-[Integrated with Polymer notification protocol](https://starcounter.github.io/uniform.css/components/polymer-binding.html)
+[Integrated with Polymer notification protocol](https://starcounter.github.io/uniform.css/components/uni-date-picker/polymer-binding.html)
 
 ## Install
 
