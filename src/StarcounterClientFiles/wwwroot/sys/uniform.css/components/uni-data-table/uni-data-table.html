@@ -1,4 +1,4 @@
-<!-- uni-data-table @version: 0.5.0 @license: MIT -->
+<!-- uni-data-table @version: 0.5.1 @license: MIT -->
 <link rel="import" href="../../../polymer/polymer.html">
 <link rel="import" href="../../../polymer/lib/elements/dom-if.html">
 <link rel="import" href="../../../polymer/lib/utils/flattened-nodes-observer.html">
@@ -146,8 +146,9 @@
 
         static get observers() {
             return [
-                '__columnsObserver(provider, provider.Columns, provider.Columns.splices)',
-                '__rowsDataObserver(provider.Pages, provider.Pages.splices, provider.TotalRows)',
+                '__columnsObserver(provider, provider.Columns, provider.Columns.*)',
+                '__rowsDataObserver(provider.Pages.*)',
+                '__pagesDataObserver(provider.Pages)',
                 '__paginationObserver(autoPagination, provider.Pagination.CurrentPageIndex$)',
                 '__pageChanged(provider.Pagination.CurrentPageIndex$)'
             ];
@@ -162,7 +163,9 @@
             // Assign `__rowsDataProvider` as a `dataProvider` in `<vaadin-grid>`
             this.$.vaadinGrid.dataProvider = this.__rowsDataProvider.bind(this);
         }
-
+        __rowsDataObserver() {
+            this.$.vaadinGrid.clearCache();
+        }
         /**
          * Match the slotted columns with the `provider.Columns`, and update
          * `__generatedColumns`.
@@ -197,14 +200,14 @@
          * grid invokes this method to fetch the data for the given page number,
          * sorters, filters, etc.
          */
-        __rowsDataProvider({ page } = params, callback) {
+        __rowsDataProvider({ page } = params, callback) {            
+            if (!this.provider) {
+                return;
+            }
             if (this.autoPagination) {
                 // When `autoPagination` is enabled, the current page should
                 // be provided, although `<vaadin-grid>` requests page 0.
                 page = this.provider.Pagination.CurrentPageIndex$;
-            }
-            if (!this.provider) {
-                return;
             }
             if (this.__hasPageInPages(page)) {
                 // If the page was loaded, invoke the callback right away
@@ -223,7 +226,7 @@
                 // setTimeout(() => {
                 //     this.set(['provider', 'Pages', page], {"Rows": [ /* ... */ ]});
                 // }, 1000);
-                // This should trigger `__rowsDataObserver`.
+                // This should trigger `__pagesDataObserver`.
             }
         }
 
@@ -233,7 +236,7 @@
          * invokes the pending `__rowsDataProvider` callbacks, and
          * `clearCache()` to update the `<vaadin-grid>`.
          */
-        __rowsDataObserver(Pages, splices, TotalRows) {
+        __pagesDataObserver(Pages) {
             if (Pages === undefined) return;
             this.__callbacksByPageMap.forEach((callback, page) => {
                 if (this.__hasPageInPages(page)) {
