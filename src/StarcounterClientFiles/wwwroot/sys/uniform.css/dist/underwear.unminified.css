@@ -65,10 +65,6 @@ pre {
  * Remove the gray background on active links in IE 10.
  */
 
-a {
-  background-color: transparent;
-}
-
 /**
  * 1. Remove the bottom border in Chrome 57-
  * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
@@ -339,6 +335,362 @@ template {
 [hidden] {
   display: none;
 }
+/* don't worry about "root" selector. PostCSS will create "host" rules for you */
+
+/* this selected is converted to :root and :host by PostCSS. The reason 
+of this temporary selector is to isolate lumo-inspired props and create a translation
+layer for them (eg: create --uni-default-tint-5pct -> --uni-default-tint-5pct) */
+
+:root {
+
+    --lumo-base-color: var(--uni-base-color, var(--uni-default-base-color));
+
+    /* Tint */
+    --lumo-tint-5pct: var(--uni-tint-5pct, var(--uni-default-tint-5pct));
+    --lumo-tint-10pct: var(--uni-tint-10pct, var(--uni-default-tint-10pct));
+    --lumo-tint-20pct: var(--uni-tint-20pct, var(--uni-default-tint-20pct));
+    --lumo-tint-30pct: var(--uni-tint-30pct, var(--uni-default-tint-30pct));
+    --lumo-tint-40pct: var(--uni-tint-40pct, var(--uni-default-tint-40pct));
+    --lumo-tint-50pct: var(--uni-tint-50pct, var(--uni-default-tint-50pct));
+    --lumo-tint-60pct: var(--uni-tint-60pct, var(--uni-default-tint-60pct));
+    --lumo-tint-70pct: var(--uni-tint-70pct, var(--uni-default-tint-70pct));
+    --lumo-tint-80pct: var(--uni-tint-80pct, var(--uni-default-tint-80pct));
+    --lumo-tint-90pct: var(--uni-tint-90pct, var(--uni-default-tint-90pct));
+    --lumo-tint: var(--uni-tint, var(--uni-default-tint));
+  
+    /* Shade */
+    --lumo-shade-5pct: var(--uni-shade-5pct, var(--uni-default-shade-5pct));
+    --lumo-shade-10pct: var(--uni-shade-10pct, var(--uni-default-shade-10pct));
+    --lumo-shade-20pct: var(--uni-shade-20pct, var(--uni-default-shade-20pct));
+    --lumo-shade-30pct: var(--uni-shade-30pct, var(--uni-default-shade-30pct));
+    --lumo-shade-40pct: var(--uni-shade-40pct, var(--uni-default-shade-40pct));
+    --lumo-shade-50pct: var(--uni-shade-50pct, var(--uni-default-shade-50pct));
+    --lumo-shade-60pct: var(--uni-shade-60pct, var(--uni-default-shade-60pct));
+    --lumo-shade-70pct: var(--uni-shade-70pct, var(--uni-default-shade-70pct));
+    --lumo-shade-80pct: var(--uni-shade-80pct, var(--uni-default-shade-80pct));
+    --lumo-shade-90pct: var(--uni-shade-90pct, var(--uni-default-shade-90pct));
+  
+    /* Contrast */
+    --lumo-contrast-5pct: var(--uni-contrast-5pct, var(--uni-default-contrast-5pct));
+    --lumo-contrast-10pct: var(--uni-contrast-10pct, var(--uni-default-contrast-10pct));
+    --lumo-contrast-20pct: var(--uni-contrast-20pct, var(--uni-default-contrast-20pct));
+    --lumo-contrast-30pct: var(--uni-contrast-30pct, var(--uni-default-contrast-30pct));
+    --lumo-contrast-40pct: var(--uni-contrast-40pct, var(--uni-default-contrast-40pct));
+    --lumo-contrast-50pct: var(--uni-contrast-50pct, var(--uni-default-contrast-50pct));
+    --lumo-contrast-60pct: var(--uni-contrast-60pct, var(--uni-default-contrast-60pct));
+    --lumo-contrast-70pct: var(--uni-contrast-70pct, var(--uni-default-contrast-70pct));
+    --lumo-contrast-80pct: var(--uni-contrast-80pct, var(--uni-default-contrast-80pct));
+    --lumo-contrast-90pct: var(--uni-contrast-90pct, var(--uni-default-contrast-90pct));
+  
+    /* Text */
+    --lumo-header-text-color: var(--uni-header-text-color, var(--uni-default-header-text-color));
+    --lumo-body-text-color: var(--uni-body-text-color, var(--uni-default-body-text-color));
+    --lumo-secondary-text-color: var(--uni-secondary-text-color, var(--uni-default-secondary-text-color));
+    --lumo-tertiary-text-color: var(--uni-tertiary-text-color, var(--uni-default-tertiary-text-color));
+    --lumo-disabled-text-color: var(--uni-disabled-text-color, var(--uni-default-disabled-text-color));
+  
+    /* Font sizes */
+    --lumo-font-size-xxs: var(--uni-font-size-xxs, var(--uni-default-font-size-xxs));
+    --lumo-font-size-xs: var(--uni-font-size-xs, var(--uni-default-font-size-xs));
+    --lumo-font-size-s: var(--uni-font-size-s, var(--uni-default-font-size-s));
+    --lumo-font-size-m: var(--uni-font-size-m, var(--uni-default-font-size-m));
+    --lumo-font-size-l: var(--uni-font-size-l, var(--uni-default-font-size-l));
+    --lumo-font-size-xl: var(--uni-font-size-xl, var(--uni-default-font-size-xl));
+    --lumo-font-size-xxl: var(--uni-font-size-xxl, var(--uni-default-font-size-xxl));
+    --lumo-font-size-xxxl: var(--uni-font-size-xxxl, var(--uni-default-font-size-xxxl));
+  
+    /* Line heights */
+    --lumo-line-height-xs: var(--uni-line-height-xs, var(--uni-default-line-height-xs));
+    --lumo-line-height-s: var(--uni-line-height-s, var(--uni-default-line-height-s));
+    --lumo-line-height-m: var(--uni-line-height-m, var(--uni-default-line-height-m));
+  
+    /* Primary */
+    --lumo-primary-color: var(--uni-primary-color, var(--uni-default-primary-color));
+    --lumo-primary-color-50pct: var(--uni-primary-color-50pct, var(--uni-default-primary-color-50pct));
+    --lumo-primary-color-10pct: var(--uni-primary-color-10pct, var(--uni-default-primary-color-10pct));
+    --lumo-primary-text-color: var(--uni-primary-text-color, var(--uni-default-primary-text-color));
+    --lumo-primary-contrast-color: var(--uni-primary-contrast-color, var(--uni-default-primary-contrast-color));
+    /* Error */
+    --lumo-error-color: var(--uni-error-color, var(--uni-default-error-color));
+    --lumo-error-color-50pct: var(--uni-error-color-50pct, var(--uni-default-error-color-50pct));
+    --lumo-error-color-10pct: var(--uni-error-color-10pct, var(--uni-default-error-color-10pct));
+    --lumo-error-text-color: var(--uni-error-text-color, var(--uni-default-error-text-color));
+    --lumo-error-contrast-color: var(--uni-error-contrast-color, var(--uni-default-error-contrast-color));
+    /* Success */
+    --lumo-success-color: var(--uni-success-color, var(--uni-default-success-color));
+    --lumo-success-color-50pct: var(--uni-success-color-50pct, var(--uni-default-success-color-50pct));
+    --lumo-success-color-10pct: var(--uni-success-color-10pct, var(--uni-default-success-color-10pct));
+    --lumo-success-text-color: var(--uni-success-text-color, var(--uni-default-success-text-color));
+    --lumo-success-contrast-color: var(--uni-success-contrast-color, var(--uni-default-success-contrast-color));
+  
+    --lumo-font-family: var(--uni-font-family, var(--uni-default-font-family));
+}
+
+:host {
+
+    --lumo-base-color: var(--uni-base-color, var(--uni-default-base-color));
+
+    /* Tint */
+    --lumo-tint-5pct: var(--uni-tint-5pct, var(--uni-default-tint-5pct));
+    --lumo-tint-10pct: var(--uni-tint-10pct, var(--uni-default-tint-10pct));
+    --lumo-tint-20pct: var(--uni-tint-20pct, var(--uni-default-tint-20pct));
+    --lumo-tint-30pct: var(--uni-tint-30pct, var(--uni-default-tint-30pct));
+    --lumo-tint-40pct: var(--uni-tint-40pct, var(--uni-default-tint-40pct));
+    --lumo-tint-50pct: var(--uni-tint-50pct, var(--uni-default-tint-50pct));
+    --lumo-tint-60pct: var(--uni-tint-60pct, var(--uni-default-tint-60pct));
+    --lumo-tint-70pct: var(--uni-tint-70pct, var(--uni-default-tint-70pct));
+    --lumo-tint-80pct: var(--uni-tint-80pct, var(--uni-default-tint-80pct));
+    --lumo-tint-90pct: var(--uni-tint-90pct, var(--uni-default-tint-90pct));
+    --lumo-tint: var(--uni-tint, var(--uni-default-tint));
+  
+    /* Shade */
+    --lumo-shade-5pct: var(--uni-shade-5pct, var(--uni-default-shade-5pct));
+    --lumo-shade-10pct: var(--uni-shade-10pct, var(--uni-default-shade-10pct));
+    --lumo-shade-20pct: var(--uni-shade-20pct, var(--uni-default-shade-20pct));
+    --lumo-shade-30pct: var(--uni-shade-30pct, var(--uni-default-shade-30pct));
+    --lumo-shade-40pct: var(--uni-shade-40pct, var(--uni-default-shade-40pct));
+    --lumo-shade-50pct: var(--uni-shade-50pct, var(--uni-default-shade-50pct));
+    --lumo-shade-60pct: var(--uni-shade-60pct, var(--uni-default-shade-60pct));
+    --lumo-shade-70pct: var(--uni-shade-70pct, var(--uni-default-shade-70pct));
+    --lumo-shade-80pct: var(--uni-shade-80pct, var(--uni-default-shade-80pct));
+    --lumo-shade-90pct: var(--uni-shade-90pct, var(--uni-default-shade-90pct));
+  
+    /* Contrast */
+    --lumo-contrast-5pct: var(--uni-contrast-5pct, var(--uni-default-contrast-5pct));
+    --lumo-contrast-10pct: var(--uni-contrast-10pct, var(--uni-default-contrast-10pct));
+    --lumo-contrast-20pct: var(--uni-contrast-20pct, var(--uni-default-contrast-20pct));
+    --lumo-contrast-30pct: var(--uni-contrast-30pct, var(--uni-default-contrast-30pct));
+    --lumo-contrast-40pct: var(--uni-contrast-40pct, var(--uni-default-contrast-40pct));
+    --lumo-contrast-50pct: var(--uni-contrast-50pct, var(--uni-default-contrast-50pct));
+    --lumo-contrast-60pct: var(--uni-contrast-60pct, var(--uni-default-contrast-60pct));
+    --lumo-contrast-70pct: var(--uni-contrast-70pct, var(--uni-default-contrast-70pct));
+    --lumo-contrast-80pct: var(--uni-contrast-80pct, var(--uni-default-contrast-80pct));
+    --lumo-contrast-90pct: var(--uni-contrast-90pct, var(--uni-default-contrast-90pct));
+  
+    /* Text */
+    --lumo-header-text-color: var(--uni-header-text-color, var(--uni-default-header-text-color));
+    --lumo-body-text-color: var(--uni-body-text-color, var(--uni-default-body-text-color));
+    --lumo-secondary-text-color: var(--uni-secondary-text-color, var(--uni-default-secondary-text-color));
+    --lumo-tertiary-text-color: var(--uni-tertiary-text-color, var(--uni-default-tertiary-text-color));
+    --lumo-disabled-text-color: var(--uni-disabled-text-color, var(--uni-default-disabled-text-color));
+  
+    /* Font sizes */
+    --lumo-font-size-xxs: var(--uni-font-size-xxs, var(--uni-default-font-size-xxs));
+    --lumo-font-size-xs: var(--uni-font-size-xs, var(--uni-default-font-size-xs));
+    --lumo-font-size-s: var(--uni-font-size-s, var(--uni-default-font-size-s));
+    --lumo-font-size-m: var(--uni-font-size-m, var(--uni-default-font-size-m));
+    --lumo-font-size-l: var(--uni-font-size-l, var(--uni-default-font-size-l));
+    --lumo-font-size-xl: var(--uni-font-size-xl, var(--uni-default-font-size-xl));
+    --lumo-font-size-xxl: var(--uni-font-size-xxl, var(--uni-default-font-size-xxl));
+    --lumo-font-size-xxxl: var(--uni-font-size-xxxl, var(--uni-default-font-size-xxxl));
+  
+    /* Line heights */
+    --lumo-line-height-xs: var(--uni-line-height-xs, var(--uni-default-line-height-xs));
+    --lumo-line-height-s: var(--uni-line-height-s, var(--uni-default-line-height-s));
+    --lumo-line-height-m: var(--uni-line-height-m, var(--uni-default-line-height-m));
+  
+    /* Primary */
+    --lumo-primary-color: var(--uni-primary-color, var(--uni-default-primary-color));
+    --lumo-primary-color-50pct: var(--uni-primary-color-50pct, var(--uni-default-primary-color-50pct));
+    --lumo-primary-color-10pct: var(--uni-primary-color-10pct, var(--uni-default-primary-color-10pct));
+    --lumo-primary-text-color: var(--uni-primary-text-color, var(--uni-default-primary-text-color));
+    --lumo-primary-contrast-color: var(--uni-primary-contrast-color, var(--uni-default-primary-contrast-color));
+    /* Error */
+    --lumo-error-color: var(--uni-error-color, var(--uni-default-error-color));
+    --lumo-error-color-50pct: var(--uni-error-color-50pct, var(--uni-default-error-color-50pct));
+    --lumo-error-color-10pct: var(--uni-error-color-10pct, var(--uni-default-error-color-10pct));
+    --lumo-error-text-color: var(--uni-error-text-color, var(--uni-default-error-text-color));
+    --lumo-error-contrast-color: var(--uni-error-contrast-color, var(--uni-default-error-contrast-color));
+    /* Success */
+    --lumo-success-color: var(--uni-success-color, var(--uni-default-success-color));
+    --lumo-success-color-50pct: var(--uni-success-color-50pct, var(--uni-default-success-color-50pct));
+    --lumo-success-color-10pct: var(--uni-success-color-10pct, var(--uni-default-success-color-10pct));
+    --lumo-success-text-color: var(--uni-success-text-color, var(--uni-default-success-text-color));
+    --lumo-success-contrast-color: var(--uni-success-contrast-color, var(--uni-default-success-contrast-color));
+  
+    --lumo-font-family: var(--uni-font-family, var(--uni-default-font-family));
+}
+/* don't worry about "root" selector. PostCSS will create "host" rules for you */
+:root {
+  --uni-default-font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+
+  /* elements styles */
+  --uni-default-blockquote-border-color: hsl(209, 15%, 59%);
+  --uni-default-code-border-color: hsl(209, 15%, 59%);
+
+  /* select & button */
+  --uni-default-control-color: #fff;
+  --uni-default-control-contrast-color: hsl(214, 0%, 10%);
+  --uni-default-control-shadow-color: hsla(0, 0%, 0%, 0.2);
+
+  --uni-default-control-hover-color: hsl(214, 0%, 96%);
+  --uni-default-control-active-color: hsl(214, 0%, 80%);
+  --uni-default-control-disabled-color: hsl(214, 0%, 96%);
+
+  --uni-default-code-color: hsl(214, 0%, 96%);
+  --uni-default-code-contrast-color: hsl(6, 73%, 54%);
+
+  --uni-default-hr-color: hsl(214, 0%, 90%);
+  --uni-default-button-color: hsl(214, 0%, 96%);
+  --uni-default-anchor-color: hsl(196, 100%, 30%);
+  --uni-default-anchor-hover-color: hsl(196, 100%, 35%);
+  --uni-default-table-border-color: hsl(214, 0%, 90%);
+
+  --uni-default-base-color: #fff;
+
+  /* Tint */
+  --uni-default-tint-5pct: hsla(0, 0%, 100%, 0.3);
+  --uni-default-tint-10pct: hsla(0, 0%, 100%, 0.37);
+  --uni-default-tint-20pct: hsla(0, 0%, 100%, 0.44);
+  --uni-default-tint-30pct: hsla(0, 0%, 100%, 0.5);
+  --uni-default-tint-40pct: hsla(0, 0%, 100%, 0.57);
+  --uni-default-tint-50pct: hsla(0, 0%, 100%, 0.64);
+  --uni-default-tint-60pct: hsla(0, 0%, 100%, 0.7);
+  --uni-default-tint-70pct: hsla(0, 0%, 100%, 0.77);
+  --uni-default-tint-80pct: hsla(0, 0%, 100%, 0.84);
+  --uni-default-tint-90pct: hsla(0, 0%, 100%, 0.9);
+  --uni-default-tint: #fff;
+
+  /* Shade */
+  --uni-default-shade-5pct: hsl(214, 0%, 96%);
+  --uni-default-shade-10pct: hsl(214, 0%, 90%);
+  --uni-default-shade-20pct: hsl(214, 0%, 80%);
+  --uni-default-shade-30pct: hsl(214, 0%, 70%);
+  --uni-default-shade-40pct: hsl(214, 0%, 60%);
+  --uni-default-shade-50pct: hsl(214, 0%, 50%);
+  --uni-default-shade-60pct: hsl(214, 0%, 40%);
+  --uni-default-shade-70pct: hsl(214, 0%, 30%);
+  --uni-default-shade-80pct: hsl(214, 0%, 20%);
+  --uni-default-shade-90pct: hsl(214, 0%, 10%);
+
+  /* Contrast */
+  --uni-default-contrast-5pct: var(--uni-default-shade-5pct);
+  --uni-default-contrast-10pct: var(--uni-default-shade-10pct);
+  --uni-default-contrast-20pct: var(--uni-default-shade-20pct);
+  --uni-default-contrast-30pct: var(--uni-default-shade-30pct);
+  --uni-default-contrast-40pct: var(--uni-default-shade-40pct);
+  --uni-default-contrast-50pct: var(--uni-default-shade-50pct);
+  --uni-default-contrast-60pct: var(--uni-default-shade-60pct);
+  --uni-default-contrast-70pct: var(--uni-default-shade-70pct);
+  --uni-default-contrast-80pct: var(--uni-default-shade-80pct);
+  --uni-default-contrast-90pct: var(--uni-default-shade-90pct);
+
+  /* Text */
+  --uni-default-header-text-color: var(--uni-default-contrast);
+  --uni-default-body-text-color: var(--uni-default-contrast-90pct);
+  --uni-default-secondary-text-color: var(--uni-default-contrast-70pct);
+  --uni-default-tertiary-text-color: var(--uni-default-contrast-50pct);
+  --uni-default-disabled-text-color: var(--uni-default-contrast-40pct);
+
+  /* Font sizes */
+  --uni-default-font-size-xxs: 0.75rem;
+  --uni-default-font-size-xs: 0.8125rem;
+  --uni-default-font-size-s: 0.875rem;
+  --uni-default-font-size-m: 1rem;
+  --uni-default-font-size-l: 1.125rem;
+  --uni-default-font-size-xl: 1.375rem;
+  --uni-default-font-size-xxl: 1.75rem;
+  --uni-default-font-size-xxxl: 2.5rem;
+
+  /* Line heights */
+  --uni-default-line-height-xs: 1.25;
+  --uni-default-line-height-s: 1.375;
+  --uni-default-line-height-m: 1.625;
+
+  --uni-default-font-family: 'Roboto', 'Segoe UI', 'Helvetica Neue', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+:host {
+  --uni-default-font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+
+  /* elements styles */
+  --uni-default-blockquote-border-color: hsl(209, 15%, 59%);
+  --uni-default-code-border-color: hsl(209, 15%, 59%);
+
+  /* select & button */
+  --uni-default-control-color: #fff;
+  --uni-default-control-contrast-color: hsl(214, 0%, 10%);
+  --uni-default-control-shadow-color: hsla(0, 0%, 0%, 0.2);
+
+  --uni-default-control-hover-color: hsl(214, 0%, 96%);
+  --uni-default-control-active-color: hsl(214, 0%, 80%);
+  --uni-default-control-disabled-color: hsl(214, 0%, 96%);
+
+  --uni-default-code-color: hsl(214, 0%, 96%);
+  --uni-default-code-contrast-color: hsl(6, 73%, 54%);
+
+  --uni-default-hr-color: hsl(214, 0%, 90%);
+  --uni-default-button-color: hsl(214, 0%, 96%);
+  --uni-default-anchor-color: hsl(196, 100%, 30%);
+  --uni-default-anchor-hover-color: hsl(196, 100%, 35%);
+  --uni-default-table-border-color: hsl(214, 0%, 90%);
+
+  --uni-default-base-color: #fff;
+
+  /* Tint */
+  --uni-default-tint-5pct: hsla(0, 0%, 100%, 0.3);
+  --uni-default-tint-10pct: hsla(0, 0%, 100%, 0.37);
+  --uni-default-tint-20pct: hsla(0, 0%, 100%, 0.44);
+  --uni-default-tint-30pct: hsla(0, 0%, 100%, 0.5);
+  --uni-default-tint-40pct: hsla(0, 0%, 100%, 0.57);
+  --uni-default-tint-50pct: hsla(0, 0%, 100%, 0.64);
+  --uni-default-tint-60pct: hsla(0, 0%, 100%, 0.7);
+  --uni-default-tint-70pct: hsla(0, 0%, 100%, 0.77);
+  --uni-default-tint-80pct: hsla(0, 0%, 100%, 0.84);
+  --uni-default-tint-90pct: hsla(0, 0%, 100%, 0.9);
+  --uni-default-tint: #fff;
+
+  /* Shade */
+  --uni-default-shade-5pct: hsl(214, 0%, 96%);
+  --uni-default-shade-10pct: hsl(214, 0%, 90%);
+  --uni-default-shade-20pct: hsl(214, 0%, 80%);
+  --uni-default-shade-30pct: hsl(214, 0%, 70%);
+  --uni-default-shade-40pct: hsl(214, 0%, 60%);
+  --uni-default-shade-50pct: hsl(214, 0%, 50%);
+  --uni-default-shade-60pct: hsl(214, 0%, 40%);
+  --uni-default-shade-70pct: hsl(214, 0%, 30%);
+  --uni-default-shade-80pct: hsl(214, 0%, 20%);
+  --uni-default-shade-90pct: hsl(214, 0%, 10%);
+
+  /* Contrast */
+  --uni-default-contrast-5pct: var(--uni-default-shade-5pct);
+  --uni-default-contrast-10pct: var(--uni-default-shade-10pct);
+  --uni-default-contrast-20pct: var(--uni-default-shade-20pct);
+  --uni-default-contrast-30pct: var(--uni-default-shade-30pct);
+  --uni-default-contrast-40pct: var(--uni-default-shade-40pct);
+  --uni-default-contrast-50pct: var(--uni-default-shade-50pct);
+  --uni-default-contrast-60pct: var(--uni-default-shade-60pct);
+  --uni-default-contrast-70pct: var(--uni-default-shade-70pct);
+  --uni-default-contrast-80pct: var(--uni-default-shade-80pct);
+  --uni-default-contrast-90pct: var(--uni-default-shade-90pct);
+
+  /* Text */
+  --uni-default-header-text-color: var(--uni-default-contrast);
+  --uni-default-body-text-color: var(--uni-default-contrast-90pct);
+  --uni-default-secondary-text-color: var(--uni-default-contrast-70pct);
+  --uni-default-tertiary-text-color: var(--uni-default-contrast-50pct);
+  --uni-default-disabled-text-color: var(--uni-default-contrast-40pct);
+
+  /* Font sizes */
+  --uni-default-font-size-xxs: 0.75rem;
+  --uni-default-font-size-xs: 0.8125rem;
+  --uni-default-font-size-s: 0.875rem;
+  --uni-default-font-size-m: 1rem;
+  --uni-default-font-size-l: 1.125rem;
+  --uni-default-font-size-xl: 1.375rem;
+  --uni-default-font-size-xxl: 1.75rem;
+  --uni-default-font-size-xxxl: 2.5rem;
+
+  /* Line heights */
+  --uni-default-line-height-xs: 1.25;
+  --uni-default-line-height-s: 1.375;
+  --uni-default-line-height-m: 1.625;
+
+  --uni-default-font-family: 'Roboto', 'Segoe UI', 'Helvetica Neue', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
 /* roboto-regular - latin_latin-ext */
 @font-face {
   font-family: "Roboto";
@@ -353,107 +705,6 @@ template {
  * MIT (c) Starcounter
  * version 0.0.3
  */
-:root {
-  /* Starcounter default color variables */
-
-  --white: #ffffff;
-
-  --gray-1: #f9f9f9;
-  --gray-2: #f6f6f6;
-  --gray-3: #efefef;
-  --gray-4: #e7e7e7;
-  --gray-5: #e1e1e1;
-  --gray-6: #868e96;
-  --gray-7: #606c76;
-
-  --transparent-black: #00000033;
-
-  --blue: #0084b4;
-  --dark-blue: #1a587f;
-  --dark: #141d26;
-  --green: #3fa13f;
-  --inky: #1b2936;
-  --livid: #8696a5;
-  --mouse: #e7ecf0;
-  --red: #df4534;
-  --yellow: #ffdb25;
-
-  --anchor-color: var(--blue);
-  --blockquote-border-color: var(--livid);
-  --button-active-background-color: var(--gray-3);
-  --button-background-color: var(--white);
-  --button-hover-background-color: var(--gray-1);
-  --button-text-color: var(--dark);
-  --code-block-background-color: var(--gray-2);
-  --code-block-border-color: var(--blue);
-  --code-block-color: var(--red);
-  --default-body-color: var(--dark);
-  --default-font-size: 14px;
-  --disabled-background-color: var(--gray-2);
-  --disabled-text-color: var(--gray-6);
-  --editable-background-color: var(--gray-2);
-  --horizontal-line-color: var(--gray-4);
-  --shadow-color: var(--transparent-black);
-  --table-border-color: var(--gray-5);
-
-  --font-family-sans-serif: 'Roboto', 'Segoe UI', 'Helvetica Neue', Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
-}
-
-/* 
-  PLEASE DO NOT MAINTAIN THE FOLLOWING PROPERTIES (in :host)
-  Instead, maintain the selector above (:root), then copy and paste the result as is to (:host).
-*/
-:host {
-  /* Starcounter default color variables */
-
-  --white: #ffffff;
-
-  --gray-1: #f9f9f9;
-  --gray-2: #f6f6f6;
-  --gray-3: #efefef;
-  --gray-4: #e7e7e7;
-  --gray-5: #e1e1e1;
-  --gray-6: #868e96;
-  --gray-7: #606c76;
-
-  --transparent-black: #00000033;
-
-  --blue: #0084b4;
-  --dark-blue: #1a587f;
-  --dark: #141d26;
-  --green: #3fa13f;
-  --inky: #1b2936;
-  --livid: #8696a5;
-  --mouse: #e7ecf0;
-  --red: #df4534;
-  --yellow: #ffdb25;
-
-  --anchor-color: var(--blue);
-  --blockquote-border-color: var(--livid);
-  --button-active-background-color: var(--gray-3);
-  --button-background-color: var(--white);
-  --button-hover-background-color: var(--gray-1);
-  --button-text-color: var(--dark);
-  --code-block-background-color: var(--gray-2);
-  --code-block-border-color: var(--blue);
-  --code-block-color: var(--red);
-  --default-body-color: var(--dark);
-  --default-font-size: 14px;
-  --disabled-background-color: var(--gray-2);
-  --disabled-text-color: var(--gray-6);
-  --editable-background-color: var(--gray-2);
-  --horizontal-line-color: var(--gray-4);
-  --shadow-color: var(--transparent-black);
-  --table-border-color: var(--gray-5);
-
-  --font-family-sans-serif: 'Roboto', 'Segoe UI', 'Helvetica Neue', Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
-}
 
 *,
 *:after,
@@ -462,9 +713,9 @@ template {
 }
 
 html {
-  color: var(--default-body-color);
-  font-family: var(--font-family-sans-serif);
-  font-size: var(--default-font-size);
+  color: var(--uni-body-text-color, var(--uni-default-body-text-color));
+  font-family: var(--uni-font-family, var(--uni-default-font-family));
+  font-size: var(--uni-font-size-s, var(--uni-default-font-size-s));
   letter-spacing: 0.01em;
   line-height: 1.6;
 }
@@ -484,7 +735,7 @@ textarea {
 }
 
 blockquote {
-  border-left: 0.3rem solid var(--blockquote-border-color);
+  border-left: 0.3rem solid var(--uni-blockquote-border-color, var(--uni-default-blockquote-border-color));
   margin-left: 0;
   margin-right: 0;
   padding: 1rem 1.5rem;
@@ -498,9 +749,9 @@ button,
 input[type='button'],
 input[type='reset'],
 input[type='submit'] {
-  background-color: var(--button-background-color);
+  background-color: var(--uni-control-color, var(--uni-default-control-color));
   border: none;
-  color: var(--button-text-color);
+  color: var(--uni-control-contrast-color, var(--uni-default-control-contrast-color));
   border-radius: 2px;
   padding-left: 16px;
   padding-top: 2px;
@@ -509,7 +760,7 @@ input[type='submit'] {
   cursor: pointer;
   white-space: nowrap;
   min-width: 120px;
-  box-shadow: 0px 1px 3px 0 var(--shadow-color);
+  box-shadow: 0px 1px 3px 0 var(--uni-control-shadow-color, var(--uni-default-control-shadow-color));
   margin: 2px 2px 2px 0;
 }
 
@@ -518,14 +769,14 @@ input[type='button']:active,
 input[type='reset']:active,
 input[type='submit']:active {
   box-shadow: none;
-  background-color: var(--button-active-background-color);
+  background-color: var(--uni-control-active-color, var(--uni-default-control-active-color));
 }
 
 button:hover:not(:active),
 input[type='button']:hover:not(:active),
 input[type='reset']:hover:not(:active),
 input[type='submit']:hover:not(:active) {
-  background-color: var(--button-hover-background-color);
+  background-color: var(--uni-control-hover-color, var(--uni-default-control-hover-color));
 }
 
 button[disabled],
@@ -534,14 +785,14 @@ input[type='reset'][disabled],
 input[type='submit'][disabled] {
   cursor: default;
   box-shadow: none;
-  background-color: var(--disabled-background-color);
-  color: var(--disabled-text-color);
+  background-color: var(--uni-control-disabled-color, var(--uni-default-control-disabled-color));
+  color: var(--uni-disabled-text-color, var(--uni-default-disabled-text-color));
 }
 
 input:not([type]):disabled,
 input[type='text']:disabled {
-  background-color: var(--disabled-background-color);
-  color: var(--disabled-text-color);
+  background-color: var(--uni-control-disabled-color, var(--uni-default-control-disabled-color));
+  color: var(--uni-disabled-text-color, var(--uni-default-disabled-text-color));
 }
 
 button[disabled]:focus,
@@ -553,22 +804,22 @@ input[type='reset'][disabled]:hover,
 input[type='submit'][disabled]:focus,
 input[type='submit'][disabled]:hover {
   cursor: not-allowed;
-  color: var(--disabled-text-color);
+  color: var(--uni-disabled-text-color, var(--uni-default-disabled-text-color));
 }
 
 code {
-  background: var(--code-block-background-color);
+  background: var(--uni-code-color, var(--uni-default-code-color));
   border-radius: 2px;
   font-size: 86%;
   margin: 0 0.2rem;
   padding: 0.2rem 0.5rem;
   white-space: nowrap;
-  color: var(--code-block-color);
+  color: var(--uni-code-contrast-color, var(--uni-default-code-contrast-color));
 }
 
 pre {
-  background: #f4f5f6;
-  border-left: 0.3rem solid var(--code-block-border-color);
+  background: var(--uni-code-color, var(--uni-default-code-color));
+  border-left: 0.3rem solid var(--uni-code-border-color, var(--uni-default-code-border-color));
   overflow-y: hidden;
   padding-left: 0.5em;
 }
@@ -578,11 +829,12 @@ pre > code {
   display: block;
   padding: 1rem 1.5rem;
   white-space: pre;
+  background: transparent; /* pre already has a bg color */
 }
 
 hr {
   border: 0;
-  border-top: 0.2rem solid var(--horizontal-line-color);
+  border-top: 0.2rem solid var(--uni-hr-color, var(--uni-default-hr-color));
   margin: 3rem 0;
 }
 
@@ -590,6 +842,8 @@ input[type='email'],
 input[type='number'],
 input[type='password'],
 input[type='search'],
+input[type='date'],
+input[type='time'],
 input[type='tel'],
 input[type='text'],
 input:not([type]),
@@ -598,7 +852,7 @@ textarea {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-color: var(--editable-background-color);
+  background-color: var(--uni-button-color, var(--uni-default-button-color));
   border: none;
   box-shadow: none;
   height: 38px;
@@ -614,10 +868,10 @@ input[type='number'] {
 select:not([multiple]) {
   background-image: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="20" height="20" x="120px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><g><polygon points="79.3,42.1 76.4,39.3 51.3,65 25.5,39.9 22.7,42.7 51.3,70.7  "></polygon></g></svg>');
   background-repeat: no-repeat;
-  background-color: var(--button-background-color);
+  background-color: var(--uni-base-color, var(--uni-default-base-color));
   padding: 5px 48px 5px 14px; /* 48 is 16 in padding, 16 for the drop arrow size, 16 for arrow-text distance */
   background-position: calc(100% - 16px) 50%;
-  box-shadow: 0 1px 3px 0 var(--shadow-color);
+  box-shadow: 0 1px 3px 0 var(--uni-control-shadow-color, var(--uni-default-control-shadow-color));
   border-radius: 2px;
   border: none;
   height: 32px;
@@ -628,7 +882,7 @@ select:not([multiple]) {
 
 select:disabled {
   box-shadow: none;
-  background-color: var(--disabled-background-color);
+  background-color: var(--uni-control-disabled-color, var(--uni-default-control-disabled-color));
 }
 
 
@@ -650,7 +904,6 @@ input[type='checkbox'],
 input[type='radio'] {
   margin-right: 5px;
   vertical-align: middle;
-  background: #fff;
 }
 
 /* only works in Chrome :( *
@@ -670,18 +923,18 @@ input[type="checkbox"]:checked::before {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M0 11.522l1.578-1.626 7.734 4.619 13.335-12.526 1.353 1.354-14 18.646z"/></svg>');
 }
 input[type="checkbox"]:disabled:before {
-  background-color: var(--gray-4)
+  background-color: var(--uni-shade-30pct, var(--uni-default-shade-30pct))
 }
 */
 
 a {
-  color: var(--anchor-color);
+  color: var(--uni-anchor-color, var(--uni-default-anchor-color));
   text-decoration: none;
 }
 
 a:focus,
 a:hover {
-  color: var(--anchor-color);
+  color: var(--uni-anchor-hover-color, var(--uni-default-anchor-hover-color));
 }
 
 dl,
@@ -719,20 +972,19 @@ tr:last-of-type > td:last-of-type {
 }
 
 td {
-  border-top: 0.1rem solid var(--table-border-color);
-  background-color: var(--white);
+  border-top: 0.1rem solid var(--uni-table-border-color, var(--uni-default-table-border-color));
 }
 
 tbody > tr:last-of-type > td {
-  border-bottom: 0.1rem solid var(--table-border-color);
+  border-bottom: 0.1rem solid var(--uni-table-border-color, var(--uni-default-table-border-color));
 }
 
 td:first-of-type {
-  border-left: 0.1rem solid var(--table-border-color);
+  border-left: 0.1rem solid var(--uni-table-border-color, var(--uni-default-table-border-color));
 }
 
 td:last-of-type {
-  border-right: 0.1rem solid var(--table-border-color);
+  border-right: 0.1rem solid var(--uni-table-border-color, var(--uni-default-table-border-color));
 }
 
 b,

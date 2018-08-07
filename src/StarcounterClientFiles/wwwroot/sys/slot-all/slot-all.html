@@ -1,4 +1,4 @@
-<!-- slot-all @version: 0.0.1 @license: MIT -->
+<!-- slot-all @version: 0.0.2 @license: MIT -->
 <script>
 (function(){
         /**
@@ -75,13 +75,18 @@
              * Create slots for given elements, if needed:
              *  - element has a slot name,
              *  - names slot was not yet created by this `slot-all``
-             * @param  {NodeList|HTMLCollection} nodeList list of host's children
+             * @param  {NodeList|HTMLCollection} nodeList list of host's children or document fragments with children
              */
             _createSlots(nodeList){
                 const slotAll = this;
                 const slotsMap = slotAll.__createdSlots;
 
-                nodeList.forEach((element)=>{
+                nodeList.forEach(function createSlot(element){
+                    // Polyfilled mutation observer sometimes gives DocumentFragments as addedNode
+                    if(element.nodeType === Node.DOCUMENT_FRAGMENT_NODE){
+                        Array.from(element.children).forEach(createSlot);
+                        return;
+                    }
                     const name = element.slot;
                     if(
                         element.nodeType === Node.ELEMENT_NODE &&

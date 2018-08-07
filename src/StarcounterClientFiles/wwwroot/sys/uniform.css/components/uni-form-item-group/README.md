@@ -5,7 +5,7 @@ an optional native `<label>` group label, and an optional `<output>` message.
 
 ## Demo
 
-[Check it live!](http://Starcounter.github.io/Uniform.css/components/uni-form-item-group)
+[Check it live!](https://starcounter.github.io/uniform.css/components/uni-form-item-group)
 
 ## Install
 
@@ -15,7 +15,7 @@ Install the component using [Bower](http://bower.io/):
 $ bower install uniform.css --save
 ```
 
-Or [download as ZIP](https://github.com/Starcounter/Uniform.css/archive/master.zip).
+Or [download as ZIP](https://github.com/Starcounter/uniform.css/archive/master.zip).
 
 ## Usage
 
@@ -129,18 +129,17 @@ Or [download as ZIP](https://github.com/Starcounter/Uniform.css/archive/master.z
 
 ```json
 {
-    "FieldGroupName": {
-        "Label": "",
-        "FirstItem": {"Label": "", "Value$": ""},
-        "SecondItem": {"Label": "", "Value$": ""},
-        "Invalid": "",
-        "Message": ""
-    }
+    "FirstItem$": "",
+    "SecondItem$": "",
+    "FieldGroupName": "",
+    "FormItemMetadata": {
+         "FieldGroupName": {
+            "Message": "",
+            "Invalid": ""
+        }
+     }
 }
 ```
-
-..., where `FirstItem` and `SecondItem` are view-models
-for `<uni-form-item>` contents.
 
 Example view:
 
@@ -148,20 +147,20 @@ Example view:
     <template>
         <dom-bind>
             <template>
-                <uni-form-item-group aria-invalid$="{{model.FieldGroupName.Invalid}}">
-                    <label>{{model.FieldGroupName.Label}}</label>
+                <uni-form-item-group>
+                    <label>{{model.FieldGroupName}}</label>
 
                     <uni-form-item>
-                        <label>{{model.FieldGroupName.FirstItem.Label}}</label>
-                        <input value="{{model.FieldGroupName.FirstItem.Value$::change}}">
+                        <label>First item label</label>
+                        <input value="{{model.FirstItem$::change}}">
                     </uni-form-item>
 
                     <uni-form-item>
-                        <label>{{model.FieldGroupName.SecondItem.Label}}</label>
-                        <input value="{{model.FieldGroupName.SecondItem.Value$::change}}">
+                        <label>Second item label</label>
+                        <input value="{{model.SecondItem$::change}}">
                     </uni-form-item>
 
-                    <output>{{model.FieldGroupName.Message}}</output>
+                    <output aria-invalid$="{{model.FormItemMetadata.FieldGroupName.Invalid}}">{{model.FormItemMetadata.FieldGroupName.Message}}</output>
                 </uni-form-item-group>
 
             </template>

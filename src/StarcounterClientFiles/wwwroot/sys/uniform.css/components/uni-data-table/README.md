@@ -5,7 +5,7 @@ cell content.
 
 ## Demo
 
-[Check it live!](http://Starcounter.github.io/Uniform.css/components/uni-data-table)
+[Check it live!](https://starcounter.github.io/uniform.css/components/uni-data-table)
 
 ## Install
 
@@ -66,8 +66,9 @@ The `provider` view-model is expected to have:
 | :--- | :--- | :--- |
 | `Pages` | `Array` | Array of pages of data, where indicies are page numbers, and values are objects containing the `Rows` key with an array of rows on the page. |
 | `Pagination` | `Object` | An object that contains information about the number of pages with the following properties: `CurrentPageIndex$`, `PageSize$`, `PagesCount` (all of type `Number`). |
+| `Columns` | `Array` | Array of column objects, which contain informations about the columns in following properties: `DisplayName`, `PropertyName`, `IsSortable`, `IsFilterable`, `Sort$`, `Filter$`. |
 | `TotalRows` | `Number` | The total number of rows across all the pages. |
-| `Page$` | `Number` | Writable page number trigger. `<uni-data-table>` modifies it to request another page from the server. |
+
 
 Example view-model:
 
@@ -154,7 +155,7 @@ Example view-model:
     `page` property, which is bound to `{{model.Page$}}` trigger, and thus
     invokes the handler on the server.
 - The server’s handler changes the `Pages` array and adds the page.
-- `<uni-data-table>` observes the `rowsData` property, which is bound
+- `<uni-data-table>` observes the `Rows` property, which is bound
     to the `{{model.Pages}}`, using the Polymer’s array splices observing.
     When a server adds or replaces a page of rows, `<uni-data-table>` can
     handle that and present the data to the end user.
@@ -246,7 +247,6 @@ the following contents:
 | :--- | :--- | :--- |
 | `DisplayName` | `String` | Displayed name for the column |
 | `PropertyName` | `String` | The key name for the column data in the item objects |
-| `Type` | `String` | Column data type description, only `string` is supported no) |
 | `IsSortable` | `Boolean` | Enable sorting for the column |
 | `Sort$` | `String` | The direction of the sorting, options: `"asc"`, `"desc"`, `null` |
 | `IsFilterable` | `Boolean` | Enable filtering for the column |
@@ -260,8 +260,7 @@ Example view-model:
         "Columns": [
             {
                 "DisplayName": "First name",
-                "PropertyName": "FirstName",
-                "Type": "string"
+                "PropertyName": "FirstName"
             }
         ],
         "Pages": ...,

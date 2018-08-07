@@ -1,14 +1,9 @@
-const WebpackShellPlugin = require('webpack-shell-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 function generateConfig(fileName) {
-  const plugins = [
-    new ExtractTextPlugin(`${fileName}.unminified.css`),
-    new WebpackShellPlugin({ onBuildExit: ['node build.js'], safe: true })
-  ];
+  const plugins = [new ExtractTextPlugin(`${fileName}.unminified.css`)];
 
   const pluginsWithMinification = [
     new ExtractTextPlugin(`${fileName}.css`),
@@ -59,7 +54,18 @@ function generateConfig(fileName) {
   return [configUnminified, configMinified];
 }
 
-module.exports = ['underwear', 'commando', 'uniform'].reduce((acc, name) => {
+const configs = ['underwear', 'commando', 'uniform'].reduce((acc, name) => {
   acc.push(...generateConfig(name));
   return acc;
 }, []);
+
+// this will generate two configurations for root-dir-uniform.css (unminified and minified)
+const rootDirUniformCSSConfig = generateConfig('uniform')[1] // we want only the minified one
+
+// change the path so Webpack resolves the fonts path correctly
+rootDirUniformCSSConfig.output.path = path.resolve(__dirname);
+rootDirUniformCSSConfig.module.loaders[1].options.name = './dist/fonts/[name].[ext]'
+
+configs.push(rootDirUniformCSSConfig);
+
+module.exports = configs;

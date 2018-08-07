@@ -1,4 +1,4 @@
-<!-- uni-form-item-group @version: 0.4.1 @license: MIT -->
+<!-- uni-form-item-group @version: 0.5.0 @license: MIT -->
 <template>
     <style>
         :host {
@@ -43,19 +43,24 @@
             font-size: 12px;
         }
 
+        /* give the field transparent border to prevent reflowing with error/success changes */
+        :host {
+            --uni-form-item-control-border: 2px solid transparent;
+        }
+
         /* Error controls should have red border */
         :host([error]) {
-            --uni-form-item-control-border: 2px solid var(--red, red);
+            --uni-form-item-control-border: 2px solid var(--uni-danger-color, hsl(5, 73%, 52%));
         }
 
         /* Error message should be red */
         :host([error]) ::slotted(output) {
-            color: var(--red, red);
+            color: var(--uni-danger-color, hsl(5, 73%, 52%));
         }
 
         /* Success message should be green */
         :host([success]) ::slotted(output) {
-            color: var(--green, green);
+            color: var(--uni-success-color, hsl(120, 44%, 44%));
         }
     </style>
     <slot></slot>
