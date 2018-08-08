@@ -20,14 +20,14 @@
     "polymer": "^2.0.0"
   },
   "homepage": "https://github.com/vaadin/vaadin-development-mode-detector",
-  "version": "1.1.0-alpha2",
-  "_release": "1.1.0-alpha2",
+  "version": "1.1.0-beta1",
+  "_release": "1.1.0-beta1",
   "_resolution": {
     "type": "version",
-    "tag": "v1.1.0-alpha2",
-    "commit": "6fdefabc40338533a7c62033e3269127a736ebac"
+    "tag": "v1.1.0-beta1",
+    "commit": "f8b644e3be734e06ff9f5bbd13dde9d1439e61de"
   },
   "_source": "https://github.com/vaadin/vaadin-development-mode-detector.git",
-  "_target": "^1.1.0-alpha2",
+  "_target": "^1.1.0-beta1",
   "_originalSource": "vaadin/vaadin-development-mode-detector"
 }

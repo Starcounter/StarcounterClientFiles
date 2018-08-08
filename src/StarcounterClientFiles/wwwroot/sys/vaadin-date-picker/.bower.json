@@ -40,7 +40,7 @@
     "vaadin-text-field": "^2.0.0",
     "vaadin-themable-mixin": "^1.1.0",
     "vaadin-control-state-mixin": "^2.0.0",
-    "vaadin-overlay": "^3.0.0",
+    "vaadin-overlay": "^3.0.4",
     "vaadin-lumo-styles": "vaadin/vaadin-lumo-styles#^1.0.0",
     "vaadin-element-mixin": "vaadin/vaadin-element-mixin#^1.0.1"
   },
@@ -58,12 +58,12 @@
     "web-component-tester": "^6.1.5",
     "vaadin-demo-helpers": "^1.0.0"
   },
-  "version": "3.1.1",
-  "_release": "3.1.1",
+  "version": "3.1.2",
+  "_release": "3.1.2",
   "_resolution": {
     "type": "version",
-    "tag": "v3.1.1",
-    "commit": "6994aa7dbac91a64cd8d18637bff002bdd17028c"
+    "tag": "v3.1.2",
+    "commit": "cabfe8847e3d65d4a6717bb34ebfbc87e7c7d448"
   },
   "_source": "https://github.com/vaadin/vaadin-date-picker.git",
   "_target": "^3.1.0",

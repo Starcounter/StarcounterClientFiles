@@ -46,12 +46,12 @@
     "starcounter-include": "Starcounter/starcounter-include#master",
     "fast-json-patch": "^2.0.6"
   },
-  "version": "7.1.0",
-  "_release": "7.1.0",
+  "version": "7.1.1",
+  "_release": "7.1.1",
   "_resolution": {
     "type": "version",
-    "tag": "7.1.0",
-    "commit": "969c0f3bcf3b0cc4786aecc916d7cec985b9b691"
+    "tag": "7.1.1",
+    "commit": "96db50372d4df9890fc166ad204f3cf9f690b846"
   },
   "_source": "https://github.com/Palindrom/palindrom-client.git",
   "_target": "^7.0.0",

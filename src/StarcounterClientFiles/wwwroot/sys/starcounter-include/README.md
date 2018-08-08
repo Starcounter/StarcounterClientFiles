@@ -64,10 +64,10 @@ To produce
  - Easy way to attach presentation expressed in declarative Shadow DOM
 
 
-### wiki
- - https://github.com/StarcounterPrefabs/Launcher/wiki/Partials
- - https://github.com/StarcounterPrefabs/Launcher/wiki/Layout-setup
- - https://github.com/StarcounterPrefabs/Launcher/wiki/include-template-in-Polyjuice
+### High-level docs
+ You can read more on [Blendable Web Apps in Starcounter docs](https://docs.starcounter.io/guides/blendable-web-apps)
+ - https://docs.starcounter.io/guides/blendable-web-apps/html-views
+ - https://docs.starcounter.io/guides/blendable-web-apps/view-composing
 
 ### Partial HTML views limitations
 

@@ -1,22 +1,22 @@
 bower check-new     Checking for new versions of the project dependencies...
-starcounter-clientfiles#3.9.0 C:\Work\Starcounter\StarcounterClientFiles\src\StarcounterClientFiles
+starcounter-clientfiles#3.14.0 C:\Work\Starcounter\StarcounterClientFiles\src\StarcounterClientFiles
 ├─┬ enlighted-link#0.0.1
-│ └── webcomponentsjs#1.2.2 (1.2.4 available, latest is 2.0.4)
+│ └── webcomponentsjs#1.2.4 (latest is 2.0.4)
 ├─┬ imported-template#3.2.1
 │ └── juicy-html#4.0.0
-├─┬ palindrom-client#7.1.0 (7.1.1 available)
+├─┬ palindrom-client#7.1.1
 │ └── Palindrom#5.1.2
 ├── palindrom-error-catcher#1.1.0
 ├── palindrom-redirect#1.0.0
 ├─┬ polymer-source#2.6.0 (latest is 3.0.5)
-│ ├── shadycss#1.3.1 (1.4.0 available)
-│ └── webcomponentsjs#1.2.2 (1.2.4 available, latest is 2.0.4)
-├─┬ slot-all#0.0.2
-│ └── webcomponentsjs#1.2.2
-├─┬ starcounter-include#5.1.0
+│ ├── shadycss#1.4.0
+│ └── webcomponentsjs#1.2.4 (latest is 2.0.4)
+├─┬ slot-all#0.0.3
+│ └── webcomponentsjs#1.2.4
+├─┬ starcounter-include#5.1.1
 │ └── imported-template#3.2.1
 ├─┬ uniform.css#0.5.1
-│ ├─┬ vaadin-date-picker#3.1.1 (3.2.0-beta2 available)
+│ ├─┬ vaadin-date-picker#3.1.2 (3.2.0-beta2 available)
 │ │ ├─┬ iron-a11y-announcer#2.1.0
 │ │ │ └── polymer not installed
 │ │ ├─┬ iron-a11y-keys-behavior#2.1.1
@@ -28,13 +28,13 @@ starcounter-clientfiles#3.9.0 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 │ │ ├── polymer not installed
 │ │ ├─┬ vaadin-button#2.0.1 (2.1.0-beta2 available)
 │ │ │ ├── polymer not installed
-│ │ │ ├─┬ vaadin-control-state-mixin#2.0.3
+│ │ │ ├─┬ vaadin-control-state-mixin#2.1.1
 │ │ │ │ └── polymer not installed
-│ │ │ ├─┬ vaadin-element-mixin#1.1.1
+│ │ │ ├─┬ vaadin-element-mixin#1.1.2
 │ │ │ │ ├── polymer not installed
-│ │ │ │ ├─┬ vaadin-development-mode-detector#1.1.0-alpha2
+│ │ │ │ ├─┬ vaadin-development-mode-detector#1.1.0-beta1
 │ │ │ │ │ └── polymer not installed
-│ │ │ │ └─┬ vaadin-usage-statistics#1.1.0-alpha1
+│ │ │ │ └─┬ vaadin-usage-statistics#1.1.0-beta1
 │ │ │ │   └── polymer not installed
 │ │ │ ├─┬ vaadin-lumo-styles#1.0.0
 │ │ │ │ ├─┬ iron-icon#2.1.0
@@ -48,15 +48,15 @@ starcounter-clientfiles#3.9.0 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 │ │ │ │ │ │ └── polymer not installed
 │ │ │ │ │ └── polymer not installed
 │ │ │ │ └── polymer not installed
-│ │ │ └─┬ vaadin-themable-mixin#1.2.0
+│ │ │ └─┬ vaadin-themable-mixin#1.2.1
 │ │ │   └── polymer not installed
-│ │ ├─┬ vaadin-control-state-mixin#2.0.3 (2.1.1 available)
+│ │ ├─┬ vaadin-control-state-mixin#2.1.1
 │ │ │ └── polymer not installed
-│ │ ├─┬ vaadin-element-mixin#1.1.1 (1.1.2 available)
+│ │ ├─┬ vaadin-element-mixin#1.1.2
 │ │ │ ├── polymer not installed
-│ │ │ ├─┬ vaadin-development-mode-detector#1.1.0-alpha2 (1.1.0-beta1 available, latest is 2.0.0-alpha3)
+│ │ │ ├─┬ vaadin-development-mode-detector#1.1.0-beta1 (latest is 2.0.0-alpha3)
 │ │ │ │ └── polymer not installed
-│ │ │ └─┬ vaadin-usage-statistics#1.1.0-alpha1 (1.1.0-beta1 available, latest is 2.0.0-alpha3)
+│ │ │ └─┬ vaadin-usage-statistics#1.1.0-beta1 (latest is 2.0.0-beta1)
 │ │ │   └── polymer not installed
 │ │ ├─┬ vaadin-lumo-styles#1.0.0 (1.1.0-beta1 available)
 │ │ │ ├─┬ iron-icon#2.1.0
@@ -70,7 +70,7 @@ starcounter-clientfiles#3.9.0 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 │ │ │ │ │ └── polymer not installed
 │ │ │ │ └── polymer not installed
 │ │ │ └── polymer not installed
-│ │ ├─┬ vaadin-overlay#3.0.3 (3.1.0-beta2 available)
+│ │ ├─┬ vaadin-overlay#3.0.4 (3.1.0-beta2 available)
 │ │ │ ├─┬ iron-overlay-behavior#2.3.4
 │ │ │ │ ├── iron-a11y-keys-behavior#2.1.1
 │ │ │ │ ├─┬ iron-fit-behavior#2.2.1
@@ -90,16 +90,16 @@ starcounter-clientfiles#3.9.0 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 │ │ │ │ │ │ └── polymer not installed
 │ │ │ │ │ └── polymer not installed
 │ │ │ │ └── polymer not installed
-│ │ │ └── vaadin-themable-mixin#1.2.0 (1.2.1 available)
-│ │ ├─┬ vaadin-text-field#2.0.1 (2.1.0-beta2 available)
+│ │ │ └── vaadin-themable-mixin#1.2.1
+│ │ ├─┬ vaadin-text-field#2.0.2 (2.1.0-beta2 available)
 │ │ │ ├── polymer not installed
-│ │ │ ├─┬ vaadin-control-state-mixin#2.0.3
+│ │ │ ├─┬ vaadin-control-state-mixin#2.1.1
 │ │ │ │ └── polymer not installed
-│ │ │ ├─┬ vaadin-element-mixin#1.1.1
+│ │ │ ├─┬ vaadin-element-mixin#1.1.2
 │ │ │ │ ├── polymer not installed
-│ │ │ │ ├─┬ vaadin-development-mode-detector#1.1.0-alpha2
+│ │ │ │ ├─┬ vaadin-development-mode-detector#1.1.0-beta1
 │ │ │ │ │ └── polymer not installed
-│ │ │ │ └─┬ vaadin-usage-statistics#1.1.0-alpha1
+│ │ │ │ └─┬ vaadin-usage-statistics#1.1.0-beta1
 │ │ │ │   └── polymer not installed
 │ │ │ ├─┬ vaadin-lumo-styles#1.0.0
 │ │ │ │ ├─┬ iron-icon#2.1.0
@@ -113,9 +113,9 @@ starcounter-clientfiles#3.9.0 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 │ │ │ │ │ │ └── polymer not installed
 │ │ │ │ │ └── polymer not installed
 │ │ │ │ └── polymer not installed
-│ │ │ └─┬ vaadin-themable-mixin#1.2.0
+│ │ │ └─┬ vaadin-themable-mixin#1.2.1
 │ │ │   └── polymer not installed
-│ │ └─┬ vaadin-themable-mixin#1.2.0 (1.2.1 available)
+│ │ └─┬ vaadin-themable-mixin#1.2.1
 │ │   └── polymer not installed
 │ ├─┬ vaadin-grid#5.0.4 (5.1.0-beta2 available)
 │ │ ├── iron-a11y-announcer#2.1.0
@@ -126,13 +126,13 @@ starcounter-clientfiles#3.9.0 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 │ │ ├── polymer not installed
 │ │ ├─┬ vaadin-checkbox#2.1.1 (2.2.0-beta2 available)
 │ │ │ ├── polymer not installed
-│ │ │ ├─┬ vaadin-control-state-mixin#2.0.3
+│ │ │ ├─┬ vaadin-control-state-mixin#2.1.1
 │ │ │ │ └── polymer not installed
-│ │ │ ├─┬ vaadin-element-mixin#1.1.1
+│ │ │ ├─┬ vaadin-element-mixin#1.1.2
 │ │ │ │ ├── polymer not installed
-│ │ │ │ ├─┬ vaadin-development-mode-detector#1.1.0-alpha2
+│ │ │ │ ├─┬ vaadin-development-mode-detector#1.1.0-beta1
 │ │ │ │ │ └── polymer not installed
-│ │ │ │ └─┬ vaadin-usage-statistics#1.1.0-alpha1
+│ │ │ │ └─┬ vaadin-usage-statistics#1.1.0-beta1
 │ │ │ │   └── polymer not installed
 │ │ │ ├─┬ vaadin-lumo-styles#1.0.0
 │ │ │ │ ├─┬ iron-icon#2.1.0
@@ -146,13 +146,13 @@ starcounter-clientfiles#3.9.0 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 │ │ │ │ │ │ └── polymer not installed
 │ │ │ │ │ └── polymer not installed
 │ │ │ │ └── polymer not installed
-│ │ │ └─┬ vaadin-themable-mixin#1.2.0
+│ │ │ └─┬ vaadin-themable-mixin#1.2.1
 │ │ │   └── polymer not installed
-│ │ ├─┬ vaadin-element-mixin#1.1.1
+│ │ ├─┬ vaadin-element-mixin#1.1.2
 │ │ │ ├── polymer not installed
-│ │ │ ├─┬ vaadin-development-mode-detector#1.1.0-alpha2
+│ │ │ ├─┬ vaadin-development-mode-detector#1.1.0-beta1
 │ │ │ │ └── polymer not installed
-│ │ │ └─┬ vaadin-usage-statistics#1.1.0-alpha1
+│ │ │ └─┬ vaadin-usage-statistics#1.1.0-beta1
 │ │ │   └── polymer not installed
 │ │ ├─┬ vaadin-lumo-styles#1.0.0
 │ │ │ ├─┬ iron-icon#2.1.0
@@ -166,15 +166,15 @@ starcounter-clientfiles#3.9.0 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 │ │ │ │ │ └── polymer not installed
 │ │ │ │ └── polymer not installed
 │ │ │ └── polymer not installed
-│ │ ├─┬ vaadin-text-field#2.0.1
+│ │ ├─┬ vaadin-text-field#2.0.2
 │ │ │ ├── polymer not installed
-│ │ │ ├─┬ vaadin-control-state-mixin#2.0.3
+│ │ │ ├─┬ vaadin-control-state-mixin#2.1.1
 │ │ │ │ └── polymer not installed
-│ │ │ ├─┬ vaadin-element-mixin#1.1.1
+│ │ │ ├─┬ vaadin-element-mixin#1.1.2
 │ │ │ │ ├── polymer not installed
-│ │ │ │ ├─┬ vaadin-development-mode-detector#1.1.0-alpha2
+│ │ │ │ ├─┬ vaadin-development-mode-detector#1.1.0-beta1
 │ │ │ │ │ └── polymer not installed
-│ │ │ │ └─┬ vaadin-usage-statistics#1.1.0-alpha1
+│ │ │ │ └─┬ vaadin-usage-statistics#1.1.0-beta1
 │ │ │ │   └── polymer not installed
 │ │ │ ├─┬ vaadin-lumo-styles#1.0.0
 │ │ │ │ ├─┬ iron-icon#2.1.0
@@ -188,9 +188,9 @@ starcounter-clientfiles#3.9.0 C:\Work\Starcounter\StarcounterClientFiles\src\Sta
 │ │ │ │ │ │ └── polymer not installed
 │ │ │ │ │ └── polymer not installed
 │ │ │ │ └── polymer not installed
-│ │ │ └─┬ vaadin-themable-mixin#1.2.0
+│ │ │ └─┬ vaadin-themable-mixin#1.2.1
 │ │ │   └── polymer not installed
-│ │ └─┬ vaadin-themable-mixin#1.2.0
+│ │ └─┬ vaadin-themable-mixin#1.2.1
 │ │   └── polymer not installed
-│ └── webcomponentsjs#1.2.2
-└── webcomponentsjs#1.2.2 (1.2.4 available, latest is 2.0.4)
+│ └── webcomponentsjs#1.2.4
+└── webcomponentsjs#1.2.4 (latest is 2.0.4)
