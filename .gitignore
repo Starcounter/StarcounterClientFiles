@@ -125,5 +125,7 @@ UpgradeLog*.XML
 node_modules
 package-lock.json
 
-
 dist/*
+
+# remove package-lock.json from bower packages
+src/StarcounterClientFiles/wwwroot/**/package-lock.json
