@@ -1,4 +1,4 @@
-<!-- slot-all @version: 0.0.2 @license: MIT -->
+<!-- slot-all @version: 0.0.3 @license: MIT -->
 <script>
 (function(){
         /**
@@ -43,6 +43,8 @@
              * to create or remove named slots.
              */
             connectedCallback(){
+                // force it to be non-displayed element
+                this.style.display = 'none';
                 const host = this.getRootNode().host;
                 // Start observing the shadow host for child list changes
                 // workaround https://github.com/webcomponents/shadydom/issues/260

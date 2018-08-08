@@ -40,12 +40,12 @@
     "vaadin-lumo-styles": "vaadin/vaadin-lumo-styles#^1.0.0",
     "vaadin-element-mixin": "vaadin/vaadin-element-mixin#^1.0.1"
   },
-  "version": "2.0.1",
-  "_release": "2.0.1",
+  "version": "2.0.2",
+  "_release": "2.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "v2.0.1",
-    "commit": "504283d8e5d17a7540205dbb07e84d86c573dd7f"
+    "tag": "v2.0.2",
+    "commit": "558788811cb9bd4d1ead1066da179acec0b786c4"
   },
   "_source": "https://github.com/vaadin/vaadin-text-field.git",
   "_target": "^2.0.0",

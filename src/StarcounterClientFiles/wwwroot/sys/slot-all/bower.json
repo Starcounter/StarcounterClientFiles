@@ -1,6 +1,6 @@
 {
   "name": "slot-all",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A custom element to distribute all elements regardless of their slot name",
   "license": "MIT",
   "main": "slot-all.html",

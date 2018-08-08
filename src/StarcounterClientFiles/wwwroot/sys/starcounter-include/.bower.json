@@ -23,6 +23,7 @@
     "bower_components",
     "Gruntfile.js",
     "wwwroot/sys",
+    "package-lock.json",
     "test",
     "wct.conf.json",
     "demo",
@@ -35,12 +36,12 @@
     "web-component-tester": "^6.0.0",
     "polymer": "^2.2.0"
   },
-  "version": "5.1.0",
-  "_release": "5.1.0",
+  "version": "5.1.1",
+  "_release": "5.1.1",
   "_resolution": {
     "type": "version",
-    "tag": "5.1.0",
-    "commit": "b91cb9e98d8557b62b6bc8b42ff4400c0daec90b"
+    "tag": "5.1.1",
+    "commit": "dedffa2776f998ac1117f03620b3e9db73e0bf09"
   },
   "_source": "https://github.com/Starcounter/starcounter-include.git",
   "_target": "^5.1.0",

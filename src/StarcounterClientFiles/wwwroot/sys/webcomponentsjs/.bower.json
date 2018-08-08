@@ -21,12 +21,12 @@
   "devDependencies": {
     "web-component-tester": "^v6.0.0"
   },
-  "version": "1.2.2",
-  "_release": "1.2.2",
+  "version": "1.2.4",
+  "_release": "1.2.4",
   "_resolution": {
     "type": "version",
-    "tag": "v1.2.2",
-    "commit": "820bcfee3599e7d7c5a739f9d69ca311af42e5a1"
+    "tag": "v1.2.4",
+    "commit": "e97a592f9662af69970039ecf425d031373b6f57"
   },
   "_source": "https://github.com/Polymer/webcomponentsjs.git",
   "_target": "^1.0.0",
