@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "node vulcanize.node.js"
+    "build": "node vulcanize.node.js && node create-service-worker.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "polymer-bundler": "^3.1.1"
+    "find": "^0.2.9",
+    "folder-hash": "^2.1.1",
+    "polymer-bundler": "^3.1.1",
+    "pretty-bytes": "^5.1.0"
   },
   "dependencies": {
     "parse5": "^4.0.0"
