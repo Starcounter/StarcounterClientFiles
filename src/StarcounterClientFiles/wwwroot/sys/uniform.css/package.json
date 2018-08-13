@@ -1,6 +1,6 @@
 {
   "name": "uniform.css",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Opinionated CSS library that plays nicely within Shadow DOM, plus a set of elements to be used as decorators in Shadow DOM",
   "main": "build.js",
   "repository": {

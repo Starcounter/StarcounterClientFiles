@@ -1,4 +1,4 @@
-<!-- uni-data-table @version: 0.5.1 @license: MIT -->
+<!-- uni-data-table @version: 0.5.2 @license: MIT -->
 <link rel="import" href="../../../polymer/polymer.html">
 <link rel="import" href="../../../polymer/lib/elements/dom-if.html">
 <link rel="import" href="../../../polymer/lib/utils/flattened-nodes-observer.html">
@@ -9,6 +9,7 @@
 
 <dom-module id="uni-data-table">
     <template>
+        <link rel="stylesheet" href="../../../uniform.css/uniform.css">
         <style>
             :host {
                 /* Expected: the host uses avaiable width from the parent */
@@ -38,6 +39,7 @@
             :host([auto-pagination]),
             :host([auto-pagination]) > vaadin-grid {
                 height: auto;
+                margin-bottom: 1em; /* to give pagiation control some space */
             }
         </style>
         <vaadin-grid id="vaadinGrid"
