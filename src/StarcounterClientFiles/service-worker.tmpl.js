@@ -17,12 +17,7 @@
 const PRECACHE = REPLACE_ME_WITH_WITH_PRE_CACHED_FILES_HASH;
 const RUNTIME = 'runtime';
 
-// A list of local resources we always want to be cached.
-const PRECACHE_WITHOUT_SYS = REPLACE_ME_WITH_WITH_PRE_CACHE_URLS;
-
-/* there is a couple hundred URLs all prefixed with `sys`. Removing those `sys`es and adding them here saves ~1KB */
-const PRECACHE_URLS = PRECACHE_WITHOUT_SYS.map(url => `sys/${url}`);
-
+const PRECACHE_URLS = REPLACE_ME_WITH_WITH_PRE_CACHE_URLS;
 
 function isRequestForAnAsset(url) {
   const lastPartOfUrl = url.split('/').pop();

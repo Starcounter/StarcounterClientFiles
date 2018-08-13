@@ -38,7 +38,7 @@ function fileFilter(file) {
 }
 
 function groomFile(file) {
-  file = path.relative(path.resolve(__dirname, 'wwwroot', 'sys'), file);
+  file = path.relative(path.resolve(__dirname, 'wwwroot'), file);
   file = file.replace(/\\/g, '/');
   return file;
 }
