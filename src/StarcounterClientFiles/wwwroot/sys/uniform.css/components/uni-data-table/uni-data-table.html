@@ -1,4 +1,4 @@
-<!-- uni-data-table @version: 0.5.2 @license: MIT -->
+<!-- uni-data-table @version: 0.5.3 @license: MIT -->
 <link rel="import" href="../../../polymer/polymer.html">
 <link rel="import" href="../../../polymer/lib/elements/dom-if.html">
 <link rel="import" href="../../../polymer/lib/utils/flattened-nodes-observer.html">
@@ -47,7 +47,7 @@
                      size="[[provider.TotalRows]]"
                      height-by-rows="[[autoPagination]]">
             <template is="dom-repeat" items="[[__generatedColumns]]" as="column">
-                <uni-data-table-column index="[[index]]"
+                <uni-data-table-column index="[[column.index]]"
                                        __table-provider="[[provider]]">
                 </uni-data-table-column>
             </template>
@@ -111,6 +111,7 @@
                  * Array of `provider.Columns` objects, with slotted columns
                  * in the DOM filtered-out. Used in `dom-repeat` for generating
                  * `<uni-data-table-column>` elements from `provider.Columns`.
+                 * Structured as `{index, column}` to workaround https://github.com/vaadin/vaadin-grid/issues/1365.
                  */
                 __generatedColumns: {
                     type: Array,
@@ -189,8 +190,8 @@
             });
             this.__generatedColumns = Columns.map((column, index) =>
                 // Do not generate if there is a slotted column for the index
-                columnElementsByIndex[index] ? null : column
-            );
+                columnElementsByIndex[index] ? undefined : {index, column}
+            ).filter((n) => n );
         }
 
         __valueWithFallback(value, fallback) {
@@ -202,7 +203,7 @@
          * grid invokes this method to fetch the data for the given page number,
          * sorters, filters, etc.
          */
-        __rowsDataProvider({ page } = params, callback) {            
+        __rowsDataProvider({ page } = params, callback) {
             if (!this.provider) {
                 return;
             }
