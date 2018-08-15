@@ -1,5 +1,5 @@
 bower check-new     Checking for new versions of the project dependencies...
-starcounter-clientfiles D:\repos\apps\StarcounterClientFiles\src\StarcounterClientFiles
+starcounter-clientfiles C:\Work\Starcounter\StarcounterClientFiles\src\StarcounterClientFiles
 ├─┬ enlighted-link#0.0.1
 │ └── webcomponentsjs#1.2.4 (latest is 2.0.4)
 ├─┬ imported-template#3.2.1
@@ -15,7 +15,7 @@ starcounter-clientfiles D:\repos\apps\StarcounterClientFiles\src\StarcounterClie
 │ └── webcomponentsjs#1.2.4
 ├─┬ starcounter-include#5.1.1
 │ └── imported-template#3.2.1
-├─┬ uniform.css#0.5.3
+├─┬ uniform.css#0.5.4
 │ ├─┬ vaadin-date-picker#3.1.2 (3.2.0-beta2 available)
 │ │ ├─┬ iron-a11y-announcer#2.1.0
 │ │ │ └── polymer not installed
@@ -52,7 +52,7 @@ starcounter-clientfiles D:\repos\apps\StarcounterClientFiles\src\StarcounterClie
 │ │ │   └── polymer not installed
 │ │ ├─┬ vaadin-control-state-mixin#2.1.1
 │ │ │ └── polymer not installed
-│ │ ├─┬ vaadin-element-mixin#1.1.2 (latest is 2.0.0)
+│ │ ├─┬ vaadin-element-mixin#1.1.2 (latest is 2.1.0)
 │ │ │ ├── polymer not installed
 │ │ │ ├─┬ vaadin-development-mode-detector#1.1.0-beta1 (latest is 2.0.0)
 │ │ │ │ └── polymer not installed
