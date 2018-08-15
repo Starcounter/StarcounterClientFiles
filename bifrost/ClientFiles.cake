@@ -1,12 +1,19 @@
 ///
-/// Global configuration
+/// Root path configuration
 ///
-string clientFilesRootPath = Environment.GetEnvironmentVariable("CakeClientFilesPath");
-if (string.IsNullOrEmpty(clientFilesRootPath))
+string clientFilesRootPath;
+ if (Tasks.Any(t => t.Name.Equals("Bifrost")))
 {
-    clientFilesRootPath = MakeAbsolute(Directory("..")).FullPath;
-    Information("StarcounterClientFiles root full path: {0}", clientFilesRootPath);
+    // Executed from Bifrost
+    clientFilesRootPath = MakeAbsolute(Directory("../StarcounterClientFiles")).FullPath;
 }
+else
+{
+    // Executed as a self-containment script
+    clientFilesRootPath = MakeAbsolute(Directory("..")).FullPath;
+}
+
+Information("StarcounterClientFiles root full path: {0}", clientFilesRootPath);
 
 ///
 /// Argument parsing 
