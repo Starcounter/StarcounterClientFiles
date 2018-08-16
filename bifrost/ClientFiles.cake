@@ -2,7 +2,8 @@
 /// Root path configuration
 ///
 string clientFilesRootPath;
- if (Tasks.Any(t => t.Name.Equals("Bifrost")))
+
+if (Tasks.Any(t => t.Name.Equals("Bifrost")))
 {
     // Executed from Bifrost
     clientFilesRootPath = MakeAbsolute(Directory("../StarcounterClientFiles")).FullPath;
@@ -12,8 +13,6 @@ else
     // Executed as a self-containment script
     clientFilesRootPath = MakeAbsolute(Directory("..")).FullPath;
 }
-
-Information("StarcounterClientFiles root full path: {0}", clientFilesRootPath);
 
 ///
 /// Argument parsing 
