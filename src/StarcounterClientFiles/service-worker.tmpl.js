@@ -83,9 +83,7 @@ self.addEventListener('fetch', event => {
           return cachedResponse;
         }
         return caches.open(RUNTIME).then(cache => {
-          return fetch(event.request, {
-            headers: { Accept: acceptHeader } // forward headers
-          }).then(response => {
+          return fetch(event.request).then(response => {
             // only cache assets
             // caching non-assets would cache eg MainPage (which is technically the app shell),
             // and would cache REST API calls
