@@ -5,7 +5,7 @@
     (function () {
         function updateCurrentLinks(currentHref) {
             document.querySelectorAll("a[href]").forEach(el => {
-                if (el.href === currentHref) {
+                if (el.href.toLowerCase() === currentHref.toLowerCase()) {
                     el.setAttribute('aria-current', "page")
                 } else if (el.hasAttribute('aria-current')) {
                     el.removeAttribute('aria-current')
