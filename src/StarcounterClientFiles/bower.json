@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "palindrom-client": "^7.0.0",
-    "imported-template": "^3.2.0",
+    "imported-template": "^3.3.0",
     "palindrom-redirect": "~1.0.0",
     "starcounter-include": "^5.1.0",
     "polymer-source": "polymer#^2.0.0",
