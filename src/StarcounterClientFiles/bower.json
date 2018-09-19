@@ -3,19 +3,19 @@
   "private": true,
   "dependencies": {
     "palindrom-client": "^7.0.0",
-    "imported-template": "^3.3.0",
+    "imported-template": "^3.4.0",
     "palindrom-redirect": "~1.0.0",
-    "starcounter-include": "^5.1.0",
-    "polymer-source": "polymer#^2.0.0",
-    "webcomponentsjs": "^1.0.0",
+    "starcounter-include": "^5.2.0",
+    "polymer-source": "polymer#^2.6.1",
+    "webcomponentsjs": "^1.2.7",
     "uniform.css": "^0.5.3",
-    "enlighted-link": "^0.0.1",
+    "enlighted-link": "^0.1.0",
     "palindrom-error-catcher": "^1.0.0",
     "slot-all": "^0.0.3"
   },
   "resolutions": {
     "fast-json-patch": "^1.1.0",
-    "polymer": "^2.0.0",
-    "webcomponentsjs": "^1.0.0"
+    "polymer": "^2.6.1",
+    "webcomponentsjs": "^1.2.7"
   }
 }

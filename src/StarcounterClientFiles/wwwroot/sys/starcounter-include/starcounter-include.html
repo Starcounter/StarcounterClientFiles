@@ -4,7 +4,7 @@ Custom Element (w/ Polymer's TemplateBinding)
 with predefined template content, which should be used to include partials.
 It's just <imported-template> wrapped within Shadow Root for `declarative-shadow-dom` bindable by layout editor.
 Uses Shadow DOM given from DB as `Starcounter.MergedPartial.{_compositionProvider_}.Composition$`.
-version: 5.1.1
+version: 5.2.0
 
 -->
 <!-- Import dependencies -->
@@ -15,15 +15,44 @@ version: 5.1.1
         function warnAboutDeprecatedPartial() {
             console.warn('`partial` attribute and property are deprecated from `starcounter-include` in favour of (viewModel property or view-model attribute), they will soon be no longer be supported');
         }
+        const BLOCKING_LINKS_SELECTOR = 'link[rel="stylesheet"]';
+        const DEFAULT_SHADOW_DOM_PRESENTATION_SELECTOR = 'template[is="declarative-shadow-dom"][presentation=default],template[is="declarative-shadow-dom"]:not([presentation])';
+
         const isWebkit = navigator.vendor && navigator.vendor.indexOf("Apple") > -1;
 
         // still needed for .selectNode
         const isSafari = isWebkit && navigator.userAgent && !navigator.userAgent.match("CriOS");
         const fallBackComposition = '<style>:host{display:block;}</style><slot></slot>';
 
+        /**
+         * Returns a rejectable promise to load (or fail to load) all blocking
+         * link elements in given scope.
+         * @param  {Node} scope scope to be queried for the elements
+         * @return {Promise|null} `.reject()`able promise that all links will be loaded,
+         *                        or `null` if there are none
+         */
+        function blockingLinksLoaded(scope){
+            const links = scope.querySelectorAll(BLOCKING_LINKS_SELECTOR);
+            if(links.length === 0){
+                return null;
+            }
+            let rejectDefer;
+            const promise = new Promise((resolveAll, rejectAll) => {
+                Promise.all(Array.from(links).map((link)=>{
+                    return new Promise((resolve, reject)=>{
+                        link.addEventListener('load', resolve);
+                        link.addEventListener('error', resolve);
+                    });
+                })).then(resolveAll);
+                rejectDefer = rejectAll;
+            });
+            promise.reject = rejectDefer;
+            return promise;
+        }
+
         class StarcounterInclude extends HTMLElement {
             static get observedAttributes() {
-                return ['partial', 'view-model', 'partialId'];
+                return ['partial', 'view-model', 'partialId', 'loading-presentation', 'loading-content'];
             }
             /**
             * Create shadowRoot, define property setters, set initial partial.
@@ -108,7 +137,8 @@ version: 5.1.1
                     const importedTemplate = document.createElement('imported-template');
                     importedTemplate.addEventListener('stamping', function fetchCompositions(event) {
                         var mergedComposition = null;
-                        const templates = event.detail.querySelectorAll('template[is="declarative-shadow-dom"][presentation=default],template[is="declarative-shadow-dom"]:not([presentation])');
+                        const fragment = event.detail;
+                        const templates = fragment.querySelectorAll(DEFAULT_SHADOW_DOM_PRESENTATION_SELECTOR);
                         if(templates.length){
                             mergedComposition = document.createDocumentFragment();
                             for(const individualComposition of templates) {
@@ -163,14 +193,24 @@ version: 5.1.1
          * Set partial property if partial or view-model attribute was changed
          */
         StarcounterIncludePrototype.attributeChangedCallback = function(name, oldVal, newVal) {
-            if (name === "view-model") {
-                this.viewModel = partialAttributeToProperty(this, newVal);
-            }
-            else if(name === "partial") {
-                if(!oldVal /* to warn only once */) {
-                    warnAboutDeprecatedPartial();
-                }
-                this.viewModel = partialAttributeToProperty(this, newVal);
+            switch(name){
+                case "view-model":
+                    this.viewModel = partialAttributeToProperty(this, newVal);
+                    break;
+                case "partial":
+                    if(!oldVal /* to warn only once */) {
+                        warnAboutDeprecatedPartial();
+                    }
+                    this.viewModel = partialAttributeToProperty(this, newVal);
+                    break;
+                // Not to overwrite existing compositions, change BlendingEditor,
+                // partialToStandaloneHTMLProvider, and due to lack of
+                // custom-elements default styles
+                // https://github.com/w3c/webcomponents/issues/468
+                // , we need to make single rule inline
+                case "loading-presentation":
+                    this.style.visibility = (this.hasAttribute('loading-presentation')) ?
+                        'hidden' : 'visible';
             }
         };
         /**
@@ -462,11 +502,19 @@ version: 5.1.1
          */
         function checkForNonNamespaced(viewModel, element){
             if(viewModel && typeof viewModel.Html !== 'undefined'){
-                console.warn(`Your view-model is probably not namespaced!
-`, viewModel, `
-We no longer support those.
-Please make sure it's a result of \`Self.GET\` on serverside. If it's not a result of blending, then replace \`<starcounter-include view-model="{{viewModel}}">\` with  \`<div><imported-template model="{{viewModel}}" href="{{viewModel.Html}}"></imported-template></div>\`.
-`, element);
+                console.warn(`The view ${viewModel.Html} is enclosed in a red-dotted line, because it is incorrectly provided to <starcounter-include> without an app namespace. Your options are to either: 
+- Make it blendable by using Self.GET on server-side, or
+- Use <imported-template> instead of <starcounter-include> and remove declarative-shadow-dom from the nested view
+
+Read more at: https://starcounter.io/starcounter-include-non-namespaced-partial-view-models/`, viewModel, element);
+                element.style.outline = "4px red dotted";
+                element.style.outlineOffset = "-4px";
+                element.wasWarned = true;
+            }
+            else if(element.wasWarned) {
+                element.style.outline = null;
+                element.style.outlineOffset = null;
+                element.wasWarned = false;
             }
         };
 
@@ -476,13 +524,36 @@ Please make sure it's a result of \`Self.GET\` on serverside. If it's not a resu
          * @param {DocumentFragment} givenComposition
          */
         StarcounterIncludePrototype.stampComposition = function(givenComposition){
-            // create shadowRoot if none
             const shadowRoot = this.shadowRoot;
+            this.blockingShadowLinksLoaded && this.blockingShadowLinksLoaded.reject('composition-changed');
 
             if (givenComposition !== undefined) {
-                // reset SD to default CSS
+                // reset SD
                 shadowRoot.innerHTML = '';
 
+                // wait for blocking links
+                const blockingShadowLinksLoaded = blockingLinksLoaded(givenComposition);
+                this.blockingShadowLinksLoaded = blockingShadowLinksLoaded;
+
+                if(blockingShadowLinksLoaded){
+                    // We have some styles that need to be loaded
+                    this.setAttribute('loading-presentation', '');
+                    blockingShadowLinksLoaded.then(()=>{
+                        this.removeAttribute('loading-presentation');
+                        this.dispatchEvent(new CustomEvent('presentation-loaded'));
+                    }, (reason) => {
+                        // forward uncaught rejection
+                        // if reason is different than `composition-changed`
+                        if(reason !== 'composition-changed'){
+                            return Promise.reject(e);
+                        }
+                    });
+                } else {
+                    // The new presentation is styled synchronously, no need to wait.
+                    // Remove the attribute if there is one from previous, unresolved styles
+                    this.removeAttribute('loading-presentation');
+                    this.dispatchEvent(new CustomEvent('presentation-loaded'));
+                }
                 shadowRoot.appendChild(givenComposition);
                 // polyfill `polyfill-next-selector` if needed
                 typeof WebComponents !== 'undefined' && WebComponents.ShadowCSS &&
@@ -500,6 +571,18 @@ Please make sure it's a result of \`Self.GET\` on serverside. If it's not a resu
             console.error('clear is not yet defined!');
         }
 
+        // Desired use of upcoming Web Platform feature,
+        // so we would not have to implement all `loading-*` attributes and
+        // fallback composition logic.
+        // customElements.define('starcounter-include', StarcounterInclude,
+        //         { style: new CSSStyleSheet(`
+        //             :element([loading-presentation]){
+        //                 visibility:hidden !important;
+        //             }
+        //             :element{
+        //                 display:block;
+        //             }`)}
+        // );
         customElements.define('starcounter-include', StarcounterInclude);
     })();
 </script>

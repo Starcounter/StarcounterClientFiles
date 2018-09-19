@@ -1,6 +1,6 @@
 {
   "name": "enlighted-link",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Awesome, Juicy Custom Element",
   "license": "MIT",
   "main": "enlighted-link.html",
@@ -25,13 +25,13 @@
     "juicy-ace-editor": "^2.0.5"
   },
   "homepage": "https://github.com/Juicy/enlighted-link",
-  "_release": "0.0.1",
+  "_release": "0.1.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.1",
-    "commit": "394701cfab5012694b74353632e983fdb6179816"
+    "tag": "0.1.0",
+    "commit": "060e8f4028cf802aa3a36d71f31d07e606b30fbf"
   },
   "_source": "https://github.com/Juicy/enlighted-link.git",
-  "_target": "^0.0.1",
+  "_target": "^0.1.0",
   "_originalSource": "enlighted-link"
 }
