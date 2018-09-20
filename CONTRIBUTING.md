@@ -22,6 +22,7 @@ The developer process of releasing of a new version of StarcounterClientFiles `3
 5. When you push to a feature branch of StarcounterClientFiles, TeamCity will run a integration test of this branch with KitchenSink and Blending. Make sure these tests are passing.
 6. Make a PR for someone to review the complete set of changes.
 7. After PR approval, still in PR branch publish a package of this version to App Warehouse (built with Starcounter 2.4). Follow the steps to do this [here](https://github.com/Starcounter/CompanyTrack/blob/master/AppsTeam/Guidelines/releasing-to-warehouse.md). 
+   * Make sure to have cake dotnet CLI tool installed: `dotnet tool install -g Cake.Tool`
    * this will create a nuget package of StarcounterClientFiles called `Starcounter.ClientFiles` to folder `/StarcounterClientFiles/artifacts/Starcounter.ClientFiles.X.Y.Z.nupkg`
 8. Execute [push_nuget_package.bat](https://github.com/Starcounter/StarcounterClientFiles/blob/3.x/push_nuget_package.bat)
     * Requires full path to nupkg file + MyGet api key: 

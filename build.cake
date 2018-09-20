@@ -1,105 +1,131 @@
 ///
-/// Root path configuration
+/// Private namespace
 ///
-string clientFilesRootPath;
+{
+    ///
+    /// Root path configuration
+    ///
+    string rootPath;
 
-if (Tasks.Any(t => t.Name.Equals("Bifrost")))
-{
-    // Executed from Bifrost
-    clientFilesRootPath = MakeAbsolute(Directory("../StarcounterClientFiles")).FullPath;
-}
-else
-{
-    // Executed as a self-containment script
-    clientFilesRootPath = MakeAbsolute(Directory("..")).FullPath;
-}
-
-///
-/// Argument parsing 
-///
-string clientFilesConfiguration = Argument("configuration", "Debug");
-string clientFilesMygetApiKey = Argument("mygetApiKey", "");
-string clientFilesNuGetPackageFile = Argument("clientFilesNupkgFile", "");
-string clientFilesStarNugetPath = Argument("starNugetPath", "");
-if (string.IsNullOrEmpty(clientFilesStarNugetPath))
-{
-    clientFilesStarNugetPath = clientFilesRootPath + "/artifacts";
-}
-
-///
-/// Task for building ClientFiles
-///
-Task("BuildClientFiles").Does(() =>
-{
-    var msBuildSettings = new MSBuildSettings
+    if (Tasks.Any(t => t.Name.Equals("Bifrost")))
     {
-        Configuration = clientFilesConfiguration,
-    };
-
-    MSBuild(clientFilesRootPath + "/StarcounterClientFiles.sln", msBuildSettings);
-});
-
-///
-/// Task for packaging NuGet ClientFiles package
-///     using AssemblyInfo.cs->AssemblyInformationalVersion as NuGet version and starNugetPathArg (%STAR_NUGET%) as output path
-///
-Task("PackClientFiles").Does(() =>
-{
-    FileInfo fi = new FileInfo(string.Format("{0}/src/StarcounterClientFiles/Properties/AssemblyInfo.cs", clientFilesRootPath));
-    
-    if (!fi.Exists)
+        // Executed from Bifrost
+        rootPath = MakeAbsolute(Directory("../StarcounterClientFiles")).FullPath;
+    }
+    else
     {
-        throw new Exception(
-            string.Format("{0} does not exist which is used to set the NuGet version.", 
-                fi.FullName, 
-                clientFilesConfiguration));
+        // Executed as a self-containment script
+        rootPath = MakeAbsolute(Directory(".")).FullPath;
     }
 
-    string[] readText = System.IO.File.ReadAllLines(fi.FullName);
-    string versionInfoLine = readText.Where(t => t.Contains("[assembly: AssemblyInformationalVersion")).FirstOrDefault();
-
-    if (string.IsNullOrEmpty(versionInfoLine))
+    ///
+    /// Argument parsing
+    ///
+    string configuration = Argument("configuration", "Debug");
+    string mygetApiKey = Argument("mygetApiKey", "");
+    string nuGetPackageFile = Argument("clientFilesNupkgFile", "");
+    string starNugetPath = Argument("starNugetPath", "");
+    if (string.IsNullOrEmpty(starNugetPath))
     {
-         throw new Exception(string.Format("{0} does not contain AssemblyInformationalVersion which is used as nuget version.", fi.FullName));
+        starNugetPath = rootPath + "/artifacts";
     }
 
-    string version = versionInfoLine.Substring(versionInfoLine.IndexOf('(') + 2, versionInfoLine.LastIndexOf(')') - versionInfoLine.IndexOf('(') - 3);
-
-    var nuGetPackSettings = new NuGetPackSettings 
+    ///
+    /// Task for building ClientFiles
+    ///
+    Task("BuildClientFiles").Does(() =>
     {
-        Version                 = version,
-        NoPackageAnalysis       = true,
-        BasePath                = clientFilesRootPath + "/bifrost",
-        Properties              = new Dictionary<string, string>()
+        var msBuildSettings = new MSBuildSettings
         {
-            {"Configuration", clientFilesConfiguration} 
-        },
-        OutputDirectory         = clientFilesStarNugetPath
-    };
-    
-    NuGetPack(clientFilesRootPath + "/bifrost/Starcounter.ClientFiles.nuspec", nuGetPackSettings);
-});
+            Configuration = configuration,
+        };
 
-///
-/// Task for pushing ClientFiles to NuGet
-///
-Task("PushClientFiles").Does(() =>
-{
-    if (string.IsNullOrEmpty(clientFilesMygetApiKey))
+        MSBuild(rootPath + "/StarcounterClientFiles.sln", msBuildSettings);
+    });
+
+    ///
+    /// Task for packaging NuGet ClientFiles package
+    ///     using AssemblyInfo.cs->AssemblyInformationalVersion as NuGet version and starNugetPathArg (%STAR_NUGET%) as output path
+    ///
+    Task("PackClientFiles").Does(() =>
     {
-        throw new Exception("MyGet API key has not been set, aborting! Set argument --mygetApiKey");
-    }
+        FileInfo fi = new FileInfo(string.Format("{0}/src/StarcounterClientFiles/Properties/AssemblyInfo.cs", rootPath));
 
-    FileInfo fi = new FileInfo(clientFilesNuGetPackageFile);
-    if (string.IsNullOrEmpty(clientFilesNuGetPackageFile) || !fi.Exists)
+        if (!fi.Exists)
+        {
+            throw new Exception(
+                string.Format("{0} does not exist which is used to set the NuGet version.",
+                    fi.FullName,
+                    configuration));
+        }
+
+        string[] readText = System.IO.File.ReadAllLines(fi.FullName);
+        string versionInfoLine = readText.Where(t => t.Contains("[assembly: AssemblyInformationalVersion")).FirstOrDefault();
+
+        if (string.IsNullOrEmpty(versionInfoLine))
+        {
+             throw new Exception(string.Format("{0} does not contain AssemblyInformationalVersion which is used as nuget version.", fi.FullName));
+        }
+
+        string version = versionInfoLine.Substring(versionInfoLine.IndexOf('(') + 2, versionInfoLine.LastIndexOf(')') - versionInfoLine.IndexOf('(') - 3);
+
+        var nuGetPackSettings = new NuGetPackSettings
+        {
+            Version                 = version,
+            NoPackageAnalysis       = true,
+            BasePath                = rootPath + "/nuget",
+            Properties              = new Dictionary<string, string>()
+            {
+                { "Configuration", configuration }
+            },
+            OutputDirectory         = starNugetPath
+        };
+
+        NuGetPack(rootPath + "/nuget/Starcounter.ClientFiles.nuspec", nuGetPackSettings);
+    });
+
+    ///
+    /// Task for pushing ClientFiles to NuGet
+    ///
+    Task("PushClientFiles").Does(() =>
     {
-        throw new Exception(string.Format("NuGet package file \"{0}\" does not exist, aborting. set argument --nupkgFile", clientFilesNuGetPackageFile));
+        if (string.IsNullOrEmpty(mygetApiKey))
+        {
+            throw new Exception("MyGet API key has not been set, aborting! Set argument --mygetApiKey");
+        }
+
+        FileInfo fi = new FileInfo(nuGetPackageFile);
+        if (string.IsNullOrEmpty(nuGetPackageFile) || !fi.Exists)
+        {
+            throw new Exception(string.Format("NuGet package file \"{0}\" does not exist, aborting. set argument --nupkgFile", nuGetPackageFile));
+        }
+
+        var nuGetPushSettings = new NuGetPushSettings
+        {
+            Source = "https://www.myget.org/F/starcounter/api/v2/package",
+            ApiKey = mygetApiKey
+        };
+
+        NuGetPush(fi.FullName, nuGetPushSettings);
+    });
+
+    ///
+    /// Run targets if invoked as self-containment script
+    ///
+    if (!Tasks.Any(t => t.Name.Equals("Bifrost")))
+    {
+        // Read targets argument
+        IEnumerable<string> targetsArg = Argument("targets", "Build,Pack").Split(new Char[]{',', ' '}).Where(s => !string.IsNullOrEmpty(s));
+
+        // Self-containment dependent targets
+        Task("Build").IsDependentOn("BuildClientFiles");
+        Task("Pack").IsDependentOn("PackClientFiles");
+        Task("Push").IsDependentOn("PushClientFiles");
+
+        // Run target
+        foreach (string t in targetsArg)
+        {
+            RunTarget(t);
+        }
     }
-
-    var nuGetPushSettings = new NuGetPushSettings {
-        Source = "https://www.myget.org/F/starcounter/api/v2/package",
-        ApiKey = clientFilesMygetApiKey
-    };
-
-    NuGetPush(fi.FullName, nuGetPushSettings);
-});
+}
