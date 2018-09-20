@@ -34,25 +34,26 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
-'use strict';var k=!(window.ShadyDOM&&window.ShadyDOM.inUse),n;function p(a){n=a&&a.shimcssproperties?!1:k||!(navigator.userAgent.match(/AppleWebKit\/601|Edge\/15/)||!window.CSS||!CSS.supports||!CSS.supports("box-shadow","0 0 0 var(--foo)"))}window.ShadyCSS&&void 0!==window.ShadyCSS.nativeCss?n=window.ShadyCSS.nativeCss:window.ShadyCSS?(p(window.ShadyCSS),window.ShadyCSS=void 0):p(window.WebComponents&&window.WebComponents.flags);var r=n;function t(){this.end=this.start=0;this.rules=this.parent=this.previous=null;this.cssText=this.parsedCssText="";this.atRule=!1;this.type=0;this.parsedSelector=this.selector=this.keyframesName=""}
-function u(a){a=a.replace(v,"").replace(aa,"");var c=x,b=a,d=new t;d.start=0;d.end=b.length;for(var e=d,f=0,h=b.length;f<h;f++)if("{"===b[f]){e.rules||(e.rules=[]);var g=e,m=g.rules[g.rules.length-1]||null;e=new t;e.start=f+1;e.parent=g;e.previous=m;g.rules.push(e)}else"}"===b[f]&&(e.end=f+1,e=e.parent||d);return c(d,a)}
-function x(a,c){var b=c.substring(a.start,a.end-1);a.parsedCssText=a.cssText=b.trim();a.parent&&(b=c.substring(a.previous?a.previous.end:a.parent.start,a.start-1),b=ba(b),b=b.replace(y," "),b=b.substring(b.lastIndexOf(";")+1),b=a.parsedSelector=a.selector=b.trim(),a.atRule=0===b.indexOf("@"),a.atRule?0===b.indexOf("@media")?a.type=z:b.match(ca)&&(a.type=A,a.keyframesName=a.selector.split(y).pop()):a.type=0===b.indexOf("--")?B:C);if(b=a.rules)for(var d=0,e=b.length,f;d<e&&(f=b[d]);d++)x(f,c);return a}
-function ba(a){return a.replace(/\\([0-9a-f]{1,6})\s/gi,function(a,b){a=b;for(b=6-a.length;b--;)a="0"+a;return"\\"+a})}
-function E(a,c,b){b=void 0===b?"":b;var d="";if(a.cssText||a.rules){var e=a.rules,f;if(f=e)f=e[0],f=!(f&&f.selector&&0===f.selector.indexOf("--"));if(f){f=0;for(var h=e.length,g;f<h&&(g=e[f]);f++)d=E(g,c,d)}else c?c=a.cssText:(c=a.cssText,c=c.replace(da,"").replace(ea,""),c=c.replace(fa,"").replace(ha,"")),(d=c.trim())&&(d="  "+d+"\n")}d&&(a.selector&&(b+=a.selector+" {\n"),b+=d,a.selector&&(b+="}\n\n"));return b}
-var C=1,A=7,z=4,B=1E3,v=/\/\*[^*]*\*+([^/*][^*]*\*+)*\//gim,aa=/@import[^;]*;/gim,da=/(?:^[^;\-\s}]+)?--[^;{}]*?:[^{};]*?(?:[;\n]|$)/gim,ea=/(?:^[^;\-\s}]+)?--[^;{}]*?:[^{};]*?{[^}]*?}(?:[;\n]|$)?/gim,fa=/@apply\s*\(?[^);]*\)?\s*(?:[;\n]|$)?/gim,ha=/[^;:]*?:[^;]*?var\([^;]*\)(?:[;\n]|$)?/gim,ca=/^@[^\s]*keyframes/,y=/\s+/g;var F=/(?:^|[;\s{]\s*)(--[\w-]*?)\s*:\s*(?:((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^)]*?\)|[^};{])+)|\{([^}]*)\}(?:(?=[;\s}])|$))/gi,G=/(?:^|\W+)@apply\s*\(?([^);\n]*)\)?/gi,ia=/@media\s(.*)/;var H=new Set;function I(a){if(!a)return"";"string"===typeof a&&(a=u(a));return E(a,r)}function J(a){!a.__cssRules&&a.textContent&&(a.__cssRules=u(a.textContent));return a.__cssRules||null}function K(a,c,b,d){if(a){var e=!1,f=a.type;if(d&&f===z){var h=a.selector.match(ia);h&&(window.matchMedia(h[1]).matches||(e=!0))}f===C?c(a):b&&f===A?b(a):f===B&&(e=!0);if((a=a.rules)&&!e){e=0;f=a.length;for(var g;e<f&&(g=a[e]);e++)K(g,c,b,d)}}}
-function L(a,c){var b=a.indexOf("var(");if(-1===b)return c(a,"","","");a:{var d=0;var e=b+3;for(var f=a.length;e<f;e++)if("("===a[e])d++;else if(")"===a[e]&&0===--d)break a;e=-1}d=a.substring(b+4,e);b=a.substring(0,b);a=L(a.substring(e+1),c);e=d.indexOf(",");return-1===e?c(b,d.trim(),"",a):c(b,d.substring(0,e).trim(),d.substring(e+1).trim(),a)};var ja=/;\s*/m,ka=/^\s*(initial)|(inherit)\s*$/,M=/\s*!important/;function N(){this.a={}}N.prototype.set=function(a,c){a=a.trim();this.a[a]={h:c,i:{}}};N.prototype.get=function(a){a=a.trim();return this.a[a]||null};var O=null;function P(){this.b=this.c=null;this.a=new N}P.prototype.o=function(a){a=G.test(a)||F.test(a);G.lastIndex=0;F.lastIndex=0;return a};
-P.prototype.m=function(a,c){if(void 0===a.a){var b=[];for(var d=a.content.querySelectorAll("style"),e=0;e<d.length;e++){var f=d[e];if(f.hasAttribute("shady-unscoped")){if(!k){var h=f.textContent;H.has(h)||(H.add(h),h=f.cloneNode(!0),document.head.appendChild(h));f.parentNode.removeChild(f)}}else b.push(f.textContent),f.parentNode.removeChild(f)}(b=b.join("").trim())?(d=document.createElement("style"),d.textContent=b,a.content.insertBefore(d,a.content.firstChild),b=d):b=null;a.a=b}return(a=a.a)?this.j(a,
-c):null};P.prototype.j=function(a,c){c=void 0===c?"":c;var b=J(a);this.l(b,c);a.textContent=I(b);return b};P.prototype.f=function(a){var c=this,b=J(a);K(b,function(a){":root"===a.selector&&(a.selector="html");c.g(a)});a.textContent=I(b);return b};P.prototype.l=function(a,c){var b=this;this.c=c;K(a,function(a){b.g(a)});this.c=null};P.prototype.g=function(a){a.cssText=la(this,a.parsedCssText);":root"===a.selector&&(a.selector=":host > *")};
-function la(a,c){c=c.replace(F,function(b,c,e,f){return ma(a,b,c,e,f)});return Q(a,c)}
-function Q(a,c){for(var b;b=G.exec(c);){var d=b[0],e=b[1];b=b.index;var f=c.slice(0,b+d.indexOf("@apply"));c=c.slice(b+d.length);var h=R(a,f);d=void 0;var g=a;e=e.replace(ja,"");var m=[];var l=g.a.get(e);l||(g.a.set(e,{}),l=g.a.get(e));if(l){g.c&&(l.i[g.c]=!0);var q=l.h;for(d in q)g=h&&h[d],l=[d,": var(",e,"_-_",d],g&&l.push(",",g.replace(M,"")),l.push(")"),M.test(q[d])&&l.push(" !important"),m.push(l.join(""))}d=m.join("; ");c=f+d+c;G.lastIndex=b+d.length}return c}
-function R(a,c){c=c.split(";");for(var b,d,e={},f=0,h;f<c.length;f++)if(b=c[f])if(h=b.split(":"),1<h.length){b=h[0].trim();var g=a;d=b;h=h.slice(1).join(":");var m=ka.exec(h);m&&(m[1]?(g.b||(g.b=document.createElement("meta"),g.b.setAttribute("apply-shim-measure",""),g.b.style.all="initial",document.head.appendChild(g.b)),d=window.getComputedStyle(g.b).getPropertyValue(d)):d="apply-shim-inherit",h=d);d=h;e[b]=d}return e}function na(a,c){if(O)for(var b in c.i)b!==a.c&&O(b)}
-function ma(a,c,b,d,e){d&&L(d,function(c,b){b&&a.a.get(b)&&(e="@apply "+b+";")});if(!e)return c;var f=Q(a,""+e),h=c.slice(0,c.indexOf("--")),g=f=R(a,f),m=a.a.get(b),l=m&&m.h;l?g=Object.assign(Object.create(l),f):a.a.set(b,g);var q=[],w,W=!1;for(w in g){var D=f[w];void 0===D&&(D="initial");!l||w in l||(W=!0);q.push(b+"_-_"+w+": "+D)}W&&na(a,m);m&&(m.h=g);d&&(h=c+";"+h);return h+q.join("; ")+";"}P.prototype.detectMixin=P.prototype.o;P.prototype.transformStyle=P.prototype.j;
-P.prototype.transformCustomStyle=P.prototype.f;P.prototype.transformRules=P.prototype.l;P.prototype.transformRule=P.prototype.g;P.prototype.transformTemplate=P.prototype.m;P.prototype._separator="_-_";Object.defineProperty(P.prototype,"invalidCallback",{get:function(){return O},set:function(a){O=a}});var S={};var oa=Promise.resolve();function pa(a){if(a=S[a])a._applyShimCurrentVersion=a._applyShimCurrentVersion||0,a._applyShimValidatingVersion=a._applyShimValidatingVersion||0,a._applyShimNextVersion=(a._applyShimNextVersion||0)+1}function T(a){return a._applyShimCurrentVersion===a._applyShimNextVersion}function qa(a){a._applyShimValidatingVersion=a._applyShimNextVersion;a.b||(a.b=!0,oa.then(function(){a._applyShimCurrentVersion=a._applyShimNextVersion;a.b=!1}))};var U=new P;function V(){this.a=null;U.invalidCallback=pa}function X(a){a.a||(a.a=window.ShadyCSS.CustomStyleInterface,a.a&&(a.a.transformCallback=function(a){U.f(a)},a.a.validateCallback=function(){requestAnimationFrame(function(){a.a.enqueued&&a.flushCustomStyles()})}))}V.prototype.prepareTemplate=function(a,c){X(this);S[c]=a;c=U.m(a,c);a._styleAst=c};
-V.prototype.flushCustomStyles=function(){X(this);if(this.a){var a=this.a.processStyles();if(this.a.enqueued){for(var c=0;c<a.length;c++){var b=this.a.getStyleForCustomStyle(a[c]);b&&U.f(b)}this.a.enqueued=!1}}};
-V.prototype.styleSubtree=function(a,c){X(this);if(c)for(var b in c)null===b?a.style.removeProperty(b):a.style.setProperty(b,c[b]);if(a.shadowRoot)for(this.styleElement(a),a=a.shadowRoot.children||a.shadowRoot.childNodes,c=0;c<a.length;c++)this.styleSubtree(a[c]);else for(a=a.children||a.childNodes,c=0;c<a.length;c++)this.styleSubtree(a[c])};
-V.prototype.styleElement=function(a){X(this);var c=a.localName,b;c?-1<c.indexOf("-")?b=c:b=a.getAttribute&&a.getAttribute("is")||"":b=a.is;if((c=S[b])&&!T(c)){if(T(c)||c._applyShimValidatingVersion!==c._applyShimNextVersion)this.prepareTemplate(c,b),qa(c);if(a=a.shadowRoot)if(a=a.querySelector("style"))a.__cssRules=c._styleAst,a.textContent=I(c._styleAst)}};V.prototype.styleDocument=function(a){X(this);this.styleSubtree(document.body,a)};
-if(!window.ShadyCSS||!window.ShadyCSS.ScopingShim){var Y=new V,Z=window.ShadyCSS&&window.ShadyCSS.CustomStyleInterface;window.ShadyCSS={prepareTemplate:function(a,c){Y.flushCustomStyles();Y.prepareTemplate(a,c)},prepareTemplateStyles:function(a,c,b){this.prepareTemplate(a,c,b)},prepareTemplateDom:function(){},styleSubtree:function(a,c){Y.flushCustomStyles();Y.styleSubtree(a,c)},styleElement:function(a){Y.flushCustomStyles();Y.styleElement(a)},styleDocument:function(a){Y.flushCustomStyles();Y.styleDocument(a)},
-getComputedStyleValue:function(a,c){return(a=window.getComputedStyle(a).getPropertyValue(c))?a.trim():""},flushCustomStyles:function(){Y.flushCustomStyles()},nativeCss:r,nativeShadow:k};Z&&(window.ShadyCSS.CustomStyleInterface=Z)}window.ShadyCSS.ApplyShim=U;}).call(this);
+'use strict';var k=!(window.ShadyDOM&&window.ShadyDOM.inUse),n;function r(a){n=a&&a.shimcssproperties?!1:k||!(navigator.userAgent.match(/AppleWebKit\/601|Edge\/15/)||!window.CSS||!CSS.supports||!CSS.supports("box-shadow","0 0 0 var(--foo)"))}window.ShadyCSS&&void 0!==window.ShadyCSS.nativeCss?n=window.ShadyCSS.nativeCss:window.ShadyCSS?(r(window.ShadyCSS),window.ShadyCSS=void 0):r(window.WebComponents&&window.WebComponents.flags);var t=n;function u(){this.end=this.start=0;this.rules=this.parent=this.previous=null;this.cssText=this.parsedCssText="";this.atRule=!1;this.type=0;this.parsedSelector=this.selector=this.keyframesName=""}
+function v(a){a=a.replace(aa,"").replace(ba,"");var b=w,c=a,e=new u;e.start=0;e.end=c.length;for(var d=e,f=0,g=c.length;f<g;f++)if("{"===c[f]){d.rules||(d.rules=[]);var h=d,l=h.rules[h.rules.length-1]||null;d=new u;d.start=f+1;d.parent=h;d.previous=l;h.rules.push(d)}else"}"===c[f]&&(d.end=f+1,d=d.parent||e);return b(e,a)}
+function w(a,b){var c=b.substring(a.start,a.end-1);a.parsedCssText=a.cssText=c.trim();a.parent&&(c=b.substring(a.previous?a.previous.end:a.parent.start,a.start-1),c=ca(c),c=c.replace(x," "),c=c.substring(c.lastIndexOf(";")+1),c=a.parsedSelector=a.selector=c.trim(),a.atRule=0===c.indexOf("@"),a.atRule?0===c.indexOf("@media")?a.type=y:c.match(da)&&(a.type=z,a.keyframesName=a.selector.split(x).pop()):a.type=0===c.indexOf("--")?A:B);if(c=a.rules)for(var e=0,d=c.length,f;e<d&&(f=c[e]);e++)w(f,b);return a}
+function ca(a){return a.replace(/\\([0-9a-f]{1,6})\s/gi,function(a,c){a=c;for(c=6-a.length;c--;)a="0"+a;return"\\"+a})}
+function C(a,b,c){c=void 0===c?"":c;var e="";if(a.cssText||a.rules){var d=a.rules,f;if(f=d)f=d[0],f=!(f&&f.selector&&0===f.selector.indexOf("--"));if(f){f=0;for(var g=d.length,h;f<g&&(h=d[f]);f++)e=C(h,b,e)}else b?b=a.cssText:(b=a.cssText,b=b.replace(ea,"").replace(fa,""),b=b.replace(ha,"").replace(ia,"")),(e=b.trim())&&(e="  "+e+"\n")}e&&(a.selector&&(c+=a.selector+" {\n"),c+=e,a.selector&&(c+="}\n\n"));return c}
+var B=1,z=7,y=4,A=1E3,aa=/\/\*[^*]*\*+([^/*][^*]*\*+)*\//gim,ba=/@import[^;]*;/gim,ea=/(?:^[^;\-\s}]+)?--[^;{}]*?:[^{};]*?(?:[;\n]|$)/gim,fa=/(?:^[^;\-\s}]+)?--[^;{}]*?:[^{};]*?{[^}]*?}(?:[;\n]|$)?/gim,ha=/@apply\s*\(?[^);]*\)?\s*(?:[;\n]|$)?/gim,ia=/[^;:]*?:[^;]*?var\([^;]*\)(?:[;\n]|$)?/gim,da=/^@[^\s]*keyframes/,x=/\s+/g;var D=/(?:^|[;\s{]\s*)(--[\w-]*?)\s*:\s*(?:((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^)]*?\)|[^};{])+)|\{([^}]*)\}(?:(?=[;\s}])|$))/gi,F=/(?:^|\W+)@apply\s*\(?([^);\n]*)\)?/gi,ja=/@media\s(.*)/;var G=new Set;function H(a){if(!a)return"";"string"===typeof a&&(a=v(a));return C(a,t)}function I(a){!a.__cssRules&&a.textContent&&(a.__cssRules=v(a.textContent));return a.__cssRules||null}function J(a,b,c,e){if(a){var d=!1,f=a.type;if(e&&f===y){var g=a.selector.match(ja);g&&(window.matchMedia(g[1]).matches||(d=!0))}f===B?b(a):c&&f===z?c(a):f===A&&(d=!0);if((a=a.rules)&&!d){d=0;f=a.length;for(var h;d<f&&(h=a[d]);d++)J(h,b,c,e)}}}
+function K(a,b){var c=a.indexOf("var(");if(-1===c)return b(a,"","","");a:{var e=0;var d=c+3;for(var f=a.length;d<f;d++)if("("===a[d])e++;else if(")"===a[d]&&0===--e)break a;d=-1}e=a.substring(c+4,d);c=a.substring(0,c);a=K(a.substring(d+1),b);d=e.indexOf(",");return-1===d?b(c,e.trim(),"",a):b(c,e.substring(0,d).trim(),e.substring(d+1).trim(),a)}
+function L(a){if(void 0===a.a){var b=a.getAttribute("css-build");if(b)a.a=b;else{a:{b="template"===a.localName?a.content.firstChild:a.firstChild;if(b instanceof Comment&&(b=b.textContent.trim().split(":"),"css-build"===b[0])){b=b[1];break a}b=""}if(""!==b){var c="template"===a.localName?a.content.firstChild:a.firstChild;c.parentNode.removeChild(c)}a.a=b}}return a.a||""};var ka=/;\s*/m,la=/^\s*(initial)|(inherit)\s*$/,M=/\s*!important/;function N(){this.a={}}N.prototype.set=function(a,b){a=a.trim();this.a[a]={h:b,i:{}}};N.prototype.get=function(a){a=a.trim();return this.a[a]||null};var O=null;function P(){this.b=this.c=null;this.a=new N}P.prototype.o=function(a){a=F.test(a)||D.test(a);F.lastIndex=0;D.lastIndex=0;return a};
+P.prototype.m=function(a,b){if(void 0===a.b){var c=[];for(var e=a.content.querySelectorAll("style"),d=0;d<e.length;d++){var f=e[d];if(f.hasAttribute("shady-unscoped")){if(!k){var g=f.textContent;G.has(g)||(G.add(g),g=f.cloneNode(!0),document.head.appendChild(g));f.parentNode.removeChild(f)}}else c.push(f.textContent),f.parentNode.removeChild(f)}(c=c.join("").trim())?(e=document.createElement("style"),e.textContent=c,a.content.insertBefore(e,a.content.firstChild),c=e):c=null;a.b=c}return(a=a.b)?this.j(a,
+b):null};P.prototype.j=function(a,b){b=void 0===b?"":b;var c=I(a);this.l(c,b);a.textContent=H(c);return c};P.prototype.f=function(a){var b=this,c=I(a);J(c,function(a){":root"===a.selector&&(a.selector="html");b.g(a)});a.textContent=H(c);return c};P.prototype.l=function(a,b){var c=this;this.c=b;J(a,function(a){c.g(a)});this.c=null};P.prototype.g=function(a){a.cssText=ma(this,a.parsedCssText,a);":root"===a.selector&&(a.selector=":host > *")};
+function ma(a,b,c){b=b.replace(D,function(b,d,f,g){return na(a,b,d,f,g,c)});return Q(a,b,c)}function oa(a,b){for(var c=b;c.parent;)c=c.parent;var e={},d=!1;J(c,function(c){(d=d||c===b)||c.selector===b.selector&&Object.assign(e,R(a,c.parsedCssText))});return e}
+function Q(a,b,c){for(var e;e=F.exec(b);){var d=e[0],f=e[1];e=e.index;var g=b.slice(0,e+d.indexOf("@apply"));b=b.slice(e+d.length);var h=c?oa(a,c):{};Object.assign(h,R(a,g));d=void 0;var l=a;f=f.replace(ka,"");var p=[];var m=l.a.get(f);m||(l.a.set(f,{}),m=l.a.get(f));if(m){l.c&&(m.i[l.c]=!0);var q=m.h;for(d in q)l=h&&h[d],m=[d,": var(",f,"_-_",d],l&&m.push(",",l.replace(M,"")),m.push(")"),M.test(q[d])&&m.push(" !important"),p.push(m.join(""))}d=p.join("; ");b=g+d+b;F.lastIndex=e+d.length}return b}
+function R(a,b){b=b.split(";");for(var c,e,d={},f=0,g;f<b.length;f++)if(c=b[f])if(g=c.split(":"),1<g.length){c=g[0].trim();var h=a;e=c;g=g.slice(1).join(":");var l=la.exec(g);l&&(l[1]?(h.b||(h.b=document.createElement("meta"),h.b.setAttribute("apply-shim-measure",""),h.b.style.all="initial",document.head.appendChild(h.b)),e=window.getComputedStyle(h.b).getPropertyValue(e)):e="apply-shim-inherit",g=e);e=g;d[c]=e}return d}function pa(a,b){if(O)for(var c in b.i)c!==a.c&&O(c)}
+function na(a,b,c,e,d,f){e&&K(e,function(b,c){c&&a.a.get(c)&&(d="@apply "+c+";")});if(!d)return b;var g=Q(a,""+d,f);f=b.slice(0,b.indexOf("--"));var h=g=R(a,g),l=a.a.get(c),p=l&&l.h;p?h=Object.assign(Object.create(p),g):a.a.set(c,h);var m=[],q,X=!1;for(q in h){var E=g[q];void 0===E&&(E="initial");!p||q in p||(X=!0);m.push(c+"_-_"+q+": "+E)}X&&pa(a,l);l&&(l.h=h);e&&(f=b+";"+f);return f+m.join("; ")+";"}P.prototype.detectMixin=P.prototype.o;P.prototype.transformStyle=P.prototype.j;
+P.prototype.transformCustomStyle=P.prototype.f;P.prototype.transformRules=P.prototype.l;P.prototype.transformRule=P.prototype.g;P.prototype.transformTemplate=P.prototype.m;P.prototype._separator="_-_";Object.defineProperty(P.prototype,"invalidCallback",{get:function(){return O},set:function(a){O=a}});var S={};var qa=Promise.resolve();function ra(a){if(a=S[a])a._applyShimCurrentVersion=a._applyShimCurrentVersion||0,a._applyShimValidatingVersion=a._applyShimValidatingVersion||0,a._applyShimNextVersion=(a._applyShimNextVersion||0)+1}function T(a){return a._applyShimCurrentVersion===a._applyShimNextVersion}function sa(a){a._applyShimValidatingVersion=a._applyShimNextVersion;a.c||(a.c=!0,qa.then(function(){a._applyShimCurrentVersion=a._applyShimNextVersion;a.c=!1}))};var U=new P;function V(){this.a=null;U.invalidCallback=ra}function W(a){a.a||(a.a=window.ShadyCSS.CustomStyleInterface,a.a&&(a.a.transformCallback=function(a){U.f(a)},a.a.validateCallback=function(){requestAnimationFrame(function(){a.a.enqueued&&a.flushCustomStyles()})}))}V.prototype.prepareTemplate=function(a,b){W(this);""===L(a)&&(S[b]=a,b=U.m(a,b),a._styleAst=b)};
+V.prototype.flushCustomStyles=function(){W(this);if(this.a){var a=this.a.processStyles();if(this.a.enqueued){for(var b=0;b<a.length;b++){var c=this.a.getStyleForCustomStyle(a[b]);c&&U.f(c)}this.a.enqueued=!1}}};
+V.prototype.styleSubtree=function(a,b){W(this);if(b)for(var c in b)null===c?a.style.removeProperty(c):a.style.setProperty(c,b[c]);if(a.shadowRoot)for(this.styleElement(a),a=a.shadowRoot.children||a.shadowRoot.childNodes,b=0;b<a.length;b++)this.styleSubtree(a[b]);else for(a=a.children||a.childNodes,b=0;b<a.length;b++)this.styleSubtree(a[b])};
+V.prototype.styleElement=function(a){W(this);var b=a.localName,c;b?-1<b.indexOf("-")?c=b:c=a.getAttribute&&a.getAttribute("is")||"":c=a.is;b=S[c];if(!(b&&""!==L(b)||!b||T(b))){if(T(b)||b._applyShimValidatingVersion!==b._applyShimNextVersion)this.prepareTemplate(b,c),sa(b);if(a=a.shadowRoot)if(a=a.querySelector("style"))a.__cssRules=b._styleAst,a.textContent=H(b._styleAst)}};V.prototype.styleDocument=function(a){W(this);this.styleSubtree(document.body,a)};
+if(!window.ShadyCSS||!window.ShadyCSS.ScopingShim){var Y=new V,Z=window.ShadyCSS&&window.ShadyCSS.CustomStyleInterface;window.ShadyCSS={prepareTemplate:function(a,b){Y.flushCustomStyles();Y.prepareTemplate(a,b)},prepareTemplateStyles:function(a,b,c){this.prepareTemplate(a,b,c)},prepareTemplateDom:function(){},styleSubtree:function(a,b){Y.flushCustomStyles();Y.styleSubtree(a,b)},styleElement:function(a){Y.flushCustomStyles();Y.styleElement(a)},styleDocument:function(a){Y.flushCustomStyles();Y.styleDocument(a)},
+getComputedStyleValue:function(a,b){return(a=window.getComputedStyle(a).getPropertyValue(b))?a.trim():""},flushCustomStyles:function(){Y.flushCustomStyles()},nativeCss:t,nativeShadow:k};Z&&(window.ShadyCSS.CustomStyleInterface=Z)}window.ShadyCSS.ApplyShim=U;}).call(this);
 
 //# sourceMappingURL=apply-shim.min.js.map
 </script>
@@ -117,7 +118,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   };
   /* eslint-enable */
 
-  window.Polymer.version = '2.6.0';
+  window.Polymer.version = '2.6.1';
 
   /* eslint-disable no-unused-vars */
   /*
@@ -378,6 +379,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   /**
    * @constructor
    * @extends {Function}
+   * @private
    */
   function MixinFunction(){}
   /** @type {(WeakMap | undefined)} */
@@ -804,17 +806,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return null;
     }
 
+    /* eslint-disable no-unused-vars */
     /**
      * @param {string} name Name of attribute.
      * @param {?string} old Old value of attribute.
      * @param {?string} value Current value of attribute.
+     * @param {?string} namespace Attribute namespace.
      * @return {void}
      */
-    attributeChangedCallback(name, old, value) {
+    attributeChangedCallback(name, old, value, namespace) {
       if (old !== value) {
         this.register();
       }
     }
+    /* eslint-enable no-unused-args */
 
     /**
      * The absolute URL of the original location of this `dom-module`.
@@ -866,7 +871,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   customElements.define('dom-module', DomModule);
 
-  // export
+  /** @const */
   Polymer.DomModule = DomModule;
 
 })();
@@ -1856,15 +1861,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          * @param {string} name Name of attribute that changed
          * @param {?string} old Old attribute value
          * @param {?string} value New attribute value
+         * @param {?string} namespace Attribute namespace.
          * @return {void}
          * @suppress {missingProperties} Super may or may not implement the callback
          */
-        attributeChangedCallback(name, old, value) {
+        attributeChangedCallback(name, old, value, namespace) {
           if (old !== value) {
             this._attributeToProperty(name, value);
           }
           if (super.attributeChangedCallback) {
-            super.attributeChangedCallback(name, old, value);
+            super.attributeChangedCallback(name, old, value, namespace);
           }
         }
 
@@ -2073,6 +2079,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * @extends {superClass}
      * @implements {Polymer_PropertiesChanged}
      * @unrestricted
+     * @private
      */
      const base = Polymer.PropertiesChanged(superClass);
 
@@ -2760,7 +2767,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /**
        * Override point for adding custom or simulated event handling.
        *
-       * @param {Node} node Node to remove event listener from
+       * @param {!Node} node Node to remove event listener from
        * @param {string} eventName Name of event
        * @param {function(!Event):void} handler Listener function to remove
        * @return {void}
@@ -2802,7 +2809,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     READ_ONLY: '__readOnly'
   };
 
-  /** @const {string} */
+  /** @const {RegExp} */
   const capitalAttributeRegex = /[A-Z]/;
 
   /**
@@ -3115,7 +3122,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       toPath = Polymer.Path.translate(fromProp, toPath, fromPath);
       value = detail && detail.value;
     } else {
-      value = event.target[fromProp];
+      value = event.currentTarget[fromProp];
     }
     value = negate ? !value : value;
     if (!inst[TYPES.READ_ONLY] || !inst[TYPES.READ_ONLY][toPath]) {
@@ -3881,6 +3888,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * @implements {Polymer_PropertyAccessors}
      * @implements {Polymer_TemplateStamp}
      * @unrestricted
+     * @private
      */
     const propertyEffectsBase = Polymer.TemplateStamp(Polymer.PropertyAccessors(superClass));
 
@@ -5388,6 +5396,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * - Inline computed method (supports negation):
        *   `[[compute(a, 'literal', b)]]`, `[[!compute(a, 'literal', b)]]`
        *
+       * The default implementation uses a regular expression for best
+       * performance. However, the regular expression uses a white-list of
+       * allowed characters in a data-binding, which causes problems for
+       * data-bindings that do use characters not in this white-list.
+       *
+       * Instead of updating the white-list with all allowed characters,
+       * there is a StrictBindingParser (see lib/mixins/strict-binding-parser)
+       * that uses a state machine instead. This state machine is able to handle
+       * all characters. However, it is slightly less performant, therefore we
+       * extracted it into a separate optional mixin.
+       *
        * @param {string} text Text to parse from attribute or textContent
        * @param {Object} templateInfo Current template metadata
        * @return {Array<!BindingPart>} Array of binding part metadata
@@ -5621,6 +5640,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * @constructor
      * @extends {superClass}
      * @implements {Polymer_PropertiesChanged}
+     * @private
      */
     const base = Polymer.PropertiesChanged(superClass);
 
@@ -5872,6 +5892,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * @extends {base}
      * @implements {Polymer_PropertyEffects}
      * @implements {Polymer_PropertiesMixin}
+     * @private
      */
     const polymerElementBase = Polymer.PropertiesMixin(Polymer.PropertyEffects(base));
 
@@ -6172,20 +6193,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       /**
        * Path matching the url from which the element was imported.
+       *
        * This path is used to resolve url's in template style cssText.
        * The `importPath` property is also set on element instances and can be
        * used to create bindings relative to the import path.
-       * Defaults to the path matching the url containing a `dom-module` element
-       * matching this element's static `is` property.
+       *
+       * For elements defined in ES modules, users should implement 
+       * `static get importMeta() { return import.meta; }`, and the default
+       * implementation of `importPath` will  return `import.meta.url`'s path.
+       * For elements defined in HTML imports, this getter will return the path
+       * to the document containing a `dom-module` element matching this
+       * element's static `is` property.
+       *
        * Note, this path should contain a trailing `/`.
        *
        * @return {string} The import path for this element class
+       * @suppress {missingProperties}
        */
       static get importPath() {
         if (!this.hasOwnProperty(JSCompiler_renameProperty('_importPath', this))) {
+          const meta = this.importMeta;
+          if (meta) {
+            this._importPath = Polymer.ResolveUrl.pathFromUrl(meta.url);
+          } else {
             const module = Polymer.DomModule && Polymer.DomModule.import(/** @type {PolymerElementConstructor} */ (this).is);
-            this._importPath = module ? module.assetpath : '' ||
-            Object.getPrototypeOf(/** @type {PolymerElementConstructor}*/ (this).prototype).constructor.importPath;
+            this._importPath = (module && module.assetpath) || 
+              Object.getPrototypeOf(/** @type {PolymerElementConstructor}*/ (this).prototype).constructor.importPath;
+          }
         }
         return this._importPath;
       }
@@ -6221,14 +6255,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _initializeProperties() {
         Polymer.telemetry.instanceCount++;
         this.constructor.finalize();
-        const importPath = this.constructor.importPath;
         // note: finalize template when we have access to `localName` to
         // avoid dependence on `is` for polyfilling styling.
         this.constructor._finalizeTemplate(/** @type {!HTMLElement} */(this).localName);
         super._initializeProperties();
         // set path defaults
         this.rootPath = Polymer.rootPath;
-        this.importPath = importPath;
+        this.importPath = this.constructor.importPath;
         // apply property defaults...
         let p$ = propertyDefaults(this.constructor);
         if (!p$) {
@@ -6640,6 +6673,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   }
 
+  /** @const */
   Polymer.Debouncer = Debouncer;
 })();
 </script>
@@ -6745,6 +6779,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'select': true
   };
 
+  // Defined at https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#enabling-and-disabling-form-controls:-the-disabled-attribute
+  /** @type {!Object<boolean>} */
+  const canBeDisabled = {
+    'button': true,
+    'command': true,
+    'fieldset': true,
+    'input': true,
+    'keygen': true,
+    'optgroup': true,
+    'option': true,
+    'select': true,
+    'textarea': true
+  };
+
   /**
    * @param {HTMLElement} el Element to check labelling status
    * @return {boolean} element can have labels
@@ -6758,7 +6806,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    * @return {!Array<!HTMLLabelElement>} Relevant label for `el`
    */
   function matchingLabels(el) {
-    let labels = [...(/** @type {HTMLInputElement} */(el).labels || [])];
+    let labels = Array.from(/** @type {HTMLInputElement} */(el).labels || []);
     // IE doesn't have `labels` and Safari doesn't populate `labels`
     // if element is in a shadowroot.
     // In this instance, finding the non-ancestor labels is enough,
@@ -7690,7 +7738,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       let dy = Math.abs(e.clientY - this.info.y);
       // find original target from `preventer` for TouchEvents, or `e` for MouseEvents
       let t = Gestures._findOriginalTarget(/** @type {Event} */(preventer || e));
-      if (!t || t.disabled) {
+      if (!t || (canBeDisabled[/** @type {!HTMLElement} */(t).localName] && t.hasAttribute('disabled'))) {
         return;
       }
       // dx,dy can be NaN if `click` has been simulated and there was no `down` for `start`
@@ -7883,6 +7931,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * @constructor
        * @extends {base}
        * @implements {Polymer_PropertyAccessors}
+       * @private
        */
       const elementBase = Polymer.PropertyAccessors(base);
 
@@ -9320,7 +9369,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    * This method facades to `Polymer.enqueueDebouncer`.
    *
    * @memberof Polymer.dom
-   * @param {Polymer.Debouncer} debouncer Debouncer to enqueue
+   * @param {!Polymer.Debouncer} debouncer Debouncer to enqueue
    */
   Polymer.dom.addDebouncer = Polymer.enqueueDebouncer;
 })();
@@ -9355,6 +9404,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * @implements {Polymer_ElementMixin}
      * @implements {Polymer_GestureEventListeners}
      * @implements {Polymer_DirMixin}
+     * @private
      */
     const legacyElementBase = Polymer.DirMixin(Polymer.GestureEventListeners(Polymer.ElementMixin(base)));
 
@@ -9391,6 +9441,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // decorate itself via an event prior to any declarative listeners
         // seeing the event. Note, this ensures compatibility with 1.x ordering.
         this._applyListeners();
+      }
+
+      /**
+       * Forwards `importMeta` from the prototype (i.e. from the info object
+       * passed to `Polymer({...})`) to the static API.
+       *
+       * @return {!Object} The `import.meta` object set on the prototype
+       * @suppress {missingProperties} `this` is always in the instance in
+       *  closure for some reason even in a static method, rather than the class
+       */
+      static get importMeta() {
+        return this.prototype.importMeta;
       }
 
       /**
@@ -9444,12 +9506,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * @param {string} name Name of attribute.
        * @param {?string} old Old value of attribute.
        * @param {?string} value Current value of attribute.
+       * @param {?string} namespace Attribute namespace.
        * @return {void}
        * @override
        */
-      attributeChangedCallback(name, old, value) {
+      attributeChangedCallback(name, old, value, namespace) {
         if (old !== value) {
-          super.attributeChangedCallback(name, old, value);
+          super.attributeChangedCallback(name, old, value, namespace);
           this.attributeChanged(name, old, value);
         }
       }
@@ -10461,6 +10524,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      */
     function GenerateClassFromInfo(info, Base) {
 
+      /** @private */
       class PolymerGenerated extends Base {
 
         static get properties() {
@@ -10963,9 +11027,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     // class only because Babel (incorrectly) requires super() in the class
     // constructor even though no `this` is used and it returns an instance.
     let newInstance = null;
+
     /**
      * @constructor
      * @extends {HTMLTemplateElement}
+     * @private
      */
     function HTMLTemplateElementExtension() { return newInstance; }
     HTMLTemplateElementExtension.prototype = Object.create(HTMLTemplateElement.prototype, {
@@ -10974,16 +11040,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         writable: true
       }
     });
+
     /**
      * @constructor
      * @implements {Polymer_PropertyEffects}
      * @extends {HTMLTemplateElementExtension}
+     * @private
      */
     const DataTemplate = Polymer.PropertyEffects(HTMLTemplateElementExtension);
+
     /**
      * @constructor
      * @implements {Polymer_MutableData}
      * @extends {DataTemplate}
+     * @private
      */
     const MutableDataTemplate = Polymer.MutableData(DataTemplate);
 
@@ -10995,10 +11065,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       newInstance = null;
     }
 
-    // Base class for TemplateInstance's
     /**
+     * Base class for TemplateInstance.
      * @constructor
      * @implements {Polymer_PropertyEffects}
+     * @private
      */
     const base = Polymer.PropertyEffects(class {});
 
@@ -11210,6 +11281,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * @constructor
      * @extends {TemplateInstanceBase}
      * @implements {Polymer_MutableData}
+     * @private
      */
     const MutableTemplateInstanceBase = Polymer.MutableData(TemplateInstanceBase);
 
@@ -11253,6 +11325,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         let klass = templateInfo.templatizeTemplateClass;
         if (!klass) {
           let base = options.mutableData ? MutableDataTemplate : DataTemplate;
+          /** @private */
           klass = templateInfo.templatizeTemplateClass =
             class TemplatizedTemplate extends base {};
           // Add template - >instances effects
@@ -11679,6 +11752,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * @implements {Polymer_PropertyEffects}
      * @implements {Polymer_OptionalMutableData}
      * @implements {Polymer_GestureEventListeners}
+     * @private
      */
     const domBindBase =
       Polymer.GestureEventListeners(
@@ -11787,6 +11861,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     customElements.define('dom-bind', DomBind);
 
+    /** @const */
     Polymer.DomBind = DomBind;
 
   })();
@@ -11950,28 +12025,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    * and property change observation.
    *
    * @customElement
-   * @polymer
    * @memberof Polymer
    * @constructor
    * @implements {Polymer_ElementMixin}
-   * @extends HTMLElement
+   * @extends {HTMLElement}
    * @appliesMixin Polymer.ElementMixin
    * @summary Custom element base class that provides the core API for Polymer's
    *   key meta-programming features including template stamping, data-binding,
    *   attribute deserialization, and property change observation
    */
-  const Element = Polymer.ElementMixin(HTMLElement);
-  /**
-   * @constructor
-   * @implements {Polymer_ElementMixin}
-   * @extends {HTMLElement}
-   */
-  Polymer.Element = Element;
+  Polymer.Element = Polymer.ElementMixin(HTMLElement);
 
   // NOTE: this is here for modulizer to export `html` for the module version of this file
   Polymer.html = Polymer.html;
 })();
-</script><script>
+</script>
+<script>
 (function() {
   'use strict';
 
@@ -11981,6 +12050,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    * @constructor
    * @implements {Polymer_OptionalMutableData}
    * @extends {Polymer.Element}
+   * @private
    */
   const domRepeatBase = Polymer.OptionalMutableData(Polymer.Element);
 
@@ -12688,6 +12758,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   customElements.define(DomRepeat.is, DomRepeat);
 
+  /** @const */
   Polymer.DomRepeat = DomRepeat;
 
 })();
@@ -12972,6 +13043,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   customElements.define(DomIf.is, DomIf);
 
+  /** @const */
   Polymer.DomIf = DomIf;
 
 })();
@@ -13017,6 +13089,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      * @constructor
      * @extends {superClass}
      * @implements {Polymer_ElementMixin}
+     * @private
      */
     let elementBase = Polymer.ElementMixin(superClass);
 
@@ -13321,6 +13394,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    * @constructor
    * @extends {Polymer.Element}
    * @implements {Polymer_ArraySelectorMixin}
+   * @private
    */
   let baseArraySelector = ArraySelectorMixin(Polymer.Element);
 
@@ -13407,6 +13481,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     static get is() { return 'array-selector'; }
   }
   customElements.define(ArraySelector.is, ArraySelector);
+
+  /** @const */
   Polymer.ArraySelector = ArraySelector;
 
 })();
@@ -13545,6 +13621,8 @@ Object.defineProperties(m.prototype,{transformCallback:{get:function(){return k}
   }
 
   window.customElements.define('custom-style', CustomStyle);
+
+  /** @const */
   Polymer.CustomStyle = CustomStyle;
 })();
 </script>

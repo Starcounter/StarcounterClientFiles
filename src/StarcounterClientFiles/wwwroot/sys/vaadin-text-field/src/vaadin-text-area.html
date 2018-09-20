@@ -84,10 +84,24 @@ This program is available under Apache License Version 2.0, available at https:/
   <script>
     (function() {
       /**
-       * `<vaadin-text-area>` is a Polymer 2 element for text area control in forms.
+       * `<vaadin-text-area>` is a Web Component for text area control in forms.
        *
        * ```html
        * <vaadin-text-area label="Add description">
+       * </vaadin-text-area>
+       * ```
+       *
+       * ### Prefixes and suffixes
+       *
+       * These are child elements of a `<vaadin-text-area>` that are displayed
+       * inline with the input, before or after.
+       * In order for an element to be considered as a prefix, it must have the slot
+       * attribute set to `prefix` (and similarly for `suffix`).
+       *
+       * ```html
+       * <vaadin-text-area label="Add description">
+       *   <div slot="prefix">Details:</div>
+       *   <div slot="suffix">The end!</div>
        * </vaadin-text-area>
        * ```
        *
@@ -127,7 +141,7 @@ This program is available under Apache License Version 2.0, available at https:/
         }
 
         static get version() {
-          return '2.0.2';
+          return '2.1.2';
         }
 
         static get observers() {

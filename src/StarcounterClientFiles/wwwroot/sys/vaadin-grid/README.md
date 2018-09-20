@@ -1,4 +1,3 @@
-![Bower version](https://badge.fury.io/bo/vaadin-grid.svg)
 [![npm version](https://badge.fury.io/js/%40vaadin%2Fvaadin-grid.svg)](https://badge.fury.io/js/%40vaadin%2Fvaadin-grid)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/vaadin/vaadin-grid)
 [![Build Status](https://travis-ci.org/vaadin/vaadin-grid.svg?branch=master)](https://travis-ci.org/vaadin/vaadin-grid)
@@ -13,7 +12,7 @@
 |
 [API documentation ↗](https://vaadin.com/components/vaadin-grid/html-api)
 
-[&lt;vaadin-grid&gt;](https://vaadin.com/components/vaadin-grid) is a free, high quality data grid / data table [Polymer](http://polymer-project.org) element, part of the [Vaadin components](https://vaadin.com/components).
+[&lt;vaadin-grid&gt;](https://vaadin.com/components/vaadin-grid) is a free, high quality data grid / data table Web Component, part of the [Vaadin components](https://vaadin.com/components).
 
 <!---
 ```
@@ -66,23 +65,62 @@
 
 [<img src="https://raw.githubusercontent.com/vaadin/vaadin-grid/master/screenshot.png" alt="Screenshot of vaadin-grid, using the default Lumo theme">](https://vaadin.com/components/vaadin-grid)
 
-## Getting Started
+## Installation
+
+The Vaadin components are distributed as Bower and npm packages.
+Please note that the version range is the same, as the API has not changed.
+You should not mix Bower and npm versions in the same application, though.
+
+Unlike the official Polymer Elements, the converted Polymer 3 compatible Vaadin components
+are only published on npm, not pushed to GitHub repositories.
+
+### Polymer 2 and HTML Imports Compatible Version
+
+Install `vaadin-grid`:
+
+```sh
+bower i vaadin/vaadin-grid --save
+```
+
+Once installed, import it in your application:
+
+```html
+<link rel="import" href="bower_components/vaadin-grid/vaadin-grid.html">
+```
+### Polymer 3 and ES Modules Compatible Version
+
+Install `vaadin-grid`:
+
+```sh
+npm i @vaadin/vaadin-grid --save
+```
+
+Once installed, import it in your application:
+
+```js
+import '@vaadin/vaadin-grid/vaadin-grid.js';
+```
+
+## Getting started
 
 Vaadin components use the Lumo theme by default.
 
-## The file structure for Vaadin components
+To use the Material theme, import the correspondent file from the `theme/material` folder.
 
-- `src/vaadin-grid.html`
+## Entry points
 
-  Unstyled component.
+- The component with the Lumo theme:
 
-- `theme/lumo/vaadin-grid.html`
+  `theme/lumo/vaadin-grid.html`
 
-  Component with Lumo theme.
+- The component with the Material theme:
 
-- `vaadin-grid.html`
+  `theme/material/vaadin-grid.html`
 
-  Alias for theme/lumo/vaadin-grid.html
+- Alias for `theme/lumo/vaadin-grid.html`:
+
+  `vaadin-grid.html`
+
 
 ## Running demos and tests in browser
 
@@ -110,12 +148,9 @@ Vaadin components use the Lumo theme by default.
 We are using [ESLint](http://eslint.org/) for linting JavaScript code. You can check if your code is following our standards by running `gulp lint`, which will automatically lint all `.js` files as well as JavaScript snippets inside `.html` files.
 
 
-## Creating a pull request
+## Contributing
 
-  - Make sure your code is compliant with our code linters: `gulp lint`
-  - Check that tests are passing: `polymer test`
-  - [Submit a pull request](https://www.digitalocean.com/community/tutorials/how-to-create-a-pull-request-on-github) with detailed title and description
-  - Wait for response from one of Vaadin components team members
+  To contribute to the component, please read [the guideline](https://github.com/vaadin/vaadin-core/blob/master/CONTRIBUTING.md) first.
 
 
 ## License

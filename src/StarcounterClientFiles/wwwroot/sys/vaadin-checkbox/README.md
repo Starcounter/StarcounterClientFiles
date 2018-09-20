@@ -1,6 +1,8 @@
-[![npm version](https://badge.fury.io/js/%40vaadin%2Fvaadin-checkbox.svg)](https://badge.fury.io/js/%40vaadin%2Fvaadin-checkbox)
+[![npm version](https://badgen.net/npm/v/@vaadin/vaadin-checkbox)](https://www.npmjs.com/package/@vaadin/vaadin-checkbox)
+[![Bower version](https://badgen.net/github/release/vaadin/vaadin-checkbox)](https://github.com/vaadin/vaadin-checkbox/releases)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/vaadin/vaadin-checkbox)
 [![Build Status](https://travis-ci.org/vaadin/vaadin-checkbox.svg?branch=master)](https://travis-ci.org/vaadin/vaadin-checkbox)
+[![Coverage Status](https://coveralls.io/repos/github/vaadin/vaadin-checkbox/badge.svg?branch=master)](https://coveralls.io/github/vaadin/vaadin-checkbox?branch=master)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vaadin/web-components?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 [![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/vaadinvaadin-checkbox)
@@ -12,7 +14,7 @@
 |
 [API documentation ↗](https://vaadin.com/components/vaadin-checkbox/html-api)
 
-[&lt;vaadin-checkbox&gt;](https://vaadin.com/components/vaadin-checkbox) is a [Polymer 2](http://polymer-project.org) element providing an accessible and customizable checkbox, part of the [Vaadin components](https://vaadin.com/components).
+[&lt;vaadin-checkbox&gt;](https://vaadin.com/components/vaadin-checkbox) is a Web Component providing an accessible and customizable checkbox, part of the [Vaadin components](https://vaadin.com/components).
 
 <!--
 ```
@@ -33,23 +35,61 @@
 
 [<img src="https://raw.githubusercontent.com/vaadin/vaadin-checkbox/master/screenshot.png" width="400" alt="Screenshot of vaadin-checkbox, using the default Lumo theme">](https://vaadin.com/components/vaadin-checkbox)
 
+## Installation
+
+The Vaadin components are distributed as Bower and npm packages.
+Please note that the version range is the same, as the API has not changed.
+You should not mix Bower and npm versions in the same application, though.
+
+Unlike the official Polymer Elements, the converted Polymer 3 compatible Vaadin components
+are only published on npm, not pushed to GitHub repositories.
+
+### Polymer 2 and HTML Imports Compatible Version
+
+Install `vaadin-checkbox`:
+
+```sh
+bower i vaadin/vaadin-checkbox --save
+```
+
+Once installed, import it in your application:
+
+```html
+<link rel="import" href="bower_components/vaadin-checkbox/vaadin-checkbox.html">
+```
+### Polymer 3 and ES Modules Compatible Version
+
+Install `vaadin-checkbox`:
+
+```sh
+npm i @vaadin/vaadin-checkbox --save
+```
+
+Once installed, import it in your application:
+
+```js
+import '@vaadin/vaadin-checkbox/vaadin-checkbox.js';
+```
+
 ## Getting Started
 
 Vaadin components use the Lumo theme by default.
 
+To use the Material theme, import the correspondent file from the `theme/material` folder.
+
 ## The file structure for Vaadin components
 
-- `src/vaadin-checkbox.html`
+- The component with the Lumo theme:
 
-  Unstyled component.
+  `theme/lumo/vaadin-checkbox.html`
 
-- `theme/lumo/vaadin-checkbox.html`
+- The component with the Material theme:
 
-  Component with Lumo theme.
+  `theme/material/vaadin-checkbox.html`
 
-- `vaadin-checkbox.html`
+- Alias for `theme/lumo/vaadin-checkbox.html`:
 
-  Alias for theme/lumo/vaadin-checkbox.html
+  `vaadin-checkbox.html`
 
 ## Running demos and tests in browser
 
@@ -77,12 +117,14 @@ Vaadin components use the Lumo theme by default.
 We are using [ESLint](http://eslint.org/) for linting JavaScript code. You can check if your code is following our standards by running `gulp lint`, which will automatically lint all `.js` files as well as JavaScript snippets inside `.html` files.
 
 
-## Creating a pull request
+## Big Thanks
 
-  - Make sure your code is compliant with our code linters: `gulp lint`
-  - Check that tests are passing: `polymer test`
-  - [Submit a pull request](https://www.digitalocean.com/community/tutorials/how-to-create-a-pull-request-on-github) with detailed title and description
-  - Wait for response from one of Vaadin components team members
+Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com).
+
+
+## Contributing
+
+  To contribute to the component, please read [the guideline](https://github.com/vaadin/vaadin-core/blob/master/CONTRIBUTING.md) first.
 
 
 ## License

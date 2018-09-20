@@ -7,7 +7,7 @@
     </style>
 
 
-    <h3>Plain date picker</h3>
+    <h3>Date picker</h3>
     <vaadin-demo-snippet id="date-picker-basic-demos-plain-date-picker">
       <template preserve-content>
         <vaadin-date-picker></vaadin-date-picker>
@@ -69,37 +69,29 @@
     </vaadin-demo-snippet>
 
 
-    <h3>Min and max dates</h3>
-    <vaadin-demo-snippet id="date-picker-basic-demos-min-and-max-dates">
+    <h3>Date range</h3>
+    <p>Use two date pickers to create a date range selector.</p>
+    <vaadin-demo-snippet id="date-picker-basic-demos-date-range">
       <template preserve-content>
-        <vaadin-date-picker label="June 2017" min="2017-06-01" max="2017-06-30" initial-position="2017-06-01">
-        </vaadin-date-picker>
-      </template>
-    </vaadin-demo-snippet>
-
-
-    <h3>Using as a Form Field</h3>
-    <vaadin-demo-snippet id="date-picker-basic-demos-using-as-a-form-field">
-      <template preserve-content>
-        <iron-form>
-          <form method="post">
-            <vaadin-date-picker name="date" required error-message="This field is required"></vaadin-date-picker>
-            <vaadin-button>Submit</vaadin-button>
-          </form>
-        </iron-form>
+        <vaadin-date-picker id="start" label="Start"></vaadin-date-picker>
+        <vaadin-date-picker id="end" label="End"></vaadin-date-picker>
 
         <script>
-          window.addDemoReadyListener('#date-picker-basic-demos-using-as-a-form-field', function(document) {
-            var form = document.querySelector('iron-form');
+          window.addDemoReadyListener('#date-picker-basic-demos-date-range', function(document) {
+            var start = document.querySelector('#start');
+            var end = document.querySelector('#end');
 
-            form.addEventListener('iron-form-submit', function() {
-              alert('Form submitted with date: ' + form.serializeForm().date);
-              return false;
+            start.addEventListener('change', function() {
+              end.min = start.value;
+
+              // Open the second date picker when the user has selected a value
+              if (start.value) {
+                end.open();
+              }
             });
 
-            var button = document.querySelector('vaadin-button');
-            button.addEventListener('click', function() {
-              form.submit();
+            end.addEventListener('change', function() {
+              start.max = end.value;
             });
           });
         </script>
@@ -126,11 +118,10 @@
 
 
     <h3>Keyboard input</h3>
+    <p>You can use a 3rd party library to parse dates from the input text.</p>
     <vaadin-demo-snippet id="date-picker-basic-demos-keyboard-input">
       <template preserve-content>
         <!--
-        Using a 3rd party library to parse dates from the input text.
-
         Try typing the following examples:
         "5/13/2014"
         "today"

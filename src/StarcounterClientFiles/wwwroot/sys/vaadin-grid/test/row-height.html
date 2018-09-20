@@ -9,6 +9,7 @@
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
   <script src="../../iron-test-helpers/mock-interactions.js"></script>
+  <link rel="import" href="../../test-fixture/test-fixture.html">
 
   <dom-module id="row-height-grid-styles" theme-for="vaadin-grid">
     <template>
@@ -121,6 +122,22 @@
 
           expect(header.getBoundingClientRect().top).to.be.closeTo(grid.getBoundingClientRect().top, 1);
           done();
+        });
+      });
+
+      it('should not misalign on reattach', done => {
+        init('default-content', () => {
+          scrollToEnd(grid);
+
+          const parentNode = grid.parentNode;
+          parentNode.removeChild(grid);
+          parentNode.offsetHeight;
+          parentNode.appendChild(grid);
+
+          setTimeout(() => {
+            expect(header.getBoundingClientRect().top).to.be.closeTo(grid.getBoundingClientRect().top, 1);
+            done();
+          });
         });
       });
 

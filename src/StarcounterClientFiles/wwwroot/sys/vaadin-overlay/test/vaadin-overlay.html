@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <title>vaadin-overlay tests</title>
   <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+  <link rel="import" href="../../test-fixture/test-fixture.html">
   <link rel="import" href="../../iron-test-helpers/iron-test-helpers.html">
   <link rel="import" href="../vaadin-overlay.html">
-  <link rel="import" href="../../polymer/polymer-element.html">
 </head>
 
 <body>
@@ -158,6 +160,23 @@
           overlay1.opened = false;
           overlay2.opened = false;
           expect(document.body.style.pointerEvents).to.eql('');
+        });
+
+        it('should disable pointer-events in first overlay when second opens', () => {
+          const overlay1Part = overlay1.shadowRoot.querySelector('[part="overlay"]');
+          overlay1.opened = true;
+          overlay2.opened = true;
+
+          expect(getComputedStyle(overlay1Part).pointerEvents).to.equal('none');
+        });
+
+        it('should restore pointer-events in first overlay when second closes', () => {
+          const overlay1Part = overlay1.shadowRoot.querySelector('[part="overlay"]');
+          overlay1.opened = true;
+          overlay2.opened = true;
+          overlay2.opened = false;
+
+          expect(getComputedStyle(overlay1Part).pointerEvents).to.equal('auto');
         });
       });
 
@@ -419,7 +438,8 @@
         });
 
         it('should fit in viewport when huge content is used', () => {
-          overlay.content.lastElementChild.style = 'display: block; width: 2000px; height: 2000px;';
+          const lastChild = overlay.content.lastElementChild;
+          lastChild.setAttribute('style', 'display: block; width: 2000px; height: 2000px;');
 
           const rect = overlay.getBoundingClientRect();
           expect(rect.left).to.be.gte(0);

@@ -2,11 +2,13 @@
   "private": true,
   "name": "puppet-redirect",
   "description": "Custom Element that redirects to a new URL when an attribute is changed. It's also being listened by PuppetJS.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "puppet-redirect.html",
-  "dependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "wct",
+    "wct": "wct",
+    "wct:no-sauce": "wct --skip-plugin sauce",
+    "wct:sauce-only": "wct --skip-plugin local --plugin sauce"
   },
   "repository": {
     "type": "git",
@@ -24,8 +26,8 @@
   },
   "homepage": "https://github.com/PuppetJs/puppet-redirect#readme",
   "devDependencies": {
-    "grunt": "~0.4.5",
+    "grunt": "^1.0.3",
     "grunt-bump": "^0.3.0",
-    "grunt-cli": "^0.1.13"
+    "grunt-cli": "^1.2.0"
   }
 }
