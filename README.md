@@ -1,3 +1,5 @@
+Dummy commit
+
 # StarcounterClientFiles
 
 This repo is the source of client files distributed with Starcounter at `%StarcounterBin%/ClientFiles`. It can also be ran as an app, overwriting the default client files distributed with Starcounter.
