@@ -4,6 +4,6 @@ PUSHD %~dp0src\StarcounterClientFiles
 starpack -p
 POPD
 
-PUSHD %~dp0bifrost
-pack.bat
-POPD
+dotnet cake %~dp0build.cake --targets="PackClientFiles" --configuration="Debug" --verbosity=Normal
+
+exit /b %errorlevel%

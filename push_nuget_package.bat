@@ -14,19 +14,7 @@ if "%2" == "" (
     goto end
 )
 
-call %~dp0bifrost/restore_cake.bat || goto error
-
-set executeCommand=%~dp0bifrost/tools/Cake/Cake.exe %~dp0bifrost/build.cake --targets="PushClientFiles" --clientFilesNupkgFile="%1" --mygetApiKey="%2" --verbosity=Normal
-echo Executing: %executeCommand%
-%executeCommand% || goto error
-
-goto end
-
-:error
-echo.
-echo Exit with code %errorlevel%
-echo.
-exit /b %errorlevel%
+dotnet cake %~dp0build.cake --targets="PushClientFiles" --clientFilesNupkgFile="%1" --mygetApiKey="%2" --verbosity=Normal || exit /b %errorlevel%
 
 :end
 exit /b 0
