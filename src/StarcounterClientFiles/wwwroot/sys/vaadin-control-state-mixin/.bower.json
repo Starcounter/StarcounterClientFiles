@@ -39,6 +39,6 @@
     "commit": "1d2a9ac6eb8ecc059a392eb0f86df3aab3d66dd3"
   },
   "_source": "https://github.com/vaadin/vaadin-control-state-mixin.git",
-  "_target": "^2.0.0",
-  "_originalSource": "vaadin-control-state-mixin"
+  "_target": "^2.1.1",
+  "_originalSource": "vaadin/vaadin-control-state-mixin"
 }

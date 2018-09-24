@@ -1,68 +1,63 @@
-<!-- palindrom-redirect version: 1.0.0 | MIT License -->
 <script>
-    customElements.define('palindrom-redirect', class PalindromRedirectElement extends HTMLElement{
-        static get observedAttributes() {
-            return ['url'];
-        }
+    /* palindrom redirect version: 1.0.1 */
+    customElements.define(
+        'palindrom-redirect',
+        class PalindromRedirectElement extends HTMLElement {
+            static get observedAttributes() {
+                return ['url'];
+            }
 
-        set url(val){
-            if(val){
-                this.setAttribute('url', val);
-            } else {
-                this.removeAttribute('url');
+            set url(val) {
+                if (val) {
+                    this.setAttribute('url', val);
+                } else {
+                    this.removeAttribute('url');
+                }
             }
-        }
-        get url(){
-            return this.getAttribute('url');
-        }
+            get url() {
+                return this.getAttribute('url');
+            }
 
-        connectedCallback(){
-            // As we cannot customize `<link>`, let's pretend it's not visual
-            this.style.display = 'none';
-            this.redirect( this.getAttribute("url") );
-        }
-        /**
-         * @event palindrom-redirect-pushstate
-         * Called whenever `history.state` is changed.
-         * @property {String} url new URL
-         */
-        attributeChangedCallback(attributeName, oldVal, newVal) {
-            switch(attributeName) {
-                case "url":
-                    if(document.contains(this)){
-						this.redirect(newVal);
-                    }
-                    break;
+            connectedCallback() {
+                // As we cannot customize `<link>`, let's pretend it's not visual
+                this.style.display = 'none';
+                this.redirect(this.getAttribute('url'));
+            }
+            /**
+             * @event palindrom-redirect-pushstate
+             * Called whenever `history.state` is changed.
+             * @property {String} url new URL
+             */
+            attributeChangedCallback(attributeName, oldVal, newVal) {
+                if (this.getRootNode().contains(this)) {
+                    this.redirect(newVal);
+                }
+            }
+            redirect(url) {
+                if (!url) {
+                    return false;
+                }
+                if (url === 'current') {
+                    url = window.location.href;
+                }
+                const target = this.getAttribute('target');
+                if (target && target !== '_self') {
+                    window.open(url, target);
+                } else if (this.hasAttribute('history')) {
+                    history.pushState(null, null, url);
+                    this.dispatchEvent(
+                        new CustomEvent('palindrom-redirect-pushstate', {
+                            detail: { url },
+                            bubbles: true
+                        })
+                    );
+                } else {
+                    window.location = url;
+                }
+                this.setAttribute('url', '');
+                this.dispatchEvent(new CustomEvent('url-changed', { detail: '' }));
+                return url;
             }
         }
-        redirect(url){
-            if(!url){
-                return false;
-            }
-            if(url == "current") {
-                url = window.location.href;
-            }
-            var target = this.getAttribute("target");
-            if(target && target !== '_self'){
-                window.open(url, this.getAttribute("target"));
-            } else if(this.hasAttribute("history")) {
-                history.pushState(null, null, url);
-                this.dispatchEvent(
-                    new CustomEvent(
-                      'palindrom-redirect-pushstate',
-                      {
-                        "detail":{"url":url},
-                        "bubbles": true
-                      }
-                  )
-                );
-            }
-            else {
-                window.location = url;
-            }
-            this.setAttribute("url", "");
-            this.dispatchEvent(new CustomEvent('url-changed',{detail: ""}));
-            return url;
-        }
-    });
+    );
 </script>

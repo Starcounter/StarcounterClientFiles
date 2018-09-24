@@ -1,4 +1,4 @@
-<!-- enlighted-link @version: 0.0.1 @license: MIT -->
+<!-- enlighted-link @version: 0.1.0 @license: MIT -->
 <script>
 customElements.define('enlighted-link', class extends HTMLElement{
     static get observedAttributes(){
@@ -14,7 +14,17 @@ customElements.define('enlighted-link', class extends HTMLElement{
         ]
     }
     connectedCallback(){
-        const link = this.link = this.link || document.createElement('link');
+        const forwardEvent = (oldEvent)=>{
+            this.dispatchEvent(new oldEvent.constructor(oldEvent.type, oldEvent));
+        }
+        let link;
+        if(this.link){
+            link = this.link;
+        } else {
+            link = this.link = document.createElement('link');
+            link.addEventListener('load', forwardEvent);
+            link.addEventListener('error', forwardEvent);
+        }
 
         for(let attrNo = 0, len = this.attributes.length; attrNo < len; attrNo++){
             link.setAttribute(this.attributes[attrNo].name, this.attributes[attrNo].value);

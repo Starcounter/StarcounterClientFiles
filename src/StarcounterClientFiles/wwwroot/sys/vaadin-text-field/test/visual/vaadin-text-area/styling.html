@@ -3,8 +3,11 @@
 <head lang="en">
   <meta charset="UTF-8">
 
-  <script src="../../../../webcomponentsjs/webcomponents-lite.js"></script>
-  <link href="../../../vaadin-text-area.html" rel="import">
+  <script src="../../../../webcomponentsjs/webcomponents-loader.js"></script>
+  <script>
+    const theme = window.location.search.replace(/.*theme=(\w+).*/, '$1') || 'lumo';
+    document.write(`<link rel="import" href="../../../theme/${theme}/vaadin-text-area.html">`);
+  </script>
 </head>
 
 <body>
@@ -19,10 +22,12 @@
         [part~="value"] {
           background-color: red;
           border: none;
+          --_lumo-text-field-overflow-mask-image: none;
         }
 
         [part~="input-field"] {
           border: 1px solid black;
+          padding: 0;
         }
 
         [part~="error-message"] {

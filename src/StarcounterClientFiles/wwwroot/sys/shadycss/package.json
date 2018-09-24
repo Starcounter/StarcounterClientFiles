@@ -1,6 +1,6 @@
 {
   "name": "@webcomponents/shadycss",
-  "version": "1.4.0",
+  "version": "1.5.2",
   "description": "Styling helpers for ShadyDOM",
   "main": "shadycss.min.js",
   "directories": {
@@ -27,7 +27,7 @@
   },
   "scripts": {
     "build": "gulp",
-    "build:debug": "gulp debug",
+    "debug": "gulp debug",
     "lint": "eslint src test entrypoints",
     "test": "npm run lint && gulp && wct",
     "prepack": "gulp closure"

@@ -1,6 +1,6 @@
 # &lt;enlighted-link&gt;
 
-> Custom element to enlight your `<link>`s from Shadow DOM to the Light.
+> Custom element to enlighten your `<link>`s from Shadow DOM to the Light.
 
 By current spec [HTML Imports do not work in Shadow DOM](https://github.com/w3c/webcomponents/issues/628). That makes it hard to import definitions of custom elements that you use in a shadow root. This element allows you to do that. You could import your dependencies exactly where and when you need them.
 
@@ -56,6 +56,17 @@ The element forwards [`link` element's content attributes](https://dev.w3.org/ht
 - sizes
 - title
 
+## Properties
+
+Property   | Options           | Default | Description
+---        | ---               | ---     | ---
+`link`     | *HTMLLinkElement* |         | The reference to created `<link>` element. `null` if not yet created. Please note, that `link` element can be disconnected from document tree when `<enlighted-link>` is disconnected.
+
+## Events
+
+The element forwards following events from created `<link>`:
+- `load`,
+- `error`
 
 ## [Contributing and Development](CONTRIBUTING.md)
 

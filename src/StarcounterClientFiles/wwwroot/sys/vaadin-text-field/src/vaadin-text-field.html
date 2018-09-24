@@ -64,11 +64,25 @@ This program is available under Apache License Version 2.0, available at https:/
   <script>
     (function() {
       /**
-       * `<vaadin-text-field>` is a Polymer 2 element for text field control in forms.
+       * `<vaadin-text-field>` is a Web Component for text field control in forms.
        *
        * ```html
        * <vaadin-text-field label="First Name">
        * </vaadin-text-field>
+       * ```
+       *
+       * ### Prefixes and suffixes
+       *
+       * These are child elements of a `<vaadin-text-field>` that are displayed
+       * inline with the input, before or after.
+       * In order for an element to be considered as a prefix, it must have the slot
+       * attribute set to `prefix` (and similarly for `suffix`).
+       *
+       * ```html
+       * <vaadin-text-field label="Email address">
+       *   <div slot="prefix">Sent to:</div>
+       *   <div slot="suffix">@vaadin.com</div>
+       * </vaadin-text-area>
        * ```
        *
        * ### Styling
@@ -113,7 +127,7 @@ This program is available under Apache License Version 2.0, available at https:/
         }
 
         static get version() {
-          return '2.0.2';
+          return '2.1.2';
         }
 
         static get properties() {

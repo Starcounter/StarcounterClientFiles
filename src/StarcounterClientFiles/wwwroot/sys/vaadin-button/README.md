@@ -1,6 +1,8 @@
-[![npm version](https://badge.fury.io/js/%40vaadin%2Fvaadin-button.svg)](https://badge.fury.io/js/%40vaadin%2Fvaadin-button)
+[![npm version](https://badgen.net/npm/v/@vaadin/vaadin-button)](https://www.npmjs.com/package/@vaadin/vaadin-button)
+[![Bower version](https://badgen.net/github/release/vaadin/vaadin-button)](https://github.com/vaadin/vaadin-button/releases)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/vaadin/vaadin-button)
 [![Build Status](https://travis-ci.org/vaadin/vaadin-button.svg?branch=master)](https://travis-ci.org/vaadin/vaadin-button)
+[![Coverage Status](https://coveralls.io/repos/github/vaadin/vaadin-button/badge.svg?branch=master)](https://coveralls.io/github/vaadin/vaadin-button?branch=master)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vaadin/web-components?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 [![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/vaadinvaadin-button)
@@ -12,7 +14,7 @@
 |
 [API documentation ↗](https://vaadin.com/components/vaadin-button/html-api)
 
-[&lt;vaadin-button&gt;](https://vaadin.com/components/vaadin-button) is a [Polymer 2](http://polymer-project.org) element providing an accessible and customizable button, part of the [Vaadin components](https://vaadin.com/components).
+[&lt;vaadin-button&gt;](https://vaadin.com/components/vaadin-button) is a Web Component providing an accessible and customizable button, part of the [Vaadin components](https://vaadin.com/components).
 
 <!--
 ```
@@ -33,23 +35,62 @@
 
 [<img src="https://raw.githubusercontent.com/vaadin/vaadin-button/master/screenshot.png" alt="Screenshot of vaadin-button, using the default Lumo theme">](https://vaadin.com/components/vaadin-button)
 
-## Getting Started
+## Installation
+
+The Vaadin components are distributed as Bower and npm packages.
+Please note that the version range is the same, as the API has not changed.
+You should not mix Bower and npm versions in the same application, though.
+
+Unlike the official Polymer Elements, the converted Polymer 3 compatible Vaadin components
+are only published on npm, not pushed to GitHub repositories.
+
+### Polymer 2 and HTML Imports compatible version
+
+Install `vaadin-button`:
+
+```sh
+bower i vaadin/vaadin-button --save
+```
+
+Once installed, import it in your application:
+
+```html
+<link rel="import" href="bower_components/vaadin-button/vaadin-button.html">
+```
+### Polymer 3 and ES Modules compatible version
+
+Install `vaadin-button`:
+
+```sh
+npm i @vaadin/vaadin-button --save
+```
+
+Once installed, import it in your application:
+
+```js
+import '@vaadin/vaadin-button/vaadin-button.js';
+```
+
+## Getting started
 
 Vaadin components use the Lumo theme by default.
 
-## The file structure for Vaadin components
+To use the Material theme, import the correspondent file from the `theme/material` folder.
 
-- `src/vaadin-button.html`
+## Entry points
 
-  Unstyled component.
+- The component with the Lumo theme:
 
-- `theme/lumo/vaadin-button.html`
+  `theme/lumo/vaadin-button.html`
 
-  Component with Lumo theme.
+- The component with the Material theme:
 
-- `vaadin-button.html`
+  `theme/material/vaadin-button.html`
 
-  Alias for theme/lumo/vaadin-button.html
+- Alias for `theme/lumo/vaadin-button.html`:
+
+  `vaadin-button.html`
+
 
 ## Running demos and tests in browser
 
@@ -77,12 +118,9 @@ Vaadin components use the Lumo theme by default.
 We are using [ESLint](http://eslint.org/) for linting JavaScript code. You can check if your code is following our standards by running `gulp lint`, which will automatically lint all `.js` files as well as JavaScript snippets inside `.html` files.
 
 
-## Creating a pull request
+## Contributing
 
-  - Make sure your code is compliant with our code linters: `gulp lint`
-  - Check that tests are passing: `polymer test`
-  - [Submit a pull request](https://www.digitalocean.com/community/tutorials/how-to-create-a-pull-request-on-github) with detailed title and description
-  - Wait for response from one of Vaadin components team members
+  To contribute to the component, please read [the guideline](https://github.com/vaadin/vaadin-core/blob/master/CONTRIBUTING.md) first.
 
 
 ## License

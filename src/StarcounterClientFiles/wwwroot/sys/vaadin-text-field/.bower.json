@@ -5,7 +5,14 @@
     "Vaadin Ltd"
   ],
   "description": "vaadin-text-field",
-  "main": "vaadin-text-field.html",
+  "main": [
+    "vaadin-text-field.html",
+    "vaadin-password-field.html",
+    "vaadin-text-area.html",
+    "theme/material/vaadin-password-field.html",
+    "theme/material/vaadin-text-area.html",
+    "theme/material/vaadin-text-field.html"
+  ],
   "keywords": [
     "Vaadin",
     "input",
@@ -30,24 +37,28 @@
     "iron-test-helpers": "^2.0.0",
     "webcomponentsjs": "^1.0.0",
     "web-component-tester": "^6.1.5",
-    "vaadin-demo-helpers": "^1.0.0",
-    "vaadin-button": "^2.0.0"
+    "vaadin-demo-helpers": "vaadin/vaadin-demo-helpers#^2.0.1",
+    "vaadin-button": "vaadin/vaadin-button#^2.1.0-beta2"
   },
   "dependencies": {
     "polymer": "^2.0.0",
-    "vaadin-themable-mixin": "^1.1.0",
-    "vaadin-control-state-mixin": "vaadin/vaadin-control-state-mixin#^2.0.0",
-    "vaadin-lumo-styles": "vaadin/vaadin-lumo-styles#^1.0.0",
-    "vaadin-element-mixin": "vaadin/vaadin-element-mixin#^1.0.1"
+    "vaadin-themable-mixin": "vaadin/vaadin-themable-mixin#^1.2.1",
+    "vaadin-control-state-mixin": "vaadin/vaadin-control-state-mixin#^2.1.1",
+    "vaadin-lumo-styles": "vaadin/vaadin-lumo-styles#^1.1.0-beta1",
+    "vaadin-material-styles": "vaadin/vaadin-material-styles#^1.1.0-beta1",
+    "vaadin-element-mixin": "vaadin/vaadin-element-mixin#^2.0.0"
   },
-  "version": "2.0.2",
-  "_release": "2.0.2",
+  "resolutions": {
+    "vaadin-element-mixin": "^2.0.0"
+  },
+  "version": "2.1.2",
+  "_release": "2.1.2",
   "_resolution": {
     "type": "version",
-    "tag": "v2.0.2",
-    "commit": "558788811cb9bd4d1ead1066da179acec0b786c4"
+    "tag": "v2.1.2",
+    "commit": "b7a40f86e360ff1b0f39977beae9635b8f27c546"
   },
   "_source": "https://github.com/vaadin/vaadin-text-field.git",
-  "_target": "^2.0.0",
-  "_originalSource": "vaadin-text-field"
+  "_target": "^2.1.0-beta2",
+  "_originalSource": "vaadin/vaadin-text-field"
 }

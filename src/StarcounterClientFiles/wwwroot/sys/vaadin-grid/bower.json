@@ -16,7 +16,24 @@
     "data-grid",
     "data-table"
   ],
-  "main": "vaadin-grid.html",
+  "main": [
+    "vaadin-grid.html",
+    "vaadin-grid-column.html",
+    "vaadin-grid-column-group.html",
+    "vaadin-grid-filter.html",
+    "vaadin-grid-selection-column.html",
+    "vaadin-grid-sorter.html",
+    "vaadin-grid-tree-toggle.html",
+    "all-imports.html",
+    "theme/material/vaadin-grid.html",
+    "theme/material/vaadin-grid-column.html",
+    "theme/material/vaadin-grid-column-group.html",
+    "theme/material/vaadin-grid-filter.html",
+    "theme/material/vaadin-grid-selection-column.html",
+    "theme/material/vaadin-grid-sorter.html",
+    "theme/material/vaadin-grid-tree-toggle.html",
+    "theme/material/all-imports.html"
+  ],
   "ignore": [
     "**/.*",
     "**/node_modules",
@@ -26,6 +43,7 @@
     "wct.conf.js"
   ],
   "devDependencies": {
+    "webcomponentsjs": "1.2.0",
     "web-component-tester": "^6.1.5",
     "iron-test-helpers": "^v2.0.0",
     "paper-input": "^v2.0.0",
@@ -39,10 +57,8 @@
     "iron-ajax": "PolymerElements/iron-ajax#^v2.0.0",
     "app-localize-behavior": "^v2.0.0",
     "iron-list": "^v2.0.4",
-    "vaadin-demo-helpers": "^1.2.0",
-    "vaadin-text-field": "^2.0.0",
-    "vaadin-checkbox": "^2.0.0",
-    "vaadin-button": "^2.0.0"
+    "vaadin-demo-helpers": "vaadin/vaadin-demo-helpers#^2.0.2",
+    "vaadin-button": "vaadin/vaadin-button#^2.1.0"
   },
   "dependencies": {
     "polymer": "^2.0.0",
@@ -50,13 +66,11 @@
     "iron-scroll-target-behavior": "PolymerElements/iron-scroll-target-behavior#^v2.0.0",
     "iron-a11y-keys-behavior": "^v2.0.0",
     "iron-a11y-announcer": "^v2.0.0",
-    "vaadin-themable-mixin": "^1.1.0",
-    "vaadin-checkbox": "^2.0.0",
-    "vaadin-text-field": "^2.0.0",
-    "vaadin-lumo-styles": "vaadin/vaadin-lumo-styles#^1.0.0",
-    "vaadin-element-mixin": "vaadin/vaadin-element-mixin#^1.0.1"
-  },
-  "resolutions": {
-    "iron-doc-viewer": "^3.0.0"
+    "vaadin-themable-mixin": "vaadin/vaadin-themable-mixin#^1.2.1",
+    "vaadin-checkbox": "vaadin/vaadin-checkbox#^2.2.1",
+    "vaadin-text-field": "vaadin/vaadin-text-field#^2.1.1",
+    "vaadin-lumo-styles": "vaadin/vaadin-lumo-styles#^1.1.1",
+    "vaadin-material-styles": "vaadin/vaadin-material-styles#^1.1.1",
+    "vaadin-element-mixin": "vaadin/vaadin-element-mixin#^2.1.1"
   }
 }
