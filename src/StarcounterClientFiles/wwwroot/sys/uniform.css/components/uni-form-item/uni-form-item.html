@@ -1,13 +1,17 @@
-<!-- uni-form-item @version: 0.3.0 @license: MIT -->
+<!-- uni-form-item @version: 0.7.0 @license: MIT -->
 <template>
     <style>
         :host {
             display: grid;
-            grid-template: "label" / auto;
+            grid-template: "label" / minmax(min-content, 1fr);
             grid-gap: 0.5rem;
             align-items: baseline;
             justify-content: start;
             justify-items: start;
+
+            width: -moz-max-content;
+            width: -ms-max-content;
+            width: max-content;
         }
 
         /* Make the `hidden` attribute work again */
@@ -43,6 +47,7 @@
         /* Enable border style overrides on control from outside */
         ::slotted(:not(label):not(output)) {
             border: var(--uni-form-item-control-border) !important;
+            width: 100%;
         }
 
         /* Error message should be red */

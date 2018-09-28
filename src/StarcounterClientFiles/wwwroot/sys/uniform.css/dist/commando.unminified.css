@@ -253,26 +253,6 @@ layer for them (eg: create --uni-default-tint-5pct -> --uni-default-tint-5pct) *
  */
 
 /**
-  * .uni-label-control
-  * Puts label (slotted or not) in the left column, everything else in the right column
- */
-
-.uni-label-control {
-  display: grid;
-  grid-template: "label";
-  grid-gap: 1rem;
-  align-items: baseline;
-  justify-content: start;
-  justify-items: start;
-}
-
-.uni-label-control > ::slotted(label) {
-  text-align: left;
-  grid-area: label;
-  font-size: 12px;
-}
-
-/**
 Buttons
 */
 
@@ -282,26 +262,27 @@ Buttons
 .uni-flat-button {
   display: inline-block;
 }
-.uni-flat-button {
-  min-width: auto;
-}
 
 /* Style a button that is a light DOM content, probably functional element bound to the database */
+.uni-primary-button > ::slotted(a),
 .uni-primary-button > ::slotted(button) {
   color: var(--uni-primary-contrast-color, var(--uni-default-primary-contrast-color)) !important;
   background-color: var(--uni-primary-color, var(--uni-default-primary-color)) !important;
 }
 
+.uni-success-button > ::slotted(a),
 .uni-success-button > ::slotted(button) {
   color: var(--uni-success-contrast-color, var(--uni-default-success-contrast-color)) !important;
   background-color: var(--uni-success-color, var(--uni-default-success-color)) !important;
 }
 
+.uni-danger-button > ::slotted(a),
 .uni-danger-button > ::slotted(button) {
   color: var(--uni-danger-contrast-color, var(--uni-default-danger-contrast-color)) !important;
   background-color: var(--uni-danger-color, var(--uni-default-danger-color)) !important;
 }
 
+.uni-flat-button > ::slotted(a),
 .uni-flat-button > ::slotted(button) {
   background-color: var(--uni-flat-button-color, var(--uni-default-flat-button-color)) !important;
   color: var(--uni-flat-button-contrast-color, var(--uni-default-flat-button-contrast-color)) !important;
@@ -311,17 +292,44 @@ Buttons
   margin-right: 16px !important;
 }
 
+.uni-danger-button > ::slotted(a),
+.uni-flat-button > ::slotted(a),
+.uni-success-button > ::slotted(a),
+.uni-primary-button> ::slotted(a) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  padding-left: 16px;
+  padding-top: 2px;
+  padding-right: 16px;
+  height: 32px;
+  cursor: pointer;
+  white-space: nowrap;
+  min-width: 120px;
+  box-shadow: 0px 1px 3px 0 var(--uni-control-shadow-color, var(--uni-default-control-shadow-color));
+  margin: 2px 2px 2px 0;
+}
+
 .uni-primary-button > ::slotted(button:hover),
 .uni-primary-button > ::slotted(button:focus),
 .uni-success-button > ::slotted(button:hover),
 .uni-success-button > ::slotted(button:focus),
 .uni-danger-button > ::slotted(button:hover),
-.uni-danger-button > ::slotted(button:focus) {
+.uni-danger-button > ::slotted(button:focus),
+.uni-primary-button > ::slotted(a:hover),
+.uni-primary-button > ::slotted(a:focus),
+.uni-success-button > ::slotted(a:hover),
+.uni-success-button > ::slotted(a:focus),
+.uni-danger-button > ::slotted(a:hover),
+.uni-danger-button > ::slotted(a:focus) {
   filter: brightness(90%) !important;
 }
 
 .uni-flat-button > ::slotted(button:hover),
-.uni-flat-button > ::slotted(button:focus) {
+.uni-flat-button > ::slotted(button:hover),
+.uni-flat-button > ::slotted(a:hover),
+.uni-flat-button > ::slotted(a:focus) {
   background-color: var(--uni-flat-button-hover-color, var(--uni-default-flat-button-hover-color)) !important;
 }
 
@@ -331,6 +339,7 @@ Buttons
 .uni-flat-button > ::slotted(button[disabled]) {
   opacity: .65 !important;
   box-shadow: initial !important;
+  cursor: not-allowed
 }
 .uni-flat-button > ::slotted(button[disabled]) {
   color: var(--uni-flat-button-disabled-contrast-color, var(--uni-default-flat-button-disabled-contrast-color)) !important;
@@ -344,6 +353,7 @@ Buttons
 .uni-danger-button > ::slotted(button[disabled]:focus) {
   filter: initial !important;
 }
+
 .uni-flat-button > ::slotted(button[disabled]:hover),
 .uni-flat-button > ::slotted(button[disabled]:focus) {
   background-color: transparent !important;

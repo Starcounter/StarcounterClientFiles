@@ -36,14 +36,19 @@
     "web-component-tester": "^6.5.0",
     "polymer": "^2.6.0"
   },
-  "version": "0.5.5",
-  "_release": "0.5.5",
+  "resolutions": {
+    "vaadin-element-mixin": "^1.0.1",
+    "vaadin-development-mode-detector": "^1.1.0-beta1",
+    "vaadin-usage-statistics": "^1.1.0-beta1"
+  },
+  "version": "0.7.0",
+  "_release": "0.7.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.5.5",
-    "commit": "323f865942f8c99e6dc68109232d56e09680479f"
+    "tag": "0.7.0",
+    "commit": "8db957425db3518403f403c9056bea5f80882b22"
   },
   "_source": "https://github.com/Starcounter/Uniform.css.git",
-  "_target": "^0.5.3",
+  "_target": "^0.7.0",
   "_originalSource": "uniform.css"
 }

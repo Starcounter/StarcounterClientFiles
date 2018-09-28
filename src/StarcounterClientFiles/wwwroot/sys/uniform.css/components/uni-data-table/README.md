@@ -357,6 +357,33 @@ Example: a column with a non-flexible width of `50px`
 </template>
 ```
 
+#### Filtering
+
+By providing [a column config](#columns) with `IsFilterable: true` you will get the default header with a text input to filter the values. You can use `<template slot="header">` to overwrite the look of your header and the element used for filtering. For example you can use the [`<vaadin-combo-box>`](https://vaadin.com/components/vaadin-combo-box) custom element to create filter specific for `Boolean` values:
+```html
+<uni-data-table-column index="1">
+    <template slot="header">
+      <style>
+      /* Prefix your classes carefully, this tree scope is shared with other cells */
+      vaadin-combo-box.assortment-manager-active-filter{
+          width: 7em;
+      }
+      </style>
+      <span>[[column.DisplayName]]</span>
+      <uni-data-table-filter aria-label="[[column.DisplayName]] filter" path="item.[[column.PropertyName]]" value="[[column.Filter$]]">
+          <vaadin-combo-box class="assortment-manager-active-filter"
+                            slot="filter"
+                            focus-target
+                            items='[{"value": true, "label": "Yes"}, {"value": false, "label": "No"}]'
+                            value="{{column.Filter$::change}}" placeholder="Any">
+          </vaadin-combo-box>
+    </uni-data-table-filter>
+    </template>
+</uni-data-table-column>
+```
+Use `<uni-data-table-filter>` to bind a `value` which you can use in your custom elements  with cells data at a given `path`.
+To replace the default `vaadin-text-field` input element, set `slot="filter"` on your element.
+
 ## History
 
 For detailed changelog, check [Releases](https://github.com/Starcounter/Uniform.css/releases).

@@ -35,5 +35,10 @@
   "devDependencies": {
     "web-component-tester": "^6.5.0",
     "polymer": "^2.6.0"
+  },
+  "resolutions": {
+    "vaadin-element-mixin": "^1.0.1",
+    "vaadin-development-mode-detector": "^1.1.0-beta1",
+    "vaadin-usage-statistics": "^1.1.0-beta1"
   }
 }

@@ -133,7 +133,7 @@ The following CSS Custom Properties are supported:
             "Message": "",
             "Invalid": ""
         }
-    
+
     }
 }
 ```
@@ -158,6 +158,14 @@ Example view:
         </template>
     </template>
 ```
+
+## Caveats
+
+MS Edge, does not support the `width: max-content;`. Therefore, the intrinsic size of `uni-form-item` falls back to `100%`. To get a consistent cross-browser look, you need to set the `width` manually.
+
+Feel invited to cast your vote for `width: max-content` in Edge:
+ - https://wpdev.uservoice.com/forums/257854-microsoft-edge-developer/suggestions/6263702-css-intrinsic-sizing
+ - https://wpdev.uservoice.com/forums/257854-microsoft-edge-developer/suggestions/9100963-max-content
 
 ## History
 

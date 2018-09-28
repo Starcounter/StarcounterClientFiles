@@ -35,7 +35,7 @@
     "Palindrom": "Palindrom/Palindrom#^v5.0.0"
   },
   "devDependencies": {
-    "polymer": "Polymer/polymer#1.9 - 2",
+    "polymer": "^2.6.1",
     "iron-component-page": "PolymerElements/iron-component-page#1 - 2",
     "paper-styles": "polymerelements/paper-styles#1 - 2",
     "test-fixture": "PolymerElements/test-fixture#^3.0.0",
@@ -46,14 +46,14 @@
     "starcounter-include": "Starcounter/starcounter-include#master",
     "fast-json-patch": "^2.0.6"
   },
-  "version": "7.1.1",
-  "_release": "7.1.1",
+  "version": "7.2.0",
+  "_release": "7.2.0",
   "_resolution": {
     "type": "version",
-    "tag": "7.1.1",
-    "commit": "96db50372d4df9890fc166ad204f3cf9f690b846"
+    "tag": "7.2.0",
+    "commit": "313e1269cc76cd4f03a3fa3c525384bd98d2fbfc"
   },
   "_source": "https://github.com/Palindrom/palindrom-client.git",
-  "_target": "^7.0.0",
+  "_target": "^7.2.0",
   "_originalSource": "palindrom-client"
 }
