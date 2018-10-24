@@ -1,6 +1,9 @@
 gemini.suite('vaadin-text-field', function(rootSuite) {
   function wait(actions, find) {
-    actions.wait(5000);
+    return actions
+      .waitForJSCondition(function(window) {
+        return window.webComponentsAreReady;
+      }, 80000);
   }
 
   function goToAboutBlank(actions, find) {
@@ -40,6 +43,13 @@ gemini.suite('vaadin-text-field', function(rootSuite) {
         .setUrl(`vaadin-text-field/rtl.html?theme=${theme}`)
         .setCaptureElements('#rtl')
         .capture('rtl');
+    });
+
+    gemini.suite(`text-field-integration-${theme}`, function(suite) {
+      suite
+        .setUrl(`vaadin-text-field/integration.html?theme=${theme}`)
+        .setCaptureElements('#integration')
+        .capture('integration');
     });
 
     gemini.suite(`password-field-${theme}`, function(suite) {

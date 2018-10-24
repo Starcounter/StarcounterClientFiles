@@ -1,10 +1,20 @@
 bower check-new     Checking for new versions of the project dependencies...
-starcounter-clientfiles D:\repos\apps\StarcounterClientFiles\src\StarcounterClientFiles
+starcounter-clientfiles C:\Work\Starcounter\StarcounterClientFiles\src\StarcounterClientFiles
 ├─┬ enlighted-link#0.1.0
 │ └── webcomponentsjs#1.2.7 (latest is 2.1.3)
 ├─┬ imported-template#3.4.0
 │ └── juicy-html#4.0.0
-├─┬ palindrom-client#7.1.1
+├─┬ iron-fit-behavior#2.2.1 extraneous (latest is 3.0.1)
+│ └── polymer not installed
+├─┬ iron-overlay-behavior#2.3.4 extraneous (latest is 3.0.2)
+│ ├─┬ iron-a11y-keys-behavior#2.1.1 (latest is 3.0.1)
+│ │ └── polymer not installed
+│ ├─┬ iron-fit-behavior#2.2.1 extraneous (latest is 3.0.1)
+│ │ └── polymer not installed
+│ ├─┬ iron-resizable-behavior#2.1.1 (latest is 3.0.1)
+│ │ └── polymer not installed
+│ └── polymer not installed
+├─┬ palindrom-client#7.2.0
 │ └── Palindrom#5.1.3
 ├── palindrom-error-catcher#1.1.0
 ├── palindrom-redirect#1.0.1
@@ -16,8 +26,10 @@ starcounter-clientfiles D:\repos\apps\StarcounterClientFiles\src\StarcounterClie
 ├─┬ starcounter-include#5.2.0
 │ └─┬ imported-template#3.4.0
 │   └── juicy-html#4.0.0
-├─┬ uniform.css#0.5.5
-│ ├─┬ vaadin-date-picker#3.2.0 (3.3.0-alpha1 available)
+├─┬ uniform.css#0.8.0
+│ ├── juicy-popover#2.1.0
+│ ├── polymer not installed
+│ ├─┬ vaadin-date-picker#3.3.0
 │ │ ├─┬ iron-a11y-announcer#2.1.0 (latest is 3.0.1)
 │ │ │ └── polymer not installed
 │ │ ├─┬ iron-a11y-keys-behavior#2.1.1 (latest is 3.0.1)
@@ -36,14 +48,14 @@ starcounter-clientfiles D:\repos\apps\StarcounterClientFiles\src\StarcounterClie
 │ │ │ │ ├── vaadin-development-mode-detector#2.0.0
 │ │ │ │ └─┬ vaadin-usage-statistics#2.0.1
 │ │ │ │   └── vaadin-development-mode-detector#2.0.0
-│ │ │ ├─┬ vaadin-lumo-styles#1.2.0
-│ │ │ │ ├─┬ iron-icon#2.1.0
-│ │ │ │ │ ├─┬ iron-flex-layout#2.0.3
+│ │ │ ├─┬ vaadin-lumo-styles#1.3.1
+│ │ │ │ ├─┬ iron-icon#2.1.0 (latest is 3.0.1)
+│ │ │ │ │ ├─┬ iron-flex-layout#2.0.3 (latest is 3.0.1)
 │ │ │ │ │ │ └── polymer not installed
-│ │ │ │ │ ├─┬ iron-meta#2.1.1
+│ │ │ │ │ ├─┬ iron-meta#2.1.1 (latest is 3.0.1)
 │ │ │ │ │ │ └── polymer not installed
 │ │ │ │ │ └── polymer not installed
-│ │ │ │ ├─┬ iron-iconset-svg#2.2.1
+│ │ │ │ ├─┬ iron-iconset-svg#2.2.1 (latest is 3.0.1)
 │ │ │ │ │ ├─┬ iron-meta#2.1.1
 │ │ │ │ │ │ └── polymer not installed
 │ │ │ │ │ └── polymer not installed
@@ -59,45 +71,14 @@ starcounter-clientfiles D:\repos\apps\StarcounterClientFiles\src\StarcounterClie
 │ │ │ ├── vaadin-development-mode-detector#2.0.0
 │ │ │ └─┬ vaadin-usage-statistics#2.0.1
 │ │ │   └── vaadin-development-mode-detector#2.0.0
-│ │ ├─┬ vaadin-lumo-styles#1.2.0
-│ │ │ ├─┬ iron-icon#2.1.0 (latest is 3.0.1)
-│ │ │ │ ├─┬ iron-flex-layout#2.0.3 (latest is 3.0.1)
-│ │ │ │ │ └── polymer not installed
-│ │ │ │ ├─┬ iron-meta#2.1.1 (latest is 3.0.1)
-│ │ │ │ │ └── polymer not installed
-│ │ │ │ └── polymer not installed
-│ │ │ ├─┬ iron-iconset-svg#2.2.1 (latest is 3.0.1)
-│ │ │ │ ├─┬ iron-meta#2.1.1
-│ │ │ │ │ └── polymer not installed
-│ │ │ │ └── polymer not installed
-│ │ │ └── polymer not installed
-│ │ ├─┬ vaadin-material-styles#1.2.0
-│ │ │ └── polymer not installed
-│ │ ├─┬ vaadin-overlay#3.1.1 (3.2.0-alpha3 available)
-│ │ │ ├─┬ iron-overlay-behavior#2.3.4 (latest is 3.0.2)
-│ │ │ │ ├── iron-a11y-keys-behavior#2.1.1 (latest is 3.0.1)
-│ │ │ │ ├─┬ iron-fit-behavior#2.2.1 (latest is 3.0.1)
-│ │ │ │ │ └── polymer not installed
-│ │ │ │ ├── iron-resizable-behavior#2.1.1 (latest is 3.0.1)
-│ │ │ │ └── polymer not installed
+│ │ ├── vaadin-lumo-styles#1.3.1
+│ │ ├── vaadin-material-styles#1.2.0
+│ │ ├─┬ vaadin-overlay#3.2.1
 │ │ │ ├── polymer not installed
-│ │ │ ├─┬ vaadin-lumo-styles#1.2.0
-│ │ │ │ ├─┬ iron-icon#2.1.0
-│ │ │ │ │ ├─┬ iron-flex-layout#2.0.3
-│ │ │ │ │ │ └── polymer not installed
-│ │ │ │ │ ├─┬ iron-meta#2.1.1
-│ │ │ │ │ │ └── polymer not installed
-│ │ │ │ │ └── polymer not installed
-│ │ │ │ ├─┬ iron-iconset-svg#2.2.1
-│ │ │ │ │ ├─┬ iron-meta#2.1.1
-│ │ │ │ │ │ └── polymer not installed
-│ │ │ │ │ └── polymer not installed
-│ │ │ │ └── polymer not installed
-│ │ │ ├─┬ vaadin-material-styles#1.2.0
-│ │ │ │ └── polymer not installed
-│ │ │ └─┬ vaadin-themable-mixin#1.3.2
-│ │ │   └── polymer not installed
-│ │ ├─┬ vaadin-text-field#2.1.2
+│ │ │ ├── vaadin-lumo-styles#1.3.1
+│ │ │ ├── vaadin-material-styles#1.2.0
+│ │ │ └── vaadin-themable-mixin#1.3.2
+│ │ ├─┬ vaadin-text-field#2.1.3
 │ │ │ ├── polymer not installed
 │ │ │ ├─┬ vaadin-control-state-mixin#2.1.1
 │ │ │ │ └── polymer not installed
@@ -106,32 +87,18 @@ starcounter-clientfiles D:\repos\apps\StarcounterClientFiles\src\StarcounterClie
 │ │ │ │ ├── vaadin-development-mode-detector#2.0.0
 │ │ │ │ └─┬ vaadin-usage-statistics#2.0.1
 │ │ │ │   └── vaadin-development-mode-detector#2.0.0
-│ │ │ ├─┬ vaadin-lumo-styles#1.2.0
-│ │ │ │ ├─┬ iron-icon#2.1.0
-│ │ │ │ │ ├─┬ iron-flex-layout#2.0.3
-│ │ │ │ │ │ └── polymer not installed
-│ │ │ │ │ ├─┬ iron-meta#2.1.1
-│ │ │ │ │ │ └── polymer not installed
-│ │ │ │ │ └── polymer not installed
-│ │ │ │ ├─┬ iron-iconset-svg#2.2.1
-│ │ │ │ │ ├─┬ iron-meta#2.1.1
-│ │ │ │ │ │ └── polymer not installed
-│ │ │ │ │ └── polymer not installed
-│ │ │ │ └── polymer not installed
-│ │ │ ├─┬ vaadin-material-styles#1.2.0
-│ │ │ │ └── polymer not installed
-│ │ │ └─┬ vaadin-themable-mixin#1.3.2
-│ │ │   └── polymer not installed
-│ │ └─┬ vaadin-themable-mixin#1.3.2
-│ │   └── polymer not installed
-│ ├─┬ vaadin-grid#5.1.0 (5.2.0-alpha2 available)
+│ │ │ ├── vaadin-lumo-styles#1.3.1
+│ │ │ ├── vaadin-material-styles#1.2.0
+│ │ │ └── vaadin-themable-mixin#1.3.2
+│ │ └── vaadin-themable-mixin#1.3.2
+│ ├─┬ vaadin-grid#5.2.1
 │ │ ├── iron-a11y-announcer#2.1.0 (latest is 3.0.1)
 │ │ ├── iron-a11y-keys-behavior#2.1.1 (latest is 3.0.1)
 │ │ ├── iron-resizable-behavior#2.1.1 (latest is 3.0.1)
 │ │ ├─┬ iron-scroll-target-behavior#2.1.1 (latest is 3.0.1)
 │ │ │ └── polymer not installed
 │ │ ├── polymer not installed
-│ │ ├─┬ vaadin-checkbox#2.2.2
+│ │ ├─┬ vaadin-checkbox#2.2.3
 │ │ │ ├── polymer not installed
 │ │ │ ├─┬ vaadin-control-state-mixin#2.1.1
 │ │ │ │ └── polymer not installed
@@ -140,15 +107,13 @@ starcounter-clientfiles D:\repos\apps\StarcounterClientFiles\src\StarcounterClie
 │ │ │ │ ├── vaadin-development-mode-detector#2.0.0
 │ │ │ │ └─┬ vaadin-usage-statistics#2.0.1
 │ │ │ │   └── vaadin-development-mode-detector#2.0.0
-│ │ │ ├── vaadin-lumo-styles#1.2.0
+│ │ │ ├── vaadin-lumo-styles#1.3.1
 │ │ │ ├── vaadin-material-styles#1.2.0
-│ │ │ └─┬ vaadin-themable-mixin#1.3.2
-│ │ │   └── polymer not installed
+│ │ │ └── vaadin-themable-mixin#1.3.2
 │ │ ├── vaadin-element-mixin#2.1.2
-│ │ ├── vaadin-lumo-styles#1.2.0
+│ │ ├── vaadin-lumo-styles#1.3.1
 │ │ ├── vaadin-material-styles#1.2.0
-│ │ ├── vaadin-text-field#2.1.2
-│ │ └─┬ vaadin-themable-mixin#1.3.2
-│ │   └── polymer not installed
+│ │ ├── vaadin-text-field#2.1.3
+│ │ └── vaadin-themable-mixin#1.3.2
 │ └── webcomponentsjs#1.2.7
 └── webcomponentsjs#1.2.7 (latest is 2.1.3)

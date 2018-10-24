@@ -53,6 +53,6 @@
     "commit": "0b4654556be00223514b7c141a5df29a82cd50b9"
   },
   "_source": "https://github.com/vaadin/vaadin-button.git",
-  "_target": "^2.1.0-beta2",
+  "_target": "^2.1.0",
   "_originalSource": "vaadin/vaadin-button"
 }

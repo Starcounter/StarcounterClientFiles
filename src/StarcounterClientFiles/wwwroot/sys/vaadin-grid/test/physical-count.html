@@ -116,7 +116,28 @@
         flushGrid(grid);
 
         expect(grid._physicalCount).to.be.above(26);
-        expect(grid._physicalCount).to.be.below(87);
+        expect(grid._physicalCount).to.be.below(60);
+      });
+
+      it('should minimize pool increase rounds', () => {
+        grid = fixture('default');
+        grid.style.height = '1000px';
+        const spy = sinon.spy(grid, '_createScrollerRows');
+        grid.dataProvider = infiniteDataProvider;
+        flushGrid(grid);
+        expect(spy.callCount).to.equal(2);
+      });
+
+      it('should not try to reorder children if pool is not increased', () => {
+        grid = fixture('default');
+        grid.items = ['foo', 'bar'];
+        flushGrid(grid);
+
+        const spy = sinon.spy(grid, '__reorderChildNodes');
+        grid.items = ['foo'];
+        flushGrid(grid);
+
+        expect(spy).not.to.be.called;
       });
 
 

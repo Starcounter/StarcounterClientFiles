@@ -1,4 +1,5 @@
-<!-- uni-date-picker @version: 0.5.5 @license: MIT -->
+<!-- uni-date-picker @version: 0.8.0 @license: MIT -->
+<link rel="import" href="../../../polymer/lib/utils/flattened-nodes-observer.html">
 <link rel="import" href="../../../vaadin-date-picker/vaadin-date-picker.html">
 <script>
 (function(){
@@ -116,9 +117,13 @@
             this.slotChangedCallback = this.slotChangedCallback.bind(this);
 
             this.slotElement = document.createElement('slot');
-            this.slotElement.addEventListener('slotchange', this.slotChangedCallback);
+            // Due to lack of interop for `slotchange` in Safari https://bugs.webkit.org/show_bug.cgi?id=190204
+            // We will use Polymer.FlattenedNodesObserver with it's scheduling to workaround it.
+            // this.slotElement.addEventListener('slotchange', this.slotChangedCallback);
+            this._observer = new Polymer.FlattenedNodesObserver(this.slotElement, this.slotChangedCallback);
 
             this.vaadinElement = document.createElement('vaadin-date-picker');
+            this.vaadinElement.disabled = true;
             // Listen to vaading changing the value
             this.vaadinElement.addEventListener('value-changed', (ev)=>{
                 if(this.input && !this._copyingInput){
@@ -178,12 +183,19 @@
             if(this.input !== input){
                 this._unobserveInput();
                 this.input = input;
-                this._observeInput();
-                // Copy all native, semantics to vaadin API
-                this._copyingInput = true;
-                this.constructor.clonedBooleanPropAPI.forEach(property => copyProperty(this.input, this.vaadinElement, property));
-                this.constructor.clonedStringAPI.forEach(property => copyProperty(this.input, this.vaadinElement, property));
-                this._copyingInput = false;
+                // if there is anything to observe/copy from
+                if(input){
+                    this._observeInput();
+                    // Copy all native, semantics to vaadin API
+                    this._copyingInput = true;
+                    this.constructor.clonedBooleanPropAPI.forEach(property => copyProperty(this.input, this.vaadinElement, property));
+                    this.constructor.clonedStringAPI.forEach(property => copyProperty(this.input, this.vaadinElement, property));
+                    this._copyingInput = false;
+                } else {
+                    this._copyingInput = true;
+                    this.vaadinElement.disabled = true;
+                    this._copyingInput = false;
+                }
             }
         }
         /*
