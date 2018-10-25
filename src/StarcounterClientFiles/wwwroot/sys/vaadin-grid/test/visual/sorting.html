@@ -4,8 +4,12 @@
   <meta charset="UTF-8">
   <title>Sorting visual tests</title>
   <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
-  <link href="../../vaadin-grid.html" rel="import">
-  <link href="../../vaadin-grid-sorter.html" rel="import">
+  <script>
+    const theme = window.location.search.replace(/.*theme=(\w+).*/, '$1') || 'lumo';
+    document.write(`<link rel="import" href="../../theme/${theme}/vaadin-grid.html">`);
+    document.write(`<link rel="import" href="../../theme/${theme}/vaadin-grid-sorter.html">`);
+  </script>
+  <script src="../../demo/grid-demo-data.js"></script>
   <link href="../../demo/x-data-provider.html" rel="import">
 </head>
 
@@ -35,13 +39,13 @@
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter id="first-name-sorter" path="name.first">First Name</vaadin-grid-sorter>
+              <vaadin-grid-sorter id="first-name-sorter" path="name.first">First name</vaadin-grid-sorter>
             </template>
             <template>[[item.name.first]]</template>
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter id="last-name-sorter" path="name.last">Last Name</vaadin-grid-sorter>
+              <vaadin-grid-sorter id="last-name-sorter" path="name.last">Last name</vaadin-grid-sorter>
             </template>
             <template>[[item.name.last]]</template>
           </vaadin-grid-column>

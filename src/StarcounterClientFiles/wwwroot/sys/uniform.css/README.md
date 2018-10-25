@@ -1,13 +1,18 @@
-# Uniform.css
+# Uniform
 
 Opinionated CSS library that plays nicely within Shadow DOM, plus a set of elements to be used as wrappers in Shadow DOM for distributed native elements.
 
 It is a set of helper CSS classes to implement:
 
 - contextual look &amp; feel for native HTML elements using classes such as `.uni-primary-button`, `.uni-alert-success`, etc
-- typical UI patterns using classes such as `.uni-section-primary`, `.uni-card`, `.uni-label-control`, etc.
+- typical UI patterns using classes such as `.uni-section-primary`, `.uni-card`, etc.
 
 If you are looking for UI Components library check [Uniform components](components/).
+
+📖 There are two GitHub repos:
+
+- [uniform](https://github.com/Starcounter/uniform) is used to discuss the design system: guidelines, components, look and feel
+- [UniformDocs](https://github.com/Starcounter/UniformDocs) is used to discuss the sample app and changes in that app
 
 ## Demo
 
@@ -120,24 +125,24 @@ In future, when it becomes possible to apply classes on `slot` elements in a cro
 ### Not so DRY code, duplicated rules
 You might notice (especially as a contributor), that we use duplicated rules, like:
 ```CSS
-.uni-label-control > ::slotted(label) {
-  text-align: left;
-  grid-column: 1 / 2;
+.uni-primary-button > ::slotted(button) {
+   /* ... */
 }
-.uni-label-control > label {
-  text-align: left;
-  grid-column: 1 / 2;
+.uni-primary-button > button  {
+   /* ... */
 }
 ```
 
-We are actually forced to do so because some browsers, which does not support Shadow DOM, fails to read entire selector and rule if it encounters unsupported part. Having `::slotted` in
+We are actually forced to do so because some browsers, which do not support Shadow DOM, fail to read entire selector and rule if they encounter an unsupported part. Having `::slotted` in
 ```CSS
-.uni-label-control > label,
-.uni-label-control > ::slotted(label) {
+.uni-primary-button > button,
+.uni-primary-button > ::slotted(button) {
     /*...*/
 }
 ```
-would make entire rule unreachable. Also, we do not provide both selectors, even for browsers that support SD natively, to be able to style elements within the same root.
+would make entire rule unreachable. You don't need to provide those duplicated rules manually. Write ones for modern browsers - with `::slotted`, then the polyfill alternative will be automatically generated in the build process.
+
+Also, we do provide both selectors, even for browsers that support SD natively, to be able to style elements within the same root.
 
 ## Contributing
 

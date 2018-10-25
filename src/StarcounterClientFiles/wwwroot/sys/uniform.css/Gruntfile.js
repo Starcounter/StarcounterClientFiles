@@ -7,6 +7,7 @@ module.exports = function(grunt) {
           'components/uni-date-picker/uni-date-picker.html',
           'components/uni-data-table/uni-data-table.html',
           'components/uni-data-table/uni-data-table.html',
+          'components/uni-form-item/uni-form-item.html',
           'components/uni-form-item-group/uni-form-item-group.html',
           'components/uni-pagination/uni-pagination.html'
         ],
@@ -17,6 +18,7 @@ module.exports = function(grunt) {
           'components/uni-date-picker/uni-date-picker.html',
           'components/uni-data-table/uni-data-table.html',
           'components/uni-data-table/uni-data-table.html',
+          'components/uni-form-item/uni-form-item.html',
           'components/uni-form-item-group/uni-form-item-group.html',
           'components/uni-pagination/uni-pagination.html'
         ],
@@ -29,8 +31,17 @@ module.exports = function(grunt) {
         prereleaseName: 'rc',
         regExp: false
       }
+    },
+    watch: {
+      css: {
+        files: ['**/*.html', '**/*.css'],
+        options: {
+          livereload: true,
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-bump');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 };

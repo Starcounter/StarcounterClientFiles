@@ -76,6 +76,6 @@
     "commit": "41136c4e6deb40692ba8dfc5ce3da67f2ecb7c00"
   },
   "_source": "https://github.com/vaadin/vaadin-material-styles.git",
-  "_target": "^1.1.0-beta1",
+  "_target": "^1.1.2",
   "_originalSource": "vaadin/vaadin-material-styles"
 }

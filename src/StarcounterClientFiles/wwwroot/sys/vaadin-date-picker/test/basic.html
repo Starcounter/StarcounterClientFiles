@@ -3,8 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="../../test-fixture/test-fixture.html">
 
   <link rel="import" href="../vaadin-date-picker.html">
@@ -41,6 +41,12 @@
       <div style="display: flex; flex-direction: column; width:500px;">
         <vaadin-date-picker></vaadin-date-picker>
       </div>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="datepicker-theme">
+    <template>
+      <vaadin-date-picker theme="foo"></vaadin-date-picker>
     </template>
   </test-fixture>
 
@@ -305,14 +311,14 @@
       });
 
       it('should realign on iron-resize', done => {
+        sinon.stub(datepicker, '_boundUpdateAlignmentAndPosition', () => {
+          if (!done._called) {
+            done._called = true;
+            done();
+          }
+        });
         open(datepicker, () => {
-          sinon.stub(datepicker, '_updateAlignmentAndPosition', () => {
-            if (!done._called) {
-              done._called = true;
-              done();
-            }
-          });
-          datepicker.fire('iron-resize', undefined, {bubbles: false});
+          datepicker.dispatchEvent(new CustomEvent('iron-resize', {bubbles: false}));
         });
       });
 
@@ -651,6 +657,49 @@
           const flexDatePicker = container.querySelector('vaadin-date-picker');
           expect(window.getComputedStyle(container).width).to.eql('500px');
           expect(window.getComputedStyle(flexDatePicker).width).to.eql('500px');
+        });
+      });
+    });
+
+    describe('Basic features theme attribute', () => {
+      let datepicker;
+
+      beforeEach(() => datepicker = fixture('datepicker-theme'));
+
+      it('should propagate theme attribute to text-field', () => {
+        expect(datepicker._inputElement.getAttribute('theme')).to.equal('foo');
+      });
+
+      it('should propagate theme attribute to overlay', () => {
+        expect(datepicker.$.overlay.getAttribute('theme')).to.equal('foo');
+      });
+
+      it('should propagate theme attribute to overlay content', () => {
+        datepicker.open();
+        const overlayContent = datepicker.$.overlay.content
+          .querySelector('#overlay-content');
+        expect(overlayContent.getAttribute('theme')).to.equal('foo');
+      });
+
+      describe('in content', () => {
+        let overlayContent;
+
+        beforeEach(done => {
+          overlayContent = datepicker.$.overlay.content
+            .querySelector('#overlay-content');
+          overlayContent.$.yearScroller.bufferSize = 0;
+          overlayContent.$.monthScroller.bufferSize = 1;
+          open(datepicker, () => {
+            overlayContent.$.yearScroller._finishInit();
+            overlayContent.$.monthScroller._finishInit();
+            done();
+          });
+        });
+
+        it('should propagate theme attribute to month calendar', () => {
+          const monthCalendar = overlayContent.$.monthScroller
+            .querySelector('vaadin-month-calendar');
+          expect(monthCalendar.getAttribute('theme')).to.equal('foo');
         });
       });
     });

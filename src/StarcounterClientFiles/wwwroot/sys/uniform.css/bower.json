@@ -28,12 +28,19 @@
     "src"
   ],
   "dependencies": {
+    "polymer": "^2.6.0",
     "webcomponentsjs": "^1.1.1",
     "vaadin-date-picker": "vaadin/vaadin-date-picker#^3.1.0",
-    "vaadin-grid": "vaadin/vaadin-grid#^5.0.0"
+    "vaadin-grid": "vaadin/vaadin-grid#^5.0.0",
+    "juicy-popover": "^2.1.0"
   },
   "devDependencies": {
     "web-component-tester": "^6.5.0",
     "polymer": "^2.6.0"
+  },
+  "resolutions": {
+    "vaadin-element-mixin": "^1.0.1",
+    "vaadin-development-mode-detector": "^1.1.0-beta1",
+    "vaadin-usage-statistics": "^1.1.0-beta1"
   }
 }

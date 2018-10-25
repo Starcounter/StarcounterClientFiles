@@ -7,11 +7,8 @@
 
     <!-- Toggle it on and off -->
     <link rel="stylesheet" href="./dist/underwear.css">
-    <!--
-        We strongly suggest to use Uniform in shadow roots,
-        then the outer tree could be free of opinionated classes
-    -->
-    <link rel="preload" as="style" href="./dist/uniform.css">
+
+    <link rel="preload" href="./dist/uniform.css">
 
     <!-- As a user of uniform you don't need any of the styles & imports below -->
     <!-- Styles for this demo page only -->
@@ -578,8 +575,7 @@
                         <code>.uni-alert-success</code>, etc</li>
                     <li>typical UI patterns using classes such as
                         <code>.uni-section-primary</code>,
-                        <code>.uni-card</code>,
-                        <code>.uni-label-control</code>, etc</li>
+                        <code>.uni-card</code>, etc</li>
                 </ul>
             </div>
         </header>
@@ -714,62 +710,6 @@
                 </div>
             </section>
             <section>
-                <h2 id="label-control">Label Control</h2>
-                <code>.uni-label-control</code>
-                <p>Puts slotted label to the top row, everything else in the bottom row.</p>
-                <p>It works for distributed elements.</p>
-                <pre><code>&lt;shadowroot mode="open"&gt;
-    &lt;link rel="stylesheet" href="./dist/uniform.css"&gt;
-    &lt;div class="uni-label-control"&gt;
-        &lt;slot&gt;&lt;/slot&gt;
-    &lt;/div&gt;
-&lt;/shadowroot&gt;
-&lt;label&gt;Label&lt;/label&gt;
-&lt;input&gt;</code></pre>
-                <div data-shadow-host>
-                    <template is="declarative-shadow-dom" mode="open">
-                        <link rel="stylesheet" href="./dist/uniform.css">
-                        <div class="uni-label-control">
-                            <slot></slot>
-                        </div>
-                    </template>
-                    <label>Label</label>
-                    <input type="text">
-                </div>
-                <hr>
-                <p>You can use it as well for styling any elements in the same tree.</p>
-                <pre><code>&lt;shadowroot mode="open"&gt;
-    &lt;link rel="stylesheet" href="./dist/uniform.css"&gt;
-    &lt;div class="uni-label-control"&gt;
-        &lt;label&gt;Label&lt;/label&gt;
-        &lt;div&gt;
-            &lt;slot&gt;&lt;/slot&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/shadowroot&gt;
-&lt;input&gt;
-&lt;select&gt;&lt;option&gt;select&lt;/option&gt;&lt;/select&gt;
-&lt;input&gt;
-&lt;span&gt;message&lt;/span&gt;</code></pre>
-                <div data-shadow-host>
-                    <template is="declarative-shadow-dom" mode="open">
-                        <link rel="stylesheet" href="./dist/uniform.css">
-                        <div class="uni-label-control">
-                            <label>Label</label>
-                            <div>
-                                <slot></slot>
-                            </div>
-                        </div>
-                    </template>
-                    <input type="text">
-                    <select>
-                        <option>select</option>
-                    </select>
-                    <input type="text">
-                    <span>message</span>
-                </div>
-            </section>
-            <section>
                 <h2 id="button">Button</h2>
                 <code>.uni-*-button</code>
                 <p>Makes a specific type of a button</p>
@@ -838,6 +778,25 @@
                                 </td>
                             </tr>
                         </table>
+                    </template>
+                </div>
+                
+                <p>Anchors will also be turned into a Uniform button when wrapped with <code>uni-*-button</code></p>
+                <div data-shadow-host>
+                    <template is="declarative-shadow-dom" mode="open">
+                        <link rel="stylesheet" href="./dist/uniform.css">                            
+                        <div class="uni-primary-button">
+                            <a>Primary</a>
+                        </div>
+                        <div class="uni-danger-button">
+                            <a>Danger</a>
+                        </div>
+                        <div class="uni-success-button">
+                            <a>Success</a>
+                        </div>
+                        <div class="uni-flat-button">
+                            <a>Flat</a>
+                        </div>
                     </template>
                 </div>
                 <p>You can style distributed buttons.</p>

@@ -23,6 +23,7 @@
     "Gruntfile.json"
   ],
   "dependencies": {
+    "polymer": "^2.6.0",
     "webcomponentsjs": "^1.1.1",
     "vaadin-date-picker": "vaadin/vaadin-date-picker#^3.1.0"
   },

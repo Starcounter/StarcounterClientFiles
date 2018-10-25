@@ -1,6 +1,6 @@
 <!--
 @license
-Copyright (c) 2017 Vaadin Ltd.
+Copyright (c) 2018 Vaadin Ltd.
 This program is available under Apache License Version 2.0, available at https://vaadin.com/license/
 -->
 
@@ -63,6 +63,21 @@ This program is available under Apache License Version 2.0, available at https:/
           type: Boolean
         },
 
+        /**
+         * Text content to display in the header cell of the column.
+         */
+        header: {
+          type: String
+        },
+
+        /**
+         * Aligns the columns cell content horizontally.
+         * Supported values: "start", "center" and "end".
+         */
+        textAlign: {
+          type: String
+        },
+
         _lastFrozen: {
           type: Boolean,
           value: false
@@ -78,7 +93,25 @@ This program is available under Apache License Version 2.0, available at https:/
 
         _footerCell: Object,
 
-        _grid: Object
+        _grid: Object,
+
+        /**
+         * Custom function for rendering the header content.
+         * Receives two arguments:
+         *
+         * - `root` The header cell content DOM element. Append your content to it.
+         * - `column` The `<vaadin-grid-column>` element.
+         */
+        headerRenderer: Function,
+
+        /**
+         * Custom function for rendering the footer content.
+         * Receives two arguments:
+         *
+         * - `root` The footer cell content DOM element. Append your content to it.
+         * - `column` The `<vaadin-grid-column>` element.
+         */
+        footerRenderer: Function
       };
     }
 
@@ -87,11 +120,13 @@ This program is available under Apache License Version 2.0, available at https:/
         '_widthChanged(width, _headerCell, _footerCell, _cells.*)',
         '_frozenChanged(frozen, _headerCell, _footerCell, _cells.*)',
         '_flexGrowChanged(flexGrow, _headerCell, _footerCell, _cells.*)',
+        '_pathOrHeaderChanged(path, header, _headerCell, _footerCell, _cells.*, renderer, headerRenderer, _bodyTemplate, _headerTemplate)',
+        '_textAlignChanged(textAlign, _cells.*, _headerCell, _footerCell)',
         '_orderChanged(_order, _headerCell, _footerCell, _cells.*)',
         '_lastFrozenChanged(_lastFrozen)',
-        '_stampBodyTemplate(_bodyTemplate, _cells, _cells.*)',
-        '_stampHeaderTemplate(_headerTemplate, _headerCell)',
-        '_stampFooterTemplate(_footerTemplate, _footerCell)',
+        '_setBodyTemplateOrRenderer(_bodyTemplate, renderer, _cells, _cells.*)',
+        '_setHeaderTemplateOrRenderer(_headerTemplate, headerRenderer, _headerCell)',
+        '_setFooterTemplateOrRenderer(_footerTemplate, footerRenderer, _footerCell)',
         '_resizableChanged(resizable, _headerCell)',
         '_reorderStatusChanged(_reorderStatus, _headerCell, _footerCell, _cells.*)',
         '_hiddenChanged(hidden, _headerCell, _footerCell, _cells.*)'
@@ -140,7 +175,8 @@ This program is available under Apache License Version 2.0, available at https:/
 
     _findHostGrid() {
       let el = this;
-      while (el && el.localName !== 'vaadin-grid') {
+      // Custom elements extending grid must have a specific localName
+      while (el && !/^vaadin.*grid$/.test(el.localName)) {
         el = el.assignedSlot ? el.assignedSlot.parentNode : el.parentNode;
       }
       return el || undefined;
@@ -197,38 +233,68 @@ This program is available under Apache License Version 2.0, available at https:/
       return template;
     }
 
-    __stampColumnTemplate(template, cells) {
+    _renderHeaderAndFooter() {
+      if (this.headerRenderer) {
+        this.__runRenderer(this.headerRenderer, this._headerCell);
+      }
+      if (this.footerRenderer) {
+        this.__runRenderer(this.footerRenderer, this._footerCell);
+      }
+    }
+
+    __runRenderer(renderer, cell, rowData) {
+      const args = [cell._content, this];
+      if (rowData && rowData.item) {
+        args.push(rowData);
+      }
+      renderer.apply(this, args);
+    }
+
+    __setColumnTemplateOrRenderer(template, renderer, cells) {
+      if (template && renderer) {
+        throw new Error('You should only use either a renderer or a template');
+      }
+
       cells.forEach(cell => {
-        if (cell._template !== template) {
+        const model = this._grid.__getRowModel(cell.parentElement);
+
+        if (renderer) {
+          cell._renderer = renderer;
+
+          if (model.item || renderer === this.headerRenderer || renderer === this.footerRenderer) {
+            this.__runRenderer(renderer, cell, model);
+          }
+        } else if (cell._template !== template) {
           cell._template = template;
 
           cell._content.innerHTML = '';
+          template.templatizer._grid = template.templatizer._grid || this._grid;
           const inst = template.templatizer.createInstance();
           cell._content.appendChild(inst.root);
           cell._instance = inst;
-
-          inst.index = cell.parentElement.index; // TODO: _index
-          inst.item = cell.parentElement._item;
+          if (model.item) {
+            cell._instance.setProperties(model);
+          }
         }
       });
     }
 
-    _stampBodyTemplate(template, cells, splices) {
-      if (template && cells) {
-        this.__stampColumnTemplate(template, cells);
+    _setBodyTemplateOrRenderer(template, renderer, cells, splices) {
+      if ((template || renderer) && cells) {
+        this.__setColumnTemplateOrRenderer(template, renderer, cells);
       }
     }
 
-    _stampHeaderTemplate(headerTemplate, headerCell) {
-      if (headerTemplate && headerCell) {
-        this.__stampColumnTemplate(headerTemplate, [headerCell]);
+    _setHeaderTemplateOrRenderer(headerTemplate, headerRenderer, headerCell) {
+      if ((headerTemplate || headerRenderer) && headerCell) {
+        this.__setColumnTemplateOrRenderer(headerTemplate, headerRenderer, [headerCell]);
         headerCell.parentElement.hidden = false;
       }
     }
 
-    _stampFooterTemplate(footerTemplate, footerCell) {
-      if (footerTemplate && footerCell) {
-        this.__stampColumnTemplate(footerTemplate, [footerCell]);
+    _setFooterTemplateOrRenderer(footerTemplate, footerRenderer, footerCell) {
+      if ((footerTemplate || footerRenderer) && footerCell) {
+        this.__setColumnTemplateOrRenderer(footerTemplate, footerRenderer, [footerCell]);
         footerCell.parentElement.hidden = false;
       }
     }
@@ -291,6 +357,34 @@ This program is available under Apache License Version 2.0, available at https:/
       }
     }
 
+    _pathOrHeaderChanged(path, header, headerCell, footerCell, cells, renderer, headerRenderer, bodyTemplate, headerTemplate) {
+      const hasHeaderText = header !== undefined && header !== null;
+      if (!headerRenderer && !headerTemplate && hasHeaderText && headerCell) {
+        headerCell._content.textContent = header;
+        headerCell.parentElement.hidden = false;
+      }
+
+      if (path && cells.value) {
+        if (!renderer && !bodyTemplate) {
+          const pathRenderer = (root, owner, {item}) => root.textContent = this.get(path, item);
+          this.__setColumnTemplateOrRenderer(undefined, pathRenderer, cells.value);
+        }
+
+        if (!headerRenderer && !headerTemplate && !hasHeaderText && headerCell) {
+          headerCell._content.textContent = this._generateHeader(path);
+          headerCell.parentElement.hidden = false;
+        }
+      }
+    }
+
+    _generateHeader(path) {
+      return path
+        .substr(path.lastIndexOf('.') + 1)
+        .replace(/([A-Z])/g, '-$1').toLowerCase()
+        .replace(/-/g, ' ')
+        .replace(/^./, match => match.toUpperCase());
+    }
+
     _toggleAttribute(name, bool, node) {
       if (node.hasAttribute(name) === !bool) {
         if (bool) {
@@ -328,6 +422,38 @@ This program is available under Apache License Version 2.0, available at https:/
       }
     }
 
+    _textAlignChanged(textAlign, _cells, _headerCell, _footerCell) {
+      if (textAlign === undefined) {
+        return;
+      }
+      if (['start', 'end', 'center'].indexOf(textAlign) === -1) {
+        console.warn('textAlign can only be set as "start", "end" or "center"');
+        return;
+      }
+
+      let textAlignFallback;
+      if (getComputedStyle(this._grid).direction === 'ltr') {
+        if (textAlign === 'start') {
+          textAlignFallback = 'left';
+        } else if (textAlign === 'end') {
+          textAlignFallback = 'right';
+        }
+      } else {
+        if (textAlign === 'start') {
+          textAlignFallback = 'right';
+        } else if (textAlign === 'end') {
+          textAlignFallback = 'left';
+        }
+      }
+
+      this._allCells.forEach(cell => {
+        cell._content.style.textAlign = textAlign;
+        if (getComputedStyle(cell._content).textAlign !== textAlign) {
+          cell._content.style.textAlign = textAlignFallback;
+        }
+      });
+    }
+
     _hiddenChanged(hidden, headerCell, footerCell, cells) {
       if (this.parentElement && this.parentElement._columnPropChanged) {
         this.parentElement._columnPropChanged('hidden', hidden);
@@ -350,18 +476,10 @@ This program is available under Apache License Version 2.0, available at https:/
   (function() {
     /**
      * A `<vaadin-grid-column>` is used to configure how a column in `<vaadin-grid>`
-     * should look like by using HTML templates.
-     * A column can have a template for each of the three table sections: header, body and footer.
+     * should look like.
      *
-     * The `class` attribute is used to differentiate header and footer templates from the body template.
-     *
-     * #### Example:
-     * ```html
-     * <vaadin-grid-column>
-     *   <template class="header">I'm in the header</template>
-     *   <template>I'm in the body</template>
-     *   <template class="footer">I'm in the footer</template>
-     * </vaadin-grid-column>
+     * See `<vaadin-grid>` documentation and demos for instructions and examples on how
+     * to configure the `<vaadin-grid-column>`.
      * ```
      *
      * @memberof Vaadin
@@ -388,6 +506,30 @@ This program is available under Apache License Version 2.0, available at https:/
           flexGrow: {
             type: Number,
             value: 1
+          },
+
+          /**
+           * Custom function for rendering the cell content.
+           * Receives three arguments:
+           *
+           * - `root` The cell content DOM element. Append your content to it.
+           * - `column` The `<vaadin-grid-column>` element.
+           * - `rowData` The object with the properties related with
+           *   the rendered item, contains:
+           *   - `rowData.index` The index of the item.
+           *   - `rowData.item` The item.
+           *   - `rowData.expanded` Sublevel toggle state.
+           *   - `rowData.level` Level of the tree represented with a horizontal offset of the toggle button.
+           *   - `rowData.selected` Selected state.
+           */
+          renderer: Function,
+
+          /**
+           * Path to an item sub-property whose value gets displayed in the column body cells.
+           * The property name is also shown in the column header if an explicit header or renderer isn't defined.
+           */
+          path: {
+            type: String
           },
 
           _bodyTemplate: {

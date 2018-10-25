@@ -9,7 +9,7 @@ This program is available under Apache License Version 2.0, available at https:/
 <link rel="import" href="../../polymer/lib/utils/render-status.html">
 <link rel="import" href="../../polymer/lib/utils/flattened-nodes-observer.html">
 <link rel="import" href="../../vaadin-themable-mixin/vaadin-themable-mixin.html">
-<link rel="import" href="../../iron-overlay-behavior/iron-focusables-helper.html">
+<link rel="import" href="vaadin-focusables-helper.html">
 
 <dom-module id="vaadin-overlay">
   <template>
@@ -124,9 +124,6 @@ This program is available under Apache License Version 2.0, available at https:/
           if (!this.shadowRoot) {
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(document.importNode(styledTemplate.content, true));
-
-            // FIXME(platosha): IronFocusablesHelper does only use legacy .root
-            this.root = this.shadowRoot;
           }
         }
       })();
@@ -137,18 +134,42 @@ This program is available under Apache License Version 2.0, available at https:/
     };
 
     /**
-     * `<vaadin-overlay>` is a Web Component for creating overlays.
+     *
+     * `<vaadin-overlay>` is a Web Component for creating overlays. The content of the overlay
+     * can be populated in two ways: imperatively by using renderer callback function and
+     * declaratively by using Polymer's Templates.
+     *
+     * ### Rendering
+     *
+     * By default, the overlay uses the content provided by using the renderer callback function.
+     *
+     * The renderer function provides `root`, `owner`, `model` arguments when applicable.
+     * Generate DOM content by using `model` object properties if needed, append it to the `root`
+     * element and control the state of the host element by accessing `owner`. Before generating new
+     * content, users are able to check if there is already content in `root` for reusing it.
      *
      * ```html
-     * <vaadin-overlay>
-     *   <template>Overlay content</template>
-     * </vaadin-overlay>
+     * <vaadin-overlay id="overlay"></vaadin-overlay>
      * ```
+     * ```js
+     * const overlay = document.querySelector('#overlay');
+     * overlay.renderer = function(root) {
+     *  root.textContent = "Overlay content";
+     * };
+     * ```
+     *
+     * Renderer is called on the opening of the overlay and each time the related model is updated.
+     * DOM generated during the renderer call can be reused
+     * in the next renderer call and will be provided with the `root` argument.
+     * On first call it will be empty.
+     *
+     * **NOTE:** when the renderer property is defined, the `<template>` content is not used.
      *
      * ### Templating
      *
-     * By default, the overlay finds the child template and uses that.
-     * You can also set a custom template using the `template` property.
+     * Alternatively, the content can be provided with Polymer Template.
+     * Overlay finds the first child template and uses that in case renderer callback function
+     * is not provided. You can also set a custom template using the `template` property.
      *
      * After the content from the template is stamped, the `content` property
      * points to the content container.
@@ -158,7 +179,13 @@ This program is available under Apache License Version 2.0, available at https:/
      * from the parent scope propagate to the content.  You can also pass
      * custom `instanceProps` object using the `instanceProps` property.
      *
-     * Note when using `instanceProps`: because of the Polymer limitation,
+     * ```html
+     * <vaadin-overlay>
+     *   <template>Overlay content</template>
+     * </vaadin-overlay>
+     * ```
+     *
+     * **NOTE:** when using `instanceProps`: because of the Polymer limitation,
      * every template can only be templatized once, so it is important
      * to set `instanceProps` before the `template` is assigned to the overlay.
      *
@@ -210,8 +237,24 @@ This program is available under Apache License Version 2.0, available at https:/
           opened: {
             type: Boolean,
             notify: true,
+            observer: '_openedChanged',
             reflectToAttribute: true
           },
+
+          /**
+           * Owner element passed with renderer function
+           */
+          owner: Element,
+
+          /**
+           * Custom function for rendering the content of the overlay.
+           * Receives three arguments:
+           *
+           * - `root` The root container DOM element. Append your content to it.
+           * - `owner` The host element of the renderer function.
+           * - `model` The object with the properties related with rendering.
+           */
+          renderer: Function,
 
           /**
            * The template of the overlay content.
@@ -241,6 +284,11 @@ This program is available under Apache License Version 2.0, available at https:/
             value: false,
             reflectToAttribute: true
           },
+
+          /**
+           * Object with properties that is passed to `renderer` function
+           */
+          model: Object,
 
           /**
            * When true the overlay won't disable the main content, showing
@@ -280,14 +328,25 @@ This program is available under Apache License Version 2.0, available at https:/
 
           _originalContentPart: Object,
 
-          _contentNodes: Array
+          _contentNodes: Array,
+
+          _oldOwner: Element,
+
+          _oldModel: Object,
+
+          _oldTemplate: Object,
+
+          _oldInstanceProps: Object,
+
+          _oldRenderer: Object,
+
+          _oldOpened: Boolean
         };
       }
 
       static get observers() {
         return [
-          '_openedChanged(opened)',
-          '_templateChanged(template)'
+          '_templateOrRendererChanged(template, renderer, owner, model, instanceProps, opened)'
         ];
       }
 
@@ -462,7 +521,7 @@ This program is available under Apache License Version 2.0, available at https:/
        * @event vaadin-overlay-open
        * fired after the `vaadin-overlay` is opened.
        */
-      _openedChanged(opened) {
+      _openedChanged(opened, wasOpened) {
         if (!this._instance) {
           this._ensureTemplatized();
         }
@@ -482,24 +541,50 @@ This program is available under Apache License Version 2.0, available at https:/
           if (!this.modeless) {
             this._enterModalState();
           }
-        } else {
+        } else if (wasOpened) {
           this._animatedClosing();
           this._exitModalState();
         }
       }
 
+      _shouldAnimate() {
+        const name = getComputedStyle(this).getPropertyValue('animation-name');
+        return name && name != 'none';
+      }
+
+      _enqueueAnimation(type, callback) {
+        const handler = `__${type}Handler`;
+        const listener = () => {
+          callback();
+          this.removeEventListener('animationend', listener);
+          delete this[handler];
+        };
+        this[handler] = listener;
+        this.addEventListener('animationend', listener);
+      }
+
+      _flushAnimation(type) {
+        const handler = `__${type}Handler`;
+        if (typeof this[handler] === 'function') {
+          this[handler]();
+        }
+      }
+
       _animatedOpening() {
+        if (this.parentNode === document.body && this.hasAttribute('closing')) {
+          this._flushAnimation('closing');
+        }
         this._attachOverlay();
         this.setAttribute('opening', '');
-        const name = getComputedStyle(this).getPropertyValue('animation-name');
-        if (name && name != 'none') {
-          const listener = () => {
-            this.removeEventListener('animationend', listener);
-            this.removeAttribute('opening');
-          };
-          this.addEventListener('animationend', listener);
-        } else {
+
+        const finishOpening = () => {
           this.removeAttribute('opening');
+        };
+
+        if (this._shouldAnimate()) {
+          this._enqueueAnimation('opening', finishOpening);
+        } else {
+          finishOpening();
         }
       }
 
@@ -510,19 +595,21 @@ This program is available under Apache License Version 2.0, available at https:/
       }
 
       _animatedClosing() {
+        if (this.hasAttribute('opening')) {
+          this._flushAnimation('opening');
+        }
         if (this._placeholder) {
           this.setAttribute('closing', '');
-          const name = getComputedStyle(this).getPropertyValue('animation-name');
-          if (name && name != 'none') {
-            const listener = () => {
-              this._detachOverlay();
-              this.removeAttribute('closing');
-              this.removeEventListener('animationend', listener);
-            };
-            this.addEventListener('animationend', listener);
-          } else {
+
+          const finishClosing = () => {
             this._detachOverlay();
             this.removeAttribute('closing');
+          };
+
+          if (this._shouldAnimate()) {
+            this._enqueueAnimation('closing', finishClosing);
+          } else {
+            finishClosing();
           }
         }
       }
@@ -536,7 +623,6 @@ This program is available under Apache License Version 2.0, available at https:/
           return;
         }
         this._placeholder.parentNode.insertBefore(this, this._placeholder);
-        this._processPendingMutationObserversFor(document.body);
         this._placeholder.parentNode.removeChild(this._placeholder);
       }
 
@@ -544,14 +630,14 @@ This program is available under Apache License Version 2.0, available at https:/
        * Returns all attached overlays.
        */
       static get __attachedInstances() {
-        return Array.from(document.body.children).filter(el => el instanceof Vaadin.OverlayElement);
+        return Array.from(document.body.children).filter(el => el instanceof OverlayElement);
       }
 
       /**
        * returns true if this is the last one in the opened overlays stack
        */
       get _last() {
-        return this === Vaadin.OverlayElement.__attachedInstances.pop();
+        return this === OverlayElement.__attachedInstances.pop();
       }
 
       _modelessChanged(modeless) {
@@ -578,7 +664,7 @@ This program is available under Apache License Version 2.0, available at https:/
         }
 
         // Disable pointer events in other attached overlays
-        Vaadin.OverlayElement.__attachedInstances.forEach(el => {
+        OverlayElement.__attachedInstances.forEach(el => {
           if (el !== this) {
             el.shadowRoot.querySelector('[part="overlay"]').style.pointerEvents = 'none';
           }
@@ -597,9 +683,10 @@ This program is available under Apache License Version 2.0, available at https:/
           delete this._previousDocumentPointerEvents;
         }
 
-        // Restore pointer events in the previous overlay(s) in reverse order
-        const instances = Vaadin.OverlayElement.__attachedInstances.reverse();
+        // Restore pointer events in the previous overlay(s)
+        const instances = OverlayElement.__attachedInstances;
         let el;
+        // Use instances.pop() to ensure the reverse order
         while (el = instances.pop()) {
           if (el === this) {
             // Skip the current instance
@@ -639,16 +726,12 @@ This program is available under Apache License Version 2.0, available at https:/
         this.content = undefined;
       }
 
-      _templateChanged(template) {
+      _stampOverlayTemplate(template, instanceProps) {
         this._removeOldContent();
-
-        if (!template) {
-          return;
-        }
 
         if (!template._Templatizer) {
           template._Templatizer = Polymer.Templatize.templatize(template, this, {
-            instanceProps: this.instanceProps,
+            instanceProps: instanceProps,
             forwardHostProp: function(prop, value) {
               if (this._instance) {
                 this._instance.forwardHostProp(prop, value);
@@ -660,14 +743,12 @@ This program is available under Apache License Version 2.0, available at https:/
         this._instance = new template._Templatizer({});
         this._contentNodes = Array.from(this._instance.root.childNodes);
 
-        const templateRoot = template.getRootNode();
+        const templateRoot = template._templateRoot || (template._templateRoot = template.getRootNode());
         const _isScoped = templateRoot !== document;
 
         if (_isScoped) {
           if (!this.$.content.shadowRoot) {
             this.$.content.attachShadow({mode: 'open'});
-            // FIXME(platosha): IronFocusablesHelper does only use legacy .root
-            this.$.content.root = this.$.content.shadowRoot;
           }
 
           let scopeCssText = Array.from(templateRoot.querySelectorAll('style'))
@@ -716,6 +797,60 @@ This program is available under Apache License Version 2.0, available at https:/
         }
       }
 
+      _removeNewRendererOrTemplate(template, oldTemplate, renderer, oldRenderer) {
+        if (template !== oldTemplate) {
+          this.template = undefined;
+        } else if (renderer !== oldRenderer) {
+          this.renderer = undefined;
+        }
+      }
+
+      /**
+       * Manually invoke existing renderer.
+       */
+      render() {
+        if (this.renderer) {
+          this.renderer.call(this.owner, this.content, this.owner, this.model);
+        }
+      }
+
+      _templateOrRendererChanged(template, renderer, owner, model, instanceProps, opened) {
+        if (template && renderer) {
+          this._removeNewRendererOrTemplate(template, this._oldTemplate, renderer, this._oldRenderer);
+          throw new Error('You should only use either a renderer or a template for overlay content');
+        }
+
+        const ownerOrModelChanged = (this._oldOwner !== owner || this._oldModel !== model);
+        this._oldModel = model;
+        this._oldOwner = owner;
+
+        const templateOrInstancePropsChanged = (this._oldInstanceProps !== instanceProps || this._oldTemplate !== template);
+        this._oldInstanceProps = instanceProps;
+        this._oldTemplate = template;
+
+        const rendererChanged = this._oldRenderer !== renderer;
+        this._oldRenderer = renderer;
+
+        const openedChanged = this._oldOpened !== opened;
+        this._oldOpened = opened;
+
+        if (template && templateOrInstancePropsChanged) {
+          this._stampOverlayTemplate(template, instanceProps);
+        } else if (renderer && (rendererChanged || openedChanged || ownerOrModelChanged)) {
+          this.content = this;
+
+          if (rendererChanged) {
+            while (this.content.firstChild) {
+              this.content.removeChild(this.content.firstChild);
+            }
+          }
+
+          if (opened) {
+            this.render();
+          }
+        }
+      }
+
       _isFocused(element) {
         return element && element.getRootNode().activeElement === element;
       }
@@ -747,13 +882,7 @@ This program is available under Apache License Version 2.0, available at https:/
 
       _getFocusableElements() {
         // collect all focusable elements
-        return Polymer.IronFocusablesHelper.getTabbableNodes(this.$.overlay);
-      }
-
-      _processPendingMutationObserversFor(node) {
-        if (window.CustomElements && !Polymer.Settings.useNativeCustomElements) {
-          CustomElements.takeRecords(node);
-        }
+        return Vaadin.FocusablesHelper.getTabbableNodes(this.$.overlay);
       }
     }
 

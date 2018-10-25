@@ -37,28 +37,29 @@
     "iron-test-helpers": "^2.0.0",
     "webcomponentsjs": "^1.0.0",
     "web-component-tester": "^6.1.5",
-    "vaadin-demo-helpers": "vaadin/vaadin-demo-helpers#^2.0.1",
-    "vaadin-button": "vaadin/vaadin-button#^2.1.0-beta2"
+    "vaadin-demo-helpers": "vaadin/vaadin-demo-helpers#^2.1.0",
+    "vaadin-button": "vaadin/vaadin-button#^2.1.0",
+    "vaadin-ordered-layout": "vaadin/vaadin-ordered-layout#^1.1.0"
   },
   "dependencies": {
     "polymer": "^2.0.0",
     "vaadin-themable-mixin": "vaadin/vaadin-themable-mixin#^1.2.1",
     "vaadin-control-state-mixin": "vaadin/vaadin-control-state-mixin#^2.1.1",
-    "vaadin-lumo-styles": "vaadin/vaadin-lumo-styles#^1.1.0-beta1",
-    "vaadin-material-styles": "vaadin/vaadin-material-styles#^1.1.0-beta1",
+    "vaadin-lumo-styles": "vaadin/vaadin-lumo-styles#^1.2.0",
+    "vaadin-material-styles": "vaadin/vaadin-material-styles#^1.2.0",
     "vaadin-element-mixin": "vaadin/vaadin-element-mixin#^2.0.0"
   },
   "resolutions": {
     "vaadin-element-mixin": "^2.0.0"
   },
-  "version": "2.1.2",
-  "_release": "2.1.2",
+  "version": "2.1.3",
+  "_release": "2.1.3",
   "_resolution": {
     "type": "version",
-    "tag": "v2.1.2",
-    "commit": "b7a40f86e360ff1b0f39977beae9635b8f27c546"
+    "tag": "v2.1.3",
+    "commit": "00b493c778624ce60f56d5aeb733b20708ca1a23"
   },
   "_source": "https://github.com/vaadin/vaadin-text-field.git",
-  "_target": "^2.1.0-beta2",
+  "_target": "^2.1.2",
   "_originalSource": "vaadin/vaadin-text-field"
 }

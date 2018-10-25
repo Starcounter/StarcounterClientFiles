@@ -14,6 +14,7 @@
   <link rel="import" href="helpers.html">
   <link rel="import" href="../vaadin-grid.html">
   <link rel="import" href="../vaadin-grid-sorter.html">
+  <link rel="import" href="../vaadin-grid-sort-column.html">
 </head>
 
 <body>
@@ -49,6 +50,30 @@
           <template class="header">
             <span class="title">last</span>
             <vaadin-grid-sorter path="last" direction="desc">
+            </vaadin-grid-sorter>
+          </template>
+          <template>[[item.last]]</template>
+        </vaadin-grid-column>
+        <vaadin-grid-sort-column></vaadin-grid-sort-column>
+      </vaadin-grid>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="multiple-sorters">
+    <template>
+      <vaadin-grid style="width: 200px; height: 200px;">
+        <vaadin-grid-column>
+          <template class="header">
+            <vaadin-grid-sorter path="first" direction="asc">
+              <span class="title">first</span>
+            </vaadin-grid-sorter>
+          </template>
+          <template>[[item.first]]</template>
+        </vaadin-grid-column>
+        <vaadin-grid-column>
+          <template class="header">
+            <span class="title">last</span>
+            <vaadin-grid-sorter path="last">
             </vaadin-grid-sorter>
           </template>
           <template>[[item.last]]</template>
@@ -386,6 +411,13 @@
             expect(sorterFirst.direction).to.be.null;
             expect(sorterLast.direction).to.eql('desc');
           });
+
+          it('should set direction to also other than last sorter', () => {
+            const grid = fixture('multiple-sorters');
+            flushGrid(grid);
+            const sorterFirst = getHeaderCellContent(grid, 0, 0).querySelector('vaadin-grid-sorter');
+            expect(sorterFirst.direction).to.eql('asc');
+          });
         });
 
         describe('accessibility', () => {
@@ -407,6 +439,42 @@
           });
         });
 
+        describe('sort-column', () => {
+          let sortColumn, sorter;
+
+          beforeEach(() => {
+            sortColumn = grid.querySelector('vaadin-grid-sort-column');
+            sorter = getHeaderCellContent(grid, 0, 2).querySelector('vaadin-grid-sorter');
+          });
+
+          it('should propagate path property to the internal vaadin-grid-sorter', () => {
+            sortColumn.path = 'last';
+            expect(sorter.path).to.equal('last');
+          });
+
+          it('should propagate direction property to the internal vaadin-grid-sorter', () => {
+            sortColumn.direction = 'asc';
+            expect(sorter.direction).to.equal('asc');
+          });
+
+          it('should notify direction property change from the internal vaadin-grid-sorter', done => {
+            sortColumn.addEventListener('direction-changed', e => {
+              expect(e.detail.value).to.equal('desc');
+              done();
+            });
+            sorter.direction = 'desc';
+          });
+
+          it('should use header property to determine the text that gets slotted inside the sorter', () => {
+            sortColumn.header = 'Last column';
+            expect(sorter.textContent).to.equal('Last column');
+          });
+
+          it('should generate the text content based on path property, if header is not defined', () => {
+            sortColumn.path = 'last';
+            expect(sorter.textContent).to.equal('Last');
+          });
+        });
       });
 
     });
