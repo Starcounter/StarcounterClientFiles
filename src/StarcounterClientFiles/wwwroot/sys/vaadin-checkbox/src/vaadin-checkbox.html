@@ -114,7 +114,7 @@ This program is available under Apache License Version 2.0, available at https:/
         }
 
         static get version() {
-          return '2.2.3';
+          return '2.2.4';
         }
 
         static get properties() {
@@ -138,7 +138,8 @@ This program is available under Apache License Version 2.0, available at https:/
               type: Boolean,
               notify: true,
               observer: '_indeterminateChanged',
-              reflectToAttribute: true
+              reflectToAttribute: true,
+              value: false
             },
 
             /**

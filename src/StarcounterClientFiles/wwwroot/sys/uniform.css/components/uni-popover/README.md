@@ -37,6 +37,12 @@
 </uni-popover>
 ```
 
+## Attributes and properties
+
+| Name | Default value |   Acceptable values    |
+| ---- | :-----------: | :--------------------: |
+| mode |   `baloon`    | `baloon` and `compact` |
+
 ## CSS Properties
 
 | Name                        |              Default value               |

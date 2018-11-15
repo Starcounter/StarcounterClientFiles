@@ -32,9 +32,9 @@ Forwarded from decorated [`<input type="range" />`](https://developer.mozilla.or
 
 Attribute       | Options     | Default      | Description
 ---             | ---         | ---          | ---
-`start`         | *Number*    | `1`          | The first page's value (if you have 1 - 5 pages, `start` should be 1)
-`end`           | *Number*    | `1`          | The last page's value (if you have 1 - 5 pages, `end` should be 5)
-`value`         | *Number*    | `start`      | The current page of your pagination
+`min`         | *Number*    | `1`          | The first page's value (if you have 1 - 5 pages, `min` should be 1)
+`max`           | *Number*    | `1`          | The last page's value (if you have 1 - 5 pages, `max` should be 5)
+`value`         | *Number*    | `min`      | The current page of your pagination
 
 ## License
 

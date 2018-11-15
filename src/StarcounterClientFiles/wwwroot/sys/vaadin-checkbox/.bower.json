@@ -47,12 +47,12 @@
   "resolutions": {
     "vaadin-element-mixin": "^2.0.0"
   },
-  "version": "2.2.3",
-  "_release": "2.2.3",
+  "version": "2.2.4",
+  "_release": "2.2.4",
   "_resolution": {
     "type": "version",
-    "tag": "v2.2.3",
-    "commit": "56cb0d5c7c50437db91ed8202f6ac7d1fde6befa"
+    "tag": "v2.2.4",
+    "commit": "0058350cea0f32a85502d87ab5c4d10d67e912e6"
   },
   "_source": "https://github.com/vaadin/vaadin-checkbox.git",
   "_target": "^2.2.1",

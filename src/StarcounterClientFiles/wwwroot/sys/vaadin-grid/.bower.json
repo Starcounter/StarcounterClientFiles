@@ -79,12 +79,12 @@
     "vaadin-material-styles": "vaadin/vaadin-material-styles#^1.1.1",
     "vaadin-element-mixin": "vaadin/vaadin-element-mixin#^2.1.1"
   },
-  "version": "5.2.1",
-  "_release": "5.2.1",
+  "version": "5.2.3",
+  "_release": "5.2.3",
   "_resolution": {
     "type": "version",
-    "tag": "v5.2.1",
-    "commit": "c33d9ef625e5e095282845df576a367deee2aebc"
+    "tag": "v5.2.3",
+    "commit": "1987d4bcc42483468a39b64928255decabdd21ea"
   },
   "_source": "https://github.com/vaadin/vaadin-grid.git",
   "_target": "^5.0.0",

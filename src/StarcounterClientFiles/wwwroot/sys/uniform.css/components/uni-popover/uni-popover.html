@@ -11,6 +11,14 @@
             border-radius: var(--uni-popover-border-radius, 15px);
         }
 
+        :host([mode="compact"]) .uni-popover-expandable {
+            background: var(--uni-popover-background, white);
+            padding: var(--uni-popover-padding, 0);
+            border: var(--uni-popover-border, 1px solid #eee);
+            box-shadow: var(--uni-popover-shadow, 5px 5px 10px -4px rgba(176, 176, 176, 1));
+            border-radius: 0;
+        }
+
         :host .uni-popover-expandable::before {
             content: '';
             display: block;
@@ -20,18 +28,18 @@
             width: 0;
         }
 
-        :host([triangle-position="topleft"]) .uni-popover-expandable,
-        :host([triangle-position="topright"]) .uni-popover-expandable {
+        :host([mode="baloon"][triangle-position="topleft"]) .uni-popover-expandable,
+        :host([mode="baloon"][triangle-position="topright"]) .uni-popover-expandable {
             margin-top: 5px;
         }
 
-        :host([triangle-position="bottomleft"]) .uni-popover-expandable,
-        :host([triangle-position="bottomright"]) .uni-popover-expandable {
+        :host([mode="baloon"][triangle-position="bottomleft"]) .uni-popover-expandable,
+        :host([mode="baloon"][triangle-position="bottomright"]) .uni-popover-expandable {
             margin-bottom: 5px;
         }
 
-        :host([triangle-position="topleft"]) .uni-popover-expandable::before,
-        :host([triangle-position="topright"]) .uni-popover-expandable::before {
+        :host([mode="baloon"][triangle-position="topleft"]) .uni-popover-expandable::before,
+        :host([mode="baloon"][triangle-position="topright"]) .uni-popover-expandable::before {
             margin-top: 5px;
             top: -4px;
             border-left: 5px solid transparent;
@@ -39,8 +47,8 @@
             border-bottom: 5px solid var(--uni-popover-background, white);
         }
 
-        :host([triangle-position="bottomleft"]) .uni-popover-expandable::before,
-        :host([triangle-position="bottomright"]) .uni-popover-expandable::before {
+        :host([mode="baloon"][triangle-position="bottomleft"]) .uni-popover-expandable::before,
+        :host([mode="baloon"][triangle-position="bottomright"]) .uni-popover-expandable::before {
             margin-bottom: 5px;
             bottom: -4px;
             border-left: 5px solid transparent;
@@ -48,13 +56,13 @@
             border-top: 5px solid var(--uni-popover-background, white);
         }
 
-        :host([triangle-position="bottomright"]) .uni-popover-expandable::before,
-        :host([triangle-position="topright"]) .uni-popover-expandable::before {
+        :host([mode="baloon"][triangle-position="bottomright"]) .uni-popover-expandable::before,
+        :host([mode="baloon"][triangle-position="topright"]) .uni-popover-expandable::before {
             right: 20px;
         }
 
-        :host([triangle-position="topleft"]) .uni-popover-expandable::before,
-        :host([triangle-position="bottomleft"]) .uni-popover-expandable::before {
+        :host([mode="baloon"][triangle-position="topleft"]) .uni-popover-expandable::before,
+        :host([mode="baloon"][triangle-position="bottomleft"]) .uni-popover-expandable::before {
             left: 20px;
         }
     </style>
@@ -89,6 +97,12 @@
                 }
                 this.onExpanded = this.onExpanded.bind(this);
             }
+            get mode() {
+                return this.getAttribute('mode');
+            }
+            set mode(v) {
+                return this.setAttribute('mode', v);
+            }
             onExpanded(e) {
                 const handleBR = this.$.popover.$.handle.getBoundingClientRect();
                 const expandableBR = this.$.popover.$.expandable.getBoundingClientRect();
@@ -102,6 +116,9 @@
             }
             connectedCallback() {
                 this.$.popover.addEventListener('juicy-popover-expand', this.onExpanded);
+                if (!this.hasAttribute('mode')) {
+                    this.setAttribute('mode', 'baloon')
+                }
             }
             disconnectedCallback() {
                 this.$.popover.removeEventListener('juicy-popover-expand', this.onExpanded);

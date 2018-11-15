@@ -30,8 +30,7 @@
     <div class="snippet">
         <h2>In Shadow DOM</h1>
             <div>
-                <input slot="uni-pagination-slot" type="range" start="1" end="20" value="1" />
-
+                <input slot="uni-pagination-slot" type="range" min="1" max="20" value="1" />
                 <template is="shadow-root">
                     <uni-pagination>
                         <slot name="uni-pagination-slot"></slot>
@@ -44,7 +43,7 @@
         <h2>In Light DOM</h1>
             <div>
                 <uni-pagination>
-                    <input type="range" start="1" end="20" value="1" />
+                    <input type="range" min="1" max="20" value="1" />
                 </uni-pagination>
             </div>
     </div>

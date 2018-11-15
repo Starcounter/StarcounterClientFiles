@@ -554,3 +554,7 @@ Buttons
   border-left: var(--uni-vertical-nav-link-highlight, 3px solid var(--uni-default-vertical-nav-link-highlight)) !important;
   color: var(--uni-vertical-nav-link-hover-color, var(--uni-default-vertical-nav-link-hover-color)) !important;
 }
+
+uni-popover:not(:defined) slot[slot="expandable"] {
+  display: none
+}
