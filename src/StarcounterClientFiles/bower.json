@@ -11,7 +11,7 @@
     "uniform.css": "Starcounter/uniform#^0.8.0",
     "enlighted-link": "^0.1.0",
     "palindrom-error-catcher": "^1.0.0",
-    "slot-all": "^0.0.3"
+    "slot-all": "^0.1.0"
   },
   "resolutions": {
     "fast-json-patch": "^1.1.0",
