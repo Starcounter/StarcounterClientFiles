@@ -42,10 +42,23 @@ Or [download as ZIP](https://github.com/Juicy/slot-all/archive/master.zip).
 
 ## Caveats
 
+## Observing slottable elements in polyfilled browsers
 WebComponentsJS Shadow DOM polyfill has some limitations.
 It does ignore `node.remove()` and `.insertAdjacentElement()` calls,
 meaning it cannot be observed or reflected in shadow root. This result in `slot-all` element being unable to react on child nodes been added or removed using these methods. If you are targeting polyfilled environments try using `node.parentNode.removeChild(node)` and `insertBefore`.
 See issues https://github.com/webcomponents/shadydom/issues/260, https://github.com/webcomponents/shadydom/issues/261, https://github.com/webcomponents/shadydom/issues/262, https://github.com/webcomponents/shadydom/issues/263.
+
+## NOT observing slots in runtime
+This custom element creates slots once it's connected and observes host's children. But it does **not observe other slot elements** in the same tree. Meaning, if you add or remove some slot elements after `<slot-all>` did its job, the element will not correct the list of its slots. For example
+```
+<div slot="foo">Foo</div>
+<div slot="bar">Bar</div>
+#shadow root
+    <slot name="foo"></slot>
+    <slot-all><slot-all>
+#/shadow root
+```
+will distribute "Foo" and "Bar", then if you later remove `<slot name="foo"></slot>` by yourself, `Foo` will no longer be distributed.
 
 ## [Contributing and Development](CONTRIBUTING.md)
 
