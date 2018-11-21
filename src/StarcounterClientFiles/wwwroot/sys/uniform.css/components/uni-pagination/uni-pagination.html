@@ -1,4 +1,4 @@
-<!-- uni-pagination @version: 0.8.0 @license: MIT -->
+<!-- uni-pagination @version: 0.9.0 @license: MIT -->
 
 <template id="uni-pagination-template">
     <style>
@@ -10,6 +10,7 @@
 
         #uni-pagination-wrapper * {
             vertical-align: middle;
+            color: hsl(196, 100%, 35%)
         }
 
         ul {
@@ -29,7 +30,7 @@
         }
 
         [disabled] {
-            background-color: #eee;
+            color: #ddd!important
         }
 
         li[disabled] button {
@@ -39,15 +40,17 @@
         button {
             border: none;
             background-color: transparent;
+            height: 20px;
+        }
+        
+        button:not([disabled]) {
             cursor: pointer;
-            min-width: 2em;
         }
 
         li {
             display: inline-block;
             margin: 4px;
             vertical-align: middle;
-            padding-bottom: 3px;
             line-height: 1em;
         }
 
@@ -104,8 +107,6 @@
     </li>
 </template>
 
-
-<!-- uni-pagination @version: 0.0.0 @license: MIT -->
 <script>
     (function () {
         const thisDoc = (document._currentScript || document.currentScript).ownerDocument;
@@ -203,8 +204,18 @@
                 }
             }
             _copySettingsFromInput(input) {
-                this.start = Number(input.getAttribute('start') || input.start || 1);
-                this.end = Number(input.getAttribute('end') || input.end || 1);
+                if(input.hasAttribute('start')) {
+                    console.error('The input slotted in `uni-pagination` has `start` attribute, which was a mistake in the API of `uni-pagination`. Please change it to `min`. See https://github.com/Starcounter/uniform/issues/216 for more info');
+                    input.setAttribute('min', input.getAttribute('start'));
+                }
+
+                if(input.hasAttribute('end')) {
+                    console.error('The input slotted in `uni-pagination` has `end` attribute, which was a mistake in the API of `uni-pagination`. Please change it to `max`. See https://github.com/Starcounter/uniform/issues/216 for more info');
+                    input.setAttribute('max', input.getAttribute('end'));
+                }
+                
+                this.start = Number(input.getAttribute('min') || input.start || 1);
+                this.end = Number(input.getAttribute('max') || input.end || 1);
                 this.value = Number(input.getAttribute('value') || input.value || this.start);
             }
             _createPages() {

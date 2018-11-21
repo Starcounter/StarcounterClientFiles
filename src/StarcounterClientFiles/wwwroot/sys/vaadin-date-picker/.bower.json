@@ -63,12 +63,12 @@
   "resolutions": {
     "vaadin-element-mixin": "^2.0.0"
   },
-  "version": "3.3.0",
-  "_release": "3.3.0",
+  "version": "3.3.1",
+  "_release": "3.3.1",
   "_resolution": {
     "type": "version",
-    "tag": "v3.3.0",
-    "commit": "aaf4a74580adca8c5c62f1a60de74930216f1744"
+    "tag": "v3.3.1",
+    "commit": "99784861b8e2e1df1cd8a4930bf06b8974eb91e6"
   },
   "_source": "https://github.com/vaadin/vaadin-date-picker.git",
   "_target": "^3.1.0",

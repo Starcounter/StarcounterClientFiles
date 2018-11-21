@@ -53,6 +53,6 @@
     "commit": "719d68affd8293b026c6456e754773b31a27712f"
   },
   "_source": "https://github.com/PolymerElements/iron-resizable-behavior.git",
-  "_target": "^2.0.0",
-  "_originalSource": "iron-resizable-behavior"
+  "_target": "1 - 2",
+  "_originalSource": "PolymerElements/iron-resizable-behavior"
 }

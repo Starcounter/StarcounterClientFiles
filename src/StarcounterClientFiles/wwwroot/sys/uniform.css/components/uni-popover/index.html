@@ -27,23 +27,36 @@
 
     <!-- Imports polyfill -->
     <script src="https://juicy.github.io/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../../components/uni-form-item/uni-form-item.html">    
+    <link rel="import" href="../../components/uni-form-item/uni-form-item.html">
     <!-- Imports custom element -->
     <link rel="import" href="uni-popover.html">
 </head>
 
 <body>
     <h1>&lt;uni-popover /&gt;</h1>
-    <p>A simple popover with an arrow to your target element. It figures out the arrow direction automatically. Built around <code><a href="https://github.com/Juicy/juicy-popover">juicy-popover</a></code>.</p>
+    <p>A simple popover with an arrow to your target element. It figures out the arrow direction automatically. Built
+        around <code><a href="https://github.com/Juicy/juicy-popover">juicy-popover</a></code>.</p>
+
+    <p>💡 To avoid flash-of-unstyled-content in your view, please either import <code>uniform.css</code> within your shadow DOM composition or use the following snippet if you have no other use of <code>uniform.css</code>.</p>
+
+    <pre><code>uni-popover:not(:defined) slot[slot="expandable"] {
+        display: none
+    }</code></pre>
+
+    <h2>Baloon mode (default)</h2>
+
     <div class="snippet">
-        <h2>In Light DOM - Simple</h2>
+        <h4>In Light DOM - Simple</h4>
         <div>
-            <uni-popover>
+            <link href="../../uniform.css" rel="stylesheet">
+            <uni-popover mode="baloon">
                 <button slot="handle">Click me!</button>
                 <div slot="expandable">Hello, I'm popover content from the light DOM</div>
             </uni-popover>
         </div>
     </div>
+
+
 
     <hr />
     <div class="snippet">
@@ -53,8 +66,9 @@
                 margin: 15px 0;
             }
         </style>
-        <h2 style="margin: 0">In Shadow DOM</h2>
-        <p>💡 Scroll until the "Click me" button is on top then click it, to see the arrow appearing on the top of the popover automatically.</p>        
+        <h4 style="margin: 0">In Shadow DOM</h4>
+        <p>💡 Scroll until the "Click me" button is on top then click it, to see the arrow appearing on the top of the
+            popover automatically.</p>
         <div>
             <button slot="uni-popover-handle">
                 Click me
@@ -74,8 +88,9 @@
                     </div>
             </div>
             <template is="shadow-root">
+                <link href="../../uniform.css" rel="stylesheet">
                 <div>
-                    <uni-popover>
+                    <uni-popover mode="baloon">
                         <slot slot="handle" name="uni-popover-handle"></slot>
                         <slot slot="expandable" name="uni-popover-expandable"></slot>
                     </uni-popover>
@@ -84,7 +99,34 @@
         </div>
     </div>
 
-
+    <h2>Compact mode</h2>
+    <div class="snippet">
+        <h4>In Light DOM - Simple</h4>
+        <style>
+            .dropdown-item {
+                margin: 0;
+                padding: 5px 40px;
+                border-bottom: 1px solid #eee;
+                cursor: pointer
+            }
+            .dropdown-item:hover {
+                background: #eee !important;
+            }
+        </style>
+        <div>
+            <uni-popover mode="compact">
+                <button slot="handle">Options</button>
+                <div slot="expandable">
+                    <div>
+                        <p class="dropdown-item">Item 1</p>
+                        <p class="dropdown-item">Item 2</p>
+                        <p class="dropdown-item">Item 3</p>
+                        <p class="dropdown-item">Item 4</p>
+                    </div>
+                </div>
+            </uni-popover>
+        </div>
+    </div>
     <script>
         // apply declarative shadow roots
         document.querySelectorAll('template[is="shadow-root"]').forEach((templ) => {

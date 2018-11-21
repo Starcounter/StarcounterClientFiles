@@ -859,6 +859,10 @@ textarea {
   padding-left: 16px;
   padding-right: 20px;
 }
+textarea {
+  padding: 10px 16px;
+  min-height: 6.5rem;
+}
 
 input[type='number'] {
   padding-right: 0;
@@ -885,10 +889,6 @@ select:disabled {
   background-color: var(--uni-control-disabled-color, var(--uni-default-control-disabled-color));
 }
 
-
-textarea {
-  min-height: 6.5rem;
-}
 
 fieldset {
   border-width: 0;
@@ -953,6 +953,10 @@ th {
   text-align: left;
   padding: 11px 8px 6px 8px;
   font-weight: 400;
+}
+
+th {
+  padding: 11px 10px 6px 10px;
 }
 
 tr:nth-child(2) > td:first-of-type {
@@ -1480,6 +1484,10 @@ Buttons
 .uni-vertical-nav ::slotted(a[aria-current="page"]) {
   border-left: var(--uni-vertical-nav-link-highlight, 3px solid var(--uni-default-vertical-nav-link-highlight)) !important;
   color: var(--uni-vertical-nav-link-hover-color, var(--uni-default-vertical-nav-link-hover-color)) !important;
+}
+
+uni-popover:not(:defined) slot[slot="expandable"] {
+  display: none
 }
 .uni-primary-button > a,
 .uni-primary-button > button {

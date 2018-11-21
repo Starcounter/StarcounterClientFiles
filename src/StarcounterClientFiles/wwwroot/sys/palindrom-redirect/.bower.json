@@ -1,6 +1,6 @@
 {
   "name": "palindrom-redirect",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Custom Element that redirects to a new URL when an attribute is changed. It's also being listened by Palindrom.",
   "license": "MIT",
   "main": "palindrom-redirect.html",
@@ -12,19 +12,25 @@
     "node_modules",
     "bower_components",
     "preview.png",
-    "Gruntfile.js"
+    "Gruntfile.js",
+    "test",
+    "wct.conf.json"
   ],
   "dependencies": {},
+  "devDependencies": {
+    "web-component-tester": "^6.0.0",
+    "webcomponentsjs": "1.*.*"
+  },
   "authors": [
     "Marcin Warpechowski <marcin@nextgen.pl>",
     "Tomek Wytrebowicz <tomalecpub@gmail.com>"
   ],
   "homepage": "https://github.com/Palindrom/palindrom-redirect",
-  "_release": "1.0.1",
+  "_release": "1.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "1.0.1",
-    "commit": "9f3ebc3a3c52e08fbf77ff13c2d5ef66d70b2572"
+    "tag": "1.0.2",
+    "commit": "451d6864280f2a8dbcfa37b7efcaf42e3bc6fdd3"
   },
   "_source": "https://github.com/Palindrom/palindrom-redirect.git",
   "_target": "~1.0.0",
