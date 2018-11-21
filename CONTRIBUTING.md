@@ -1,6 +1,6 @@
 ## Development flow tips
 To slightly help with the "repolepsy" and make working with multiple repos and elements together easier, you may consider using [`bower link`](https://bower.io/docs/api/#link).
-- an keep the clone of some client package repo in a separate folder, for example `/path/to/imported-template`,
+ - keep the clone of some client package repo in a separate folder, for example `/path/to/imported-template`,
 - develop it there in isolation, use `polyserve`, `livereaload`, `wct`, etc,
 - call `bower link` in `imported-template` folder, so Bower could link to your working folder from whenever you want. Now you can share the same version of the element across other dependent packages and apps.
   - call `bower link imported-template` from `path/to/starcounter-include` when you work with other package that needs it,
