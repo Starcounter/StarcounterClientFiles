@@ -1,4 +1,4 @@
-<!-- slot-all @version: 0.0.3 @license: MIT -->
+<!-- slot-all @version: 0.1.0 @license: MIT -->
 <script>
 (function(){
         /**
@@ -45,6 +45,12 @@
             connectedCallback(){
                 // force it to be non-displayed element
                 this.style.display = 'none';
+                
+                // Do nothing if elements is already disconnected
+                // https://github.com/whatwg/html/pull/4127/files#diff-36cd38f49b9afa08222c0dc9ebfe35ebR67065
+                if(!this.isConnected){
+                    return ;
+                }
                 const host = this.getRootNode().host;
                 // Start observing the shadow host for child list changes
                 // workaround https://github.com/webcomponents/shadydom/issues/260
@@ -80,6 +86,13 @@
              * @param  {NodeList|HTMLCollection} nodeList list of host's children or document fragments with children
              */
             _createSlots(nodeList){
+                // Ensure shadow dom distribution is completed in polyfilled browsers
+                // window.ShadyDOM && window.ShadyDOM.flush();
+                // Trick Polymer to render this shadow tree to make `assignedSlot` of element accessible.
+                // it's cheaper than the code above, as flushes only this tree
+                // https://github.com/webcomponents/shadydom/issues/295
+                window.ShadyDOM && window.ShadyDOM.inUse && this.assignedSlot;
+
                 const slotAll = this;
                 const slotsMap = slotAll.__createdSlots;
 
@@ -93,11 +106,10 @@
                     if(
                         element.nodeType === Node.ELEMENT_NODE &&
                         element.hasAttribute('slot') &&
-                        !slotsMap.has(name)
-                        // we do create a slot for elements already
-                        // assigned by other `slot(-all)`s
-                        // to handle distribution when others are removed.
-                        // !element.assignedSlot
+                        !slotsMap.has(name) &&
+                        // do not distribute already distributed elements,
+                        // once the other slot is removed this element will not add it
+                        !element.assignedSlot
                     ){
                         const namedSlot = document.createElement('slot');
                         namedSlot.setAttribute('name', name);

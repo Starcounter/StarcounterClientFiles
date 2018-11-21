@@ -1,3 +1,8 @@
+DirectoryPath GetClientFilesRoot([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
+{
+    return new FilePath(sourceFilePath).GetDirectory();
+}
+
 ///
 /// Private namespace
 ///
@@ -5,18 +10,8 @@
     ///
     /// Root path configuration
     ///
-    string rootPath;
-
-    if (Tasks.Any(t => t.Name.Equals("Bifrost")))
-    {
-        // Executed from Bifrost
-        rootPath = MakeAbsolute(Directory("../StarcounterClientFiles")).FullPath;
-    }
-    else
-    {
-        // Executed as a self-containment script
-        rootPath = MakeAbsolute(Directory(".")).FullPath;
-    }
+    DirectoryPath rootDirectory = GetClientFilesRoot();
+    string rootPath = rootDirectory.FullPath;
 
     ///
     /// Argument parsing
@@ -27,7 +22,7 @@
     string starNugetPath = Argument("starNugetPath", "");
     if (string.IsNullOrEmpty(starNugetPath))
     {
-        starNugetPath = rootPath + "/artifacts";
+        starNugetPath = EnvironmentVariable("STAR_NUGET") ?? $"{rootPath}/artifacts";
     }
 
     ///

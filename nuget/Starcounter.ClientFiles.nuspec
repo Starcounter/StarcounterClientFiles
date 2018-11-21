@@ -14,6 +14,7 @@
   <files>
     <file src="..\src\StarcounterClientFiles\wwwroot\sys\**" target="contentFiles/any/any/ClientFiles/StaticFiles/sys" />
     <file src="..\src\StarcounterClientFiles\bower.json" target="contentFiles/any/any/ClientFiles" />
+    <file src="..\src\StarcounterClientFiles\.bowerrc" target="contentFiles/any/any/ClientFiles" />
     <file src="..\src\StarcounterClientFiles\bower-list.txt" target="contentFiles/any/any/ClientFiles" />
   </files>
 </package>

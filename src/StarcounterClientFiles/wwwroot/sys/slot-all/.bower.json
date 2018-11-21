@@ -1,6 +1,6 @@
 {
   "name": "slot-all",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "A custom element to distribute all elements regardless of their slot name",
   "license": "MIT",
   "main": "slot-all.html",
@@ -25,13 +25,13 @@
     "juicy-ace-editor": "^2.1.0"
   },
   "homepage": "https://github.com/Juicy/slot-all",
-  "_release": "0.0.3",
+  "_release": "0.1.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.3",
-    "commit": "d88f825127e661dd0c429abd512b3aad662c72e5"
+    "tag": "0.1.0",
+    "commit": "e7a905af8b8581ac95c18e6d0a4ce0575ec0c757"
   },
   "_source": "https://github.com/Juicy/slot-all.git",
-  "_target": "^0.0.3",
+  "_target": "^0.1.0",
   "_originalSource": "slot-all"
 }
