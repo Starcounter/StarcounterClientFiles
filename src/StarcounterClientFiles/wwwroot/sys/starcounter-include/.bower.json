@@ -37,12 +37,12 @@
     "polymer": "^2.2.0",
     "enlighted-link": "^0.1.0"
   },
-  "version": "5.2.0",
-  "_release": "5.2.0",
+  "version": "5.3.0",
+  "_release": "5.3.0",
   "_resolution": {
     "type": "version",
-    "tag": "5.2.0",
-    "commit": "1a0afeafd1ea1dd294c1531a520ff295954174d4"
+    "tag": "5.3.0",
+    "commit": "7a2d76eabc0e13df17a685d47bd27daf3ba6c77f"
   },
   "_source": "https://github.com/Starcounter/starcounter-include.git",
   "_target": "^5.2.0",

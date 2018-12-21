@@ -3,8 +3,8 @@
 Custom Element (w/ Polymer's TemplateBinding)
 with predefined template content, which should be used to include partials.
 It's just <imported-template> wrapped within Shadow Root for `declarative-shadow-dom` bindable by layout editor.
-Uses Shadow DOM given from DB as `Starcounter.MergedPartial.{_compositionProvider_}.Composition$`.
-version: 5.2.0
+Uses Shadow DOM given from DB as `Starcounter.MergedPartial.{_compositionProvider_}.Composition`.
+version: 5.3.0
 
 -->
 <!-- Import dependencies -->
@@ -262,11 +262,11 @@ version: 5.2.0
             }
         }
         /**
-         * @deprecated Use `starcounterInclude.shadowRoot` or `viewModel.{compositionProvider}.Composition$`
+         * @deprecated Use `starcounterInclude.shadowRoot` or `viewModel.{compositionProvider}.Composition`
          * @alias #updateComposition
          */
         StarcounterIncludePrototype._compositionChanged = function(compositionString) {
-            console.warn('_compositionChanged, was renamed to updateComposition. Most probably you don\'t even need to use it. In most of the cases `starcounterInclude.shadowRoot` or changing the `viewModel.{compositionProvider}.Composition$` should do the right thing.');
+            console.warn('_compositionChanged, was renamed to updateComposition. Most probably you don\'t even need to use it. In most of the cases `starcounterInclude.shadowRoot` or changing the `viewModel.{compositionProvider}.Composition` should do the right thing.');
             return this.updateComposition(compositionString);
         };
         /**
@@ -287,16 +287,17 @@ version: 5.2.0
             }
             else {
                 const compositionProvider = this.viewModel && this.viewModel[this.compositionProvider];
-
                 if (compositionProvider) {
                     this.partialId = compositionProvider.PartialId;
                     this.temporaryComposition = null;
+					// For backward compatibility
+					var compositionProviderComposition = compositionProvider.Composition || compositionProvider.Composition$;
                     if (compositionString === "") {
                         //this is a request from starcounter-layout-html-editor to reset to default composition
                     }
-                    else if (compositionProvider.Composition$) {
-                        return this._renderCompositionChange(compositionProvider.Composition$, () => {
-                            this.storedLayout = compositionProvider.Composition$; //should always be string
+                    else if (compositionProviderComposition) {
+                        return this._renderCompositionChange(compositionProviderComposition, () => {
+                            this.storedLayout = compositionProviderComposition; //should always be string
                             const merged = this.stringToDocumentFragment(this.storedLayout);
 
                             if (compositionProvider.ViewUris) {
@@ -402,7 +403,7 @@ version: 5.2.0
                     this._updateHref();
                     return;
                 }
-                // TODO: handle just composition change add a test for a change for just model.{compositionProvider}.Composition$
+                // TODO: handle just composition change add a test for a change for just model.{compositionProvider}.Composition
                 // Notify about model change
                 if (this.template._setPendingPropertyOrPath) {
                     this.template._setPendingPropertyOrPath(newPath, value);
@@ -462,6 +463,7 @@ version: 5.2.0
          * @TODO: to be simplified after https://github.com/StarcounterApps/CompositionProvider/pull/13 is done
          */
         StarcounterIncludePrototype.saveLayout = function(compositionStr){
+			console.warn("This method of saving composition is deprecated and will be removed soon. Please use the current version of Blending app.");
             compositionStr = compositionStr || this.shadowRoot.innerHTML;
             this.viewModel[this.compositionProvider].Composition$ = compositionStr;
             this.dispatchEvent(new CustomEvent("starcounter-include-composition-saved", {detail: compositionStr}));
