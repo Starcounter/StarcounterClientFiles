@@ -1,8 +1,3 @@
-DirectoryPath GetClientFilesRoot([System.Runtime.CompilerServices.CallerFilePath] string sourceFilePath = "")
-{
-    return new FilePath(sourceFilePath).GetDirectory();
-}
-
 ///
 /// Private namespace
 ///
@@ -10,7 +5,7 @@ DirectoryPath GetClientFilesRoot([System.Runtime.CompilerServices.CallerFilePath
     ///
     /// Root path configuration
     ///
-    DirectoryPath rootDirectory = GetClientFilesRoot();
+    DirectoryPath rootDirectory = Context.GetCallerInfo().SourceFilePath.GetDirectory();
     string rootPath = rootDirectory.FullPath;
 
     ///
