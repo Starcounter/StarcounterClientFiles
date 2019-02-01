@@ -5,10 +5,10 @@
     "palindrom-client": "^7.0.0",
     "imported-template": "^3.4.0",
     "palindrom-redirect": "~1.0.0",
-    "starcounter-include": "^5.2.0",
+    "starcounter-include": "^5.4.0",
     "polymer-source": "polymer#^2.6.1",
     "webcomponentsjs": "^1.2.7",
-    "uniform.css": "Starcounter/uniform#^0.9.0",
+    "uniform.css": "Starcounter/uniform#^0.10.0",
     "enlighted-link": "^0.1.0",
     "palindrom-error-catcher": "^1.0.0",
     "slot-all": "^0.1.0"

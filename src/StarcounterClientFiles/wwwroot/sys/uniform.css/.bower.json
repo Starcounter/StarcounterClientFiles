@@ -43,14 +43,14 @@
     "vaadin-development-mode-detector": "^1.1.0-beta1",
     "vaadin-usage-statistics": "^1.1.0-beta1"
   },
-  "version": "0.9.0",
-  "_release": "0.9.0",
+  "version": "0.10.0",
+  "_release": "0.10.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.9.0",
-    "commit": "314803ba793c801ecbf8359062ca8c39487c2e96"
+    "tag": "0.10.0",
+    "commit": "a63f6048dd79556d1ab09a8f4a94489c2bd53aa5"
   },
   "_source": "https://github.com/Starcounter/uniform.git",
-  "_target": "^0.9.0",
+  "_target": "^0.10.0",
   "_originalSource": "Starcounter/uniform"
 }

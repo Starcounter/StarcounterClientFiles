@@ -141,8 +141,8 @@ Property   | Options           | Default | Description
 Name                                    | Detail                 | Description
 ---                                     | ---                    | ---
 `starcounter-include-composition-saved` | *String* stored composition | Triggered once composition is saved
-`partial-changed`                       | *Object* `{value: storedComposition, path: 'partial.{compositionProvider}.Composition$'}` | Polymer notification protocol compliant event to notify about `partial.{compositionProvider}.Composition$` change, triggered once composition is saved.
-`view-model-changed`                       | *Object* `{value: storedComposition, path: 'viewModel.{compositionProvider}.Composition$'}` | Polymer notification protocol compliant event to notify about `partial.{compositionProvider}.Composition$` change, triggered once composition is saved.
+`partial-changed`                       | *Object* `{value: storedComposition, path: 'partial.{compositionProvider}.Composition'}` | Polymer notification protocol compliant event to notify about `partial.{compositionProvider}.Composition` change, triggered once composition is saved.
+`view-model-changed`                       | *Object* `{value: storedComposition, path: 'viewModel.{compositionProvider}.Composition'}` | Polymer notification protocol compliant event to notify about `partial.{compositionProvider}.Composition` change, triggered once composition is saved.
 `presentation-loaded`                   | none                   | When all links from a stamped presentation finished loading (with success or failure).
 
 ## Render-blocking links
