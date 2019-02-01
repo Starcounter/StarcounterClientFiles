@@ -4,7 +4,7 @@ Custom Element (w/ Polymer's TemplateBinding)
 with predefined template content, which should be used to include partials.
 It's just <imported-template> wrapped within Shadow Root for `declarative-shadow-dom` bindable by layout editor.
 Uses Shadow DOM given from DB as `Starcounter.MergedPartial.{_compositionProvider_}.Composition`.
-version: 5.3.0
+version: 5.4.0
 
 -->
 <!-- Import dependencies -->
@@ -12,8 +12,8 @@ version: 5.3.0
 
 <script>
     (function() {
-        function warnAboutDeprecatedPartial() {
-            console.warn('`partial` attribute and property are deprecated from `starcounter-include` in favour of (viewModel property or view-model attribute), they will soon be no longer be supported');
+        function warnAboutDeprecatedPartial(element) {
+            console.warn('`partial` attribute and property are deprecated from `starcounter-include` in favour of (viewModel property or view-model attribute), they will soon be no longer be supported', element);
         }
         const BLOCKING_LINKS_SELECTOR = 'link[rel="stylesheet"]';
         const DEFAULT_SHADOW_DOM_PRESENTATION_SELECTOR = 'template[is="declarative-shadow-dom"][presentation=default],template[is="declarative-shadow-dom"]:not([presentation])';
@@ -64,7 +64,7 @@ version: 5.3.0
                 var viewModel = this.viewModel || this.partial || undefined;
 
                 if(this.partial) {
-                    warnAboutDeprecatedPartial();
+                    warnAboutDeprecatedPartial(this);
                 }
 
                 checkForNonNamespaced(viewModel, this);
@@ -80,7 +80,7 @@ version: 5.3.0
                 Object.defineProperties(this, {
                     partial: {
                         set: function(newValue) {
-                            warnAboutDeprecatedPartial();
+                            warnAboutDeprecatedPartial(this);
                             this.viewModel = newValue;
                         },
                         get: function() {
@@ -199,7 +199,7 @@ version: 5.3.0
                     break;
                 case "partial":
                     if(!oldVal /* to warn only once */) {
-                        warnAboutDeprecatedPartial();
+                        warnAboutDeprecatedPartial(this);
                     }
                     this.viewModel = partialAttributeToProperty(this, newVal);
                     break;
@@ -291,13 +291,13 @@ version: 5.3.0
                     this.partialId = compositionProvider.PartialId;
                     this.temporaryComposition = null;
 					// For backward compatibility
-					var compositionProviderComposition = compositionProvider.Composition || compositionProvider.Composition$;
+					var compositionProviderComposition = compositionProvider.Composition;
                     if (compositionString === "") {
                         //this is a request from starcounter-layout-html-editor to reset to default composition
                     }
                     else if (compositionProviderComposition) {
+                        this.storedLayout = compositionProviderComposition; //should always be string
                         return this._renderCompositionChange(compositionProviderComposition, () => {
-                            this.storedLayout = compositionProviderComposition; //should always be string
                             const merged = this.stringToDocumentFragment(this.storedLayout);
 
                             if (compositionProvider.ViewUris) {
@@ -356,7 +356,7 @@ version: 5.3.0
         // Polymer doesn't set props on its own components, rather, it calls this function
         StarcounterIncludePrototype._setPendingProperty = function (path, value) {
             if(path === 'partial') {
-                warnAboutDeprecatedPartial();
+                warnAboutDeprecatedPartial(this);
             }
             this[path] = value;
         }
@@ -402,8 +402,15 @@ version: 5.3.0
                 ){
                     this._updateHref();
                     return;
+                } else if (
+                    // Just the composition was changed
+                    // and it's different than already stored one
+                    subPath === this.compositionProvider + '.Composition' &&
+                    value != this.storedLayout
+                ) {
+                    this.updateComposition();
+                    return;
                 }
-                // TODO: handle just composition change add a test for a change for just model.{compositionProvider}.Composition
                 // Notify about model change
                 if (this.template._setPendingPropertyOrPath) {
                     this.template._setPendingPropertyOrPath(newPath, value);
@@ -457,22 +464,6 @@ version: 5.3.0
                 return undefined;
             }
         };
-        /**
-         * Saves given or current composition as stored one, notifies binding about it.
-         * @param  {String} [compositionStr] composition to be saved, if not given current one will be used
-         * @TODO: to be simplified after https://github.com/StarcounterApps/CompositionProvider/pull/13 is done
-         */
-        StarcounterIncludePrototype.saveLayout = function(compositionStr){
-			console.warn("This method of saving composition is deprecated and will be removed soon. Please use the current version of Blending app.");
-            compositionStr = compositionStr || this.shadowRoot.innerHTML;
-            this.viewModel[this.compositionProvider].Composition$ = compositionStr;
-            this.dispatchEvent(new CustomEvent("starcounter-include-composition-saved", {detail: compositionStr}));
-            // trigger polymer-notification-protocol-compilant event
-            var notificationPath = this.compositionProvider + '.Composition$';
-            this.dispatchEvent(new CustomEvent("partial-changed", {detail: {value: compositionStr, path: 'partial.' + notificationPath}}));
-            this.dispatchEvent(new CustomEvent("view-model-changed", {detail: {value: compositionStr, path: 'viewModel.' + notificationPath}}));
-        };
-
         // stringToDocumentFragment(strHTML) from http://stackoverflow.com/a/25214113/868184
         /**
          * Creates DocumentFragment from a string.
@@ -504,7 +495,7 @@ version: 5.3.0
          */
         function checkForNonNamespaced(viewModel, element){
             if(viewModel && typeof viewModel.Html !== 'undefined'){
-                console.warn(`The view ${viewModel.Html} is enclosed in a red-dotted line, because it is incorrectly provided to <starcounter-include> without an app namespace. Your options are to either: 
+                console.warn(`The view ${viewModel.Html} is enclosed in a red-dotted line, because it is incorrectly provided to <starcounter-include> without an app namespace. Your options are to either:
 - Make it blendable by using Self.GET on server-side, or
 - Use <imported-template> instead of <starcounter-include> and remove declarative-shadow-dom from the nested view
 

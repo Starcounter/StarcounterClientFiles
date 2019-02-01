@@ -161,7 +161,16 @@ Example view:
 
 ## Caveats
 
-MS Edge, does not support the `width: max-content;`. Therefore, the intrinsic size of `uni-form-item` falls back to `100%`. To get a consistent cross-browser look, you need to set the `width` manually.
+By default `uni-form-item` width is set to `100%`, so it could occupy entire (grid) area given (for example by the simple composition editor).
+To achieve intrinsic size, you can use `max-content`:
+```css
+uni-form-item{
+    width: -moz-max-content;
+    width: max-content;
+}
+```
+
+However MS Edge, does not support it. Therefore, the intrinsic size of `uni-form-item` falls back to `100%`.
 
 Feel invited to cast your vote for `width: max-content` in Edge:
  - https://wpdev.uservoice.com/forums/257854-microsoft-edge-developer/suggestions/6263702-css-intrinsic-sizing
