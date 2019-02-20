@@ -1,0 +1,15 @@
+{
+  "name": "custom-elements-builtin",
+  "homepage": "https://github.com/ungap/custom-elements-builtin",
+  "version": "0.1.2",
+  "_release": "0.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.1.2",
+    "commit": "39ba8711a1c6982d8d30f0fb9638e573912d6ab9"
+  },
+  "_source": "https://github.com/ungap/custom-elements-builtin.git",
+  "_target": "^0.1.2",
+  "_originalSource": "ungap/custom-elements-builtin",
+  "_direct": true
+}
