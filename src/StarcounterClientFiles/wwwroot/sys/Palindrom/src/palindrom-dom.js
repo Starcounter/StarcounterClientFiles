@@ -3,10 +3,23 @@
  * (c) 2017 Joachim Wester
  * MIT license
  */
-
 const Palindrom = require('./palindrom');
 
+class AbortError extends Error {};
+
 const PalindromDOM = (() => {
+    /** scroll to coordiates and return if the scroll was successful */
+    function attemptScroll(x, y) {
+        scrollTo(x, y);
+        return window.scrollX === x && window.scrollY === y;
+    }
+
+    async function sleep(duration) {
+        return new Promise(resolve => {
+            setTimeout(resolve, duration);
+        });
+    }
+
     /**
      * PalindromDOM
      * @extends {Palindrom}
@@ -41,12 +54,17 @@ const PalindromDOM = (() => {
             this.clickHandler = this.clickHandler.bind(this);
             this.historyHandler = this.historyHandler.bind(this);
             this.morphUrlEventHandler = this.morphUrlEventHandler.bind(this);
+            this._scrollWatcher = this._scrollWatcher.bind(this);
 
             /* in some cases, people emit redirect requests before `listen` is called */
             this.element.addEventListener(
                 'palindrom-redirect-pushstate',
-                this.historyHandler
+                this.morphUrlEventHandler
             );
+
+            if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+            }
         }
 
         listen() {
@@ -63,6 +81,24 @@ const PalindromDOM = (() => {
                 'palindrom-redirect-pushstate',
                 this.historyHandler
             );
+
+            this._watchingScroll();
+        }
+        _watchingScroll() {
+            window.addEventListener('scroll', this._scrollWatcher);
+        }
+        _unwatchingScroll() {
+            window.removeEventListener('scroll', this._scrollWatcher);
+        }
+        _scrollWatcher() {
+            // do not record self created scroll events
+            if(this._attemptingScroll) {
+                return;
+            }
+            clearTimeout(this._scrollDebounceTimeout);
+            this._scrollDebounceTimeout = setTimeout(() => {
+                history.replaceState([window.scrollX, window.scrollY], null);
+            }, 20);
         }
         unlisten() {
             this.listening = false;
@@ -78,6 +114,57 @@ const PalindromDOM = (() => {
                 'palindrom-morph-url',
                 this.morphUrlEventHandler
             );
+            this._unwatchingScroll();
+        }
+
+        /**
+         * @param {String} href
+         * @throws {Error} network error if occured or the `palindrom-before-redirect` was cancelled by calling event.preventDefault()
+         * @fires Palindrom#palindrom-before-redirect
+         * @fires Palindrom#palindrom-after-redirect
+         * @returns {Response} response (https://github.com/axios/axios#response-schema)
+         */
+        async getPatchUsingHTTP(href) {
+            /**
+             * palindrom-before-redirect event.
+             *
+             * @event Palindrom#palindrom-before-redirect
+             * @type {CustomEvent}
+             * @property {Object} detail containing `href` property that contains the URL
+             */
+            const beforeEvent = new CustomEvent('palindrom-before-redirect', {
+                detail: {
+                    href
+                },
+                cancelable: true,
+                bubbles: true
+            });
+
+            this.element.dispatchEvent(beforeEvent);
+
+            if (beforeEvent.defaultPrevented) {
+                throw new AbortError(
+                    '`getPatchUsingHTTP` was aborted by cancelling `palindrom-before-redirect` event.'
+                );
+            }
+
+            const response = await this.network.getPatchUsingHTTP(href);
+            let detail = { href, response };
+
+            /**
+             * palindrom-after-redirect event
+             *
+             * @event Palindrom#palindrom-after-redirect
+             * @type {CustomEvent}
+             * @property {Object} detail containing `href: String` and `response: Response (https://developer.mozilla.org/en-US/docs/Web/API/Response)`
+             */
+            const afterEvent = new CustomEvent('palindrom-after-redirect', {
+                detail,
+                bubbles: true
+            });
+
+            this.element.dispatchEvent(afterEvent);
+            return response;
         }
 
         //TODO move fallback to window.location.href from PalindromNetworkChannel to here (PalindromDOM)
@@ -120,11 +207,34 @@ const PalindromDOM = (() => {
          * Push a new URL to the browser address bar and send a patch request (empty or including queued local patches)
          * so that the URL handlers can be executed on the remote
          * @param url
+         * @returns {boolean} true if morphing was successful
          */
-        morphUrl(url) {
-            history.pushState(null, null, url);
-            this.network.getPatchUsingHTTP(url);
-            window && window.scrollTo(0, 0);
+        async morphUrl(url) {
+            const scrollX = window.scrollX;
+            const scrollY = window.scrollY;
+            try {
+                const res = await this.getPatchUsingHTTP(url);
+                if (res && res.status < 500) {
+                    // mark current state's scroll position
+                    history.replaceState(
+                        [scrollX, scrollY],
+                        null,
+                        window.location.href
+                    );
+
+                    // push a new state with the new position
+                    history.pushState([0, 0], null, url);
+
+                    // scroll it!
+                    scrollTo(0, 0);
+                    return true;
+                }
+            } catch (error) {
+                if (error instanceof AbortError) {
+                    return false;
+                }
+                throw new Error(`HTTP request failed, error message: ${error.message}`);
+            }
         }
 
         /**
@@ -181,9 +291,33 @@ const PalindromDOM = (() => {
                 }
             }
         }
+        
+        async historyHandler(event) {
+            await this.getPatchUsingHTTP(location.href);
+            const [scrollX, scrollY] = event.state || [0, 0];
+            
+            // flag if the user has scrolled, not our own code
+            let userHadScrolled = false;
 
-        historyHandler() /*event*/ {
-            this.network.getPatchUsingHTTP(location.href);
+            // flag if this code it scrolling, not the user
+            this._attemptingScroll = false;
+
+            // if this handler is called && we're not attemptingScroll, then the user has scrolled!
+            const scrollHandler = () => (userHadScrolled = !attemptingScroll);
+            window.addEventListener('scroll', scrollHandler);
+
+            for (let i = 0; i < 30 && !userHadScrolled; i++) {
+                // prevent our scroll attempt from setting `hadScrolled`
+                this._attemptingScroll = true;
+                const scrollSucceeded = attemptScroll(scrollX, scrollY);
+                this._attemptingScroll = false;
+                if (scrollSucceeded) {
+                    break;
+                } else {
+                    await sleep(30);
+                }
+            }
+            window.removeEventListener('scroll', scrollHandler);
         }
 
         /**
@@ -204,7 +338,6 @@ const PalindromDOM = (() => {
                 if (parser.host == '') {
                     parser.href = parser.href;
                 }
-
                 elem = parser;
             }
             return (

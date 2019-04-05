@@ -32,7 +32,7 @@
     "Gruntfile.js"
   ],
   "dependencies": {
-    "Palindrom": "Palindrom/Palindrom#^v5.0.0"
+    "Palindrom": "Palindrom/Palindrom#^v6.0.0"
   },
   "devDependencies": {
     "polymer": "^2.6.1",
@@ -46,14 +46,15 @@
     "starcounter-include": "Starcounter/starcounter-include#master",
     "fast-json-patch": "^2.0.6"
   },
-  "version": "7.2.1",
-  "_release": "7.2.1",
+  "version": "7.3.0",
+  "_release": "7.3.0",
   "_resolution": {
     "type": "version",
-    "tag": "7.2.1",
-    "commit": "15c3930109aef01f040022ce443770cd0eb8757f"
+    "tag": "7.3.0",
+    "commit": "70a1a2a363bd951c3873ad33373b0ad6c9458303"
   },
   "_source": "https://github.com/Palindrom/palindrom-client.git",
-  "_target": "^7.0.0",
-  "_originalSource": "palindrom-client"
+  "_target": "^7.3.0",
+  "_originalSource": "palindrom-client",
+  "_direct": true
 }
