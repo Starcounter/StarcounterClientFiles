@@ -14,7 +14,7 @@ if "%2" == "" (
     goto end
 )
 
-dotnet cake %~dp0build.cake --targets="PushClientFiles" --clientFilesNupkgFile="%1" --mygetApiKey="%2" --verbosity=Normal || exit /b %errorlevel%
+dotnet cake %~dp0build.cake --targets="PushClientFiles" --clientFilesNupkgFile="%1" --nugetApiKey="%2" --verbosity=Normal || exit /b %errorlevel%
 
 :end
 exit /b 0

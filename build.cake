@@ -12,7 +12,7 @@
     /// Argument parsing
     ///
     string configuration = Argument("configuration", "Debug");
-    string mygetApiKey = Argument("mygetApiKey", "");
+    string nugetApiKey = Argument("nugetApiKey", "");
     string nuGetPackageFile = Argument("clientFilesNupkgFile", "");
     string starNugetPath = Argument("starNugetPath", "");
     if (string.IsNullOrEmpty(starNugetPath))
@@ -79,9 +79,9 @@
     ///
     Task("PushClientFiles").Does(() =>
     {
-        if (string.IsNullOrEmpty(mygetApiKey))
+        if (string.IsNullOrEmpty(nugetApiKey))
         {
-            throw new Exception("MyGet API key has not been set, aborting! Set argument --mygetApiKey");
+            throw new Exception("NuGet API key has not been set, aborting! Set argument --nugetApiKey");
         }
 
         FileInfo fi = new FileInfo(nuGetPackageFile);
@@ -92,8 +92,8 @@
 
         var nuGetPushSettings = new NuGetPushSettings
         {
-            Source = "https://www.myget.org/F/starcounter/api/v2/package",
-            ApiKey = mygetApiKey
+            Source = "https://api.nuget.org/v3/index.json",
+            ApiKey = nugetApiKey
         };
 
         NuGetPush(fi.FullName, nuGetPushSettings);
