@@ -2,7 +2,6 @@
   "name": "starcounter-clientfiles",
   "private": true,
   "dependencies": {
-    "palindrom-client": "^7.0.0",
     "imported-template": "^3.4.0",
     "palindrom-redirect": "~1.0.0",
     "starcounter-include": "^5.4.0",
