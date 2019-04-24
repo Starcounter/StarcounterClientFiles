@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <title>{0}</title>
     <script>  
-      const logPrefix = '[Starcounter App Shell];'
       (function() {{
+          const logPrefix = '[Starcounter App Shell]';
           function register() {{
           if ('serviceWorker' in navigator) {{
             window.addEventListener('load', () => {{
@@ -30,20 +30,20 @@
                       // At this point, the old content will have been purged and
                       // the fresh content will have been added to the cache.
                       // It's the perfect time to reload the page.
-                      console.info(`${logPrefix} Detected a new service worker cache version, reloading...`)
+                      console.info(`${{logPrefix}} Detected a new service worker cache version, reloading...`)
                       window.location.reload();
                     }} else {{
                       // At this point, everything has been precached.
                       // It's the perfect time to display a
                       // "Content is cached for offline use." message.
-                      console.info(`${logPrefix} Content is cached for offline use.`);
+                      console.info(`${{logPrefix}} Content is cached for offline use.`);
                     }}
                   }}
                 }}
               }}
             }}
             catch(error) {{
-              console.error(`${logPrefix} Error during service worker registration:`, error);
+              console.error(`${{logPrefix}} Error during service worker registration:`, error);
             }};
         }};
         register();
