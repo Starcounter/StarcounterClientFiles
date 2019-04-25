@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{0}</title>
+    <script>  
+      (async function() {{
+        const logPrefix = '[Starcounter App Shell]';
+        if ('serviceWorker' in navigator) {{
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          for(const registration of registrations) {{
+              registration.unregister()
+          }}
+          if(registrations.length > 0) {{
+            console.info(`${{logPrefix}} Removed ${{registrations.length}} service worker registration${{registrations.length > 1 ? 's' : ''}}`);
+            // this `debugger` is left here on purpose.
+            // To allow developers (who have DevTools open) pause here and see if any registrations removals occurred before auto-reload is triggered
+            debugger; 
+            location.reload(); // reload the page to lose content that was served from cache
+          }}
+        }};
+      }})()
+    </script>
+    <script src="/sys/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="/sys/polymer/polymer.html">
+    <link rel="import" href="/sys/starcounter.html">
+    <link rel="stylesheet" href="/sys/uniform.css/uniform.css">
+    <link rel="manifest">
+</head>
+<body>
+    <dom-bind id="palindrom-root">
+        <template>
+            <starcounter-include view-model="{{{{model}}}}"></starcounter-include>
+        </template>
+    </dom-bind>
+    
+    <palindrom-client ref="palindrom-root" remote-url="{1}"></palindrom-client>
+</body>
+</html>
