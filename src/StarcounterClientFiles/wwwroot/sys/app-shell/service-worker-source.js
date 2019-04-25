@@ -21,8 +21,8 @@ function niceLog() {
 }
 
 /**
- * This function's logic determins `url` is cached in the service worker cache. 
- * Feel free to extend is logic with whatever critera you think is needed for caching urls
+ * This function's logic determines whether `url` is cached in the service worker cache. 
+ * Feel free to extend its logic with whatever critera you think is needed for caching urls
  * @param {String} url 
  * @returns {Boolean} whether to cache the URL or not.
  */
@@ -30,7 +30,7 @@ function shouldCacheThisURL(url) {
   // get the last part of the url after the last `/`;
   const lastPartOfUrl = url.split('/').pop();
 
-  /* if the last part matches ends with an extension that is (2-5) in length
+  /* if the last part ends with an extension that is (2-5) in length
      it's probably a file (eg: file.jpg), worth caching
    */
   if (lastPartOfUrl.match(/\.\w{2,5}$/)) {
@@ -60,7 +60,7 @@ self.addEventListener('message', function(event){
 self.addEventListener('install', function(event) {
   niceLog(`Installed version ${version}`);
   niceLog(`Skip waiting on install`);
-  return self.skipWaiting();
+  event.waitUntil(self.skipWaiting());
 });
 
 self.addEventListener('activate', function(event) { 
@@ -72,7 +72,7 @@ self.addEventListener('activate', function(event) {
       var urls = clientList.map(function(client) {
         return client.url;
       });
-      niceLog(`Matching clients:' ${urls.join(', ')}`);
+      niceLog(`Matching clients: ${urls.join(', ')}`);
     });
 
   event.waitUntil(
@@ -82,14 +82,14 @@ self.addEventListener('activate', function(event) {
         return Promise.all(
           cacheNames.map(function(cacheName) {
             if (cacheName !== version) {
-              niceLog(`Deleting old cache:' ${cacheName}`);
+              niceLog(`Deleting old cache: ${cacheName}`);
               return caches.delete(cacheName);
             }
           })
         );
       })
       .then(function() {
-        niceLog(`Claiming clients for version`);
+        niceLog(`Claiming clients for version ${version}`);
         return self.clients.claim();
       })
   );

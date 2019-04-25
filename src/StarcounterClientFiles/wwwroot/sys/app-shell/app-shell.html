@@ -5,22 +5,42 @@
     <title>{0}</title>
     <script>  
       (function() {{
-          const logPrefix = '[Starcounter App Shell]';
-          function register() {{
-          if ('serviceWorker' in navigator) {{
-            window.addEventListener('load', () => {{
-              const swUrl = `/service-worker.js`;
-              registerSW(swUrl);
-            }});
+        const logPrefix = '[Starcounter App Shell]';
+        
+        if ('serviceWorker' in navigator) {{
+          window.addEventListener('load', () => {{
+            const swUrl = `/service-worker.js`;
+            registerSW(swUrl);
+          }});
+        }} else {{
+          let reason;
+          if('isSecureContext' in window) {{
+            if(window.isSecureContext) {{
+              reason = 'Service worker failed to register due to lack of support in this agent';
+            }} else {{
+              reason = 'Service worker failed to register because this context is not secure. Secure contexts are HTTPS websites and `localhost`';
+            }}
+          }} else {{ // we don't know what happened
+            reason = 'Service worker failed to register due to either lack of support in this agent or due to an insecure context. Secure contexts are HTTPS websites and `localhost`';
           }}
+          console.info(`${{logPrefix}} ${{reason}}`);
         }}
 
         async function registerSW(swUrl) {{
           try {{
             const registration = await navigator.serviceWorker.register(swUrl);
             
-            // send a message to the SW to it logs the SW disclaimer
-            navigator.serviceWorker.controller.postMessage("Hi! I deeclare myself as a new client");
+            // for fresh visits, `controller` will be `null`. We need to wait for the cache to be populated
+            navigator.serviceWorker.oncontrollerchange = () => {{
+              // let the service worker know that a client has connected. This helps the SW log welcome messages and disclaimers needed for this beta phase
+              // the message body is useless since we just want the notification, not the data
+              navigator.serviceWorker.controller.postMessage("Hi! I declare myself as a new client");
+            }}
+
+            if(navigator.serviceWorker.controller) {{
+              // for non-fresh visits, we can nudge the service worker about our presence
+              navigator.serviceWorker.controller.postMessage("Hi! I declare myself as a old client");
+            }}
 
             registration.onupdatefound = () => {{
                 const installingWorker = registration.installing;
@@ -46,7 +66,6 @@
               console.error(`${{logPrefix}} Error during service worker registration:`, error);
             }};
         }};
-        register();
       }})()
     </script>
     <script src="/sys/webcomponentsjs/webcomponents-lite.js"></script>
