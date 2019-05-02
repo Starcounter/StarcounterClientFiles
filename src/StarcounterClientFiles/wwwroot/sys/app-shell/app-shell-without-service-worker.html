@@ -13,9 +13,6 @@
           }}
           if(registrations.length > 0) {{
             console.info(`${{logPrefix}} Removed ${{registrations.length}} service worker registration${{registrations.length > 1 ? 's' : ''}}`);
-            // this `debugger` is left here on purpose.
-            // To allow developers (who have DevTools open) pause here and see if any registrations removals occurred before auto-reload is triggered
-            debugger; 
             location.reload(); // reload the page to lose content that was served from cache
           }}
         }};
