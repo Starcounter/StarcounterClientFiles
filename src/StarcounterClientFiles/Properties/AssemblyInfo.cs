@@ -33,10 +33,13 @@ using Starcounter.Internal;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyInformationalVersion("3.25.0")]
+[assembly: AssemblyInformationalVersion("3.26.0")]
 
-[assembly: AssemblyVersion("3.25.0")]
-[assembly: AssemblyFileVersion("3.25.0")]
+// Nuget does not pickup this value
+// see https://docs.microsoft.com/en-us/nuget/create-packages/prerelease-packages
+[assembly: AssemblyVersion("3.26.0")]
+[assembly: AssemblyFileVersion("3.26.0")]
+
 
 // Assures the current assembly has a reference to the Starcounter
 // assembly. A reference to Starcounter is currently required for

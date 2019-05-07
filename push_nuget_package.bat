@@ -1,5 +1,5 @@
 :: Push ClientFiles to NuGet
-::    usage: push_nuget_package.bat [nupkg file] [myget api key]
+::    usage: push_nuget_package.bat [nupkg file] [NuGet api key]
 ::           push_nuget_package.bat C:\somefolder\Starcounter.ClientFiles.X.Y.Z.nupkg XXXXXXXXXXXXXXXXXXXXXX
 
 @echo off
@@ -10,7 +10,7 @@ if "%1" == "" (
 )
 
 if "%2" == "" (
-    echo MyGet API key needs to be set as the second argument to %0
+    echo NuGet API key needs to be set as the second argument to %0
     goto end
 )
 

@@ -34,7 +34,7 @@ The developer process of releasing of a new version of StarcounterClientFiles `3
 7. After PR approval, still in PR branch publish a package of this version to App Warehouse (built with Starcounter 2.4). Follow the steps to do this [here](https://github.com/Starcounter/CompanyTrack/blob/master/AppsTeam/Guidelines/releasing-to-warehouse.md). But make sure to have cake dotnet CLI tool installed before this step: `dotnet tool install -g Cake.Tool`
    * this will create a nuget package of StarcounterClientFiles called `Starcounter.ClientFiles` to folder `%STAR_NUGET%/Starcounter.ClientFiles.X.Y.Z.nupkg` or `/StarcounterClientFiles/artifacts/Starcounter.ClientFiles.X.Y.Z.nupkg`
 8. Execute [push_nuget_package.bat](https://github.com/Starcounter/StarcounterClientFiles/blob/3.x/push_nuget_package.bat)
-    * Requires full path to nupkg file + MyGet api key:
+    * Requires full path to nupkg file + NuGet api key:
 
     ```
     push_nuget_package.bat C:\StarcounterClientFiles\artifacts\Starcounter.ClientFiles.X.Y.Z.nupkg XXXXXXXXXXXXXXXXXXXXXX
